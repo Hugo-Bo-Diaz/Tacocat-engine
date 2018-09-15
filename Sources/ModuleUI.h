@@ -15,7 +15,7 @@ public:
 	bool Init();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
-	bool CleanUp();
+	bool CleanUp() { return true; };
 
 private:
 	//list of ui elements
