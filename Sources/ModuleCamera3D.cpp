@@ -152,6 +152,9 @@ float* ModuleCamera3D::GetViewMatrix()
 // -----------------------------------------------------------------
 void ModuleCamera3D::CalculateViewMatrix()
 {
-	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
+	ViewMatrix = mat4x4(	X.x,				Y.x,				Z.x,				0.0f, 
+							X.y,				Y.y,				Z.y,				0.0f,
+							X.z,				Y.z,				Z.z,				0.0f, 
+							-dot(X, Position),	-dot(Y, Position),	-dot(Z, Position),	1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
 }
