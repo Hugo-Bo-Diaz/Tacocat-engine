@@ -22,6 +22,9 @@
     <Filter Include="Sources\Modules\UI">
       <UniqueIdentifier>{3283fc2b-f62e-456e-baff-35986cb7a4d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\Scenes">
+      <UniqueIdentifier>{b6d5c40a-08de-4492-a492-40b78048011c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -69,9 +72,6 @@
     <ClInclude Include="Light.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneIntro.h">
-      <Filter>Sources\Modules\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
@@ -110,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneController.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +155,6 @@
     <ClCompile Include="Light.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Sources\Modules\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="ModulePhysics3D.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
@@ -180,6 +180,9 @@
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="ModuleUI.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneController.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,7 +3,7 @@
 
 #include "imgui-1.65/imgui.h"
 
-ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleUI::ModuleUI(bool start_enabled) : Module( start_enabled)
 {
 
 }

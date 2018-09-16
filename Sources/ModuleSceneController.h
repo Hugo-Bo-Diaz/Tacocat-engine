@@ -26,11 +26,11 @@ struct Sensor {
 	int id;
 };
 
-class ModuleSceneIntro : public Module
+class ModuleSceneController : public Module
 {
 public:
-	ModuleSceneIntro(Application* app, bool start_enabled = true);
-	~ModuleSceneIntro();
+	ModuleSceneController(bool start_enabled = true);
+	~ModuleSceneController();
 
 	bool Start();
 	update_status Update(float dt);
@@ -38,7 +38,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void SetToCP(PhysVehicle3D* v);
+	//void SetToCP(PhysVehicle3D* v);
 
 public:
 

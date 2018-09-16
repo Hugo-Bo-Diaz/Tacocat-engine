@@ -2,15 +2,14 @@
 
 Application::Application()
 {
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
-	scene_intro = new ModuleSceneIntro(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	physics = new ModulePhysics3D(this);
-	player = new ModulePlayer(this);
-	UI = new ModuleUI(this);
+	window = new ModuleWindow(true);
+	input = new ModuleInput(true);
+	audio = new ModuleAudio(true);
+	scene_controller = new ModuleSceneController(true);
+	renderer3D = new ModuleRenderer3D(true);
+	camera = new ModuleCamera3D(true);
+	physics = new ModulePhysics3D(true);
+	UI = new ModuleUI(true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -25,8 +24,7 @@ Application::Application()
 	AddModule(UI);
 	
 	// Scenes
-	AddModule(scene_intro);
-	AddModule(player);
+	AddModule(scene_controller);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -85,7 +83,7 @@ void Application::FinishUpdate()
 	{
 		scene_intro->set_to_cp = false;
 
-		scene_intro->SetToCP(player->vehicle);
+		//scene_intro->SetToCP(player->vehicle);
 	}
 
 }
