@@ -35,12 +35,11 @@ Application::Application()
 
 Application::~Application()
 {
-	p2List_item<Module*>* item = list_modules.getLast();
+	std::list<Module*>::iterator item = list_modules.end();
 
-	while(item != NULL)
+	for (std::list<Module*>::iterator it = list_modules.end(); it != list_modules.begin(); it--)
 	{
-		delete item->data;
-		item = item->prev;
+		list_modules.remove(*it);
 	}
 }
 
@@ -49,24 +48,19 @@ bool Application::Init()
 	bool ret = true;
 
 	// Call Init() in all modules
-	p2List_item<Module*>* item = list_modules.getFirst();
 
-	while(item != NULL && ret == true)
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
 	{
-		ret = item->data->Init();
-		item = item->next;
+		ret = (*it)->Init();
 	}
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
-	item = list_modules.getFirst();
 
-	while(item != NULL && ret == true)
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
 	{
-		ret = item->data->Start();
-		item = item->next;
+		ret = (*it)->Start();
 	}
-	
 	ms_timer.Start();
 	return ret;
 }
@@ -90,28 +84,19 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 	
-	p2List_item<Module*>* item = list_modules.getFirst();
-	
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == UPDATE_CONTINUE; it++)
 	{
-		ret = item->data->PreUpdate(dt);
-		item = item->next;
+		ret = (*it)->PreUpdate(dt);
 	}
 
-	item = list_modules.getFirst();
-
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == UPDATE_CONTINUE; it++)
 	{
-		ret = item->data->Update(dt);
-		item = item->next;
+		ret = (*it)->Update(dt);
 	}
 
-	item = list_modules.getFirst();
-
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == UPDATE_CONTINUE; it++)
 	{
-		ret = item->data->PostUpdate(dt);
-		item = item->next;
+		ret = (*it)->PostUpdate(dt);
 	}
 
 	FinishUpdate();
@@ -121,17 +106,14 @@ update_status Application::Update()
 bool Application::CleanUp()
 {
 	bool ret = true;
-	p2List_item<Module*>* item = list_modules.getLast();
 
-	while(item != NULL && ret == true)
-	{
-		ret = item->data->CleanUp();
-		item = item->prev;
-	}
+	for (std::list<Module*>::reverse_iterator it = list_modules.rbegin(); it != list_modules.rend(); it++)
+		if (!(*it)->CleanUp()) return false;
+
 	return ret;
 }
 
 void Application::AddModule(Module* mod)
 {
-	list_modules.add(mod);
+	list_modules.push_back(mod);
 }
