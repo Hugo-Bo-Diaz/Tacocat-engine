@@ -80,6 +80,8 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui-1.65\imconfig.h" />
     <ClInclude Include="imgui-1.65\imgui.h" />
+    <ClInclude Include="imgui-1.65\imgui_impl_opengl2.h" />
+    <ClInclude Include="imgui-1.65\imgui_impl_sdl.h" />
     <ClInclude Include="imgui-1.65\imgui_internal.h" />
     <ClInclude Include="imgui-1.65\imstb_rectpack.h" />
     <ClInclude Include="imgui-1.65\imstb_textedit.h" />
@@ -109,6 +111,8 @@
     <ClCompile Include="imgui-1.65\imgui.cpp" />
     <ClCompile Include="imgui-1.65\imgui_demo.cpp" />
     <ClCompile Include="imgui-1.65\imgui_draw.cpp" />
+    <ClCompile Include="imgui-1.65\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="imgui-1.65\imgui_impl_sdl.cpp" />
     <ClCompile Include="imgui-1.65\imgui_widgets.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />

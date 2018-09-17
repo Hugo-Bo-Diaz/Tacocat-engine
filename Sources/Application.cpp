@@ -21,13 +21,16 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(UI);
 	
 	// Scenes
 	AddModule(scene_controller);
+	
 
 	// Renderer last!
 	AddModule(renderer3D);
+
+	// UI
+	AddModule(UI);
 }
 
 Application::~Application()

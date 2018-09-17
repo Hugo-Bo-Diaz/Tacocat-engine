@@ -108,6 +108,12 @@
     <ClInclude Include="ModuleSceneController.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="imgui-1.65\imgui_impl_opengl2.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.65\imgui_impl_sdl.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -172,6 +178,12 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneController.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.65\imgui_impl_opengl2.cpp">
+      <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.65\imgui_impl_sdl.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
