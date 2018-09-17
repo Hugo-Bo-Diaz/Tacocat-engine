@@ -14,12 +14,15 @@ public:
 
 	bool Init();
 	update_status PreUpdate(float dt);
-	update_status Update(float dt);
 	bool CleanUp();
 
 private:
 	//list of ui elements
 	std::list<UI*> UI_Elements;
+
+	//UI Components
+	bool draw_menu = true;
+	bool draw_about;
 
 	bool draw_demo;
 };

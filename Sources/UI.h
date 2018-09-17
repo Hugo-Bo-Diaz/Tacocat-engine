@@ -7,15 +7,18 @@ class UI
 {
 public:
 	UI();
+	UI(bool enabled, ImVec2 pos);
 	~UI();
 
-	bool Start();
+	//Get needed info
+	virtual bool isEnabled() const;
+	virtual ImVec2 getPos() const;
 
-	bool isEnabled();
 	void Render();
 
 private:
 	bool enabled;
+	ImVec2 pos;
 };
 
 #endif // !UI_CLASS

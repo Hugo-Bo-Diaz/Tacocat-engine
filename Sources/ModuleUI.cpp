@@ -34,18 +34,43 @@ bool ModuleUI::Init()
 
 update_status ModuleUI::PreUpdate(float dt)
 {
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(App->window->window);
+	ImGui::NewFrame();
+
 	// Test window ------
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		draw_demo = !draw_demo;
 
-	return UPDATE_CONTINUE;
-}
+	// Draw menu bar
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File", &draw_menu))
+		{
+			if (ImGui::MenuItem("Save"))
+			{
+			}
+			if (ImGui::MenuItem("Load"))
+			{
+			}
+			if (ImGui::MenuItem("Options"))
+			{
+			}
+			if (ImGui::MenuItem("Exit"))
+			{
+				return UPDATE_STOP;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem("About"))
+				draw_about = !draw_about;
 
-update_status ModuleUI::Update(float dt)
-{
-	ImGui_ImplOpenGL2_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
-	ImGui::NewFrame();
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
 
 	if (draw_demo)
 		ImGui::ShowDemoWindow(&draw_demo);
