@@ -5,8 +5,8 @@
 
 UI_About::UI_About() 
 {
-	this->Enable(false);
-	this->SetPos(ImVec2(200, 100));
+	Enable(false);
+	setPos(ImVec2(200, 100));
 }
 
 UI_About::~UI_About()
@@ -24,7 +24,7 @@ void UI_About::Render()
 	ImGui::Text("By Hugo Bo and Daniel Garcia");
 	ImGui::Separator();
 	ImGui::Text("Made with:");
-	//Add the modules used in the engine
+	//Add the resources used in the engine
 	ImGui::Text("Dear ImGui - 1.65");
 	ImGui::Text("SDL        - 2.0");
 	ImGui::Text("Bullet     - 2.84");

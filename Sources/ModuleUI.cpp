@@ -31,8 +31,10 @@ bool ModuleUI::Init()
 	LOG("Creating UI components")
 	draw_demo = false;
 	about = new UI_About();
+	config = new UI_Configuration();
 
 	UI_Elements.push_back(about);
+	UI_Elements.push_back(config);
 
 	return ret;
 }
@@ -65,6 +67,12 @@ update_status ModuleUI::Update(float dt)
 			{
 				return UPDATE_STOP;
 			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			if (ImGui::MenuItem("Configuration"))
+				config->Enable(!config->isEnabled());
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))

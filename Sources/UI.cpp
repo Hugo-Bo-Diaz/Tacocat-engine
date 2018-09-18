@@ -37,7 +37,7 @@ void UI::Enable(bool enable)
 	enabled = enable;
 }
 
-void UI::SetPos(ImVec2 position)
+void UI::setPos(ImVec2 position)
 {
 	pos = position;
 }

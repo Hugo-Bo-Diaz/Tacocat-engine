@@ -7,6 +7,7 @@
 
 #include "UI.h"
 #include "UI_About.h"
+#include "UI_Configuration.h"
 
 class ModuleUI : public Module
 {
@@ -27,6 +28,7 @@ private:
 	bool draw_demo;
 
 	UI_About* about;
+	UI_Configuration* config;
 };
 
 #endif // !MODULE_UI

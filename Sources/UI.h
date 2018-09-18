@@ -16,7 +16,7 @@ public:
 
 	//Add needed info
 	void Enable(bool enable);
-	void SetPos(ImVec2 position);
+	void setPos(ImVec2 position);
 
 	virtual void Render();
 
