@@ -20,6 +20,7 @@ bool ModuleUI::Init()
 	LOG("Initiating UI module");
 	bool ret = true;
 
+	LOG("Initiating dear ImGui");
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -27,12 +28,16 @@ bool ModuleUI::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 
+	LOG("Creating UI components")
 	draw_demo = false;
+	about = new UI_About();
+
+	UI_Elements.push_back(about);
 
 	return ret;
 }
 
-update_status ModuleUI::PreUpdate(float dt)
+update_status ModuleUI::Update(float dt)
 {
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -42,7 +47,7 @@ update_status ModuleUI::PreUpdate(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		draw_demo = !draw_demo;
 
-	// Draw menu bar
+	// Draw menu bar ----
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File", &draw_menu))
@@ -65,7 +70,7 @@ update_status ModuleUI::PreUpdate(float dt)
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
-				draw_about = !draw_about;
+				about->Enable(!about->isEnabled());
 
 			ImGui::EndMenu();
 		}
@@ -74,14 +79,14 @@ update_status ModuleUI::PreUpdate(float dt)
 
 	if (draw_demo)
 		ImGui::ShowDemoWindow(&draw_demo);
-
-	/*for (std::list<UI*>::iterator it = UI_Elements.begin(); it != UI_Elements.end(); ++it)
+	
+	for (std::list<UI*>::iterator it = UI_Elements.begin(); it != UI_Elements.end(); ++it)
 	{
-		if ((it*)->isEnabled())
+		if ((*it)->isEnabled())
 		{
-			(it*)->Render();
+			(*it)->Render();
 		}
-	}*/
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());

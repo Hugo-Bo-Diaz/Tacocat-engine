@@ -2,7 +2,9 @@
 
 UI::UI()
 {
-
+	enabled = false;
+	pos.x = 200;
+	pos.y = 100;
 }
 
 UI::UI(bool enabled, ImVec2 pos) : enabled(enabled), pos(pos) 
@@ -17,7 +19,7 @@ UI::~UI()
 
 bool UI::isEnabled() const
 {
-	return true;
+	return enabled;
 }
 
 ImVec2 UI::getPos() const
@@ -28,4 +30,14 @@ ImVec2 UI::getPos() const
 void UI::Render()
 {
 	//Dear ImGui functions needed to draw the UI
+}
+
+void UI::Enable(bool enable)
+{
+	enabled = enable;
+}
+
+void UI::SetPos(ImVec2 position)
+{
+	pos = position;
 }

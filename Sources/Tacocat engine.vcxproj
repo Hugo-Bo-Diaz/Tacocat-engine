@@ -101,6 +101,7 @@
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UI_About.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UI_About.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

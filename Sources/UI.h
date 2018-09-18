@@ -11,10 +11,14 @@ public:
 	~UI();
 
 	//Get needed info
-	virtual bool isEnabled() const;
-	virtual ImVec2 getPos() const;
+	bool isEnabled() const;
+	ImVec2 getPos() const;
 
-	void Render();
+	//Add needed info
+	void Enable(bool enable);
+	void SetPos(ImVec2 position);
+
+	virtual void Render();
 
 private:
 	bool enabled;

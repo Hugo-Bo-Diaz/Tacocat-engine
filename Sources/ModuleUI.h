@@ -3,8 +3,10 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "UI.h"
 #include <list>
+
+#include "UI.h"
+#include "UI_About.h"
 
 class ModuleUI : public Module
 {
@@ -13,18 +15,18 @@ public:
 	~ModuleUI();
 
 	bool Init();
-	update_status PreUpdate(float dt);
+	update_status Update(float dt);
 	bool CleanUp();
 
 private:
-	//list of ui elements
+	//List of UI elements
 	std::list<UI*> UI_Elements;
 
 	//UI Components
 	bool draw_menu = true;
-	bool draw_about;
-
 	bool draw_demo;
+
+	UI_About* about;
 };
 
 #endif // !MODULE_UI
