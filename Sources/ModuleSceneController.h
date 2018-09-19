@@ -4,6 +4,8 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#include "MathGeoLib/MathGeoLib.h"
+
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
@@ -23,6 +25,16 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 	//void SetToCP(PhysVehicle3D* v);
+
+	//sph1 and sph2 collide
+	Sphere sph1;
+	Sphere sph2;
+
+	//cap1 and cap2 don't collide
+	AABB cube1;
+	AABB cube2;
+
+
 
 public:
 

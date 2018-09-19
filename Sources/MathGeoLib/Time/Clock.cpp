@@ -38,6 +38,8 @@
 #include "../Math/myassert.h"
 #include "../Math/assume.h"
 
+#include <intrin.h>
+
 MATH_BEGIN_NAMESPACE
 
 #ifdef WIN32
@@ -97,24 +99,26 @@ Clock::Clock()
 	InitClockData();
 }
 
-void Clock::Sleep(int milliseconds)
-{
-#ifdef WIN8RT
-#pragma WARNING(Clock::Sleep has not been implemented!)
-#elif defined(WIN32)
-	::Sleep(milliseconds);
-#elif !defined(__native_client__) && !defined(EMSCRIPTEN)
-	// http://linux.die.net/man/2/nanosleep
-	timespec ts;
-	ts.tv_sec = milliseconds / 1000;
-	ts.tv_nsec = (milliseconds - ts.tv_sec * 1000) * 1000 * 1000;
-	int ret = nanosleep(&ts, NULL);
-	if (ret == -1)
-		LOGI("nanosleep returned -1! Reason: %s(%d).", strerror(errno), (int)errno);
-#else
-#warning Clock::Sleep has not been implemented!
-#endif
-}
+//UNDO
+
+//void Clock::Sleep(int milliseconds)
+//{
+//#ifdef WIN8RT
+//#pragma WARNING(Clock::Sleep has not been implemented!)
+//#elif defined(WIN32)
+//	::Sleep(milliseconds);
+//#elif !defined(__native_client__) && !defined(EMSCRIPTEN)
+//	// http://linux.die.net/man/2/nanosleep
+//	timespec ts;
+//	ts.tv_sec = milliseconds / 1000;
+//	ts.tv_nsec = (milliseconds - ts.tv_sec * 1000) * 1000 * 1000;
+//	int ret = nanosleep(&ts, NULL);
+//	if (ret == -1)
+//		LOGI("nanosleep returned -1! Reason: %s(%d).", strerror(errno), (int)errno);
+//#else
+//#warning Clock::Sleep has not been implemented!
+//#endif
+//}
 
 int Clock::Year()
 {

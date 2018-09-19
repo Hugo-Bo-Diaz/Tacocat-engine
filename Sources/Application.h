@@ -25,6 +25,8 @@ public:
 	ModulePhysics3D* physics;
 	ModuleUI* UI;
 
+	LCG* random;
+
 private:
 
 	Timer	ms_timer;
