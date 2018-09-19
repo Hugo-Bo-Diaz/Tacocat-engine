@@ -110,3 +110,8 @@ bool ModuleUI::CleanUp()
 
 	return true;
 }
+
+void ModuleUI::send_FPSdata(float value)
+{
+	config->store_app_FPS(value);
+}

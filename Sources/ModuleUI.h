@@ -19,6 +19,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	//Send the fps data to the config window
+	void send_FPSdata(float value);
+
 private:
 	//List of UI elements
 	std::list<UI*> UI_Elements;
