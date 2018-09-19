@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 
+#include "MathGeoLib/MathGeoLib.h"
+
 ModuleSceneController::ModuleSceneController(bool start_enabled) : Module(start_enabled)
 {
 }
@@ -14,7 +16,10 @@ ModuleSceneController::~ModuleSceneController()
 // Load assets
 bool ModuleSceneController::Start()
 {
-	LOG("Loading Intro assets");
+
+
+
+	CONSOLE_LOG("Loading Intro assets");
 	bool ret = true;
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -33,7 +38,7 @@ bool ModuleSceneController::Start()
 // Load assets
 bool ModuleSceneController::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	CONSOLE_LOG("Unloading Intro scene");
 
 	return true;
 }
@@ -41,9 +46,7 @@ bool ModuleSceneController::CleanUp()
 // Update
 update_status ModuleSceneController::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+	Plane p;
 
 	
 	

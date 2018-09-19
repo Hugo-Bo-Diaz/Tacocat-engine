@@ -17,10 +17,10 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Init()
 {
-	LOG("Initiating UI module");
+	CONSOLE_LOG("Initiating UI module");
 	bool ret = true;
 
-	LOG("Initiating dear ImGui");
+	CONSOLE_LOG("Initiating dear ImGui");
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -28,7 +28,7 @@ bool ModuleUI::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL2_Init();
 
-	LOG("Creating UI components")
+	CONSOLE_LOG("Creating UI components")
 	draw_demo = false;
 	about = new UI_About();
 	config = new UI_Configuration();
