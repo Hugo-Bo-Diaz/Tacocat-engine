@@ -43,6 +43,9 @@ bool ModuleSceneController::Start()
 		CONSOLE_LOG("WORKS");
 	}
 
+	int example1 = App->random->Int(0, 1000);
+	float example2 = App->random->Float01Incl();
+
 	CONSOLE_LOG("Loading Intro assets");
 	bool ret = true;
 

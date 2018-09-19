@@ -2,6 +2,8 @@
 
 Application::Application()
 {
+	random = new LCG();
+
 	window = new ModuleWindow(true);
 	input = new ModuleInput(true);
 	audio = new ModuleAudio(true);
