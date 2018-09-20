@@ -35,10 +35,7 @@ void UI_Configuration::Render()
 		Calc_avg(fps_app);
 		char title[25];
 		sprintf_s(title, 25, "%.1f FPS", avg);
-		//fps_text = std::to_string(avg) + " FPS";
-		char *c_app = new char[fps_text.size()];
 		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, title, 0.0f, /*float(fps)*/100.0f, ImVec2(200, 100));
-		delete[] c_app;
 		//TODO: Plot histogram milliseconds
 
 		//TODO: Plot histogram memory consumption
@@ -64,7 +61,18 @@ void UI_Configuration::Render()
 
 void UI_Configuration::store_app_FPS(float value)
 {
-	fps_app.push_back(value);
+	if (fps_app.capacity() != fps_app.size())
+	{
+		fps_app.push_back(value);
+	}
+	else
+	{
+		for (int val = 0; val < (GRAPH_SIZE - 1); val++)
+		{
+			fps_app[val] = fps_app[val + 1];
+		}
+		fps_app[fps_app.size() - 1] = value;
+	}
 }
 
 void UI_Configuration::Calc_avg(std::vector<float> aux) {

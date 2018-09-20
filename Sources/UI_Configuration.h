@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-#define GRAPH_SIZE 20
+#define GRAPH_SIZE 50
 
 class UI_Configuration : public UI
 {
