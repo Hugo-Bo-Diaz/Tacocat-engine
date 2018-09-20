@@ -33,11 +33,12 @@ void UI_Configuration::Render()
 		//TODO: Make function to set the max fps
 		ImGui::Text("Frames Per Second");
 		Calc_avg(fps_app);
-		fps_text = std::to_string(avg) + " FPS";
+		char title[25];
+		sprintf_s(title, 25, "%.1f FPS", avg);
+		//fps_text = std::to_string(avg) + " FPS";
 		char *c_app = new char[fps_text.size()];
-		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, c_app, 0.0f, /*float(fps)*/100.0f, ImVec2(200, 100));
+		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, title, 0.0f, /*float(fps)*/100.0f, ImVec2(200, 100));
 		delete[] c_app;
-
 		//TODO: Plot histogram milliseconds
 
 		//TODO: Plot histogram memory consumption
