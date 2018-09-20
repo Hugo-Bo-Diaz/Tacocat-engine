@@ -45,6 +45,9 @@ public:
 	void Close();
 	bool quit = false;
 
+	pcg32_random_t rng1, rng2;
+	int random_int(int min, int max);
+	float random_between_0_1();
 private:
 
 	void AddModule(Module* mod);

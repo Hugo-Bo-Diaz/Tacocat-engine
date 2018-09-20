@@ -2,8 +2,6 @@
 
 Application::Application()
 {
-	random = new LCG();
-	//random->Seed(srand(time(NULL)));
 
 	window = new ModuleWindow(true);
 	input = new ModuleInput(true);
@@ -13,6 +11,9 @@ Application::Application()
 	camera = new ModuleCamera3D(true);
 	physics = new ModulePhysics3D(true);
 	UI = new ModuleUI(true);
+
+	pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
+	pcg32_srandom_r(&rng2, time(NULL), (intptr_t)&rng2);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -127,4 +128,14 @@ void Application::AddModule(Module* mod)
 void Application::Close()
 {
 	quit = true;
+}
+
+int Application::random_int(int min, int max)
+{
+	return (int)pcg32_boundedrand_r(&rng1, max - min) + min;
+}
+
+float Application::random_between_0_1()
+{
+	return ldexp(pcg32_random_r(&rng2), -32);
 }

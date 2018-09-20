@@ -42,7 +42,7 @@ public:
 //	~Clock() {}
 
 	/// Sleeps the current thread for the given amount of milliseconds.
-	//static void Sleep(int milliseconds);
+	//static void _Sleep(int milliseconds);
 
 	/// @return The current year.
 	static int Year();

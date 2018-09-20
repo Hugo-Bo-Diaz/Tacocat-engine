@@ -7,6 +7,7 @@
 #include "mathgeolib/Geometry/Sphere.h"
 #include "mathgeolib/Geometry/AABB.h"
 
+
 ModuleSceneController::ModuleSceneController(bool start_enabled) : Module(start_enabled)
 {
 }
@@ -38,13 +39,15 @@ bool ModuleSceneController::Start()
 	cube2.minPoint = { 2,0,0 };
 	cube2.maxPoint = { 1,1,1 };
 
+
 	if (!cube1.Intersects(cube2))
 	{
 		CONSOLE_LOG("WORKS");
 	}
 
-	int example1 = App->random->Int(0, 1000);
-	float example2 = App->random->Float01Incl();
+	int example1 = App->random_int(1000,1912);
+
+	float example2 = App->random_between_0_1();
 
 	CONSOLE_LOG("Loading Intro assets");
 	bool ret = true;

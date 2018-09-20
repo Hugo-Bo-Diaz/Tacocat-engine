@@ -6,6 +6,8 @@
 
 #include "MathGeoLib/MathGeoLib.h"
 
+#include "pcg32\pcg_variants.h"
+
 #define MAX_SNAKE 2
 
 struct PhysBody3D;

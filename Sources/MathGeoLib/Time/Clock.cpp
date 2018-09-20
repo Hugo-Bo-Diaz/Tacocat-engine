@@ -39,6 +39,8 @@
 #include "../Math/assume.h"
 
 #include <intrin.h>
+#include <stdio.h>
+#include <time.h>
 
 MATH_BEGIN_NAMESPACE
 
@@ -99,9 +101,11 @@ Clock::Clock()
 	InitClockData();
 }
 
-//UNDO
 //TODO
-//void Clock::Sleep(int milliseconds)
+
+
+
+//void Clock::_Sleep(int milliseconds)
 //{
 //#ifdef WIN8RT
 //#pragma WARNING(Clock::Sleep has not been implemented!)
@@ -112,7 +116,7 @@ Clock::Clock()
 //	timespec ts;
 //	ts.tv_sec = milliseconds / 1000;
 //	ts.tv_nsec = (milliseconds - ts.tv_sec * 1000) * 1000 * 1000;
-//	int ret = nanosleep(&ts, NULL);
+//	int ret = Sleep(&ts, NULL);
 //	if (ret == -1)
 //		LOGI("nanosleep returned -1! Reason: %s(%d).", strerror(errno), (int)errno);
 //#else
