@@ -3,6 +3,7 @@
 Application::Application()
 {
 	random = new LCG();
+	//random->Seed(srand(time(NULL)));
 
 	window = new ModuleWindow(true);
 	input = new ModuleInput(true);
