@@ -23,6 +23,7 @@ void UI_Configuration::Render()
 	ImGui::Text("Options");
 	if (ImGui::CollapsingHeader("Application"))
 	{
+		//Info from the application
 		ImGui::Text(TITLE); ImGui::SameLine();
 		ImGui::Text("App name");
 		ImGui::Text(ORGANIZATION); ImGui::SameLine();
@@ -36,6 +37,26 @@ void UI_Configuration::Render()
 		char *c_app = new char[fps_text.size()];
 		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, c_app, 0.0f, float(fps), ImVec2(200, 100));
 		delete[] c_app;
+
+		//TODO: Plot histogram milliseconds
+
+		//TODO: Plot histogram memory consumption
+	}
+	if (ImGui::CollapsingHeader("Window"))
+	{
+		//Window options
+	}
+	if (ImGui::CollapsingHeader("File System"))
+	{
+		//File systems options
+	}
+	if (ImGui::CollapsingHeader("Input"))
+	{
+		//Input options
+	}
+	if (ImGui::CollapsingHeader("Hardware"))
+	{
+		//Hardware info
 	}
 	ImGui::End();
 }
