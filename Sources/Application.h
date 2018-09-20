@@ -41,6 +41,9 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+	
+	void Close();
+	bool quit = false;
 
 private:
 

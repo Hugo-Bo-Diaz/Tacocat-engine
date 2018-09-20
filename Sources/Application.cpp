@@ -38,12 +38,15 @@ Application::Application()
 
 Application::~Application()
 {
-	std::list<Module*>::iterator item = list_modules.end();
+	//std::list<Module*>::iterator item = list_modules.end();
 
-	for (std::list<Module*>::iterator it = list_modules.end(); it != list_modules.begin(); it--)
+	for (std::list<Module*>::reverse_iterator it = list_modules.rbegin(); it != list_modules.rend(); it++)
 	{
-		list_modules.remove(*it);
+		//list_modules.remove(*it);
+		delete (*it);
 	}
+
+	list_modules.clear();
 }
 
 bool Application::Init()
@@ -119,4 +122,9 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+void Application::Close()
+{
+	quit = true;
 }

@@ -65,7 +65,7 @@ update_status ModuleUI::Update(float dt)
 			}
 			if (ImGui::MenuItem("Exit"))
 			{
-				return UPDATE_STOP;
+				App->Close();
 			}
 			ImGui::EndMenu();
 		}

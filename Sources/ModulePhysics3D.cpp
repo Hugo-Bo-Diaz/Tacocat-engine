@@ -28,7 +28,7 @@ ModulePhysics3D::ModulePhysics3D( bool start_enabled) : Module(start_enabled)
 // Destructor
 ModulePhysics3D::~ModulePhysics3D()
 {
-	delete debug_draw;
+	//delete debug_draw;
 	delete solver;
 	delete broad_phase;
 	delete dispatcher;
