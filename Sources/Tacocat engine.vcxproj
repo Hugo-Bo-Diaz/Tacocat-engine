@@ -103,6 +103,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="UI_About.h" />
     <ClInclude Include="UI_Configuration.h" />
+    <ClInclude Include="UI_Console.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UI_About.cpp" />
     <ClCompile Include="UI_Configuration.cpp" />
+    <ClCompile Include="UI_Console.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,13 +29,13 @@ void UI_Configuration::Render()
 		ImGui::Text(ORGANIZATION); ImGui::SameLine();
 		ImGui::Text("Organization");
 		const int fps = 0;
-		ImGui::SliderInt("MaxFPS", fps, 0, 120);
+		//ImGui::SliderInt("MaxFPS", fps, 0, 120);
 		//TODO: Make function to set the max fps
 		ImGui::Text("Frames Per Second");
 		Calc_avg(fps_app);
 		fps_text = std::to_string(avg) + " FPS";
 		char *c_app = new char[fps_text.size()];
-		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, c_app, 0.0f, float(fps), ImVec2(200, 100));
+		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, c_app, 0.0f, /*float(fps)*/100.0f, ImVec2(200, 100));
 		delete[] c_app;
 
 		//TODO: Plot histogram milliseconds

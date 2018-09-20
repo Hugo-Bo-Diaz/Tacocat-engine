@@ -69,7 +69,7 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
-	
+	UI->send_FPSdata(1/dt);
 	ms_timer.Start();
 }
 

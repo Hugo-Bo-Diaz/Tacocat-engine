@@ -111,6 +111,10 @@
     <ClInclude Include="UI_Configuration.h">
       <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="p2Point.h" />
+    <ClInclude Include="UI_Console.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -189,6 +193,9 @@
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Configuration.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Console.cpp">
       <Filter>Sources\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
