@@ -48,6 +48,10 @@ public:
 	pcg32_random_t rng1, rng2;
 	int random_int(int min, int max);
 	float random_between_0_1();
+
+	void SaveConfig(const char* filename);
+	void LoadConfig(const char* filename);
+
 private:
 
 	void AddModule(Module* mod);

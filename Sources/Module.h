@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include <string>
 
 class Application;
 struct PhysBody3D;
@@ -12,6 +13,8 @@ private :
 
 public:
 	//Application* App;
+
+	std::string name;
 
 	Module(bool start_enabled = true)
 	{}
@@ -51,4 +54,6 @@ public:
 
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{}
+
+	virtual void SaveConfig() {};
 };

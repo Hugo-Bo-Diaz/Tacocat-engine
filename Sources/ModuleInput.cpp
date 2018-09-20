@@ -6,6 +6,8 @@
 
 ModuleInput::ModuleInput( bool start_enabled) : Module( start_enabled)
 {
+	name = "Input";
+
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
@@ -103,7 +105,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_QUIT:
-			quit = true;
+				App->Close();
 			break;
 
 			case SDL_WINDOWEVENT:

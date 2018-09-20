@@ -7,9 +7,11 @@
 #include "mathgeolib/Geometry/Sphere.h"
 #include "mathgeolib/Geometry/AABB.h"
 
+#include "parson\parson.h"
 
 ModuleSceneController::ModuleSceneController(bool start_enabled) : Module(start_enabled)
 {
+	name = "SceneController";
 }
 
 ModuleSceneController::~ModuleSceneController()
@@ -18,6 +20,8 @@ ModuleSceneController::~ModuleSceneController()
 // Load assets
 bool ModuleSceneController::Start()
 {
+
+
 
 	float3 pos1 = { 0,0,0 };
 	float3 pos2 = { 5,5,0 };

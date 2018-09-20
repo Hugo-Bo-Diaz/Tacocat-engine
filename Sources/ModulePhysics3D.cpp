@@ -18,6 +18,8 @@ ModulePhysics3D::ModulePhysics3D( bool start_enabled) : Module(start_enabled)
 {
 	debug = true;
 
+	name = "Physics3D";
+
 	collision_conf = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collision_conf);
 	broad_phase = new btDbvtBroadphase();

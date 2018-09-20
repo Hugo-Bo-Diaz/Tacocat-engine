@@ -35,6 +35,8 @@ Application::Application()
 
 	// UI
 	AddModule(UI);
+
+
 }
 
 Application::~Application()
@@ -138,4 +140,18 @@ int Application::random_int(int min, int max)
 float Application::random_between_0_1()
 {
 	return ldexp(pcg32_random_r(&rng2), -32);
+}
+
+void Application::SaveConfig(const char* filename)
+{
+
+
+
+}
+
+void Application::LoadConfig(const char* filename)
+{
+
+
+
 }
