@@ -28,6 +28,9 @@
     <Filter Include="Sources\mathgeolib">
       <UniqueIdentifier>{24a9f7c3-32cb-4836-8de6-d967f2f5a624}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\parson">
+      <UniqueIdentifier>{d484c960-fa41-4a02-9ae1-5abfa48b8617}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -288,6 +291,9 @@
     <ClInclude Include="MathGeoLib\MathGeoLibFwd.h">
       <Filter>Sources\mathgeolib</Filter>
     </ClInclude>
+    <ClInclude Include="parson\parson.h">
+      <Filter>Sources\parson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -457,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="MathGeoLib\Time\Clock.cpp">
       <Filter>Sources\mathgeolib</Filter>
+    </ClCompile>
+    <ClCompile Include="parson\parson.c">
+      <Filter>Sources\parson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

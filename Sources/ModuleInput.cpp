@@ -121,6 +121,16 @@ update_status ModuleInput::PreUpdate(float dt)
 		App->Close();
 	}
 
+	if (keyboard[SDL_SCANCODE_G] == KEY_DOWN)
+	{
+		App->SaveConfig("config.xml");
+	}
+
+	if (keyboard[SDL_SCANCODE_H] == KEY_DOWN)
+	{
+		App->LoadConfig("config.xml");
+	}
+
 	if (App->quit)
 	{
 		return UPDATE_STOP;

@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include <string>
+#include "parson/parson.h"
 
 class Application;
 struct PhysBody3D;
@@ -55,5 +56,7 @@ public:
 	virtual void OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{}
 
-	virtual void SaveConfig() {};
+	virtual void SaveConfig(JSON_Object* iterator) {};
+
+	virtual void LoadConfig(JSON_Object* iterator) {};
 };

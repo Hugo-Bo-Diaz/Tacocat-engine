@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "parson/parson.h"
 
 Application::Application()
 {
@@ -151,7 +152,23 @@ void Application::SaveConfig(const char* filename)
 
 void Application::LoadConfig(const char* filename)
 {
+	JSON_Value *root_value;
+	JSON_Array *configurations;
+	JSON_Object *iterator;
 
+	root_value = json_parse_file(filename);
+	if (json_value_get_type(root_value) != JSONArray) {
+		CONSOLE_LOG("couldn't find the file %d", filename);
+		return;
+	}
 
+	configurations = json_value_get_array(root_value);
+	int i = 0;
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+	{
+		iterator = json_array_get_object(configurations, i);
+		(*it)->LoadConfig(iterator);
+		++i;;
+	}
 
 }
