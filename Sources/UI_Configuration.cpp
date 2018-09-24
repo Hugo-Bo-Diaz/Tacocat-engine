@@ -2,6 +2,8 @@
 #include "Globals.h"
 #include "Application.h"
 
+#include "SDL/include/SDL_cpuinfo.h"
+
 UI_Configuration::UI_Configuration()
 {
 	Enable(false);
@@ -54,7 +56,32 @@ void UI_Configuration::Render()
 	}
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
-		//Hardware info
+		ImGui::Text("Total Ram - %d GB", SDL_GetSystemRAM()/1024);
+		ImGui::Text("Number of CPU cores - %d", SDL_GetCPUCount());
+		if (SDL_HasRDTSC() == SDL_TRUE)
+		{
+			ImGui::Text("RDTSC"); ImGui::SameLine();
+		}
+		if (SDL_HasSSE() == SDL_TRUE)
+		{
+			ImGui::Text("SSE"); ImGui::SameLine();
+		}
+		if (SDL_HasSSE2() == SDL_TRUE)
+		{
+			ImGui::Text("SSE2"); ImGui::SameLine();
+		}
+		if (SDL_HasSSE3() == SDL_TRUE)
+		{
+			ImGui::Text("SSE3"); ImGui::SameLine();
+		}
+		if (SDL_HasSSE41() == SDL_TRUE)
+		{
+			ImGui::Text("SSE41"); ImGui::SameLine();
+		}
+		if (SDL_HasSSE42() == SDL_TRUE)
+		{
+			ImGui::Text("SSE42"); ImGui::SameLine();
+		}
 	}
 	ImGui::End();
 }
