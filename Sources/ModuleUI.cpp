@@ -32,9 +32,11 @@ bool ModuleUI::Init()
 	draw_demo = false;
 	about = new UI_About();
 	config = new UI_Configuration();
+	console = new UI_Console();
 
 	UI_Elements.push_back(about);
 	UI_Elements.push_back(config);
+	UI_Elements.push_back(console);
 
 	return ret;
 }
@@ -73,6 +75,8 @@ update_status ModuleUI::Update(float dt)
 		{
 			if (ImGui::MenuItem("Configuration"))
 				config->Enable(!config->isEnabled());
+			if (ImGui::MenuItem("Console"))
+				console->Enable(!console->isEnabled());
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))

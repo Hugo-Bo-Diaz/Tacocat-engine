@@ -8,6 +8,7 @@
 #include "UI.h"
 #include "UI_About.h"
 #include "UI_Configuration.h"
+#include "UI_Console.h"
 
 class ModuleUI : public Module
 {
@@ -32,6 +33,7 @@ private:
 
 	UI_About* about;
 	UI_Configuration* config;
+	UI_Console* console;
 };
 
 #endif // !MODULE_UI
