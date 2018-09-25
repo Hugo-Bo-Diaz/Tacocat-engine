@@ -52,6 +52,8 @@ public:
 	void SaveConfig(const char* filename);
 	void LoadConfig(const char* filename);
 
+	double confg_fps = 60.0f;
+
 private:
 
 	void AddModule(Module* mod);

@@ -30,7 +30,6 @@ Application::Application()
 	// Scenes
 	AddModule(scene_controller);
 	
-
 	// Renderer last!
 	AddModule(renderer3D);
 
@@ -56,6 +55,8 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
+
+	LoadConfig("config.json");
 
 	// Call Init() in all modules
 
@@ -145,30 +146,48 @@ float Application::random_between_0_1()
 
 void Application::SaveConfig(const char* filename)
 {
+	JSON_Value *config = json_parse_file("config.json");
+	config = json_value_init_object();
+	JSON_Object* root_object = json_value_get_object(config);
 
+	json_object_set_number(root_object, "fps", confg_fps);
+	
+	json_object_dotset_number(root_object, "Audio.volume", App->audio->volume);
 
+	json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
+	json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
+	json_object_dotset_boolean(root_object, "Window.resizable", App->window->resizable);
+	json_object_dotset_boolean(root_object, "Window.full_desktop", App->window->full_desktop);
+	json_object_dotset_number(root_object, "Window.brightness", App->window->brightness);
+	json_object_dotset_number(root_object, "Window.width", App->window->width);
+	json_object_dotset_number(root_object, "Window.height", App->window->height);
+
+	json_serialize_to_file(config, "config.json");
 
 }
 
 void Application::LoadConfig(const char* filename)
 {
 	JSON_Value *root_value;
-	JSON_Array *configurations;
-	JSON_Object *iterator;
+	JSON_Object *root_object;
 
 	root_value = json_parse_file(filename);
-	if (json_value_get_type(root_value) != JSONArray) {
+	if (json_value_get_type(root_value) != JSONObject) {
 		CONSOLE_LOG("couldn't find the file %d", filename);
 		return;
 	}
+	root_object = json_value_get_object(root_value);
 
-	configurations = json_value_get_array(root_value);
-	int i = 0;
-	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
-	{
-		iterator = json_array_get_object(configurations, i);
-		(*it)->LoadConfig(iterator);
-		++i;;
-	}
+	confg_fps = json_object_get_number(root_object, "fps");
+
+	App->audio->volume = json_object_dotget_number(root_object, "Audio.volume");
+
+	App->window->fullscreen = json_object_dotget_boolean(root_object, "Window.fullscreen");
+	App->window->borderless = json_object_dotget_boolean(root_object, "Window.borderless");
+	App->window->resizable = json_object_dotget_boolean(root_object, "Window.resizable");
+	App->window->full_desktop = json_object_dotget_boolean(root_object, "Window.full_desktop");
+	App->window->brightness = json_object_dotget_number(root_object, "Window.brightness");
+	App->window->width = json_object_dotget_number(root_object, "Window.width");
+	App->window->height = json_object_dotget_number(root_object, "Window.height");
 
 }
