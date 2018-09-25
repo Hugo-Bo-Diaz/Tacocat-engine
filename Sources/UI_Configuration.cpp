@@ -21,7 +21,7 @@ void UI_Configuration::Render()
 {
 	ImGui::SetNextWindowPos(getPos(), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300,300));
-	ImGui::Begin("Configuration");
+	ImGui::Begin("Configuration",&enabled);
 	ImGui::Text("Options");
 	if (ImGui::CollapsingHeader("Application"))
 	{

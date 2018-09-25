@@ -22,7 +22,7 @@ UI_Console::~UI_Console()
 void UI_Console::Render()
 {
 	ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
-	if (!ImGui::Begin("Console", (bool *)isEnabled()))
+	if (!ImGui::Begin("Console", /*(bool *)isEnabled()*/&enabled))
 	{
 		ImGui::End();
 		return;
