@@ -19,9 +19,9 @@ public:
 	void setPos(ImVec2 position);
 
 	virtual void Render();
-
+	bool enabled = false;
 private:
-	bool enabled;
+
 	ImVec2 pos;
 };
 
