@@ -20,8 +20,12 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	UI_About* about;
+	UI_Configuration* config;
+	UI_Console* console;
+
 	//Send the fps data to the config window
-	void send_FPSdata(float value);
+	void send_FPSdata(float value, float ms);
 
 private:
 	//List of UI elements
@@ -31,9 +35,8 @@ private:
 	bool draw_menu = true;
 	bool draw_demo;
 
-	UI_About* about;
-	UI_Configuration* config;
-	UI_Console* console;
+
+
 };
 
 #endif // !MODULE_UI

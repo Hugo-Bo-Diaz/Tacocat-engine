@@ -2,6 +2,7 @@
 #define UI_CONFIGURATION_CLASS
 
 #include "UI.h"
+#include "Globals.h"
 
 #include <vector>
 #include <string>
@@ -18,9 +19,25 @@ public:
 
 	void store_app_FPS(float value);
 
+	void store_app_ms(float value);
+
+
+	bool conf_fullscreen = false;
+	bool conf_resizable = false;
+	bool conf_borderless = false;
+	bool conf_fulldesktop = false;
+
+	float prev_width = 0;
+	float prev_height = 0;
+
+	float width = SCREEN_WIDTH;
+	float height = SCREEN_HEIGHT;
+
 private:
 	//Vectors to store the data for the graphs
 	std::vector<float> fps_app;
+
+	std::vector<float> ms_app;
 
 	// Calculate average value from vector function and value
 	float avg;

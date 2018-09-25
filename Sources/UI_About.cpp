@@ -1,7 +1,9 @@
 ﻿#include "UI_About.h"
 
+#include "SDL\include\SDL_version.h"
 #include <stdlib.h>
 #include <Windows.h>
+#include "Bullet/include/LinearMath/btScalar.h"
 
 UI_About::UI_About() 
 {
@@ -25,10 +27,14 @@ void UI_About::Render()
 	ImGui::Separator();
 	ImGui::Text("Made with:");
 	//Add the resources used in the engine
-	ImGui::Text("Dear ImGui - 1.65");
-	ImGui::Text("SDL        - 2.0");
-	ImGui::Text("Bullet     - 2.84");
-	ImGui::Text("Glut       - 3.7");
+
+	ImGui::Text("Dear ImGui - %s",ImGui::GetVersion());
+	SDL_version version;
+	SDL_GetVersion(&version);
+	ImGui::Text("SDL        - %d.%d.%d",version.major,version.minor,version.patch);
+	ImGui::Text("Bullet     - %d.%d", btGetVersion()/100, btGetVersion()- (btGetVersion()/100)*100);
+	ImGui::Text("PCG        - help");
+	
 	ImGui::Separator();
 	ImGui::Text("MIT License");
 	if (ImGui::Button("License")) ShellExecute(0, 0, "https://github.com/Hugo-Bo-Diaz/Tacocat-engine/blob/master/LICENSE", 0, 0, SW_SHOW);

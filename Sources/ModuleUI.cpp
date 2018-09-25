@@ -115,7 +115,8 @@ bool ModuleUI::CleanUp()
 	return true;
 }
 
-void ModuleUI::send_FPSdata(float value)
+void ModuleUI::send_FPSdata(float FPS, float ms)
 {
-	config->store_app_FPS(value);
+	config->store_app_FPS(FPS);
+	config->store_app_ms(ms);
 }

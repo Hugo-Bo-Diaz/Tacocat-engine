@@ -20,6 +20,9 @@ public:
 
 	void SetTitle(const char* title);
 
+	//int width = SCREEN_WIDTH;
+	//int height = SCREEN_HEIGHT;
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;

@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-
+#include "ModuleUI.h"
 #define MAX_KEYS 300
 
 ModuleInput::ModuleInput( bool start_enabled) : Module( start_enabled)
@@ -44,15 +44,21 @@ update_status ModuleInput::PreUpdate(float dt)
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
+			if (keyboard[i] == KEY_IDLE)
+			{
+				App->UI->console->AddLog("Keyboard - %d - DOWN", i);
 				keyboard[i] = KEY_DOWN;
+			}
 			else
 				keyboard[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			{
+				App->UI->console->AddLog("Keyboard - %d - UP", i);
 				keyboard[i] = KEY_UP;
+			}
 			else
 				keyboard[i] = KEY_IDLE;
 		}
@@ -68,15 +74,22 @@ update_status ModuleInput::PreUpdate(float dt)
 	{
 		if(buttons & SDL_BUTTON(i))
 		{
-			if(mouse_buttons[i] == KEY_IDLE)
+			if (mouse_buttons[i] == KEY_IDLE)
+			{
 				mouse_buttons[i] = KEY_DOWN;
+				App->UI->console->AddLog("Mouse - %d - DOWN",i);
+			}
 			else
 				mouse_buttons[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if(mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
+			if (mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
+			{
 				mouse_buttons[i] = KEY_UP;
+				App->UI->console->AddLog("Mouse - %d - UP", i);
+
+			}
 			else
 				mouse_buttons[i] = KEY_IDLE;
 		}
