@@ -25,6 +25,8 @@ public:
 	ModulePhysics3D* physics;
 	ModuleUI* UI;
 
+	LCG* random;
+
 private:
 
 	Timer	ms_timer;
@@ -39,6 +41,18 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+	
+	void Close();
+	bool quit = false;
+
+	pcg32_random_t rng1, rng2;
+	int random_int(int min, int max);
+	float random_between_0_1();
+
+	void SaveConfig(const char* filename);
+	void LoadConfig(const char* filename);
+
+	double confg_fps = 60.0f;
 
 private:
 

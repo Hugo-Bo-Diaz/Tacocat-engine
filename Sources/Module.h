@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Globals.h"
+#include <string>
+#include "parson/parson.h"
 
 class Application;
 struct PhysBody3D;
@@ -12,6 +14,8 @@ private :
 
 public:
 	//Application* App;
+
+	std::string name;
 
 	Module(bool start_enabled = true)
 	{}

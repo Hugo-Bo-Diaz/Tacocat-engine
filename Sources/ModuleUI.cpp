@@ -7,7 +7,7 @@
 
 ModuleUI::ModuleUI(bool start_enabled) : Module( start_enabled)
 {
-
+	name = "UI";
 }
 
 ModuleUI::~ModuleUI()
@@ -67,7 +67,7 @@ update_status ModuleUI::Update(float dt)
 			}
 			if (ImGui::MenuItem("Exit"))
 			{
-				return UPDATE_STOP;
+				App->Close();
 			}
 			ImGui::EndMenu();
 		}

@@ -6,6 +6,8 @@
 
 ModuleInput::ModuleInput( bool start_enabled) : Module( start_enabled)
 {
+	name = "Input";
+
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
@@ -116,7 +118,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_QUIT:
-			quit = true;
+				App->Close();
 			break;
 
 			case SDL_WINDOWEVENT:
@@ -127,8 +129,25 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
+	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)//REDO PROVISIONAL
+	{
+		App->Close();
+	}
+
+	if (keyboard[SDL_SCANCODE_G] == KEY_DOWN)
+	{
+		App->SaveConfig("config.json");
+	}
+
+	if (keyboard[SDL_SCANCODE_H] == KEY_DOWN)
+	{
+		App->LoadConfig("config.json");
+	}
+
+	if (App->quit)
+	{
 		return UPDATE_STOP;
+	}
 
 	return UPDATE_CONTINUE;
 }
