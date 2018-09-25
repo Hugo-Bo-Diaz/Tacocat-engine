@@ -35,8 +35,6 @@ Application::Application()
 
 	// UI
 	AddModule(UI);
-
-
 }
 
 Application::~Application()
@@ -88,7 +86,10 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-
+	float frame_time = ms_timer.Read();
+	float del = 1000 / confg_fps - frame_time;
+	if (del > 0)
+		SDL_Delay(del);
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

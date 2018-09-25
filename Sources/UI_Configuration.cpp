@@ -25,6 +25,9 @@ void UI_Configuration::Render()
 	bool prev_conf_borderless = conf_borderless;
 	bool prev_conf_fulldesktop = conf_fulldesktop;
 
+	int prevwidth = App->window->width;
+	int prevheight = App->window->height;
+
 	ImGui::SetNextWindowPos(getPos(), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300,300), ImGuiSetCond_FirstUseEver);
 	ImGui::Begin("Configuration",&enabled);
@@ -59,8 +62,8 @@ void UI_Configuration::Render()
 		ImGui::Checkbox("Borderless", &conf_borderless);
 		ImGui::Checkbox("Resizable", &conf_resizable);
 		ImGui::Checkbox("Full desktop", &conf_fulldesktop);
-		ImGui::DragFloat("Width", &width);
-		ImGui::DragFloat("Height", &height);
+		ImGui::DragFloat("Width", &App->window->width);
+		ImGui::DragFloat("Height", &App->window->height);
 
 		SDL_DisplayMode DM;
 		SDL_GetCurrentDisplayMode(0, &DM);
@@ -97,54 +100,24 @@ void UI_Configuration::Render()
 
 	if (prev_conf_borderless != conf_borderless)
 	{
-		if (conf_borderless)
-			SDL_SetWindowBordered(App->window->window, SDL_TRUE);
-		else
-			SDL_SetWindowBordered(App->window->window, SDL_FALSE);
+		App->window->Toggle_Borderless();
 	}
 	if (prev_conf_fullscreen != conf_fullscreen)
 	{
-		if (conf_fullscreen == true)
-		{
-			SDL_DisplayMode DM;
-			SDL_GetCurrentDisplayMode(0, &DM);
-			SDL_SetWindowSize(App->window->window, DM.w, DM.h);
-			SDL_SetWindowFullscreen(App->window->window,SDL_WINDOW_FULLSCREEN);
-		}
-		else
-		{
-			SDL_SetWindowSize(App->window->window,/*App->window->width*/SCREEN_WIDTH, /*App->window->height*/SCREEN_HEIGHT);
-			SDL_SetWindowFullscreen(App->window->window, 0);
-		}
+		App->window->Toggle_FullScreen();
 	}
 	if (prev_conf_resizable != conf_resizable)
 	{
-		//if (conf_borderless)
-		//	SDL_SetWindowResizable(App->window->window,SDL_TRUE);
-		//else
-		//	SDL_SetWindowResizable(App->window->window, SDL_FALSE);
+		App->window->Toggle_Resizable();
 	}
 	if (prev_conf_fulldesktop != conf_fulldesktop)
 	{
-		SDL_DisplayMode DM;
-		SDL_GetCurrentDisplayMode(0, &DM);
-		SDL_SetWindowSize(App->window->window, DM.w, DM.h);
-		SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		App->window->Toggle_FullDesktop();
 	}
-	int curr_w;
-	int curr_h;
-	SDL_GetWindowSize(App->window->window, &curr_w, &curr_h);
-	if (curr_w != width )
+	if (prevwidth != App->window->width || prevheight != App->window->height)
 	{
-		SDL_SetWindowSize(App->window->window,width,curr_h);
+	SDL_SetWindowSize(App->window->window, App->window->width, App->window->height);
 	}
-
-	SDL_GetWindowSize(App->window->window, &curr_w, &curr_h);
-	if (curr_h!= height )
-	{
-		SDL_SetWindowSize(App->window->window, curr_w, height);
-	}
-
 
 }
 

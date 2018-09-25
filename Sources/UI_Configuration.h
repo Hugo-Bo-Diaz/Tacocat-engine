@@ -27,11 +27,8 @@ public:
 	bool conf_borderless = false;
 	bool conf_fulldesktop = false;
 
-	float prev_width = 0;
-	float prev_height = 0;
-
-	float width = SCREEN_WIDTH;
-	float height = SCREEN_HEIGHT;
+	//float width = SCREEN_WIDTH;
+	//float height = SCREEN_HEIGHT;
 
 private:
 	//Vectors to store the data for the graphs

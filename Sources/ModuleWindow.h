@@ -19,6 +19,11 @@ public:
 	bool CleanUp();
 
 	void SetTitle(const char* title);
+	
+	void Toggle_FullScreen();
+	void Toggle_FullDesktop();
+	void Toggle_Borderless();
+	void Toggle_Resizable();
 
 	//int width = SCREEN_WIDTH;
 	//int height = SCREEN_HEIGHT;
@@ -35,8 +40,10 @@ public:
 	bool full_desktop = false;
 	bool resizable = false;
 	float brightness = false;
-	int width = SCREEN_WIDTH;
-	int height = SCREEN_HEIGHT;
+	float width = SCREEN_WIDTH;
+	float height = SCREEN_HEIGHT;
+	float window_width = SCREEN_WIDTH;
+	float window_height = SCREEN_HEIGHT;
 };
 
 #endif // __ModuleWindow_H__

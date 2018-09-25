@@ -58,9 +58,11 @@ update_status ModuleUI::Update(float dt)
 		{
 			if (ImGui::MenuItem("Save"))
 			{
+				App->SaveConfig("config.json");
 			}
 			if (ImGui::MenuItem("Load"))
 			{
+				App->LoadConfig("config.json");
 			}
 			if (ImGui::MenuItem("Options"))
 			{
