@@ -2,7 +2,6 @@
 #define __PhysBody3D_H__
 
 #include <list>
-#include "glmath.h"
 
 class btRigidBody;
 class Module;

@@ -20,8 +20,8 @@ ModuleSceneController::~ModuleSceneController()
 // Load assets
 bool ModuleSceneController::Start()
 {
-
-
+	grid.normal = { 0,1,0 };
+	grid.d = -1;
 
 	float3 pos1 = { 0,0,0 };
 	float3 pos2 = { 5,5,0 };
@@ -80,7 +80,9 @@ bool ModuleSceneController::CleanUp()
 // Update
 update_status ModuleSceneController::Update(float dt)
 {
-	Plane p;
+	
+
+
 
 	
 	
@@ -93,7 +95,11 @@ void ModuleSceneController::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 
 }
+void ModuleSceneController::Draw()
+{
 
+	
+}
 //void ModuleSceneController::SetToCP(PhysVehicle3D* v){
 //	p2List_item<Sensor*>*item = sensors.getFirst();
 //	while (item != NULL) {

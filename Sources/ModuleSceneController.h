@@ -26,6 +26,8 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	void Draw();
+
 	//void SetToCP(PhysVehicle3D* v);
 
 	//sph1 and sph2 collide
@@ -36,7 +38,7 @@ public:
 	AABB cube1;
 	AABB cube2;
 
-
+	Plane grid;
 
 public:
 

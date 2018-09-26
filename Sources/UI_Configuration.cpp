@@ -117,6 +117,7 @@ void UI_Configuration::Render()
 	if (prevwidth != App->window->width || prevheight != App->window->height)
 	{
 	SDL_SetWindowSize(App->window->window, App->window->width, App->window->height);
+	App->renderer3D->OnResize(App->window->width, App->window->height);
 	}
 
 }

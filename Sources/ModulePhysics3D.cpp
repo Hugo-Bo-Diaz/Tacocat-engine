@@ -263,7 +263,7 @@ bool ModulePhysics3D::CleanUp()
 //}
 
 // ---------------------------------------------------------
-void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB)
+void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const float3& anchorA, const float3& anchorB)
 {
 	btTypedConstraint* p2p = new btPoint2PointConstraint(
 		*(bodyA.body), 
@@ -275,7 +275,7 @@ void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, con
 	p2p->setDbgDrawSize(2.0f);
 }
 
-void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, bool disable_collision)
+void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const float3& anchorA, const float3& anchorB, const float3& axisA, const float3& axisB, bool disable_collision)
 {
 	btHingeConstraint* hinge = new btHingeConstraint(
 		*(bodyA.body), 

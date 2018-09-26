@@ -1,12 +1,15 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+#pragma comment (lib, "Glew/libx86/glew32.lib")
 
 ModuleRenderer3D::ModuleRenderer3D( bool start_enabled) : Module(start_enabled)
 {
@@ -22,21 +25,21 @@ bool ModuleRenderer3D::Init()
 {
 	CONSOLE_LOG("Creating 3D Renderer context");
 	bool ret = true;
-	
+
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
-	if(context == NULL)
+	if (context == NULL)
 	{
 		CONSOLE_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
-	
+
 	if(ret == true)
 	{
 		//Use Vsync
 		//if(VSYNC &&  < 0)//TODO
 		//CONSOLE_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-			SDL_GL_SetSwapInterval(0);
+		SDL_GL_SetSwapInterval(0);
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -64,8 +67,15 @@ bool ModuleRenderer3D::Init()
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 		
-		//Initialize clear color
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glClearDepth(1.0f);
 		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 
 		//Check for error
 		error = glGetError();
@@ -98,7 +108,7 @@ bool ModuleRenderer3D::Init()
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(App->window->width, App->window->height);
 
 	return ret;
 }
@@ -107,7 +117,7 @@ bool ModuleRenderer3D::Init()
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+	glLoadIdentity(); 
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
@@ -118,12 +128,31 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
+
 	return UPDATE_CONTINUE;
 }
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	App->scene_controller->Draw();
+
+	glLineWidth(1.0f);
+
+	glBegin(GL_LINES);
+
+	float d = 200.0f;
+
+	for (float i = -d; i <= d; i += 1.0f)
+	{
+		glVertex3f(i, 0.0f, -d);
+		glVertex3f(i, 0.0f, d);
+		glVertex3f(-d, 0.0f, i);
+		glVertex3f(d, 0.0f, i);
+	}
+
+	glEnd();
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
