@@ -25,6 +25,12 @@ void UI_Configuration::Render()
 	bool prev_conf_borderless = conf_borderless;
 	bool prev_conf_fulldesktop = conf_fulldesktop;
 
+	bool prev_conf_depth_test = conf_depth_test;
+	bool prev_conf_cull_face = conf_cull_face;
+	bool prev_conf_lighting = conf_lighting;
+	bool prev_conf_color_material = conf_color_material;
+	bool prev_conf_texture_2D = conf_texture_2D;
+
 	int prevwidth = App->window->width;
 	int prevheight = App->window->height;
 
@@ -78,7 +84,17 @@ void UI_Configuration::Render()
 	{
 		ImGui::Text("Mouse position: %d, %d", App->input->GetMouseX(), App->input->GetMouseY());
 		ImGui::Text("Mouse position: %d, %d", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+	}	
+	
+	if (ImGui::CollapsingHeader("OpenGL Settings"))
+	{
+		ImGui::Checkbox("depth_test", &conf_depth_test);
+		ImGui::Checkbox("cull_face", &conf_cull_face);
+		ImGui::Checkbox("lighting", &conf_lighting);
+		ImGui::Checkbox("color_material", &conf_color_material);
+		ImGui::Checkbox("texture_2D", &conf_texture_2D);
 	}
+
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
 		ImGui::Text("Total Ram - %d GB", SDL_GetSystemRAM()/1024);
@@ -119,6 +135,67 @@ void UI_Configuration::Render()
 	SDL_SetWindowSize(App->window->window, App->window->width, App->window->height);
 	App->renderer3D->OnResize(App->window->width, App->window->height);
 	}
+
+	if (prev_conf_depth_test != conf_depth_test)
+	{
+		if (conf_depth_test)
+		{
+			App->renderer3D->enable_flag_depth_test();
+		}
+		else
+		{
+			App->renderer3D->disable_flag_depth_test();
+		}
+	}
+
+	if (prev_conf_cull_face != conf_cull_face)
+	{
+		if (conf_cull_face)
+		{
+			App->renderer3D->enable_flag_cull_face();
+		}
+		else
+		{
+			App->renderer3D->disable_flag_cull_face();
+		}
+	}
+
+	if (prev_conf_lighting != conf_lighting)
+	{
+		if (conf_lighting)
+		{
+			App->renderer3D->enable_flag_lighting();
+		}
+		else
+		{
+			App->renderer3D->disable_flag_lighting();
+		}
+	}
+
+	if (prev_conf_color_material != conf_color_material)
+	{
+		if (conf_color_material)
+		{
+			App->renderer3D->enable_flag_color_material();
+		}
+		else
+		{
+			App->renderer3D->disable_flag_color_material();
+		}
+	}
+
+	if (prev_conf_texture_2D != conf_texture_2D)
+	{
+		if (conf_texture_2D)
+		{
+			App->renderer3D->enable_flag_texture_2D();
+		}
+		else
+		{
+			App->renderer3D->disable_flag_texture_2D();
+		}
+	}
+
 
 }
 

@@ -73,35 +73,35 @@ bool ModulePhysics3D::Start()
 // ---------------------------------------------------------
 update_status ModulePhysics3D::PreUpdate(float dt)
 {
-	world->stepSimulation(dt, 15);
+	//world->stepSimulation(dt, 15);
 
-	int numManifolds = world->getDispatcher()->getNumManifolds();
-	for(int i = 0; i<numManifolds; i++)
-	{
-		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
-		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
-		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+	//int numManifolds = world->getDispatcher()->getNumManifolds();
+	//for(int i = 0; i<numManifolds; i++)
+	//{
+	//	btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
+	//	btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+	//	btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
-		int numContacts = contactManifold->getNumContacts();
-		if(numContacts > 0)
-		{
-			PhysBody3D* pbodyA = (PhysBody3D*)obA->getUserPointer();
-			PhysBody3D* pbodyB = (PhysBody3D*)obB->getUserPointer();
+	//	int numContacts = contactManifold->getNumContacts();
+	//	if(numContacts > 0)
+	//	{
+	//		PhysBody3D* pbodyA = (PhysBody3D*)obA->getUserPointer();
+	//		PhysBody3D* pbodyB = (PhysBody3D*)obB->getUserPointer();
 
-			if(pbodyA && pbodyB)
-			{
-				for (std::list<Module*>::iterator item = pbodyA->collision_listeners.begin(); item != pbodyA->collision_listeners.end(); item++)
-				{
-					(*item)->OnCollision(pbodyA, pbodyB);
-				}
-				for (std::list<Module*>::iterator item_1 = pbodyB->collision_listeners.begin(); item_1 != pbodyB->collision_listeners.end(); item_1++)
-				{
-					(*item_1)->OnCollision(pbodyB, pbodyA);
-				}
+	//		if(pbodyA && pbodyB)
+	//		{
+	//			for (std::list<Module*>::iterator item = pbodyA->collision_listeners.begin(); item != pbodyA->collision_listeners.end(); item++)
+	//			{
+	//				(*item)->OnCollision(pbodyA, pbodyB);
+	//			}
+	//			for (std::list<Module*>::iterator item_1 = pbodyB->collision_listeners.begin(); item_1 != pbodyB->collision_listeners.end(); item_1++)
+	//			{
+	//				(*item_1)->OnCollision(pbodyB, pbodyA);
+	//			}
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
 	return UPDATE_CONTINUE;
 }
@@ -263,32 +263,32 @@ bool ModulePhysics3D::CleanUp()
 //}
 
 // ---------------------------------------------------------
-void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const float3& anchorA, const float3& anchorB)
-{
-	btTypedConstraint* p2p = new btPoint2PointConstraint(
-		*(bodyA.body), 
-		*(bodyB.body), 
-		btVector3(anchorA.x, anchorA.y, anchorA.z), 
-		btVector3(anchorB.x, anchorB.y, anchorB.z));
-	world->addConstraint(p2p);
-	constraints.push_back(p2p);
-	p2p->setDbgDrawSize(2.0f);
-}
-
-void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const float3& anchorA, const float3& anchorB, const float3& axisA, const float3& axisB, bool disable_collision)
-{
-	btHingeConstraint* hinge = new btHingeConstraint(
-		*(bodyA.body), 
-		*(bodyB.body), 
-		btVector3(anchorA.x, anchorA.y, anchorA.z),
-		btVector3(anchorB.x, anchorB.y, anchorB.z),
-		btVector3(axisA.x, axisA.y, axisA.z), 
-		btVector3(axisB.x, axisB.y, axisB.z));
-
-	world->addConstraint(hinge, disable_collision);
-	constraints.push_back(hinge);
-	hinge->setDbgDrawSize(2.0f);
-}
+//void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const float3& anchorA, const float3& anchorB)
+//{
+//	btTypedConstraint* p2p = new btPoint2PointConstraint(
+//		*(bodyA.body), 
+//		*(bodyB.body), 
+//		btVector3(anchorA.x, anchorA.y, anchorA.z), 
+//		btVector3(anchorB.x, anchorB.y, anchorB.z));
+//	world->addConstraint(p2p);
+//	constraints.push_back(p2p);
+//	p2p->setDbgDrawSize(2.0f);
+//}
+//
+//void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const float3& anchorA, const float3& anchorB, const float3& axisA, const float3& axisB, bool disable_collision)
+//{
+//	btHingeConstraint* hinge = new btHingeConstraint(
+//		*(bodyA.body), 
+//		*(bodyB.body), 
+//		btVector3(anchorA.x, anchorA.y, anchorA.z),
+//		btVector3(anchorB.x, anchorB.y, anchorB.z),
+//		btVector3(axisA.x, axisA.y, axisA.z), 
+//		btVector3(axisB.x, axisB.y, axisB.z));
+//
+//	world->addConstraint(hinge, disable_collision);
+//	constraints.push_back(hinge);
+//	hinge->setDbgDrawSize(2.0f);
+//}
 
 // =============================================
 //void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)

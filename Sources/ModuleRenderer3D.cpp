@@ -120,7 +120,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity(); 
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf((float*)App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -138,9 +138,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	App->scene_controller->Draw();
 
 	glLineWidth(1.0f);
-
 	glBegin(GL_LINES);
-
 	float d = 200.0f;
 
 	for (float i = -d; i <= d; i += 1.0f)
@@ -175,8 +173,70 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	glLoadMatrixf((float*)App->camera->GetViewMatrix());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+
+float4x4 ModuleRenderer3D::perspective(float fovy, float aspect, float n, float f)
+{
+	float4x4 Perspective;
+
+	float coty = 1.0f / tan(fovy * (float)3.14159265358979323846 / 360.0f);
+
+	Perspective[0][0] = coty / aspect;
+	Perspective[0][1] = coty;
+	Perspective[2][2] = (n + f) / (n - f);
+	Perspective[3][2] = -1.0f;
+	Perspective[2][3] = 2.0f * n * f / (n - f);
+	Perspective[3][3] = 0.0f;
+
+	return Perspective;
+}
+
+void ModuleRenderer3D::enable_flag_depth_test()
+{
+	glEnable(GL_DEPTH_TEST);
+}
+void ModuleRenderer3D::disable_flag_depth_test()
+{
+	glDisable(GL_DEPTH_TEST);
+}
+
+void ModuleRenderer3D::enable_flag_cull_face()
+{
+	glEnable(GL_CULL_FACE);
+}
+void ModuleRenderer3D::disable_flag_cull_face()
+{
+	glDisable(GL_CULL_FACE);
+}
+
+void ModuleRenderer3D::enable_flag_lighting()
+{
+	glEnable(GL_LIGHTING);
+}
+void ModuleRenderer3D::disable_flag_lighting()
+{
+	glDisable(GL_LIGHTING);
+}
+
+void ModuleRenderer3D::enable_flag_color_material()
+{
+	glEnable(GL_COLOR_MATERIAL);
+}
+void ModuleRenderer3D::disable_flag_color_material()
+{
+	glDisable(GL_COLOR_MATERIAL);
+}
+
+void ModuleRenderer3D::enable_flag_texture_2D()
+{
+	glEnable(GL_TEXTURE_2D);
+}
+void ModuleRenderer3D::disable_flag_texture_2D()
+{
+	glDisable(GL_TEXTURE_2D);
 }

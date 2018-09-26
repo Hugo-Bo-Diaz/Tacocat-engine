@@ -27,6 +27,12 @@ public:
 	bool conf_borderless = false;
 	bool conf_fulldesktop = false;
 
+	bool conf_depth_test = false;
+	bool conf_cull_face = false;
+	bool conf_lighting = false;
+	bool conf_color_material = false;
+	bool conf_texture_2D = false;
+
 	//float width = SCREEN_WIDTH;
 	//float height = SCREEN_HEIGHT;
 
