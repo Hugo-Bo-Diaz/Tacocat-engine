@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-//#include "glmath.h"
+//#include "glmath.h"//TOCHANGE
 #include "Light.h"
 
 #define MAX_LIGHTS 8
@@ -20,12 +20,16 @@ public:
 	void OnResize(int width, int height);
 
 public:
-	float4x4 perspective(float fovy, float aspect, float n, float f);
+
+	float* float4x4_to_float(float4x4 to_change);
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	float3x3 NormalMatrix;
-	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	math::float3x3 NormalMatrix;
+	math::float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	//mat3x3 NormalMatrix;
+	//mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	void enable_flag_depth_test();
 	void disable_flag_depth_test();

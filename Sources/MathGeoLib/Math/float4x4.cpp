@@ -2088,6 +2088,22 @@ void float4x4::Decompose(float3 &translate, float4x4 &rotate, float3 &scale) con
 	assume(float4x4::FromTRS(translate, rotate, scale).Equals(*this, 0.1f));
 }
 
+float4x4 float4x4::Perspective(float fovy, float aspect, float n, float f)
+{
+	float4x4 perspective;
+	float coty = 1.0f / tan(fovy*(float)pi / 360.0f);
+
+	perspective.Set(0,0,	coty / aspect);
+	perspective.Set(1,1,	coty);
+	perspective.Set(2,2,	(n + f) / (n - f));
+	perspective.Set(2,3,	-1.0f);
+	perspective.Set(3,2,	2.0f);
+	perspective.Set(3,2,	2.0f*n*f / (n - f));
+	perspective.Set(3,3,	0.0f);
+
+	return perspective;
+}
+
 #ifdef MATH_ENABLE_STL_SUPPORT
 std::ostream &operator <<(std::ostream &out, const float4x4 &rhs)
 {

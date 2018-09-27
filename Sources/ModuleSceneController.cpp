@@ -56,7 +56,7 @@ bool ModuleSceneController::Start()
 	CONSOLE_LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(float3(1.0f, 1.0f, 0.0f));
+	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 
 	/*p.normal = { 0,1,0 };
 	p.constant = 0;*/

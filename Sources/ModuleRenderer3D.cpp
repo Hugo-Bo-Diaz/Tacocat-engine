@@ -67,15 +67,12 @@ bool ModuleRenderer3D::Init()
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 		
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		/*glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE_2D);*/
 
 		//Check for error
 		error = glGetError();
@@ -120,7 +117,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity(); 
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf((float*)App->camera->GetViewMatrix());
+	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -151,6 +148,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	glEnd();
 
+	//glLineWidth(2.0f);
+	//glBegin(GL_LINES);  
+	//glVertex3f(0.f, 0.f, 0.f);  
+	//glVertex3f(0.f, 10.f, 0.f); 
+	//glEnd();
+	//glLineWidth(1.0f);
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -172,29 +176,46 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf((float*)App->camera->GetViewMatrix());
+	ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	//glLoadMatrixf(float4x4_to_float(ProjectionMatrix));
+	//float ret[16] =
+	//{	ProjectionMatrix[0][0], ProjectionMatrix[0][1], ProjectionMatrix[0][2], ProjectionMatrix[0][3],
+	//	ProjectionMatrix[1][0], ProjectionMatrix[1][1], ProjectionMatrix[1][2], ProjectionMatrix[1][3],
+	//	ProjectionMatrix[2][0], ProjectionMatrix[2][1], ProjectionMatrix[2][2], ProjectionMatrix[2][3],
+	//	ProjectionMatrix[3][0], ProjectionMatrix[3][1], ProjectionMatrix[3][2], ProjectionMatrix[3][3] };
+
+	float ret[16] =
+	{ ProjectionMatrix[0][0], ProjectionMatrix[1][0], ProjectionMatrix[2][0], ProjectionMatrix[3][0],
+		ProjectionMatrix[0][1], ProjectionMatrix[1][1], ProjectionMatrix[2][1], ProjectionMatrix[3][1],
+		ProjectionMatrix[0][2], ProjectionMatrix[1][2], ProjectionMatrix[2][2], ProjectionMatrix[3][2],
+		ProjectionMatrix[0][3], ProjectionMatrix[1][3], ProjectionMatrix[2][3], ProjectionMatrix[3][3] };
+
+	glLoadMatrixf(ret);
+
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	//glViewport(0, 0, width, height);
+
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	//glLoadMatrixf((float*)&ProjectionMatrix);
+
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
 }
 
-
-float4x4 ModuleRenderer3D::perspective(float fovy, float aspect, float n, float f)
+float* ModuleRenderer3D::float4x4_to_float(float4x4 to_change)
 {
-	float4x4 Perspective;
-
-	float coty = 1.0f / tan(fovy * (float)3.14159265358979323846 / 360.0f);
-
-	Perspective[0][0] = coty / aspect;
-	Perspective[0][1] = coty;
-	Perspective[2][2] = (n + f) / (n - f);
-	Perspective[3][2] = -1.0f;
-	Perspective[2][3] = 2.0f * n * f / (n - f);
-	Perspective[3][3] = 0.0f;
-
-	return Perspective;
+	float ret[16] = {to_change[0][0],to_change[0][1], to_change[0][2], to_change[0][3], 
+					to_change[1][0], to_change[1][1], to_change[1][2], to_change[1][3], 
+					to_change[2][0], to_change[2][1], to_change[2][2], to_change[2][3], 
+					to_change[3][0], to_change[3][1], to_change[3][2], to_change[3][3]};
+	return ret;
 }
+
 
 void ModuleRenderer3D::enable_flag_depth_test()
 {
