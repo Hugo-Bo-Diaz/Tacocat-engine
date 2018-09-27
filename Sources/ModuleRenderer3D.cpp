@@ -252,7 +252,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	CONSOLE_LOG("Destroying 3D Renderer");
+	App->UI->console->AddLog("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(context);
 

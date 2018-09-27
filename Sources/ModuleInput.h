@@ -19,7 +19,7 @@ public:
 	ModuleInput( bool start_enabled = true);
 	~ModuleInput();
 
-	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
@@ -57,6 +57,7 @@ public:
 	{
 		return mouse_y_motion;
 	}
+	bool sendinputs = false;
 
 private:
 	KEY_STATE* keyboard;
@@ -66,5 +67,6 @@ private:
 	int mouse_z;
 	int mouse_x_motion;
 	int mouse_y_motion;
+
 	//int mouse_z_motion;
 };

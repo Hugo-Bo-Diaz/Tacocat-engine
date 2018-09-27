@@ -19,7 +19,6 @@ Application::Application()
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
-
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
@@ -57,7 +56,6 @@ bool Application::Init()
 	bool ret = true;
 
 	LoadConfig("config.json");
-
 	// Call Init() in all modules
 
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
@@ -66,13 +64,15 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	CONSOLE_LOG("Application Start --------------");
+	App->UI->console->AddLog("Application Start --------------");
 
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
 	{
 		ret = (*it)->Start();
 	}
-	ms_timer.Start();
+	ms_timer.Start();	
+
+
 	return ret;
 }
 
@@ -169,6 +169,7 @@ void Application::SaveConfig(const char* filename)
 
 	json_serialize_to_file(config, "config.json");
 
+	App->UI->console->AddLog("saved succesfully %s",filename);//CHANGE THIS FUNCTION
 }
 
 void Application::LoadConfig(const char* filename)
@@ -178,7 +179,7 @@ void Application::LoadConfig(const char* filename)
 
 	root_value = json_parse_file(filename);
 	if (json_value_get_type(root_value) != JSONObject) {
-		CONSOLE_LOG("couldn't find the file %d", filename);
+		App->UI->console->AddLog("couldn't find the file %d", filename);
 		return;
 	}
 	root_object = json_value_get_object(root_value);
@@ -194,5 +195,7 @@ void Application::LoadConfig(const char* filename)
 	App->window->brightness = json_object_dotget_number(root_object, "Window.brightness");
 	App->window->width = json_object_dotget_number(root_object, "Window.width");
 	App->window->height = json_object_dotget_number(root_object, "Window.height");
+
+
 
 }

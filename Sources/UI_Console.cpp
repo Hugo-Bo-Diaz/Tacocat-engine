@@ -133,6 +133,8 @@ void UI_Console::ClearLog()
 void UI_Console::AddLog(const char* fmt, ...) IM_FMTARGS(2)
 {
 	// FIXME-OPT
+	if (enabled)
+	{
 	char buf[1024];
 	va_list args;
 	va_start(args, fmt);
@@ -141,6 +143,8 @@ void UI_Console::AddLog(const char* fmt, ...) IM_FMTARGS(2)
 	va_end(args);
 	Items.push_back(Strdup(buf));
 	ScrollToBottom = true;
+	}
+
 }
 
 void UI_Console::ExecCommand(const char* command_line)

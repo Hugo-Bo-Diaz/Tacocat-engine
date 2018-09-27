@@ -34,7 +34,7 @@ bool ModuleSceneController::Start()
 
 	if (sph1.Intersects(sph2))
 	{
-		CONSOLE_LOG("WORKS");
+		//App->UI->console->AddLog("WORKS");
 	}
 
 	cube1.minPoint = { 0,0,0 };
@@ -46,14 +46,14 @@ bool ModuleSceneController::Start()
 
 	if (!cube1.Intersects(cube2))
 	{
-		CONSOLE_LOG("WORKS");
+		//App->UI->console->AddLog("WORKS");
 	}
 
 	int example1 = App->random_int(1000,1912);
 
 	float example2 = App->random_between_0_1();
 
-	CONSOLE_LOG("Loading Intro assets");
+	App->UI->console->AddLog("Loading Intro assets");
 	bool ret = true;
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -71,7 +71,7 @@ bool ModuleSceneController::Start()
 // Load assets
 bool ModuleSceneController::CleanUp()
 {
-	CONSOLE_LOG("Unloading Intro scene");
+	App->UI->console->AddLog("Unloading Intro scene");
 
 	return true;
 }

@@ -84,6 +84,8 @@ void UI_Configuration::Render()
 	{
 		ImGui::Text("Mouse position: %d, %d", App->input->GetMouseX(), App->input->GetMouseY());
 		ImGui::Text("Mouse position: %d, %d", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+		ImGui::Checkbox("Send inputs to console", &App->input->sendinputs);
+
 	}	
 	
 	if (ImGui::CollapsingHeader("OpenGL Settings"))
