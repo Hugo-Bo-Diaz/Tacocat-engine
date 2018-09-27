@@ -5,8 +5,8 @@
 
 UI_Configuration::UI_Configuration()
 {
-	Enable(false);
-	setPos(ImVec2(200, 100));
+	Enable(true);
+	setPos(ImVec2(20, 20));
 
 	fps_app.resize(GRAPH_SIZE);
 	ms_app.resize(GRAPH_SIZE);

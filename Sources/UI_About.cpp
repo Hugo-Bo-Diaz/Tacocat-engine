@@ -3,7 +3,7 @@
 #include "SDL\include\SDL_version.h"
 #include <stdlib.h>
 #include <Windows.h>
-#include "Bullet/include/LinearMath/btScalar.h"
+//#include "Bullet/include/LinearMath/btScalar.h"
 
 UI_About::UI_About() 
 {
@@ -32,7 +32,7 @@ void UI_About::Render()
 	SDL_version version;
 	SDL_GetVersion(&version);
 	ImGui::Text("SDL        - %d.%d.%d",version.major,version.minor,version.patch);
-	ImGui::Text("Bullet     - %d.%d", btGetVersion()/100, btGetVersion()- (btGetVersion()/100)*100);
+	//ImGui::Text("Bullet     - %d.%d", btGetVersion()/100, btGetVersion()- (btGetVersion()/100)*100);
 	ImGui::Text("PCG        - help");
 	
 	ImGui::Separator();

@@ -102,8 +102,6 @@ update_status ModuleUI::Update(float dt)
 		}
 	}
 
-	ImGui::Render();
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	return UPDATE_CONTINUE;
 }
@@ -115,6 +113,13 @@ bool ModuleUI::CleanUp()
 	ImGui::DestroyContext();
 
 	return true;
+}
+
+void ModuleUI::Draw()
+{
+	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
 }
 
 void ModuleUI::send_FPSdata(float FPS, float ms)

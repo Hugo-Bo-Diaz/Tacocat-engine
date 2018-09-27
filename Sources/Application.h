@@ -10,7 +10,7 @@
 #include "ModuleSceneController.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-#include "ModulePhysics3D.h"
+//#include "ModulePhysics3D.h"
 #include "ModuleUI.h"
 
 class Application
@@ -22,7 +22,7 @@ public:
 	ModuleSceneController* scene_controller;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	ModulePhysics3D* physics;
+	//ModulePhysics3D* physics;
 	ModuleUI* UI;
 
 	LCG* random;

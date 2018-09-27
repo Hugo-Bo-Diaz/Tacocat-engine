@@ -27,6 +27,8 @@ public:
 	//Send the fps data to the config window
 	void send_FPSdata(float value, float ms);
 
+	void Draw();
+
 private:
 	//List of UI elements
 	std::list<UI*> UI_Elements;

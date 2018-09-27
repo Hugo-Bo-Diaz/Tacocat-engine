@@ -10,6 +10,7 @@ UI_Console::UI_Console()
 	Commands.push_back("CLEAR");
 	Commands.push_back("CLASSIFY");  // "classify" is only here to provide an example of "C"+[tab] completing to "CL" and displaying matches.
 	AddLog("Welcome to TacocaT engine");
+	Enable(true);
 }
 
 UI_Console::~UI_Console()
@@ -21,7 +22,7 @@ UI_Console::~UI_Console()
 
 void UI_Console::Render()
 {
-	ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(520, 200), ImGuiCond_FirstUseEver);
 	if (!ImGui::Begin("Console", /*(bool *)isEnabled()*/&enabled))
 	{
 		ImGui::End();
@@ -51,11 +52,11 @@ void UI_Console::Render()
 
 	ImGui::Separator();
 
-	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+	//ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
 	static ImGuiTextFilter filter;
-	filter.Draw("Filter (\"incl,-excl\") (\"error\")", 180);
-	ImGui::PopStyleVar();
-	ImGui::Separator();
+	//filter.Draw("Filter (\"incl,-excl\") (\"error\")", 180);
+	//ImGui::PopStyleVar();
+	//ImGui::Separator();
 
 	const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
 	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar); // Leave room for 1 separator + 1 InputText
@@ -99,24 +100,24 @@ void UI_Console::Render()
 	ScrollToBottom = false;
 	ImGui::PopStyleVar();
 	ImGui::EndChild();
-	ImGui::Separator();
+	//ImGui::Separator();
 
 	// Command-line
-	bool reclaim_focus = false;
-	if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory, &TextEditCallbackStub, (void*)this))
-	{
-		char* s = InputBuf;
-		Strtrim(s);
-		if (s[0])
-			ExecCommand(s);
-		strcpy(s, "");
-		reclaim_focus = true;
-	}
+	//bool reclaim_focus = false;
+	//if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory, &TextEditCallbackStub, (void*)this))
+	//{
+	//	char* s = InputBuf;
+	//	Strtrim(s);
+	//	if (s[0])
+	//		ExecCommand(s);
+	//	strcpy(s, "");
+	//	reclaim_focus = true;
+	//}
 
 	// Auto-focus on window apparition
-	ImGui::SetItemDefaultFocus();
-	if (reclaim_focus)
-		ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
+	//ImGui::SetItemDefaultFocus();
+	//if (reclaim_focus)
+	//	ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
 
 	ImGui::End();
 }

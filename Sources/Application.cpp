@@ -10,7 +10,7 @@ Application::Application()
 	scene_controller = new ModuleSceneController(true);
 	renderer3D = new ModuleRenderer3D(true);
 	camera = new ModuleCamera3D(true);
-	physics = new ModulePhysics3D(true);
+	//physics = new ModulePhysics3D(true);
 	UI = new ModuleUI(true);
 
 	pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
@@ -25,16 +25,18 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);
-	AddModule(physics);
+	//AddModule(physics);
 	
 	// Scenes
 	AddModule(scene_controller);
-	
+
+		// UI
+	AddModule(UI);
+
 	// Renderer last!
 	AddModule(renderer3D);
 
-	// UI
-	AddModule(UI);
+
 }
 
 Application::~Application()

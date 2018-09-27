@@ -182,66 +182,68 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
 	//glDisableClientState(GL_VERTEX_ARRAY);
 	
-	////draw a quad
-	//glLineWidth(2.0f);
-	//glBegin(GL_TRIANGLES);
-	////Front face
-	//	//pt 1
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//	//pt 2
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	////Right face in truth it's the top
-	//	//pt 1
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//	//pt 2
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	////Back face
-	//	//pt 1
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//	//pt 2
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	////Left face acshually its bottom
-	//	//pt 1
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//	//pt 2
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	////Top ???
-	//	//pt 1
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//draw a quad
+	glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
+	//Front face
+		//pt 1
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+		//pt 2
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//Right face in truth it's the top
+		//pt 1
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+		//pt 2
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//Back face
+		//pt 1
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+		//pt 2
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//Left face acshually its bottom
+		//pt 1
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+		//pt 2
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//Top ???
+		//pt 1
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
 
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	////Bottom ???
-	//	//pt 1
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//Bottom ???
+		//pt 1
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
 
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
 
-	//glEnd();
+	glEnd();
 
+
+	App->UI->Draw();
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
@@ -264,7 +266,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
-	//ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	//ProjectionMatrix = ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
 	////glLoadMatrixf(float4x4_to_float(ProjectionMatrix));
 	////float ret[16] =
 	////{	ProjectionMatrix[0][0], ProjectionMatrix[0][1], ProjectionMatrix[0][2], ProjectionMatrix[0][3],
