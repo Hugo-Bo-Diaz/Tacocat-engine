@@ -107,6 +107,10 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(App->window->width, App->window->height);
 
+	glGenBuffers(1, (GLuint*) &(my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*36 * 3, vertices, GL_STATIC_DRAW);
+
 	return ret;
 }
 
@@ -134,26 +138,110 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->scene_controller->Draw();
 
-	glLineWidth(1.0f);
-	glBegin(GL_LINES);
-	float d = 200.0f;
 
-	for (float i = -d; i <= d; i += 1.0f)
-	{
-		glVertex3f(i, 0.0f, -d);
-		glVertex3f(i, 0.0f, d);
-		glVertex3f(-d, 0.0f, i);
-		glVertex3f(d, 0.0f, i);
-	}
-
-	glEnd();
-
-	//glLineWidth(2.0f);
-	//glBegin(GL_LINES);  
-	//glVertex3f(0.f, 0.f, 0.f);  
-	//glVertex3f(0.f, 10.f, 0.f); 
-	//glEnd();
 	//glLineWidth(1.0f);
+	//glBegin(GL_LINES);
+	//float d = 200.0f;
+
+	//for (float i = -d; i <= d; i += 1.0f)
+	//{
+	//	glVertex3f(i, 0.0f, -d);
+	//	glVertex3f(i, 0.0f, d);
+	//	glVertex3f(-d, 0.0f, i);
+	//	glVertex3f(d, 0.0f, i);
+	//}
+
+	//glEnd();
+
+	//draw a line
+
+	glLineWidth(2.0f);
+	glBegin(GL_LINES);  
+	glVertex3f(0.f, 0.f, 0.f);  
+	glVertex3f(0.f, 10.f, 0.f); 
+	glEnd();
+	glLineWidth(1.0f);
+
+	//glVertex3f(0.5f, 0.5f, 0.5f);
+
+	/* Quad vertices
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	*/
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	// ... draw other buffers
+	glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	
+	////draw a quad
+	//glLineWidth(2.0f);
+	//glBegin(GL_TRIANGLES);
+	////Front face
+	//	//pt 1
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//	//pt 2
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	////Right face in truth it's the top
+	//	//pt 1
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//	//pt 2
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	////Back face
+	//	//pt 1
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//	//pt 2
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	////Left face acshually its bottom
+	//	//pt 1
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//	//pt 2
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	////Top ???
+	//	//pt 1
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	////Bottom ???
+	//	//pt 1
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
+	//glEnd();
+
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
@@ -172,39 +260,39 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
-	glViewport(0, 0, width, height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	//glLoadMatrixf(float4x4_to_float(ProjectionMatrix));
-	//float ret[16] =
-	//{	ProjectionMatrix[0][0], ProjectionMatrix[0][1], ProjectionMatrix[0][2], ProjectionMatrix[0][3],
-	//	ProjectionMatrix[1][0], ProjectionMatrix[1][1], ProjectionMatrix[1][2], ProjectionMatrix[1][3],
-	//	ProjectionMatrix[2][0], ProjectionMatrix[2][1], ProjectionMatrix[2][2], ProjectionMatrix[2][3],
-	//	ProjectionMatrix[3][0], ProjectionMatrix[3][1], ProjectionMatrix[3][2], ProjectionMatrix[3][3] };
-
-	float ret[16] =
-	{ ProjectionMatrix[0][0], ProjectionMatrix[1][0], ProjectionMatrix[2][0], ProjectionMatrix[3][0],
-		ProjectionMatrix[0][1], ProjectionMatrix[1][1], ProjectionMatrix[2][1], ProjectionMatrix[3][1],
-		ProjectionMatrix[0][2], ProjectionMatrix[1][2], ProjectionMatrix[2][2], ProjectionMatrix[3][2],
-		ProjectionMatrix[0][3], ProjectionMatrix[1][3], ProjectionMatrix[2][3], ProjectionMatrix[3][3] };
-
-	glLoadMatrixf(ret);
-
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
 	//glViewport(0, 0, width, height);
 
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 	//ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	//glLoadMatrixf((float*)&ProjectionMatrix);
+	////glLoadMatrixf(float4x4_to_float(ProjectionMatrix));
+	////float ret[16] =
+	////{	ProjectionMatrix[0][0], ProjectionMatrix[0][1], ProjectionMatrix[0][2], ProjectionMatrix[0][3],
+	////	ProjectionMatrix[1][0], ProjectionMatrix[1][1], ProjectionMatrix[1][2], ProjectionMatrix[1][3],
+	////	ProjectionMatrix[2][0], ProjectionMatrix[2][1], ProjectionMatrix[2][2], ProjectionMatrix[2][3],
+	////	ProjectionMatrix[3][0], ProjectionMatrix[3][1], ProjectionMatrix[3][2], ProjectionMatrix[3][3] };
+
+	//float ret[16] =
+	//{ ProjectionMatrix[0][0], ProjectionMatrix[1][0], ProjectionMatrix[2][0], ProjectionMatrix[3][0],
+	//	ProjectionMatrix[0][1], ProjectionMatrix[1][1], ProjectionMatrix[2][1], ProjectionMatrix[3][1],
+	//	ProjectionMatrix[0][2], ProjectionMatrix[1][2], ProjectionMatrix[2][2], ProjectionMatrix[3][2],
+	//	ProjectionMatrix[0][3], ProjectionMatrix[1][3], ProjectionMatrix[2][3], ProjectionMatrix[3][3] };
+
+	//glLoadMatrixf(ret);
+
 
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
+
+	glViewport(0, 0, width, height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	glLoadMatrixf(&ProjectionMatrix);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 float* ModuleRenderer3D::float4x4_to_float(float4x4 to_change)
