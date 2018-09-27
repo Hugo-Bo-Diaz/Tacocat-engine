@@ -107,9 +107,9 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(App->window->width, App->window->height);
 
-	glGenBuffers(1, (GLuint*) &(my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*36 * 3, vertices, GL_STATIC_DRAW);
+	//glGenBuffers(1, (GLuint*) &(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float)*36 * 3, vertices, GL_STATIC_DRAW);
 
 	return ret;
 }
@@ -139,19 +139,19 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	App->scene_controller->Draw();
 
 
-	//glLineWidth(1.0f);
-	//glBegin(GL_LINES);
-	//float d = 200.0f;
+	glLineWidth(1.0f);
+	glBegin(GL_LINES);
+	float d = 200.0f;
 
-	//for (float i = -d; i <= d; i += 1.0f)
-	//{
-	//	glVertex3f(i, 0.0f, -d);
-	//	glVertex3f(i, 0.0f, d);
-	//	glVertex3f(-d, 0.0f, i);
-	//	glVertex3f(d, 0.0f, i);
-	//}
+	for (float i = -d; i <= d; i += 1.0f)
+	{
+		glVertex3f(i, 0.0f, -d);
+		glVertex3f(i, 0.0f, d);
+		glVertex3f(-d, 0.0f, i);
+		glVertex3f(d, 0.0f, i);
+	}
 
-	//glEnd();
+	glEnd();
 
 	//draw a line
 
@@ -175,12 +175,12 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertex3f(-0.5f, 0.5f, 0.5f); // H
 	*/
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	// ... draw other buffers
-	glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//// ... draw other buffers
+	//glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 	
 	////draw a quad
 	//glLineWidth(2.0f);
