@@ -25,6 +25,13 @@ public:
 	void Toggle_Borderless();
 	void Toggle_Resizable();
 
+	void Configuration();
+
+	bool conf_fullscreen = false;
+	bool conf_resizable = false;
+	bool conf_borderless = false;
+	bool conf_fulldesktop = false;
+
 	//int width = SCREEN_WIDTH;
 	//int height = SCREEN_HEIGHT;
 

@@ -25,13 +25,12 @@ public:
 	//ModulePhysics3D* physics;
 	ModuleUI* UI;
 
-	LCG* random;
+	std::list<Module*> list_modules;
 
 private:
 
 	Timer	ms_timer;
 	float	dt;
-	std::list<Module*> list_modules;
 
 public:
 

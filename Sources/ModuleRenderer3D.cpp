@@ -351,3 +351,81 @@ void ModuleRenderer3D::disable_flag_texture_2D()
 {
 	glDisable(GL_TEXTURE_2D);
 }
+
+void ModuleRenderer3D::Configuration()
+{
+	bool prev_conf_depth_test = conf_depth_test;
+	bool prev_conf_cull_face = conf_cull_face;
+	bool prev_conf_lighting = conf_lighting;
+	bool prev_conf_color_material = conf_color_material;
+	bool prev_conf_texture_2D = conf_texture_2D;
+
+	if (ImGui::CollapsingHeader("OpenGL Settings"))
+	{
+		ImGui::Checkbox("depth_test", &conf_depth_test);
+		ImGui::Checkbox("cull_face", &conf_cull_face);
+		ImGui::Checkbox("lighting", &conf_lighting);
+		ImGui::Checkbox("color_material", &conf_color_material);
+		ImGui::Checkbox("texture_2D", &conf_texture_2D);
+	}
+
+	if (prev_conf_depth_test != conf_depth_test)
+	{
+		if (conf_depth_test)
+		{
+			enable_flag_depth_test();
+		}
+		else
+		{
+			disable_flag_depth_test();
+		}
+	}
+
+	if (prev_conf_cull_face != conf_cull_face)
+	{
+		if (conf_cull_face)
+		{
+			enable_flag_cull_face();
+		}
+		else
+		{
+			disable_flag_cull_face();
+		}
+	}
+
+	if (prev_conf_lighting != conf_lighting)
+	{
+		if (conf_lighting)
+		{
+			enable_flag_lighting();
+		}
+		else
+		{
+			disable_flag_lighting();
+		}
+	}
+
+	if (prev_conf_color_material != conf_color_material)
+	{
+		if (conf_color_material)
+		{
+			enable_flag_color_material();
+		}
+		else
+		{
+			disable_flag_color_material();
+		}
+	}
+
+	if (prev_conf_texture_2D != conf_texture_2D)
+	{
+		if (conf_texture_2D)
+		{
+			enable_flag_texture_2D();
+		}
+		else
+		{
+			disable_flag_texture_2D();
+		}
+	}
+}

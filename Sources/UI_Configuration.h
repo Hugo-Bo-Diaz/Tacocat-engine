@@ -21,12 +21,6 @@ public:
 
 	void store_app_ms(float value);
 
-
-	bool conf_fullscreen = false;
-	bool conf_resizable = false;
-	bool conf_borderless = false;
-	bool conf_fulldesktop = false;
-
 	bool conf_depth_test = false;
 	bool conf_cull_face = false;
 	bool conf_lighting = false;

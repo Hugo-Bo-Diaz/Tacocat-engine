@@ -59,6 +59,8 @@ public:
 	}
 	bool sendinputs = false;
 
+	void Configuration();
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];

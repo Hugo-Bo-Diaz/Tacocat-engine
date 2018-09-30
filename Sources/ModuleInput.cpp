@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleUI.h"
+
 #define MAX_KEYS 300
 
 ModuleInput::ModuleInput( bool start_enabled) : Module( start_enabled)
@@ -162,4 +163,14 @@ bool ModuleInput::CleanUp()
 	App->UI->console->AddLog("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void ModuleInput::Configuration()
+{
+	if (ImGui::CollapsingHeader("Input"))
+	{
+		ImGui::Text("Mouse position: %d, %d", GetMouseX(), App->input->GetMouseY());
+		ImGui::Text("Mouse position: %d, %d", GetMouseXMotion(), App->input->GetMouseYMotion());
+		ImGui::Checkbox("Send inputs to console", &sendinputs);
+	}
 }

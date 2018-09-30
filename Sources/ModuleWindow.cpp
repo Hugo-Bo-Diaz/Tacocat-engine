@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleUI.h"
 
 ModuleWindow::ModuleWindow(bool start_enabled) : Module( start_enabled)
 {
@@ -180,5 +181,54 @@ void ModuleWindow::Toggle_Resizable()
 	{
 		SDL_SetWindowResizable(window, SDL_FALSE);
 		resizable = false;
+	}
+}
+
+void ModuleWindow::Configuration()
+{
+	bool prev_conf_fullscreen = conf_fullscreen;
+	bool prev_conf_resizable = conf_resizable;
+	bool prev_conf_borderless = conf_borderless;
+	bool prev_conf_fulldesktop = conf_fulldesktop;
+
+	int prevwidth = width;
+	int prevheight = height;
+
+	if (ImGui::CollapsingHeader("Window"))
+	{
+		ImGui::Checkbox("Fullscreen", &conf_fullscreen);
+		ImGui::Checkbox("Borderless", &conf_borderless);
+		ImGui::Checkbox("Resizable", &conf_resizable);
+		ImGui::Checkbox("Full desktop", &conf_fulldesktop);
+		ImGui::DragFloat("Width", &width);
+		ImGui::DragFloat("Height", &height);
+
+		SDL_DisplayMode DM;
+		SDL_GetCurrentDisplayMode(0, &DM);
+		ImGui::Text("Refresh Rate: %d", DM.refresh_rate);
+
+	}
+
+	if (prev_conf_borderless != conf_borderless)
+	{
+		Toggle_Borderless();
+	}
+	if (prev_conf_fullscreen != conf_fullscreen)
+	{
+		Toggle_FullScreen();
+	}
+	if (prev_conf_resizable != conf_resizable)
+	{
+		Toggle_Resizable();
+	}
+	if (prev_conf_fulldesktop != conf_fulldesktop)
+	{
+		Toggle_FullDesktop();
+	}
+
+	if (prevwidth != width || prevheight != height)
+	{
+		SDL_SetWindowSize(window, width, height);
+		App->renderer3D->OnResize(width, height);
 	}
 }
