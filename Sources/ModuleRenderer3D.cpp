@@ -3,8 +3,8 @@
 #include "ModuleRenderer3D.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
+//#include <gl/GL.h>
+//#include <gl/GLU.h>
 
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
@@ -31,6 +31,13 @@ bool ModuleRenderer3D::Init()
 	if (context == NULL)
 	{
 		CONSOLE_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		ret = false;
+	}
+
+	GLenum error = glewInit();
+	if (error != GL_NO_ERROR)
+	{
+		App->UI->console->AddLog("Error initializing glew! Error: %s\n", gluErrorString(error));
 		ret = false;
 	}
 
@@ -107,11 +114,94 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(App->window->width, App->window->height);
 
-	//glGenBuffers(1, (GLuint*) &(my_id));
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float)*36 * 3, vertices, GL_STATIC_DRAW);
-
 	return ret;
+}
+
+bool ModuleRenderer3D::Start()
+{
+
+	vertices = {
+		//0 1 3
+		0.5, -0.5, -0.5, // A
+		0.5, 0.5, -0.5, // B
+		0.5, 0.5, 0.5, // D
+		//3 2 0
+		0.5, 0.5, 0.5, // D
+		0.5, -0.5, 0.5, // C
+		0.5, -0.5, -0.5, // A
+		//1 5 7
+		0.5, 0.5, -0.5, // B
+		-0.5, 0.5, -0.5, // F
+		-0.5, 0.5, 0.5, // H
+		//7 3 1
+		-0.5, 0.5, 0.5, // H
+		0.5, 0.5, 0.5, // D
+		0.5, 0.5, -0.5, // B
+		//5 4 6
+		-0.5, 0.5, -0.5, // F
+		-0.5, -0.5, -0.5, // E
+		-0.5, -0.5, 0.5, // G
+		//6 7 5
+		-0.5, -0.5, 0.5, // G
+		-0.5, 0.5, 0.5, // H
+		-0.5, 0.5, -0.5, // F
+		//4 0 2
+		-0.5, -0.5, -0.5, // E
+		0.5, -0.5, -0.5, // A
+		0.5, -0.5, 0.5, // C
+		//2 6 4
+		0.5, -0.5, 0.5, // C
+		-0.5, -0.5, 0.5, // G
+		-0.5, -0.5, -0.5, // E
+		//2 3 7
+		0.5, -0.5, 0.5, // C
+		0.5, 0.5, 0.5, // D
+		-0.5, 0.5, 0.5, // H
+		//7 6 2
+		-0.5, 0.5, 0.5, // H
+		-0.5, -0.5, 0.5, // G
+		0.5, -0.5, 0.5, // C
+		//4 5 1
+		-0.5, -0.5, -0.5, // E
+		-0.5, 0.5, -0.5, // F
+		0.5, 0.5, -0.5, // B
+		//1 0 4
+		0.5, 0.5, -0.5,// B
+		0.5, -0.5, -0.5, // A
+		-0.5, -0.5, -0.5 // E
+	};
+
+	glGenBuffers(1, (GLuint*) &(my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	vertices2 = { 0.5, -0.5, -0.5, // A = 0
+		0.5, 0.5, -0.5, // B = 1
+		0.5, -0.5, 0.5, // C = 2
+		0.5, 0.5, 0.5, // D = 3
+		-0.5, -0.5, -0.5, // E = 4
+		-0.5, 0.5, -0.5, // F = 5
+		-0.5, -0.5, 0.5, // G = 6
+		-0.5, 0.5, 0.5, // H = 7
+
+	};
+
+	vertex_order = 
+	{	0,1,3, 3,2,0,
+		1,5,7,  7,3,1,
+		5,4,6,  6,7,5,
+		4,0,2,  2,6,4,
+		2,3,7,  7,6,2,
+		4,5,1,  1,0,4 };
+
+	glGenBuffers(1, (GLuint*) &(my_id2));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return true;
+
 }
 
 // PreUpdate: clear buffer
@@ -185,62 +275,79 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//draw a quad
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
-	//Front face
-		//pt 1
-	glVertex3f(0.5f, -0.5f, -0.5f); // A
-	glVertex3f(0.5f, 0.5f, -0.5f); // B
-	glVertex3f(0.5f, 0.5f, 0.5f); // D
-		//pt 2
-	glVertex3f(0.5f, 0.5f, 0.5f); // D
-	glVertex3f(0.5f, -0.5f, 0.5f); // C
-	glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//Right face in truth it's the top
-		//pt 1
-	glVertex3f(0.5f, 0.5f, -0.5f); // B
-	glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	glVertex3f(-0.5f, 0.5f, 0.5f); // H
-		//pt 2
-	glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	glVertex3f(0.5f, 0.5f, 0.5f); // D
-	glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//Back face
-		//pt 1
-	glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	glVertex3f(-0.5f, -0.5f, 0.5f); // G
-		//pt 2
-	glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//Left face acshually its bottom
-		//pt 1
-	glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	glVertex3f(0.5f, -0.5f, -0.5f); // A
-	glVertex3f(0.5f, -0.5f, 0.5f); // C
-		//pt 2
-	glVertex3f(0.5f, -0.5f, 0.5f); // C
-	glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//Top ???
-		//pt 1
-	glVertex3f(0.5f, -0.5f, 0.5f); // C
-	glVertex3f(0.5f, 0.5f, 0.5f); // D
-	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	////Front face
+	//	//pt 1
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//	//pt 2
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	////Right face in truth it's the top
+	//	//pt 1
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//	//pt 2
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	////Back face
+	//	//pt 1
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//	//pt 2
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	////Left face actually its bottom
+	//	//pt 1
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//	//pt 2
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	////Top ???
+	//	//pt 1
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//glVertex3f(0.5f, 0.5f, 0.5f); // D
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
 
-	glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//Bottom ???
-		//pt 1
-	glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	//glVertex3f(0.5f, -0.5f, 0.5f); // C
+	////Bottom ???
+	//	//pt 1
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
 
-	glVertex3f(0.5f, 0.5f, -0.5f); // B
-	glVertex3f(0.5f, -0.5f, -0.5f); // A
-	glVertex3f(-0.5f, -0.5f, -0.5f); // E
-
+	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	//glVertex3f(0.5f, -0.5f, -0.5f); // A
+	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	
 	glEnd();
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
+	glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+
+
 
 
 	App->UI->Draw();

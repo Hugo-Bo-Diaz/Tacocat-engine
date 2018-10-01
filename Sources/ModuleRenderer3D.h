@@ -4,6 +4,8 @@
 //#include "glmath.h"//TOCHANGE
 #include "Light.h"
 
+#include <vector>
+
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module
@@ -13,6 +15,7 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
@@ -27,57 +30,64 @@ public:
 	SDL_GLContext context;
 	math::float3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	
+	uint my_id = 0;
+	uint my_id2 = 0;
+	std::vector<float> vertices;
+	std::vector<float> vertices2;
+	std::vector<uint> vertex_order;
 
-	//uint my_id = 0;
-	//float vertices[] = {
+/*
+	//0.5f, -0.5f, -0.5f, // A
+	//	0.5f, 0.5f, -0.5f, // B
+	//	0.5f, 0.5f, 0.5f, // D
+
+	//	0.5f, 0.5f, 0.5f, // D
+	//	0.5f, -0.5f, 0.5f, // C
 	//	0.5f, -0.5f, -0.5f, // A
-	//	0.5f, 0.5f, -0.5f, // B
-	//	0.5f, 0.5f, 0.5f, // D
-	//
-	//	0.5f, 0.5f, 0.5f, // D
-	//	0.5f, -0.5f, 0.5f, // C
-	//	0.5f, -0.5f, -0.5f, // A
-	//
+
 	//	0.5f, 0.5f, -0.5f, // B
 	//	-0.5f, 0.5f, -0.5f, // F
 	//	-0.5f, 0.5f, 0.5f, // H
-	//
+
 	//	-0.5f, 0.5f, 0.5f, // H
 	//	0.5f, 0.5f, 0.5f, // D
 	//	0.5f, 0.5f, -0.5f, // B
-	//
+
 	//	-0.5f, 0.5f, -0.5f, // F
 	//	-0.5f, -0.5f, -0.5f, // E
 	//	-0.5f, -0.5f, 0.5f, // G
-	//
+
 	//	-0.5f, -0.5f, 0.5f, // G
 	//	-0.5f, 0.5f, 0.5f, // H
 	//	-0.5f, 0.5f, -0.5f, // F
-	//
+
 	//	-0.5f, -0.5f, -0.5f, // E
 	//	0.5f, -0.5f, -0.5f, // A
 	//	0.5f, -0.5f, 0.5f, // C
-	//
+
 	//	0.5f, -0.5f, 0.5f, // C
 	//	-0.5f, -0.5f, 0.5f, // G
 	//	-0.5f, -0.5f, -0.5f, // E
-	//
+
 	//	0.5f, -0.5f, 0.5f, // C
 	//	0.5f, 0.5f, 0.5f, // D
 	//	-0.5f, 0.5f, 0.5f, // H
-	//
+
 	//	-0.5f, 0.5f, 0.5f, // H
 	//	-0.5f, -0.5f, 0.5f, // G
 	//	0.5f, -0.5f, 0.5f, // C
-	//
+
 	//	-0.5f, -0.5f, -0.5f, // E
 	//	-0.5f, 0.5f, -0.5f, // F
 	//	0.5f, 0.5f, -0.5f, // B
-	//
+
 	//	0.5f, 0.5f, -0.5f,// B
 	//	0.5f, -0.5f, -0.5f, // A
 	//	-0.5f, -0.5f, -0.5f // E
-	//};
+	*/
+
+
 
 	//mat3x3 NormalMatrix;
 	//mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
