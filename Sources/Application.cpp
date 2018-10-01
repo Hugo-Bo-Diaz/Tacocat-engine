@@ -13,8 +13,8 @@ Application::Application()
 	//physics = new ModulePhysics3D(true);
 	UI = new ModuleUI(true);
 
-	pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
-	pcg32_srandom_r(&rng2, time(NULL), (intptr_t)&rng2);
+	//pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
+	//pcg32_srandom_r(&rng2, time(NULL), (intptr_t)&rng2);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

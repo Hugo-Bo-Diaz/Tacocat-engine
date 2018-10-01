@@ -1,8 +1,11 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "SphereMine.h"
+#include "CylinderMine.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
+
 //#include <gl/GL.h>
 //#include <gl/GLU.h>
 
@@ -176,14 +179,14 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	vertices2 = { 0.5, -0.5, -0.5, // A = 0
-		0.5, 0.5, -0.5, // B = 1
-		0.5, -0.5, 0.5, // C = 2
-		0.5, 0.5, 0.5, // D = 3
-		-0.5, -0.5, -0.5, // E = 4
-		-0.5, 0.5, -0.5, // F = 5
-		-0.5, -0.5, 0.5, // G = 6
-		-0.5, 0.5, 0.5, // H = 7
+	vertices2 = { 2.5, -0.5, 1.5, // A = 0
+		2.5, 0.5, 1.5, // B = 1
+		2.5, -0.5, 2.5, // C = 2
+		2.5, 0.5, 2.5, // D = 3
+		1.5, -0.5, 1.5, // E = 4
+		1.5, 0.5, 1.5, // F = 5
+		1.5, -0.5, 2.5, // G = 6
+		1.5, 0.5, 2.5, // H = 7
 
 	};
 
@@ -200,6 +203,11 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+	sph = new NOTphere(1.5, 20, 20);
+	sph->move(1, 0, 10);
+
+	lin = new NOTlinder(1.5, 20, 3, 5);
+	lin->move(10,0,1);
 	return true;
 
 }
@@ -227,7 +235,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->scene_controller->Draw();
-
 
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
@@ -275,80 +282,81 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//draw a quad
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
-	////Front face
-	//	//pt 1
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//	//pt 2
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	////Right face in truth it's the top
-	//	//pt 1
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//	//pt 2
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	////Back face
-	//	//pt 1
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//	//pt 2
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	////Left face actually its bottom
-	//	//pt 1
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//	//pt 2
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	////Top ???
-	//	//pt 1
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	//glVertex3f(0.5f, 0.5f, 0.5f); // D
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	//Front face
+		//pt 1
+	glVertex3f(2.5f, -0.5f, -0.5f); // A
+	glVertex3f(2.5f, 0.5f, -0.5f); // B
+	glVertex3f(2.5f, 0.5f, 0.5f); // D
+		//pt 2
+	glVertex3f(2.5f, 0.5f, 0.5f); // D
+	glVertex3f(2.5f, -0.5f, 0.5f); // C
+	glVertex3f(2.5f, -0.5f, -0.5f); // A
+	//Right face in truth it's the top
+		//pt 1
+	glVertex3f(2.5f, 0.5f, -0.5f); // B
+	glVertex3f(1.5f, 0.5f, -0.5f); // F
+	glVertex3f(1.5f, 0.5f, 0.5f); // H
+		//pt 2
+	glVertex3f(1.5f, 0.5f, 0.5f); // H
+	glVertex3f(2.5f, 0.5f, 0.5f); // D
+	glVertex3f(2.5f, 0.5f, -0.5f); // B
+	//Back face
+		//pt 1
+	glVertex3f(1.5f, 0.5f, -0.5f); // F
+	glVertex3f(1.5f, -0.5f, -0.5f); // E
+	glVertex3f(1.5f, -0.5f, 0.5f); // G
+		//pt 2
+	glVertex3f(1.5f, -0.5f, 0.5f); // G
+	glVertex3f(1.5f, 0.5f, 0.5f); // H
+	glVertex3f(1.5f, 0.5f, -0.5f); // F
+	//Left face actually its bottom
+		//pt 1
+	glVertex3f(1.5f, -0.5f, -0.5f); // E
+	glVertex3f(2.5f, -0.5f, -0.5f); // A
+	glVertex3f(2.5f, -0.5f, 0.5f); // C
+		//pt 2
+	glVertex3f(2.5f, -0.5f, 0.5f); // C
+	glVertex3f(1.5f, -0.5f, 0.5f); // G
+	glVertex3f(1.5f, -0.5f, -0.5f); // E
+	//Top ???
+		//pt 1
+	glVertex3f(2.5f, -0.5f, 0.5f); // C
+	glVertex3f(2.5f, 0.5f, 0.5f); // D
+	glVertex3f(1.5f, 0.5f, 0.5f); // H
 
-	//glVertex3f(-0.5f, 0.5f, 0.5f); // H
-	//glVertex3f(-0.5f, -0.5f, 0.5f); // G
-	//glVertex3f(0.5f, -0.5f, 0.5f); // C
-	////Bottom ???
-	//	//pt 1
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
-	//glVertex3f(-0.5f, 0.5f, -0.5f); // F
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(1.5f, 0.5f, 0.5f); // H
+	glVertex3f(1.5f, -0.5f, 0.5f); // G
+	glVertex3f(2.5f, -0.5f, 0.5f); // C
+	//Bottom ???
+		//pt 1
+	glVertex3f(1.5f, -0.5f, -0.5f); // E
+	glVertex3f(1.5f, 0.5f, -0.5f); // F
+	glVertex3f(2.5f, 0.5f, -0.5f); // B
 
-	//glVertex3f(0.5f, 0.5f, -0.5f); // B
-	//glVertex3f(0.5f, -0.5f, -0.5f); // A
-	//glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(2.5f, 0.5f, -0.5f); // B
+	glVertex3f(2.5f, -0.5f, -0.5f); // A
+	glVertex3f(1.5f, -0.5f, -0.5f); // E
 	
 	glEnd();
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
 	glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+	sph->draw(0, 0, 0);
+	//sph->move(0.1, 0.1, 0.1);
+
+	lin->draw(0, 0, 0);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
-
-
-
-
 
 	App->UI->Draw();
 
@@ -403,15 +411,15 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
-float* ModuleRenderer3D::float4x4_to_float(float4x4 to_change)
-{
-	float ret[16] = {to_change[0][0],to_change[0][1], to_change[0][2], to_change[0][3], 
-					to_change[1][0], to_change[1][1], to_change[1][2], to_change[1][3], 
-					to_change[2][0], to_change[2][1], to_change[2][2], to_change[2][3], 
-					to_change[3][0], to_change[3][1], to_change[3][2], to_change[3][3]};
-	return ret;
-}
+//
+//float* ModuleRenderer3D::float4x4_to_float(float4x4 to_change)
+//{
+//	float ret[16] = {to_change[0][0],to_change[0][1], to_change[0][2], to_change[0][3], 
+//					to_change[1][0], to_change[1][1], to_change[1][2], to_change[1][3], 
+//					to_change[2][0], to_change[2][1], to_change[2][2], to_change[2][3], 
+//					to_change[3][0], to_change[3][1], to_change[3][2], to_change[3][3]};
+//	return ret;
+//}
 
 
 void ModuleRenderer3D::enable_flag_depth_test()

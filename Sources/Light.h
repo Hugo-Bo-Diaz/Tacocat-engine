@@ -1,7 +1,7 @@
 
 #pragma once
 #include "Color.h"
-#include "MathGeoLib/MathGeoLib.h"
+//#include "MathGeoLib/MathGeoLib.h"
 #include "glmath.h"//TOCHANGE
 
 struct Light

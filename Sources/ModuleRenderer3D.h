@@ -3,10 +3,12 @@
 #include "Globals.h"
 //#include "glmath.h"//TOCHANGE
 #include "Light.h"
-
 #include <vector>
 
 #define MAX_LIGHTS 8
+
+class NOTphere;
+class NOTlinder;
 
 class ModuleRenderer3D : public Module
 {
@@ -24,11 +26,11 @@ public:
 
 public:
 
-	float* float4x4_to_float(float4x4 to_change);
+	//float* float4x4_to_float(float4x4 to_change);
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	math::float3x3 NormalMatrix;
+	//math::float3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	
 	uint my_id = 0;
@@ -114,4 +116,14 @@ public:
 	bool conf_texture_2D = false;
 
 	void Configuration();
+
+	NOTphere* sph;
+	NOTlinder* lin;
+
+	//void DrawQuad(	std::vector<float> point1,
+	//				std::vector<float> point2,
+	//				std::vector<float> point3,
+	//				std::vector<float> point4);
+
+		//DOESN'T ACTUALLY DRAW QUADS
 };
