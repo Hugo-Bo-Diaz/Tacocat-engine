@@ -205,16 +205,20 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	sph = new NOTphere(1.5, 20, 20);
-	sph->move(1, 0, 10);
+	sph = AddSphere(1.5, 20, 20,1,0,10);
 
-	lin = new NOTlinder(1.5, 20, 3, 5);
-	lin->move(10,0,1);
+	lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
 
-	arr = new NOTarrow(0,0,10,10,10,0);
+	arr = AddArrow(0,0,10,10,10,0);
 
-	cub = new NOTcube(2.0f,2.0f,2.0f);
-	cub->move(10, 10, 10);
+	cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
+
+	//SDL_ShowSimpleMessageBox(
+	//	SDL_MESSAGEBOX_INFORMATION,
+	//	"File dropped on window",
+	//	"what the heck is this",
+	//	App->window->window
+	//);
 
 	return true;
 
@@ -367,17 +371,22 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	*/
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	arr->draw();
 
-	sph->draw();
-
-	cub->draw();
-
-	//sph->move(0.1, 0.1, 0.1);
-
-	lin->draw();
+	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
 
 
+	//arr->draw();
+
+	//sph->draw();
+
+	//cub->draw();
+
+	////sph->move(0.1, 0.1, 0.1);
+
+	//lin->draw();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -488,6 +497,43 @@ void ModuleRenderer3D::enable_flag_texture_2D()
 void ModuleRenderer3D::disable_flag_texture_2D()
 {
 	glDisable(GL_TEXTURE_2D);
+}
+
+NOTphere* ModuleRenderer3D::AddSphere(float radius, double rings, double stacks, float x, float y, float z)
+{
+	NOTphere* prim = new NOTphere(radius,rings,stacks);
+	
+	prim->move(x, y, z);
+	primitive_vector.push_back(prim);
+	return prim;
+}
+
+NOTarrow* ModuleRenderer3D::AddArrow(float x1, float y1, float z1, float x2, float y2, float z2)
+{
+	NOTarrow* prim = new NOTarrow(x1, y1, z1, x2, y2, z2);
+	primitive_vector.push_back(prim);
+
+	return prim;
+}
+
+NOTcube* ModuleRenderer3D::AddCube(float widthx, float height, float widthz, float x, float y, float z)
+{
+	NOTcube* prim = new NOTcube(widthx, height, widthz);
+
+	prim->move(x, y, z);
+	primitive_vector.push_back(prim);
+
+	return prim;
+}
+
+NOTlinder* ModuleRenderer3D::AddCylinder(float radius, float sector, float stacks, float height, float x, float y, float z)
+{
+	NOTlinder* prim = new NOTlinder(radius, sector, stacks, height);
+
+	prim->move(x, y, z);
+	primitive_vector.push_back(prim);
+
+	return prim;
 }
 
 void ModuleRenderer3D::Configuration()

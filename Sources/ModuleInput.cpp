@@ -131,6 +131,9 @@ update_status ModuleInput::PreUpdate(float dt)
 					App->window->height = e.window.data2;
 				}
 			}
+
+			case SDL_DROPFILE:
+				OnDrag(e.drop.file);
 		}
 	}
 
@@ -173,4 +176,9 @@ void ModuleInput::Configuration()
 		ImGui::Text("Mouse position: %d, %d", GetMouseXMotion(), App->input->GetMouseYMotion());
 		ImGui::Checkbox("Send inputs to console", &sendinputs);
 	}
+}
+
+void ModuleInput::OnDrag(const char* file)
+{
+
 }

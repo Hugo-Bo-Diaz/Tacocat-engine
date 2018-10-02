@@ -11,6 +11,7 @@ class NOTphere;
 class NOTlinder;
 class NOTarrow;
 class NOTcube;
+class NOTprimitive;
 
 class ModuleRenderer3D : public Module
 {
@@ -73,6 +74,13 @@ public:
 	NOTlinder* lin;
 	NOTarrow* arr;
 	NOTcube* cub;
+
+	NOTphere* AddSphere(float radius, double rings, double stacks,				 float x = 0, float y = 0, float z = 0);
+	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
+	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
+	NOTarrow* AddArrow(float x1,float y1, float z1, float x2, float y2, float z2);
+
+	std::vector<NOTprimitive*> primitive_vector;
 
 	//void DrawQuad(	std::vector<float> point1,
 	//				std::vector<float> point2,
