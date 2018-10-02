@@ -6,19 +6,6 @@
 NOTphere::NOTphere(float radius, unsigned int sector_count, unsigned int stack_count)
 {
 	////CALCULATE POINTS
-	//float angle_interval = (M_PI/2) / tris_on_straight_angle;
-	//for (int iterations_on_y = 0; iterations_on_y < tris_on_straight_angle *4; iterations_on_y ++)//for all the angles
-	//{
-	//	for (int iterations_on_z = 0; iterations_on_z < tris_on_straight_angle*4; iterations_on_z)
-	//	{
-	//		float x_to_add = cosf(iterations_on_y*angle_interval) * radius;
-	//		float y_to_add = sinf(iterations_on_y*angle_interval) * radius;
-	//		float z_to_add = sinf(iterations_on_z*angle_interval) * radius;
-	//		vertices.push_back(x_to_add);
-	//		vertices.push_back(y_to_add);
-	//		vertices.push_back(z_to_add);
-	//	}
-	//}
 
 	float x, y, z, xy;                              // vertex position
 
@@ -75,24 +62,4 @@ NOTphere::NOTphere(float radius, unsigned int sector_count, unsigned int stack_c
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*indices.size(), &indices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-void NOTphere::draw(float x, float y, float z)
-{
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
-	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-}
-
-void NOTphere::move(float x, float y, float z)
-{
-	for (int i = 0; i < vertices.size(); i += 3)
-	{
-		vertices[i] += x;
-		vertices[i + 1] += y;
-		vertices[i + 2] += z;
-	}
 }

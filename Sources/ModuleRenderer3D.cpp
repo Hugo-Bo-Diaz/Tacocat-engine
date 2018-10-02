@@ -3,6 +3,8 @@
 #include "ModuleRenderer3D.h"
 #include "SphereMine.h"
 #include "CylinderMine.h"
+#include "ArrowMine.h"
+#include "CubeMine.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
@@ -123,61 +125,61 @@ bool ModuleRenderer3D::Init()
 bool ModuleRenderer3D::Start()
 {
 
-	vertices = {
-		//0 1 3
-		0.5, -0.5, -0.5, // A
-		0.5, 0.5, -0.5, // B
-		0.5, 0.5, 0.5, // D
-		//3 2 0
-		0.5, 0.5, 0.5, // D
-		0.5, -0.5, 0.5, // C
-		0.5, -0.5, -0.5, // A
-		//1 5 7
-		0.5, 0.5, -0.5, // B
-		-0.5, 0.5, -0.5, // F
-		-0.5, 0.5, 0.5, // H
-		//7 3 1
-		-0.5, 0.5, 0.5, // H
-		0.5, 0.5, 0.5, // D
-		0.5, 0.5, -0.5, // B
-		//5 4 6
-		-0.5, 0.5, -0.5, // F
-		-0.5, -0.5, -0.5, // E
-		-0.5, -0.5, 0.5, // G
-		//6 7 5
-		-0.5, -0.5, 0.5, // G
-		-0.5, 0.5, 0.5, // H
-		-0.5, 0.5, -0.5, // F
-		//4 0 2
-		-0.5, -0.5, -0.5, // E
-		0.5, -0.5, -0.5, // A
-		0.5, -0.5, 0.5, // C
-		//2 6 4
-		0.5, -0.5, 0.5, // C
-		-0.5, -0.5, 0.5, // G
-		-0.5, -0.5, -0.5, // E
-		//2 3 7
-		0.5, -0.5, 0.5, // C
-		0.5, 0.5, 0.5, // D
-		-0.5, 0.5, 0.5, // H
-		//7 6 2
-		-0.5, 0.5, 0.5, // H
-		-0.5, -0.5, 0.5, // G
-		0.5, -0.5, 0.5, // C
-		//4 5 1
-		-0.5, -0.5, -0.5, // E
-		-0.5, 0.5, -0.5, // F
-		0.5, 0.5, -0.5, // B
-		//1 0 4
-		0.5, 0.5, -0.5,// B
-		0.5, -0.5, -0.5, // A
-		-0.5, -0.5, -0.5 // E
-	};
+	//vertices = {
+	//	//0 1 3
+	//	0.5, -0.5, -0.5, // A
+	//	0.5, 0.5, -0.5, // B
+	//	0.5, 0.5, 0.5, // D
+	//	//3 2 0
+	//	0.5, 0.5, 0.5, // D
+	//	0.5, -0.5, 0.5, // C
+	//	0.5, -0.5, -0.5, // A
+	//	//1 5 7
+	//	0.5, 0.5, -0.5, // B
+	//	-0.5, 0.5, -0.5, // F
+	//	-0.5, 0.5, 0.5, // H
+	//	//7 3 1
+	//	-0.5, 0.5, 0.5, // H
+	//	0.5, 0.5, 0.5, // D
+	//	0.5, 0.5, -0.5, // B
+	//	//5 4 6
+	//	-0.5, 0.5, -0.5, // F
+	//	-0.5, -0.5, -0.5, // E
+	//	-0.5, -0.5, 0.5, // G
+	//	//6 7 5
+	//	-0.5, -0.5, 0.5, // G
+	//	-0.5, 0.5, 0.5, // H
+	//	-0.5, 0.5, -0.5, // F
+	//	//4 0 2
+	//	-0.5, -0.5, -0.5, // E
+	//	0.5, -0.5, -0.5, // A
+	//	0.5, -0.5, 0.5, // C
+	//	//2 6 4
+	//	0.5, -0.5, 0.5, // C
+	//	-0.5, -0.5, 0.5, // G
+	//	-0.5, -0.5, -0.5, // E
+	//	//2 3 7
+	//	0.5, -0.5, 0.5, // C
+	//	0.5, 0.5, 0.5, // D
+	//	-0.5, 0.5, 0.5, // H
+	//	//7 6 2
+	//	-0.5, 0.5, 0.5, // H
+	//	-0.5, -0.5, 0.5, // G
+	//	0.5, -0.5, 0.5, // C
+	//	//4 5 1
+	//	-0.5, -0.5, -0.5, // E
+	//	-0.5, 0.5, -0.5, // F
+	//	0.5, 0.5, -0.5, // B
+	//	//1 0 4
+	//	0.5, 0.5, -0.5,// B
+	//	0.5, -0.5, -0.5, // A
+	//	-0.5, -0.5, -0.5 // E
+	//};
 
-	glGenBuffers(1, (GLuint*) &(my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glGenBuffers(1, (GLuint*) &(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	vertices2 = { 2.5, -0.5, 1.5, // A = 0
 		2.5, 0.5, 1.5, // B = 1
@@ -208,6 +210,12 @@ bool ModuleRenderer3D::Start()
 
 	lin = new NOTlinder(1.5, 20, 3, 5);
 	lin->move(10,0,1);
+
+	arr = new NOTarrow(0,0,10,10,10,0);
+
+	cub = new NOTcube(2.0f,2.0f,2.0f);
+	cub->move(10, 10, 10);
+
 	return true;
 
 }
@@ -249,13 +257,16 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	glEnd();
-
+	/*
 	//draw a line
 
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);  
 	glVertex3f(0.f, 0.f, 0.f);  
 	glVertex3f(0.f, 10.f, 0.f); 
+
+	//arr->draw(0,0,0);
+
 	glEnd();
 	glLineWidth(1.0f);
 
@@ -271,14 +282,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertex3f(-0.5f, -0.5f, 0.5f); // G
 	glVertex3f(-0.5f, 0.5f, 0.5f); // H
 	*/
-
 	//glEnableClientState(GL_VERTEX_ARRAY);
 	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	//glVertexPointer(3, GL_FLOAT, 0, NULL);
 	//// ... draw other buffers
 	//glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
 	//glDisableClientState(GL_VERTEX_ARRAY);
-	
+	/*
 	//draw a quad
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
@@ -339,7 +349,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	
 	glEnd();
 
-	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -350,11 +359,20 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	*/
+	glEnableClientState(GL_VERTEX_ARRAY);
 
-	sph->draw(0, 0, 0);
+	arr->draw();
+
+	sph->draw();
+
+	cub->draw();
+
 	//sph->move(0.1, 0.1, 0.1);
 
-	lin->draw(0, 0, 0);
+	lin->draw();
+
+
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 

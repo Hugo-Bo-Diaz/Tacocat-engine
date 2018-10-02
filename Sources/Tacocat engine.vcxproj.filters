@@ -60,9 +60,6 @@
     <ClInclude Include="Globals.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
@@ -303,6 +300,18 @@
     <ClInclude Include="CylinderMine.h">
       <Filter>Sources\Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="Primitivedelete.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.h">
+      <Filter>Sources\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrowMine.h">
+      <Filter>Sources\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMine.h">
+      <Filter>Sources\Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -331,9 +340,6 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Sources\Containers</Filter>
@@ -480,6 +486,18 @@
       <Filter>Sources\mathgeolib</Filter>
     </ClCompile>
     <ClCompile Include="CylinderMine.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitivedelete.cpp">
+      <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitive.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrowMine.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMine.cpp">
       <Filter>Sources\Primitives</Filter>
     </ClCompile>
   </ItemGroup>

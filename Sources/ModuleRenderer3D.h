@@ -9,6 +9,8 @@
 
 class NOTphere;
 class NOTlinder;
+class NOTarrow;
+class NOTcube;
 
 class ModuleRenderer3D : public Module
 {
@@ -39,57 +41,6 @@ public:
 	std::vector<float> vertices2;
 	std::vector<uint> vertex_order;
 
-/*
-	//0.5f, -0.5f, -0.5f, // A
-	//	0.5f, 0.5f, -0.5f, // B
-	//	0.5f, 0.5f, 0.5f, // D
-
-	//	0.5f, 0.5f, 0.5f, // D
-	//	0.5f, -0.5f, 0.5f, // C
-	//	0.5f, -0.5f, -0.5f, // A
-
-	//	0.5f, 0.5f, -0.5f, // B
-	//	-0.5f, 0.5f, -0.5f, // F
-	//	-0.5f, 0.5f, 0.5f, // H
-
-	//	-0.5f, 0.5f, 0.5f, // H
-	//	0.5f, 0.5f, 0.5f, // D
-	//	0.5f, 0.5f, -0.5f, // B
-
-	//	-0.5f, 0.5f, -0.5f, // F
-	//	-0.5f, -0.5f, -0.5f, // E
-	//	-0.5f, -0.5f, 0.5f, // G
-
-	//	-0.5f, -0.5f, 0.5f, // G
-	//	-0.5f, 0.5f, 0.5f, // H
-	//	-0.5f, 0.5f, -0.5f, // F
-
-	//	-0.5f, -0.5f, -0.5f, // E
-	//	0.5f, -0.5f, -0.5f, // A
-	//	0.5f, -0.5f, 0.5f, // C
-
-	//	0.5f, -0.5f, 0.5f, // C
-	//	-0.5f, -0.5f, 0.5f, // G
-	//	-0.5f, -0.5f, -0.5f, // E
-
-	//	0.5f, -0.5f, 0.5f, // C
-	//	0.5f, 0.5f, 0.5f, // D
-	//	-0.5f, 0.5f, 0.5f, // H
-
-	//	-0.5f, 0.5f, 0.5f, // H
-	//	-0.5f, -0.5f, 0.5f, // G
-	//	0.5f, -0.5f, 0.5f, // C
-
-	//	-0.5f, -0.5f, -0.5f, // E
-	//	-0.5f, 0.5f, -0.5f, // F
-	//	0.5f, 0.5f, -0.5f, // B
-
-	//	0.5f, 0.5f, -0.5f,// B
-	//	0.5f, -0.5f, -0.5f, // A
-	//	-0.5f, -0.5f, -0.5f // E
-	*/
-
-
 
 	//mat3x3 NormalMatrix;
 	//mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
@@ -119,6 +70,8 @@ public:
 
 	NOTphere* sph;
 	NOTlinder* lin;
+	NOTarrow* arr;
+	NOTcube* cub;
 
 	//void DrawQuad(	std::vector<float> point1,
 	//				std::vector<float> point2,
