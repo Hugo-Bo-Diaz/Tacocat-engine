@@ -114,6 +114,7 @@ public:
 	bool conf_lighting = false;
 	bool conf_color_material = false;
 	bool conf_texture_2D = false;
+	bool conf_wireframe = false;
 
 	void Configuration();
 
