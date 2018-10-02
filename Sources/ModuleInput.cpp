@@ -5,6 +5,8 @@
 
 #define MAX_KEYS 300
 
+#include "mmgr\mmgr.h"
+
 ModuleInput::ModuleInput( bool start_enabled) : Module( start_enabled)
 {
 	name = "Input";

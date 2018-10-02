@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "SDL/include/SDL_cpuinfo.h"
+#include "mmgr\mmgr.h"
 
 UI_Configuration::UI_Configuration()
 {
@@ -50,6 +51,8 @@ void UI_Configuration::Render()
 		ImGui::PlotHistogram("", &ms_app[0], ms_app.size(), 0, NULL, 0.0f, /*float(fps)*/20.0f, ImVec2(200, 100));
 
 		//TODO: Plot histogram memory consumption
+		ImGui::Text("Memory");
+		
 	}
 	for (std::list<Module*>::iterator it = App->list_modules.begin(); it != App->list_modules.end(); it++)
 	{
@@ -109,6 +112,22 @@ void UI_Configuration::store_app_ms(float value)
 			ms_app[val] = ms_app[val + 1];
 		}
 		ms_app[ms_app.size() - 1] = value;
+	}
+}
+
+void UI_Configuration::store_memory(float value)
+{
+	if (memory.capacity() != memory.size())
+	{
+		memory.push_back(value);
+	}
+	else
+	{
+		for (int val = 0; val < (GRAPH_SIZE - 1); val++)
+		{
+			memory[val] = memory[val + 1];
+		}
+		memory[memory.size() - 1] = value;
 	}
 }
 

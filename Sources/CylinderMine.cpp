@@ -3,6 +3,8 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
+#include "mmgr\mmgr.h"
+
 NOTlinder::NOTlinder(float radius, unsigned int sector_count,unsigned int stack_count, unsigned int height)
 {
 
