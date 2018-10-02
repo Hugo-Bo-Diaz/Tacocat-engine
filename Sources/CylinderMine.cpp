@@ -36,11 +36,11 @@ NOTlinder::NOTlinder(float radius, unsigned int sector_count,unsigned int stack_
 	int k1, k2;
 	vertices.push_back(0);
 	vertices.push_back(0);
-	vertices.push_back(radius);
+	vertices.push_back(0);
 
 	vertices.push_back(0);
 	vertices.push_back(height-2);
-	vertices.push_back(radius);
+	vertices.push_back(0);
 
 	//base
 	for (int i = 0; i < sector_count; i++)

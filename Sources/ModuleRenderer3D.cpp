@@ -244,6 +244,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->scene_controller->Draw();
 
+	if (conf_wireframe)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
 	float d = 200.0f;
@@ -495,11 +500,12 @@ void ModuleRenderer3D::Configuration()
 
 	if (ImGui::CollapsingHeader("OpenGL Settings"))
 	{
-		ImGui::Checkbox("depth_test", &conf_depth_test);
+		ImGui::Checkbox("depth_test", &conf_depth_test); ImGui::SameLine(150);
 		ImGui::Checkbox("cull_face", &conf_cull_face);
-		ImGui::Checkbox("lighting", &conf_lighting);
+		ImGui::Checkbox("lighting", &conf_lighting); ImGui::SameLine(150);
 		ImGui::Checkbox("color_material", &conf_color_material);
-		ImGui::Checkbox("texture_2D", &conf_texture_2D);
+		ImGui::Checkbox("texture_2D", &conf_texture_2D); ImGui::SameLine(150);
+		ImGui::Checkbox("wireframe", &conf_wireframe);
 	}
 
 	if (prev_conf_depth_test != conf_depth_test)
