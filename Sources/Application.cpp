@@ -1,8 +1,6 @@
 #include "Application.h"
 #include "parson/parson.h"
 
-#include "mmgr\mmgr.h"
-
 Application::Application()
 {
 

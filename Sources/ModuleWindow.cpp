@@ -3,8 +3,6 @@
 #include "ModuleWindow.h"
 #include "ModuleUI.h"
 
-#include "mmgr\mmgr.h"
-
 ModuleWindow::ModuleWindow(bool start_enabled) : Module( start_enabled)
 {
 	window = NULL;

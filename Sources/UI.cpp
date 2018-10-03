@@ -1,7 +1,5 @@
 #include "UI.h"
 
-#include "mmgr\mmgr.h"
-
 UI::UI()
 {
 	enabled = false;

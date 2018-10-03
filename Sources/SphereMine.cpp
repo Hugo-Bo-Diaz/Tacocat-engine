@@ -3,8 +3,6 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
-#include "mmgr\mmgr.h"
-
 NOTphere::NOTphere(float radius, unsigned int sector_count, unsigned int stack_count)
 {
 	////CALCULATE POINTS

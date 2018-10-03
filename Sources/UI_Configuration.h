@@ -19,7 +19,7 @@ public:
 
 	void store_app_FPS(float value);
 	void store_app_ms(float value);
-	void store_memory(float value);
+	void store_memory();
 
 	bool conf_depth_test = false;
 	bool conf_cull_face = false;

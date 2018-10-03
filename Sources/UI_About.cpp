@@ -5,8 +5,6 @@
 #include <Windows.h>
 //#include "Bullet/include/LinearMath/btScalar.h"
 
-#include "mmgr\mmgr.h"
-
 UI_About::UI_About() 
 {
 	Enable(false);

@@ -52,7 +52,8 @@ void UI_Configuration::Render()
 
 		//TODO: Plot histogram memory consumption
 		ImGui::Text("Memory");
-		
+		store_memory();
+		ImGui::PlotHistogram("", &memory[0], memory.size(), 0, NULL, 0.0f, /*float(fps)*/20.0f, ImVec2(200, 100));
 	}
 	for (std::list<Module*>::iterator it = App->list_modules.begin(); it != App->list_modules.end(); it++)
 	{
@@ -115,11 +116,13 @@ void UI_Configuration::store_app_ms(float value)
 	}
 }
 
-void UI_Configuration::store_memory(float value)
+void UI_Configuration::store_memory()
 {
+	sMStats stats = m_getMemoryStatistics();
+
 	if (memory.capacity() != memory.size())
 	{
-		memory.push_back(value);
+		memory.push_back((float)stats.totalReportedMemory);
 	}
 	else
 	{
@@ -127,7 +130,7 @@ void UI_Configuration::store_memory(float value)
 		{
 			memory[val] = memory[val + 1];
 		}
-		memory[memory.size() - 1] = value;
+		memory[memory.size() - 1] = (float)stats.totalReportedMemory;
 	}
 }
 

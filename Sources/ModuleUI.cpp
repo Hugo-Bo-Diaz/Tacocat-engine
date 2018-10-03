@@ -5,8 +5,6 @@
 #include "imgui-1.65/imgui_impl_sdl.h"
 #include "imgui-1.65/imgui_impl_opengl2.h"
 
-#include "mmgr\mmgr.h"
-
 ModuleUI::ModuleUI(bool start_enabled) : Module( start_enabled)
 {
 	name = "UI";

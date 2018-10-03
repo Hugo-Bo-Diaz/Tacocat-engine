@@ -1,5 +1,4 @@
 #include "UI_Console.h"
-#include "mmgr\mmgr.h"
 
 UI_Console::UI_Console()
 {
