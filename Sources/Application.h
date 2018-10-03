@@ -10,7 +10,7 @@
 #include "ModuleSceneController.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-//#include "ModulePhysics3D.h"
+#include "ModuleMeshLoader.h"
 #include "ModuleUI.h"
 
 class Application
@@ -24,6 +24,7 @@ public:
 	ModuleCamera3D* camera;
 	//ModulePhysics3D* physics;
 	ModuleUI* UI;
+	ModuleMeshLoader* mesh_loader;
 
 	std::list<Module*> list_modules;
 

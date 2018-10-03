@@ -315,6 +315,9 @@
     <ClInclude Include="UI_Primitives.h">
       <Filter>Sources\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleMeshLoader.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -505,6 +508,9 @@
     </ClCompile>
     <ClCompile Include="UI_Primitives.cpp">
       <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleMeshLoader.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

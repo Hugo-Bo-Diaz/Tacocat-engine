@@ -79,6 +79,7 @@ public:
 	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
 	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
 	NOTarrow* AddArrow(float x1,float y1, float z1, float x2, float y2, float z2);
+	void AddElement(NOTprimitive*);
 
 	std::vector<NOTprimitive*> primitive_vector;
 

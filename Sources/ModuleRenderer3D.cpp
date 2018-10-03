@@ -205,13 +205,13 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	sph = AddSphere(1.5, 20, 20,1,0,10);
+	//sph = AddSphere(1.5, 20, 20,1,0,10);
 
-	lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
+	//lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
 
-	arr = AddArrow(0,0,10,10,10,0);
+	//arr = AddArrow(0,0,10,10,10,0);
 
-	cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
+	//cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
 
 	//SDL_ShowSimpleMessageBox(
 	//	SDL_MESSAGEBOX_INFORMATION,
@@ -371,22 +371,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	*/
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-
 	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
 	{
 		(*it)->draw();
 	}
-
-
-	//arr->draw();
-
-	//sph->draw();
-
-	//cub->draw();
-
-	////sph->move(0.1, 0.1, 0.1);
-
-	//lin->draw();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -534,6 +522,11 @@ NOTlinder* ModuleRenderer3D::AddCylinder(float radius, float sector, float stack
 	primitive_vector.push_back(prim);
 
 	return prim;
+}
+
+void ModuleRenderer3D::AddElement(NOTprimitive* p)
+{
+	primitive_vector.push_back(p);
 }
 
 void ModuleRenderer3D::Configuration()

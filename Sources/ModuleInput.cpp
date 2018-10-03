@@ -131,9 +131,11 @@ update_status ModuleInput::PreUpdate(float dt)
 					App->window->height = e.window.data2;
 				}
 			}
+			break;
 
 			case SDL_DROPFILE:
-				OnDrag(e.drop.file);
+				App->mesh_loader->Load(e.drop.file);
+			break;
 		}
 	}
 
@@ -180,5 +182,6 @@ void ModuleInput::Configuration()
 
 void ModuleInput::OnDrag(const char* file)
 {
-
+	if (file != NULL)
+		App->mesh_loader->Load(file);
 }

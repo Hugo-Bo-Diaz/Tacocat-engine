@@ -8,6 +8,7 @@ Application::Application()
 	input = new ModuleInput(true);
 	audio = new ModuleAudio(true);
 	scene_controller = new ModuleSceneController(true);
+	mesh_loader = new ModuleMeshLoader(true);
 	renderer3D = new ModuleRenderer3D(true);
 	camera = new ModuleCamera3D(true);
 	//physics = new ModulePhysics3D(true);
@@ -24,7 +25,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);
-	//AddModule(physics);
+	AddModule(mesh_loader);
 	
 	// Scenes
 	AddModule(scene_controller);
