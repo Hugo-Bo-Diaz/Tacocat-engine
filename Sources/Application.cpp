@@ -13,6 +13,7 @@ Application::Application()
 	camera = new ModuleCamera3D(true);
 	//physics = new ModulePhysics3D(true);
 	UI = new ModuleUI(true);
+	tex_loader = new ModuleTextureLoader(true);
 
 	//pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
 	//pcg32_srandom_r(&rng2, time(NULL), (intptr_t)&rng2);
@@ -26,6 +27,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(mesh_loader);
+	AddModule(tex_loader);
 	
 	// Scenes
 	AddModule(scene_controller);
