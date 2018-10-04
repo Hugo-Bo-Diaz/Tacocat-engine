@@ -246,13 +246,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	App->scene_controller->Draw();
-
-	if (conf_wireframe)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	
+	//App->scene_controller->Draw();
+	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
 	float d = 200.0f;
@@ -266,6 +261,22 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	glEnd();
+
+	if (conf_draw == 0)
+		FillDraw();
+	else if (conf_draw == 1)
+		LineDraw();
+	else
+	{
+		FillDraw();
+		glLineWidth(2.0f);
+		glColor3f(0, 0, 0);
+		LineDraw();
+	}
+	
+	//glColor3f(1, 1, 0);
+
+	
 	/*
 	//draw a line
 
@@ -369,14 +380,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	*/
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
-	{
-		(*it)->draw();
-	}
-
-	glDisableClientState(GL_VERTEX_ARRAY);
+	
 
 	App->UI->Draw();
 
@@ -529,6 +533,34 @@ void ModuleRenderer3D::AddElement(NOTprimitive* p)
 	primitive_vector.push_back(p);
 }
 
+void ModuleRenderer3D::FillDraw()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void ModuleRenderer3D::LineDraw()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
 void ModuleRenderer3D::Configuration()
 {
 	bool prev_conf_depth_test = conf_depth_test;
@@ -539,12 +571,17 @@ void ModuleRenderer3D::Configuration()
 
 	if (ImGui::CollapsingHeader("OpenGL Settings"))
 	{
+		ImGui::Text("Draw Mode");
+		ImGui::RadioButton("Fill", &conf_draw, 0); ImGui::SameLine();
+		ImGui::RadioButton("Wireframe", &conf_draw, 1); ImGui::SameLine();
+		ImGui::RadioButton("Debug", &conf_draw, 2);
+		ImGui::Separator();
+		ImGui::Text("Draw settings");
 		ImGui::Checkbox("depth_test", &conf_depth_test); ImGui::SameLine(150);
 		ImGui::Checkbox("cull_face", &conf_cull_face);
 		ImGui::Checkbox("lighting", &conf_lighting); ImGui::SameLine(150);
 		ImGui::Checkbox("color_material", &conf_color_material);
-		ImGui::Checkbox("texture_2D", &conf_texture_2D); ImGui::SameLine(150);
-		ImGui::Checkbox("wireframe", &conf_wireframe);
+		ImGui::Checkbox("texture_2D", &conf_texture_2D);	
 	}
 
 	if (prev_conf_depth_test != conf_depth_test)
@@ -607,3 +644,4 @@ void ModuleRenderer3D::Configuration()
 		}
 	}
 }
+

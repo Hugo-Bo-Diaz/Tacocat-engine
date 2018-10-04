@@ -66,7 +66,7 @@ public:
 	bool conf_lighting = false;
 	bool conf_color_material = false;
 	bool conf_texture_2D = false;
-	bool conf_wireframe = false;
+	int conf_draw = 0;
 
 	void Configuration();
 
@@ -89,4 +89,7 @@ public:
 	//				std::vector<float> point4);
 
 		//DOESN'T ACTUALLY DRAW QUADS
+private:
+	void FillDraw();
+	void LineDraw();
 };
