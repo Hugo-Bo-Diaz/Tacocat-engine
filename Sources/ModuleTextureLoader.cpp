@@ -51,8 +51,8 @@ update_status ModuleTextureLoader::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneController::Draw()
-{
-
-
-}
+//void ModuleSceneController::Draw()
+//{
+//
+//
+//}
