@@ -90,23 +90,3 @@ NOTlinder::NOTlinder(float radius, unsigned int sector_count,unsigned int stack_
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*indices.size(), &indices[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-
-void NOTlinder::draw(float x, float y, float z)
-{
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
-	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-}
-
-void NOTlinder::move(float x, float y, float z)
-{
-	for (int i = 0; i < vertices.size(); i += 3)
-	{
-		vertices[i] += x;
-		vertices[i + 1] += y;
-		vertices[i + 2] += z;
-	}
-}

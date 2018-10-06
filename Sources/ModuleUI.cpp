@@ -33,10 +33,12 @@ bool ModuleUI::Init()
 	about = new UI_About();
 	config = new UI_Configuration();
 	console = new UI_Console();
+	primitives = new UI_Primitives();
 
 	UI_Elements.push_back(about);
 	UI_Elements.push_back(config);
 	UI_Elements.push_back(console);
+	UI_Elements.push_back(primitives);
 
 	return ret;
 }
@@ -79,6 +81,12 @@ update_status ModuleUI::Update(float dt)
 				config->Enable(!config->isEnabled());
 			if (ImGui::MenuItem("Console"))
 				console->Enable(!console->isEnabled());
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			if (ImGui::MenuItem("Primitives"))
+				primitives->Enable(!primitives->isEnabled());
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))

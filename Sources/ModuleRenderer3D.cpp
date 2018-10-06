@@ -3,6 +3,8 @@
 #include "ModuleRenderer3D.h"
 #include "SphereMine.h"
 #include "CylinderMine.h"
+#include "ArrowMine.h"
+#include "CubeMine.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
@@ -113,6 +115,7 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -124,61 +127,61 @@ bool ModuleRenderer3D::Init()
 bool ModuleRenderer3D::Start()
 {
 
-	vertices = {
-		//0 1 3
-		0.5, -0.5, -0.5, // A
-		0.5, 0.5, -0.5, // B
-		0.5, 0.5, 0.5, // D
-		//3 2 0
-		0.5, 0.5, 0.5, // D
-		0.5, -0.5, 0.5, // C
-		0.5, -0.5, -0.5, // A
-		//1 5 7
-		0.5, 0.5, -0.5, // B
-		-0.5, 0.5, -0.5, // F
-		-0.5, 0.5, 0.5, // H
-		//7 3 1
-		-0.5, 0.5, 0.5, // H
-		0.5, 0.5, 0.5, // D
-		0.5, 0.5, -0.5, // B
-		//5 4 6
-		-0.5, 0.5, -0.5, // F
-		-0.5, -0.5, -0.5, // E
-		-0.5, -0.5, 0.5, // G
-		//6 7 5
-		-0.5, -0.5, 0.5, // G
-		-0.5, 0.5, 0.5, // H
-		-0.5, 0.5, -0.5, // F
-		//4 0 2
-		-0.5, -0.5, -0.5, // E
-		0.5, -0.5, -0.5, // A
-		0.5, -0.5, 0.5, // C
-		//2 6 4
-		0.5, -0.5, 0.5, // C
-		-0.5, -0.5, 0.5, // G
-		-0.5, -0.5, -0.5, // E
-		//2 3 7
-		0.5, -0.5, 0.5, // C
-		0.5, 0.5, 0.5, // D
-		-0.5, 0.5, 0.5, // H
-		//7 6 2
-		-0.5, 0.5, 0.5, // H
-		-0.5, -0.5, 0.5, // G
-		0.5, -0.5, 0.5, // C
-		//4 5 1
-		-0.5, -0.5, -0.5, // E
-		-0.5, 0.5, -0.5, // F
-		0.5, 0.5, -0.5, // B
-		//1 0 4
-		0.5, 0.5, -0.5,// B
-		0.5, -0.5, -0.5, // A
-		-0.5, -0.5, -0.5 // E
-	};
+	//vertices = {
+	//	//0 1 3
+	//	0.5, -0.5, -0.5, // A
+	//	0.5, 0.5, -0.5, // B
+	//	0.5, 0.5, 0.5, // D
+	//	//3 2 0
+	//	0.5, 0.5, 0.5, // D
+	//	0.5, -0.5, 0.5, // C
+	//	0.5, -0.5, -0.5, // A
+	//	//1 5 7
+	//	0.5, 0.5, -0.5, // B
+	//	-0.5, 0.5, -0.5, // F
+	//	-0.5, 0.5, 0.5, // H
+	//	//7 3 1
+	//	-0.5, 0.5, 0.5, // H
+	//	0.5, 0.5, 0.5, // D
+	//	0.5, 0.5, -0.5, // B
+	//	//5 4 6
+	//	-0.5, 0.5, -0.5, // F
+	//	-0.5, -0.5, -0.5, // E
+	//	-0.5, -0.5, 0.5, // G
+	//	//6 7 5
+	//	-0.5, -0.5, 0.5, // G
+	//	-0.5, 0.5, 0.5, // H
+	//	-0.5, 0.5, -0.5, // F
+	//	//4 0 2
+	//	-0.5, -0.5, -0.5, // E
+	//	0.5, -0.5, -0.5, // A
+	//	0.5, -0.5, 0.5, // C
+	//	//2 6 4
+	//	0.5, -0.5, 0.5, // C
+	//	-0.5, -0.5, 0.5, // G
+	//	-0.5, -0.5, -0.5, // E
+	//	//2 3 7
+	//	0.5, -0.5, 0.5, // C
+	//	0.5, 0.5, 0.5, // D
+	//	-0.5, 0.5, 0.5, // H
+	//	//7 6 2
+	//	-0.5, 0.5, 0.5, // H
+	//	-0.5, -0.5, 0.5, // G
+	//	0.5, -0.5, 0.5, // C
+	//	//4 5 1
+	//	-0.5, -0.5, -0.5, // E
+	//	-0.5, 0.5, -0.5, // F
+	//	0.5, 0.5, -0.5, // B
+	//	//1 0 4
+	//	0.5, 0.5, -0.5,// B
+	//	0.5, -0.5, -0.5, // A
+	//	-0.5, -0.5, -0.5 // E
+	//};
 
-	glGenBuffers(1, (GLuint*) &(my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glGenBuffers(1, (GLuint*) &(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	vertices2 = { 2.5, -0.5, 1.5, // A = 0
 		2.5, 0.5, 1.5, // B = 1
@@ -204,11 +207,21 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	sph = new NOTphere(1.5, 20, 20);
-	sph->move(1, 0, 10);
+	//sph = AddSphere(1.5, 20, 20,1,0,10);
 
-	lin = new NOTlinder(1.5, 20, 3, 5);
-	lin->move(10,0,1);
+	//lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
+
+	//arr = AddArrow(0,0,10,10,10,0);
+
+	//cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
+
+	//SDL_ShowSimpleMessageBox(
+	//	SDL_MESSAGEBOX_INFORMATION,
+	//	"File dropped on window",
+	//	"what the heck is this",
+	//	App->window->window
+	//);
+
 	return true;
 
 }
@@ -235,13 +248,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	App->scene_controller->Draw();
-
-	if (conf_wireframe)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	
+	//App->scene_controller->Draw();
+	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
 	float d = 200.0f;
@@ -256,12 +264,31 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	glEnd();
 
+	if (conf_draw == 0)
+		FillDraw();
+	else if (conf_draw == 1)
+		LineDraw();
+	else
+	{
+		FillDraw();
+		glLineWidth(2.0f);
+		glColor3f(0, 0, 0);
+		LineDraw();
+	}
+	
+	//glColor3f(1, 1, 0);
+
+	
+	/*
 	//draw a line
 
 	glLineWidth(2.0f);
 	glBegin(GL_LINES);  
 	glVertex3f(0.f, 0.f, 0.f);  
 	glVertex3f(0.f, 10.f, 0.f); 
+
+	//arr->draw(0,0,0);
+
 	glEnd();
 	glLineWidth(1.0f);
 
@@ -277,14 +304,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertex3f(-0.5f, -0.5f, 0.5f); // G
 	glVertex3f(-0.5f, 0.5f, 0.5f); // H
 	*/
-
 	//glEnableClientState(GL_VERTEX_ARRAY);
 	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	//glVertexPointer(3, GL_FLOAT, 0, NULL);
 	//// ... draw other buffers
 	//glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
 	//glDisableClientState(GL_VERTEX_ARRAY);
-	
+	/*
 	//draw a quad
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
@@ -345,7 +371,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	
 	glEnd();
 
-	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -356,13 +381,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	sph->draw(0, 0, 0);
-	//sph->move(0.1, 0.1, 0.1);
-
-	lin->draw(0, 0, 0);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
+	*/
+	
 
 	App->UI->Draw();
 
@@ -473,6 +493,76 @@ void ModuleRenderer3D::disable_flag_texture_2D()
 	glDisable(GL_TEXTURE_2D);
 }
 
+NOTphere* ModuleRenderer3D::AddSphere(float radius, double rings, double stacks, float x, float y, float z)
+{
+	NOTphere* prim = new NOTphere(radius,rings,stacks);
+	
+	prim->move(x, y, z);
+	primitive_vector.push_back(prim);
+	return prim;
+}
+
+NOTarrow* ModuleRenderer3D::AddArrow(float x1, float y1, float z1, float x2, float y2, float z2)
+{
+	NOTarrow* prim = new NOTarrow(x1, y1, z1, x2, y2, z2);
+	primitive_vector.push_back(prim);
+
+	return prim;
+}
+
+NOTcube* ModuleRenderer3D::AddCube(float widthx, float height, float widthz, float x, float y, float z)
+{
+	NOTcube* prim = new NOTcube(widthx, height, widthz);
+
+	prim->move(x, y, z);
+	primitive_vector.push_back(prim);
+
+	return prim;
+}
+
+NOTlinder* ModuleRenderer3D::AddCylinder(float radius, float sector, float stacks, float height, float x, float y, float z)
+{
+	NOTlinder* prim = new NOTlinder(radius, sector, stacks, height);
+
+	prim->move(x, y, z);
+	primitive_vector.push_back(prim);
+
+	return prim;
+}
+
+void ModuleRenderer3D::AddElement(NOTprimitive* p)
+{
+	primitive_vector.push_back(p);
+}
+
+void ModuleRenderer3D::FillDraw()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void ModuleRenderer3D::LineDraw()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
 void ModuleRenderer3D::Configuration()
 {
 	bool prev_conf_depth_test = conf_depth_test;
@@ -483,12 +573,17 @@ void ModuleRenderer3D::Configuration()
 
 	if (ImGui::CollapsingHeader("OpenGL Settings"))
 	{
+		ImGui::Text("Draw Mode");
+		ImGui::RadioButton("Fill", &conf_draw, 0); ImGui::SameLine();
+		ImGui::RadioButton("Wireframe", &conf_draw, 1); ImGui::SameLine();
+		ImGui::RadioButton("Debug", &conf_draw, 2);
+		ImGui::Separator();
+		ImGui::Text("Draw settings");
 		ImGui::Checkbox("depth_test", &conf_depth_test); ImGui::SameLine(150);
 		ImGui::Checkbox("cull_face", &conf_cull_face);
 		ImGui::Checkbox("lighting", &conf_lighting); ImGui::SameLine(150);
 		ImGui::Checkbox("color_material", &conf_color_material);
-		ImGui::Checkbox("texture_2D", &conf_texture_2D); ImGui::SameLine(150);
-		ImGui::Checkbox("wireframe", &conf_wireframe);
+		ImGui::Checkbox("texture_2D", &conf_texture_2D);	
 	}
 
 	if (prev_conf_depth_test != conf_depth_test)
@@ -551,3 +646,4 @@ void ModuleRenderer3D::Configuration()
 		}
 	}
 }
+

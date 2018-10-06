@@ -9,6 +9,9 @@
 
 class NOTphere;
 class NOTlinder;
+class NOTarrow;
+class NOTcube;
+class NOTprimitive;
 
 class ModuleRenderer3D : public Module
 {
@@ -39,57 +42,6 @@ public:
 	std::vector<float> vertices2;
 	std::vector<uint> vertex_order;
 
-/*
-	//0.5f, -0.5f, -0.5f, // A
-	//	0.5f, 0.5f, -0.5f, // B
-	//	0.5f, 0.5f, 0.5f, // D
-
-	//	0.5f, 0.5f, 0.5f, // D
-	//	0.5f, -0.5f, 0.5f, // C
-	//	0.5f, -0.5f, -0.5f, // A
-
-	//	0.5f, 0.5f, -0.5f, // B
-	//	-0.5f, 0.5f, -0.5f, // F
-	//	-0.5f, 0.5f, 0.5f, // H
-
-	//	-0.5f, 0.5f, 0.5f, // H
-	//	0.5f, 0.5f, 0.5f, // D
-	//	0.5f, 0.5f, -0.5f, // B
-
-	//	-0.5f, 0.5f, -0.5f, // F
-	//	-0.5f, -0.5f, -0.5f, // E
-	//	-0.5f, -0.5f, 0.5f, // G
-
-	//	-0.5f, -0.5f, 0.5f, // G
-	//	-0.5f, 0.5f, 0.5f, // H
-	//	-0.5f, 0.5f, -0.5f, // F
-
-	//	-0.5f, -0.5f, -0.5f, // E
-	//	0.5f, -0.5f, -0.5f, // A
-	//	0.5f, -0.5f, 0.5f, // C
-
-	//	0.5f, -0.5f, 0.5f, // C
-	//	-0.5f, -0.5f, 0.5f, // G
-	//	-0.5f, -0.5f, -0.5f, // E
-
-	//	0.5f, -0.5f, 0.5f, // C
-	//	0.5f, 0.5f, 0.5f, // D
-	//	-0.5f, 0.5f, 0.5f, // H
-
-	//	-0.5f, 0.5f, 0.5f, // H
-	//	-0.5f, -0.5f, 0.5f, // G
-	//	0.5f, -0.5f, 0.5f, // C
-
-	//	-0.5f, -0.5f, -0.5f, // E
-	//	-0.5f, 0.5f, -0.5f, // F
-	//	0.5f, 0.5f, -0.5f, // B
-
-	//	0.5f, 0.5f, -0.5f,// B
-	//	0.5f, -0.5f, -0.5f, // A
-	//	-0.5f, -0.5f, -0.5f // E
-	*/
-
-
 
 	//mat3x3 NormalMatrix;
 	//mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
@@ -114,12 +66,22 @@ public:
 	bool conf_lighting = false;
 	bool conf_color_material = false;
 	bool conf_texture_2D = false;
-	bool conf_wireframe = false;
+	int conf_draw = 0;
 
 	void Configuration();
 
 	NOTphere* sph;
 	NOTlinder* lin;
+	NOTarrow* arr;
+	NOTcube* cub;
+
+	NOTphere* AddSphere(float radius, double rings, double stacks,				 float x = 0, float y = 0, float z = 0);
+	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
+	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
+	NOTarrow* AddArrow(float x1,float y1, float z1, float x2, float y2, float z2);
+	void AddElement(NOTprimitive*);
+
+	std::vector<NOTprimitive*> primitive_vector;
 
 	//void DrawQuad(	std::vector<float> point1,
 	//				std::vector<float> point2,
@@ -127,4 +89,7 @@ public:
 	//				std::vector<float> point4);
 
 		//DOESN'T ACTUALLY DRAW QUADS
+private:
+	void FillDraw();
+	void LineDraw();
 };
