@@ -19,7 +19,7 @@ public:
 
 	void store_app_FPS(float value);
 	void store_app_ms(float value);
-	void store_memory();
+	float store_memory();
 
 	bool conf_depth_test = false;
 	bool conf_cull_face = false;
@@ -35,6 +35,8 @@ private:
 	std::vector<float> fps_app;
 	std::vector<float> ms_app;
 	std::vector<float> memory;
+
+	float peak = 0;
 
 	// Calculate average value from vector function and value
 	float avg;

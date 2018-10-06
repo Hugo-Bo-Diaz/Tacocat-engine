@@ -11,6 +11,7 @@ UI_Configuration::UI_Configuration()
 
 	fps_app.resize(GRAPH_SIZE);
 	ms_app.resize(GRAPH_SIZE);
+	memory.resize(GRAPH_SIZE);
 }
 
 UI_Configuration::~UI_Configuration()
@@ -52,8 +53,10 @@ void UI_Configuration::Render()
 
 		//TODO: Plot histogram memory consumption
 		ImGui::Text("Memory");
-		store_memory();
-		ImGui::PlotHistogram("", &memory[0], memory.size(), 0, NULL, 0.0f, /*float(fps)*/20.0f, ImVec2(200, 100));
+		peak = store_memory();
+		Calc_avg(memory);
+		sprintf_s(title, 25, "%.1f ", avg);
+		ImGui::PlotHistogram("", &memory[0], memory.size(), 0, title, 0.0f, peak, ImVec2(200, 100));
 	}
 	for (std::list<Module*>::iterator it = App->list_modules.begin(); it != App->list_modules.end(); it++)
 	{
@@ -116,7 +119,7 @@ void UI_Configuration::store_app_ms(float value)
 	}
 }
 
-void UI_Configuration::store_memory()
+float UI_Configuration::store_memory()
 {
 	sMStats stats = m_getMemoryStatistics();
 
@@ -132,6 +135,8 @@ void UI_Configuration::store_memory()
 		}
 		memory[memory.size() - 1] = (float)stats.totalReportedMemory;
 	}
+
+	return (float)stats.peakReportedMemory * 1.2f;
 }
 
 void UI_Configuration::Calc_avg(std::vector<float> aux) {
