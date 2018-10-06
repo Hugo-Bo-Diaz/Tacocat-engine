@@ -309,6 +309,12 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="ArrowMine.h" />
+    <ClInclude Include="CubeMine.h" />
+    <ClInclude Include="ModuleMeshLoader.h" />
+    <ClInclude Include="ModuleTextureLoader.h" />
+    <ClInclude Include="Primitivedelete.h" />
+    <ClInclude Include="UI_Primitives.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -491,6 +497,12 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="ArrowMine.cpp" />
+    <ClCompile Include="CubeMine.cpp" />
+    <ClCompile Include="ModuleMeshLoader.cpp" />
+    <ClCompile Include="ModuleTextureLoader.cpp" />
+    <ClCompile Include="Primitivedelete.cpp" />
+    <ClCompile Include="UI_Primitives.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">
