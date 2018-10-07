@@ -5,6 +5,9 @@
 #include "Light.h"
 #include <vector>
 
+#include "Glew/include/glew.h"
+#include "SDL\include\SDL_opengl.h"
+
 #define MAX_LIGHTS 8
 
 class NOTphere;
@@ -82,6 +85,8 @@ public:
 	void AddElement(NOTprimitive*);
 
 	std::vector<NOTprimitive*> primitive_vector;
+	
+	GLuint texture_buffer =0;
 
 	//void DrawQuad(	std::vector<float> point1,
 	//				std::vector<float> point2,

@@ -207,13 +207,32 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+	GLubyte checkImage[7][7][4];
+	for (int i = 0; i < 7; i++) {
+		for (int j = 0; j < 7; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &texture_buffer);
+	glBindTexture(GL_TEXTURE_2D, texture_buffer);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 7, 7,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 	//sph = AddSphere(1.5, 20, 20,1,0,10);
 
 	//lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
 
 	//arr = AddArrow(0,0,10,10,10,0);
 
-	//cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
+	cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
 
 	//SDL_ShowSimpleMessageBox(
 	//	SDL_MESSAGEBOX_INFORMATION,
