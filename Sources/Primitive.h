@@ -12,6 +12,8 @@ public:
 	float* tex_coords;
 	uint buffer_id;
 
+	uint texture = 0;
+
 	NOTprimitive() {};
 
 	/*

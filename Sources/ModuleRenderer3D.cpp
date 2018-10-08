@@ -476,8 +476,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
 	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	
-	
 
 	App->UI->Draw();
 

@@ -15,11 +15,13 @@ public:
 	ModuleTextureLoader(bool start_enabled = true);
 	~ModuleTextureLoader();
 
-	bool Init();
+	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
 
 	uint LoadTexture(const char* file);
+
+	uint texturelol = 0;
 
 public:
 

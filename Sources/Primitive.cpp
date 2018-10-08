@@ -11,8 +11,11 @@ void NOTprimitive::draw()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
+	//glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
+	if (texture != 0)
+		glBindTexture(GL_TEXTURE_2D, texture);
+	else
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, 0, tex_coords);

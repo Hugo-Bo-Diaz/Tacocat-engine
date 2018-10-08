@@ -134,7 +134,28 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
-				App->mesh_loader->Load(e.drop.file);
+				std::string filename = e.drop.file;
+				std::string extension;
+				bool isextension = false;
+				for (int i = 0; i < filename.length(); ++i)
+				{
+					if (filename[i] == 46)//46 is the . in ascii
+					{
+						isextension = true;
+					}
+					if (isextension)
+					{
+						extension += filename[i];
+					}
+				}
+				if (extension == ".fbx")
+				{
+					App->mesh_loader->Load(e.drop.file);
+				}
+				else if (extension == ".png" || extension == ".dss")
+				{
+					App->tex_loader->LoadTexture(e.drop.file);
+				}
 			break;
 		}
 	}
