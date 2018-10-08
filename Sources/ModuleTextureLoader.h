@@ -19,6 +19,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	uint LoadTexture(const char* file);
+
 public:
 
 };

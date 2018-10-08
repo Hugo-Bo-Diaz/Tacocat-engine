@@ -71,7 +71,21 @@ uint* ModuleMeshLoader::Load(const char* file)
 					else
 						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
+			}				
+			if (iterator->HasTextureCoords(0))
+			{
+				//m->num_index = iterator->mNumFaces * 3;
+				//m->index = new uint[m->num_index]; // assume each face is a triangle
+				m->tex_coords = new float[m->num_index * 2];
+				uint w = 0;
+				for (uint i = 0; i < iterator->mNumVertices; i+=2)
+				{
+					memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
+					memcpy(&m->tex_coords[i+1], &iterator->mTextureCoords[0][w].y, sizeof(float));
+					++w;
+				}
 			}
+
 		glGenBuffers(1, (GLuint*) &(m->buffer_id));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
@@ -92,7 +106,19 @@ uint* ModuleMeshLoader::Load(const char* file)
 void NOTmesh::draw()
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
+
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, tex_coords);
+
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
 }

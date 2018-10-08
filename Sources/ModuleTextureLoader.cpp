@@ -52,8 +52,11 @@ update_status ModuleTextureLoader::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-//void ModuleSceneController::Draw()
-//{
-//
-//
-//}
+uint ModuleTextureLoader::LoadTexture(const char* file)
+{
+	uint buffernumber = -1;
+
+
+
+	return buffernumber;
+}

@@ -207,8 +207,8 @@ bool ModuleRenderer3D::Start()
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	for (int i = 0; i < 7; i++) {
-		for (int j = 0; j < 7; j++) {
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
 			checkImage[i][j][0] = (GLubyte)c;
 			checkImage[i][j][1] = (GLubyte)c;
@@ -223,7 +223,7 @@ bool ModuleRenderer3D::Start()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 7, 7,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 100, 100,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 
 	//sph = AddSphere(1.5, 20, 20,1,0,10);
@@ -338,67 +338,131 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	//Front face
-		//pt 1
-	glVertex3f(2.5f, -0.5f, -0.5f); // A
-	glVertex3f(2.5f, 0.5f, -0.5f); // B
-	glVertex3f(2.5f, 0.5f, 0.5f); // D
+		//pt 1	
+
+	glTexCoord2f(0,0);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	glTexCoord2f(0,1);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(1,1);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
 
 		//pt 2
-	glVertex3f(2.5f, 0.5f, 0.5f); // D
-	glVertex3f(2.5f, -0.5f, 0.5f); // C
-	glVertex3f(2.5f, -0.5f, -0.5f); // A
-	//Right face in truth it's the top
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+	glTexCoord2f(1, 0);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	//Right face but really it's the top
 		//pt 1
-	glVertex3f(2.5f, 0.5f, -0.5f); // B
-	glVertex3f(1.5f, 0.5f, -0.5f); // F
-	glVertex3f(1.5f, 0.5f, 0.5f); // H
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(0, 1);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
 		//pt 2
-	glVertex3f(1.5f, 0.5f, 0.5f); // H
-	glVertex3f(2.5f, 0.5f, 0.5f); // D
-	glVertex3f(2.5f, 0.5f, -0.5f); // B
 
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
 
-	glBegin(GL_TRIANGLES);
+	glTexCoord2f(1, 0);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
 
 
 	//Back face
 		//pt 1
-	glVertex3f(1.5f, 0.5f, -0.5f); // F
-	glVertex3f(1.5f, -0.5f, -0.5f); // E
-	glVertex3f(1.5f, -0.5f, 0.5f); // G
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+	glTexCoord2f(0, 1);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
 		//pt 2
-	glVertex3f(1.5f, -0.5f, 0.5f); // G
-	glVertex3f(1.5f, 0.5f, 0.5f); // H
-	glVertex3f(1.5f, 0.5f, -0.5f); // F
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // Hç
+
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+
 	//Left face actually its bottom
 		//pt 1
-	glVertex3f(1.5f, -0.5f, -0.5f); // E
-	glVertex3f(2.5f, -0.5f, -0.5f); // A
-	glVertex3f(2.5f, -0.5f, 0.5f); // C
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
+	glTexCoord2f(0, 1);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
 		//pt 2
-	glVertex3f(2.5f, -0.5f, 0.5f); // C
-	glVertex3f(1.5f, -0.5f, 0.5f); // G
-	glVertex3f(1.5f, -0.5f, -0.5f); // E
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
 	//Top ???
 		//pt 1
-	glVertex3f(2.5f, -0.5f, 0.5f); // C
-	glVertex3f(2.5f, 0.5f, 0.5f); // D
-	glVertex3f(1.5f, 0.5f, 0.5f); // H
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
 
-	glVertex3f(1.5f, 0.5f, 0.5f); // H
-	glVertex3f(1.5f, -0.5f, 0.5f); // G
-	glVertex3f(2.5f, -0.5f, 0.5f); // C
+	glTexCoord2f(0, 1);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
 	//Bottom ???
 		//pt 1
-	glVertex3f(1.5f, -0.5f, -0.5f); // E
-	glVertex3f(1.5f, 0.5f, -0.5f); // F
-	glVertex3f(2.5f, 0.5f, -0.5f); // B
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	
+	glTexCoord2f(0, 1);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
 
-	glVertex3f(2.5f, 0.5f, -0.5f); // B
-	glVertex3f(2.5f, -0.5f, -0.5f); // A
-	glVertex3f(1.5f, -0.5f, -0.5f); // E
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(1, 0);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
 	
 	glEnd();
 
