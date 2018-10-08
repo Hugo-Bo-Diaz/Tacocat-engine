@@ -15,7 +15,7 @@ void NOTprimitive::draw()
 	glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
 
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, &texture_coords[0]);
+	glTexCoordPointer(2, GL_FLOAT, 0, &App->renderer3D->checkImage[0]);
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 

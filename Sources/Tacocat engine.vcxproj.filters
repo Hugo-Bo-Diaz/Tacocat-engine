@@ -309,12 +309,22 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="ArrowMine.h" />
-    <ClInclude Include="CubeMine.h" />
-    <ClInclude Include="ModuleMeshLoader.h" />
-    <ClInclude Include="ModuleTextureLoader.h" />
     <ClInclude Include="Primitivedelete.h" />
-    <ClInclude Include="UI_Primitives.h" />
+    <ClInclude Include="ArrowMine.h">
+      <Filter>Sources\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMine.h">
+      <Filter>Sources\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextureLoader.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleMeshLoader.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Primitives.h">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -497,12 +507,22 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="ArrowMine.cpp" />
-    <ClCompile Include="CubeMine.cpp" />
-    <ClCompile Include="ModuleMeshLoader.cpp" />
-    <ClCompile Include="ModuleTextureLoader.cpp" />
     <ClCompile Include="Primitivedelete.cpp" />
-    <ClCompile Include="UI_Primitives.cpp" />
+    <ClCompile Include="ArrowMine.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMine.cpp">
+      <Filter>Sources\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextureLoader.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleMeshLoader.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Primitives.cpp">
+      <Filter>Sources\Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

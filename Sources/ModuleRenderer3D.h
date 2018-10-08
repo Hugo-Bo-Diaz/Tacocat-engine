@@ -87,6 +87,8 @@ public:
 	std::vector<NOTprimitive*> primitive_vector;
 	
 	GLuint texture_buffer =0;
+	GLubyte checkImage[7][7][4];
+
 
 	//void DrawQuad(	std::vector<float> point1,
 	//				std::vector<float> point2,

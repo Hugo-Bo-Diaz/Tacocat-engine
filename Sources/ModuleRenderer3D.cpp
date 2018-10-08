@@ -183,31 +183,30 @@ bool ModuleRenderer3D::Start()
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	vertices2 = { 2.5, -0.5, 1.5, // A = 0
-		2.5, 0.5, 1.5, // B = 1
-		2.5, -0.5, 2.5, // C = 2
-		2.5, 0.5, 2.5, // D = 3
-		1.5, -0.5, 1.5, // E = 4
-		1.5, 0.5, 1.5, // F = 5
-		1.5, -0.5, 2.5, // G = 6
-		1.5, 0.5, 2.5, // H = 7
+	//vertices2 = { 2.5, -0.5, 1.5, // A = 0
+	//	2.5, 0.5, 1.5, // B = 1
+	//	2.5, -0.5, 2.5, // C = 2
+	//	2.5, 0.5, 2.5, // D = 3
+	//	1.5, -0.5, 1.5, // E = 4
+	//	1.5, 0.5, 1.5, // F = 5
+	//	1.5, -0.5, 2.5, // G = 6
+	//	1.5, 0.5, 2.5, // H = 7
 
-	};
+	//};
 
-	vertex_order = 
-	{	0,1,3, 3,2,0,
-		1,5,7,  7,3,1,
-		5,4,6,  6,7,5,
-		4,0,2,  2,6,4,
-		2,3,7,  7,6,2,
-		4,5,1,  1,0,4 };
+	//vertex_order = 
+	//{	0,1,3, 3,2,0,
+	//	1,5,7,  7,3,1,
+	//	5,4,6,  6,7,5,
+	//	4,0,2,  2,6,4,
+	//	2,3,7,  7,6,2,
+	//	4,5,1,  1,0,4 };
 
-	glGenBuffers(1, (GLuint*) &(my_id2));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//glGenBuffers(1, (GLuint*) &(my_id2));
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	GLubyte checkImage[7][7][4];
 	for (int i = 0; i < 7; i++) {
 		for (int j = 0; j < 7; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
@@ -226,13 +225,14 @@ bool ModuleRenderer3D::Start()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 7, 7,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+
 	//sph = AddSphere(1.5, 20, 20,1,0,10);
 
 	//lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
 
 	//arr = AddArrow(0,0,10,10,10,0);
 
-	cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
+	//cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
 
 	//SDL_ShowSimpleMessageBox(
 	//	SDL_MESSAGEBOX_INFORMATION,
@@ -268,6 +268,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	//App->scene_controller->Draw();
+	glBindTexture(GL_TEXTURE_2D,0);
 	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
@@ -329,8 +330,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//// ... draw other buffers
 	//glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
 	//glDisableClientState(GL_VERTEX_ARRAY);
-	/*
+	
 	//draw a quad
+
+	glBindTexture(GL_TEXTURE_2D, texture_buffer);
+
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	//Front face
@@ -338,6 +342,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertex3f(2.5f, -0.5f, -0.5f); // A
 	glVertex3f(2.5f, 0.5f, -0.5f); // B
 	glVertex3f(2.5f, 0.5f, 0.5f); // D
+
 		//pt 2
 	glVertex3f(2.5f, 0.5f, 0.5f); // D
 	glVertex3f(2.5f, -0.5f, 0.5f); // C
@@ -351,6 +356,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertex3f(1.5f, 0.5f, 0.5f); // H
 	glVertex3f(2.5f, 0.5f, 0.5f); // D
 	glVertex3f(2.5f, 0.5f, -0.5f); // B
+
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBegin(GL_TRIANGLES);
+
+
 	//Back face
 		//pt 1
 	glVertex3f(1.5f, 0.5f, -0.5f); // F
@@ -391,16 +403,16 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glEnd();
 
 
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
-	glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	*/
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
+	//glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
+	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
 	
 
 	App->UI->Draw();
