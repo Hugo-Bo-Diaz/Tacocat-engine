@@ -50,10 +50,11 @@ uint* ModuleMeshLoader::Load(const char* file)
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{	
-		NOTmesh* m = new NOTmesh();
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
+			NOTmesh* m = new NOTmesh();
+
 			aiMesh* iterator = scene->mMeshes[i];
 
 			m->num_vertex = iterator->mNumVertices;
@@ -66,7 +67,6 @@ uint* ModuleMeshLoader::Load(const char* file)
 				for (uint i = 0; i < iterator->mNumFaces; ++i)
 				{
 					if (iterator->mFaces[i].mNumIndices != 3)
-						//LOG("WARNING, geometry face with != 3 indices!");
 						App->UI->console->AddLog("geometry messed up");
 					else
 						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
@@ -78,7 +78,7 @@ uint* ModuleMeshLoader::Load(const char* file)
 				//m->index = new uint[m->num_index]; // assume each face is a triangle
 				m->tex_coords = new float[m->num_index * 2];
 				uint w = 0;
-				for (uint i = 0; i < iterator->mNumVertices; i+=2)
+				for (uint i = 0; i < iterator->mNumVertices*2; i+=2)
 				{
 					memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
 					memcpy(&m->tex_coords[i+1], &iterator->mTextureCoords[0][w].y, sizeof(float));
@@ -91,8 +91,10 @@ uint* ModuleMeshLoader::Load(const char* file)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		}
 		App->renderer3D->AddElement(m);
+
+		}
+
 		App->UI->console->AddLog("Loaded %s", file);
 
 		aiReleaseImport(scene);
@@ -109,19 +111,28 @@ void NOTmesh::draw()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 
 	if (texture != 0)
-		glBindTexture(GL_TEXTURE_2D, texture);
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindTexture(GL_TEXTURE_2D, texture);	
+	}
 	else
+	{
 		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, tex_coords);
+	glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	if (texture != 0)
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	}	
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 }

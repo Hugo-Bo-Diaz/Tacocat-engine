@@ -148,7 +148,7 @@ update_status ModuleInput::PreUpdate(float dt)
 						extension += filename[i];
 					}
 				}
-				if (extension == ".fbx")
+				if (extension == ".FBX" || extension == ".fbx")
 				{
 					App->mesh_loader->Load(e.drop.file);
 				}

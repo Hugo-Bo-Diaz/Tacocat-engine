@@ -94,6 +94,7 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
 			0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		//Delete file from memory
 		ilDeleteImages(1, &buffernumber);
@@ -102,7 +103,9 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		int i = 0;
 		for (std::vector<NOTprimitive*>::iterator it = App->renderer3D->primitive_vector.begin(); it != App->renderer3D->primitive_vector.end(); it++)
 		{
-			(*it)->texture = buffernumber;
+			//if (i==0)
+				(*it)->texture = buffernumber;
+
 			++i;
 		}
 		App->UI->console->AddLog("Applied texture to %d mesh(es)", i);

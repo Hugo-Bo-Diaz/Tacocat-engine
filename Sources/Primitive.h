@@ -8,7 +8,6 @@ class NOTprimitive
 public:
 	std::vector<float> vertices;
 	std::vector<uint> indices;
-	std::vector<uint> texture_coords;
 	float* tex_coords;
 	uint buffer_id;
 
