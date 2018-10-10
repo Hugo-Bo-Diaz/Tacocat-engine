@@ -64,8 +64,8 @@ public:
 	void enable_flag_texture_2D();
 	void disable_flag_texture_2D();
 
-	bool conf_depth_test = false;
-	bool conf_cull_face = false;
+	bool conf_depth_test = true;
+	bool conf_cull_face = true;
 	bool conf_lighting = false;
 	bool conf_color_material = false;
 	bool conf_texture_2D = false;
