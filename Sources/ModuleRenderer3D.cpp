@@ -110,12 +110,17 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
+		if (conf_depth_test)
+			glEnable(GL_DEPTH_TEST);
+		if (conf_cull_face)
+			glEnable(GL_CULL_FACE);
+		if (conf_lighting)
+			glEnable(GL_LIGHTING);
+		if (conf_color_material)
+			glEnable(GL_COLOR_MATERIAL);
+		if (conf_texture_2D)
+			glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
