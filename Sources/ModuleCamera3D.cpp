@@ -60,7 +60,10 @@ update_status ModuleCamera3D::Update(float dt)
 	Position.Set(newPos.x + Position.x, newPos.y + Position.y, newPos.z + Position.z);
 	Reference.Set(newPos.x + Position.x, newPos.y + Position.y, newPos.z + Position.z);
 
-	
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	{
+		Reference = (0.0f, 0.0f, 0.0f);
+	}
 
 	//Position.setX(newPos.x);
 	//Position.setY(newPos.y);
@@ -103,7 +106,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position = Reference + Z * length(Position);
 	}
-
+	
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
 
