@@ -34,6 +34,7 @@ bool ModuleUI::Init()
 	config = new UI_Configuration();
 	console = new UI_Console();
 	primitives = new UI_Primitives();
+	properties = new UI_Properties();
 
 	UI_Elements.push_back(about);
 	UI_Elements.push_back(config);
@@ -87,6 +88,8 @@ update_status ModuleUI::Update(float dt)
 		{
 			if (ImGui::MenuItem("Primitives"))
 				primitives->Enable(!primitives->isEnabled());
+			if (ImGui::MenuItem("Model Properties"))
+				properties->Enable(!properties->isEnabled());
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))

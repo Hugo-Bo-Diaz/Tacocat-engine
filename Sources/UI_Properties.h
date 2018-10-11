@@ -5,6 +5,7 @@
 
 class UI_Properties : public UI
 {
+public:
 	UI_Properties();
 	~UI_Properties();
 

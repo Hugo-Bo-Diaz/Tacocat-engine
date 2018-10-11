@@ -2,7 +2,8 @@
 
 UI_Properties::UI_Properties()
 {
-
+	Enable(false);
+	setPos(ImVec2(20, 20));
 }
 
 UI_Properties::~UI_Properties()
