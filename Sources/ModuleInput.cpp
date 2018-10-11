@@ -134,6 +134,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
+				App->UI->console->AddLog("File dropped in window %s", e.drop.file);
 				std::string filename = e.drop.file;
 				std::string extension;
 				bool isextension = false;
