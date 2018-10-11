@@ -10,6 +10,7 @@
 #include "UI_Configuration.h"
 #include "UI_Console.h"
 #include "UI_Primitives.h"
+#include "UI_Properties.h"
 
 class ModuleUI : public Module
 {
@@ -25,6 +26,7 @@ public:
 	UI_Configuration* config;
 	UI_Console* console;
 	UI_Primitives* primitives;
+	UI_Properties* properties;
 
 	//Send the fps data to the config window
 	void send_FPSdata(float value, float ms);
