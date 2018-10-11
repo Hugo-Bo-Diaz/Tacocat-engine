@@ -55,7 +55,7 @@ void UI_Configuration::Render()
 		ImGui::Text("Memory");
 		peak = store_memory();
 		Calc_avg(memory);
-		sprintf_s(title, 25, "%.1f ", avg);
+		sprintf_s(title, 25, "%.1f MB", avg);
 		ImGui::PlotHistogram("", &memory[0], memory.size(), 0, title, 0.0f, peak, ImVec2(200, 100));
 	}
 	for (std::list<Module*>::iterator it = App->list_modules.begin(); it != App->list_modules.end(); it++)
@@ -125,7 +125,7 @@ float UI_Configuration::store_memory()
 
 	if (memory.capacity() != memory.size())
 	{
-		memory.push_back((float)stats.totalReportedMemory);
+		memory.push_back((float)stats.totalReportedMemory / 8192);
 	}
 	else
 	{
@@ -133,10 +133,10 @@ float UI_Configuration::store_memory()
 		{
 			memory[val] = memory[val + 1];
 		}
-		memory[memory.size() - 1] = (float)stats.totalReportedMemory;
+		memory[memory.size() - 1] = (float)stats.totalReportedMemory / 8192;
 	}
 
-	return (float)stats.peakReportedMemory * 1.2f;
+	return ((float)stats.peakReportedMemory / 8192) * 1.2f;
 }
 
 void UI_Configuration::Calc_avg(std::vector<float> aux) {

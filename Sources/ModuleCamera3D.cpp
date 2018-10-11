@@ -63,12 +63,6 @@ update_status ModuleCamera3D::Update(float dt)
 
 	newPos = { 0,0,0 };
 
-
-	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
-	{
-		Reference = (0.0f, 0.0f, 0.0f);
-	}
-
 	//Position.setX(newPos.x);
 	//Position.setY(newPos.y);
 	//Position.setZ(newPos.z);
@@ -76,8 +70,13 @@ update_status ModuleCamera3D::Update(float dt)
 
 	// Mouse motion ----------------
 
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT || (App->input->GetKey(SDL_SCANCODE_LALT) && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT))
 	{
+		if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			Reference = (0.0f, 0.0f, 0.0f);
+		}
+
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
