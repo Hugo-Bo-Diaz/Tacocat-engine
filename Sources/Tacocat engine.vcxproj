@@ -169,6 +169,7 @@
     <ClInclude Include="UI_Configuration.h" />
     <ClInclude Include="UI_Console.h" />
     <ClInclude Include="UI_Primitives.h" />
+    <ClInclude Include="UI_Properties.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="UI_Configuration.cpp" />
     <ClCompile Include="UI_Console.cpp" />
     <ClCompile Include="UI_Primitives.cpp" />
+    <ClCompile Include="UI_Properties.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl" />
