@@ -39,11 +39,11 @@ public:
 	//math::float3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	
-	uint my_id = 0;
-	uint my_id2 = 0;
-	std::vector<float> vertices;
-	std::vector<float> vertices2;
-	std::vector<uint> vertex_order;
+	//uint my_id = 0;
+	//uint my_id2 = 0;
+	//std::vector<float> vertices;
+	//std::vector<float> vertices2;
+	//std::vector<uint> vertex_order;
 
 
 	//mat3x3 NormalMatrix;
@@ -73,21 +73,18 @@ public:
 
 	void Configuration();
 
-	NOTphere* sph;
-	NOTlinder* lin;
-	NOTarrow* arr;
-	NOTcube* cub;
-
 	NOTphere* AddSphere(float radius, double rings, double stacks,				 float x = 0, float y = 0, float z = 0);
 	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
 	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
 	NOTarrow* AddArrow(float x1,float y1, float z1, float x2, float y2, float z2);
 	void AddElement(NOTprimitive*);
+	void AddMesh(NOTmesh*);
 
 	std::vector<NOTprimitive*> primitive_vector;
+	std::vector<NOTmesh*> mesh_vector;
 	
-	GLuint texture_buffer =0;
-	GLubyte checkImage[100][100][4];
+	GLuint checkers_texture = 0;
+	GLubyte checkImage[128][128][4];
 
 
 	//void DrawQuad(	std::vector<float> point1,

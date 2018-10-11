@@ -12,7 +12,7 @@
 
 #define MAX_SNAKE 2
 
-class NOTmesh : public NOTprimitive
+class NOTmesh 
 {
 public:
 	//uint id_index = 0; // index in VRAM
