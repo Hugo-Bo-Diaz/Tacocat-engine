@@ -84,9 +84,11 @@ public:
 	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
 	NOTarrow* AddArrow(float x1,float y1, float z1, float x2, float y2, float z2);
 	void AddElement(NOTprimitive*);
+	void AddMesh(NOTmesh*);
 
 	std::vector<NOTprimitive*> primitive_vector;
-	
+	std::vector<NOTmesh*> mesh_vector;
+
 	GLuint texture_buffer =0;
 	GLubyte checkImage[100][100][4];
 
