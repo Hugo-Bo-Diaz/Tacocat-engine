@@ -45,6 +45,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef AI_QUATERNION_INL_INC
 #define AI_QUATERNION_INL_INC
 
+#define PI 3.14159265359
+
 #ifdef __cplusplus
 #include "quaternion.h"
 

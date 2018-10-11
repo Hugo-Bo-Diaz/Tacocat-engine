@@ -47,6 +47,8 @@ bool ModuleMeshLoader::CleanUp()
 
 uint* ModuleMeshLoader::Load(const char* file)
 {
+	names.clear();
+
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{	
@@ -85,18 +87,49 @@ uint* ModuleMeshLoader::Load(const char* file)
 					++w;
 				}
 			}
-
+			//if (iterator->HasNormals())
+			//{
+			//	m->normals = new float[iterator->mNumFaces * 3]; // assume each face is a triangle
+			//	for (uint i = 0; i < iterator->mNumFaces * 3; i)
+			//	{
+			//		m->normals[i] = iterator->mNormals[i++].x;
+			//		m->normals[i] = iterator->mNormals[i++].y;
+			//		m->normals[i] = iterator->mNormals[i++].z;
+			//	}
+			//}
+		
 		glGenBuffers(1, (GLuint*) &(m->buffer_id));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		App->renderer3D->AddMesh(m);
-
+		name = iterator->mName.C_Str();
+		aiQuaterniont <float> quat;
+		scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling,quat,m->position);
+		m->rotation = quat.GetEuler();
 		}
+		
+		App->UI->console->AddLog("Loaded %d meshes %s", scene->mNumMeshes, file);
 
-		App->UI->console->AddLog("Loaded %s", file);
+		if (scene->HasMaterials())
+		{
+			for (unsigned int i = 0; i < scene->mNumMaterials; i++)
+			{
+				const aiMaterial* material = scene->mMaterials[i];
+				aiString texturePath;
 
+				unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+
+				if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+				{
+					material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+					App->tex_loader->LoadTexture(texturePath.C_Str());
+				}
+
+			}
+		}
+		
 		aiReleaseImport(scene);
 	}
 	else

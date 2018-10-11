@@ -24,14 +24,12 @@ private:
 	void CalculateViewMatrix();
 
 public:
-	
-	//float3 X, Y, Z, Position, Reference;
 	vec3 X, Y, Z, Position, Reference;
 
 	vec3 newPos; 
+
 private:
 
-	//float4x4 ViewMatrix, ViewMatrixInverse;
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 
 };

@@ -28,6 +28,14 @@ public:
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
+	float* normals = nullptr;
+
+	std::string name;
+
+	aiVector3t<float> scaling;
+	aiVector3t< float > rotation;
+	aiVector3t< float > position;
+
 	void draw();
 
 	void Scale(float scalex,float scaley, float scalez)
@@ -50,6 +58,8 @@ public:
 
 	bool Start();
 	bool CleanUp();
+	
+	std::list<std::string> names;
 
 	//returns the memory index given by opengl
 	uint* Load(const char* filename);
