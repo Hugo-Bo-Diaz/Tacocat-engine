@@ -306,6 +306,7 @@
     <ClInclude Include="mmgr\nommgr.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Primitivedelete.h" />
     <ClInclude Include="ArrowMine.h">
       <Filter>Sources\Primitives</Filter>
     </ClInclude>
@@ -500,6 +501,7 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="Primitivedelete.cpp" />
     <ClCompile Include="ArrowMine.cpp">
       <Filter>Sources\Primitives</Filter>
     </ClCompile>

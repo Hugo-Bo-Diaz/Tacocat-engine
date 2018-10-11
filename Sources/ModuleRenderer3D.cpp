@@ -132,6 +132,86 @@ bool ModuleRenderer3D::Init()
 bool ModuleRenderer3D::Start()
 {
 
+	//vertices = {
+	//	//0 1 3
+	//	0.5, -0.5, -0.5, // A
+	//	0.5, 0.5, -0.5, // B
+	//	0.5, 0.5, 0.5, // D
+	//	//3 2 0
+	//	0.5, 0.5, 0.5, // D
+	//	0.5, -0.5, 0.5, // C
+	//	0.5, -0.5, -0.5, // A
+	//	//1 5 7
+	//	0.5, 0.5, -0.5, // B
+	//	-0.5, 0.5, -0.5, // F
+	//	-0.5, 0.5, 0.5, // H
+	//	//7 3 1
+	//	-0.5, 0.5, 0.5, // H
+	//	0.5, 0.5, 0.5, // D
+	//	0.5, 0.5, -0.5, // B
+	//	//5 4 6
+	//	-0.5, 0.5, -0.5, // F
+	//	-0.5, -0.5, -0.5, // E
+	//	-0.5, -0.5, 0.5, // G
+	//	//6 7 5
+	//	-0.5, -0.5, 0.5, // G
+	//	-0.5, 0.5, 0.5, // H
+	//	-0.5, 0.5, -0.5, // F
+	//	//4 0 2
+	//	-0.5, -0.5, -0.5, // E
+	//	0.5, -0.5, -0.5, // A
+	//	0.5, -0.5, 0.5, // C
+	//	//2 6 4
+	//	0.5, -0.5, 0.5, // C
+	//	-0.5, -0.5, 0.5, // G
+	//	-0.5, -0.5, -0.5, // E
+	//	//2 3 7
+	//	0.5, -0.5, 0.5, // C
+	//	0.5, 0.5, 0.5, // D
+	//	-0.5, 0.5, 0.5, // H
+	//	//7 6 2
+	//	-0.5, 0.5, 0.5, // H
+	//	-0.5, -0.5, 0.5, // G
+	//	0.5, -0.5, 0.5, // C
+	//	//4 5 1
+	//	-0.5, -0.5, -0.5, // E
+	//	-0.5, 0.5, -0.5, // F
+	//	0.5, 0.5, -0.5, // B
+	//	//1 0 4
+	//	0.5, 0.5, -0.5,// B
+	//	0.5, -0.5, -0.5, // A
+	//	-0.5, -0.5, -0.5 // E
+	//};
+
+	//glGenBuffers(1, (GLuint*) &(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, &vertices[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//vertices2 = { 2.5, -0.5, 1.5, // A = 0
+	//	2.5, 0.5, 1.5, // B = 1
+	//	2.5, -0.5, 2.5, // C = 2
+	//	2.5, 0.5, 2.5, // D = 3
+	//	1.5, -0.5, 1.5, // E = 4
+	//	1.5, 0.5, 1.5, // F = 5
+	//	1.5, -0.5, 2.5, // G = 6
+	//	1.5, 0.5, 2.5, // H = 7
+
+	//};
+
+	//vertex_order = 
+	//{	0,1,3, 3,2,0,
+	//	1,5,7,  7,3,1,
+	//	5,4,6,  6,7,5,
+	//	4,0,2,  2,6,4,
+	//	2,3,7,  7,6,2,
+	//	4,5,1,  1,0,4 };
+
+	//glGenBuffers(1, (GLuint*) &(my_id2));
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36 , &vertex_order[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
 	for (int i = 0; i < 100; i++) {
 		for (int j = 0; j < 100; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
@@ -142,14 +222,22 @@ bool ModuleRenderer3D::Start()
 		}
 	}
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &checkers_texture);
-	glBindTexture(GL_TEXTURE_2D, checkers_texture);
+	glGenTextures(1, &texture_buffer);
+	glBindTexture(GL_TEXTURE_2D, texture_buffer);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 100, 100,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+
+	//sph = AddSphere(1.5, 20, 20,1,0,10);
+
+	//lin = AddCylinder(1.5, 20, 3, 5,10,0,1);
+
+	//arr = AddArrow(0,0,10,10,10,0);
+
+	//cub = AddCube(2.0f,2.0f,2.0f,10,0,10);
 
 	//SDL_ShowSimpleMessageBox(
 	//	SDL_MESSAGEBOX_INFORMATION,
@@ -212,6 +300,187 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glColor3f(0, 0, 0);
 		LineDraw();
 	}
+	
+	//glColor3f(1, 1, 0);
+
+	
+	/*
+	//draw a line
+
+	glLineWidth(2.0f);
+	glBegin(GL_LINES);  
+	glVertex3f(0.f, 0.f, 0.f);  
+	glVertex3f(0.f, 10.f, 0.f); 
+
+	//arr->draw(0,0,0);
+
+	glEnd();
+	glLineWidth(1.0f);
+
+	//glVertex3f(0.5f, 0.5f, 0.5f);
+
+	/* Quad vertices
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+	*/
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//// ... draw other buffers
+	//glDrawArrays(GL_TRIANGLES, 0, 36 * 3);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	
+	//draw a quad
+
+	glBindTexture(GL_TEXTURE_2D, texture_buffer);
+
+	glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
+	//Front face
+		//pt 1	
+
+	glTexCoord2f(0,0);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	glTexCoord2f(0,1);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(1,1);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+		//pt 2
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+	glTexCoord2f(1, 0);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	//Right face but really it's the top
+		//pt 1
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(0, 1);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+		//pt 2
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+
+	glTexCoord2f(1, 0);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+
+	//Back face
+		//pt 1
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+	glTexCoord2f(0, 1);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+		//pt 2
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // Hç
+
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+
+	//Left face actually its bottom
+		//pt 1
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
+	glTexCoord2f(0, 1);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
+		//pt 2
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+
+	//Top ???
+		//pt 1
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+
+	glTexCoord2f(0, 1);
+	glVertex3f(0.5f, 0.5f, 0.5f); // D
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-0.5f, 0.5f, 0.5f); // H
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-0.5f, -0.5f, 0.5f); // G
+
+	glTexCoord2f(0, 0);
+	glVertex3f(0.5f, -0.5f, 0.5f); // C
+	//Bottom ???
+		//pt 1
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	
+	glTexCoord2f(0, 1);
+	glVertex3f(-0.5f, 0.5f, -0.5f); // F
+
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(1, 1);
+	glVertex3f(0.5f, 0.5f, -0.5f); // B
+
+	glTexCoord2f(1, 0);
+	glVertex3f(0.5f, -0.5f, -0.5f); // A
+
+	glTexCoord2f(0, 0);
+	glVertex3f(-0.5f, -0.5f, -0.5f); // E
+	
+	glEnd();
+
+
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_id2);
+	//glVertexPointer(3, GL_FLOAT, 0, &vertices2[0]);
+	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT,NULL);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	App->UI->Draw();
 
@@ -232,6 +501,29 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
+	//glViewport(0, 0, width, height);
+
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//ProjectionMatrix = ProjectionMatrix.Perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	////glLoadMatrixf(float4x4_to_float(ProjectionMatrix));
+	////float ret[16] =
+	////{	ProjectionMatrix[0][0], ProjectionMatrix[0][1], ProjectionMatrix[0][2], ProjectionMatrix[0][3],
+	////	ProjectionMatrix[1][0], ProjectionMatrix[1][1], ProjectionMatrix[1][2], ProjectionMatrix[1][3],
+	////	ProjectionMatrix[2][0], ProjectionMatrix[2][1], ProjectionMatrix[2][2], ProjectionMatrix[2][3],
+	////	ProjectionMatrix[3][0], ProjectionMatrix[3][1], ProjectionMatrix[3][2], ProjectionMatrix[3][3] };
+
+	//float ret[16] =
+	//{ ProjectionMatrix[0][0], ProjectionMatrix[1][0], ProjectionMatrix[2][0], ProjectionMatrix[3][0],
+	//	ProjectionMatrix[0][1], ProjectionMatrix[1][1], ProjectionMatrix[2][1], ProjectionMatrix[3][1],
+	//	ProjectionMatrix[0][2], ProjectionMatrix[1][2], ProjectionMatrix[2][2], ProjectionMatrix[3][2],
+	//	ProjectionMatrix[0][3], ProjectionMatrix[1][3], ProjectionMatrix[2][3], ProjectionMatrix[3][3] };
+
+	//glLoadMatrixf(ret);
+
+
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
 
 	glViewport(0, 0, width, height);
 
@@ -243,6 +535,15 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+//
+//float* ModuleRenderer3D::float4x4_to_float(float4x4 to_change)
+//{
+//	float ret[16] = {to_change[0][0],to_change[0][1], to_change[0][2], to_change[0][3], 
+//					to_change[1][0], to_change[1][1], to_change[1][2], to_change[1][3], 
+//					to_change[2][0], to_change[2][1], to_change[2][2], to_change[2][3], 
+//					to_change[3][0], to_change[3][1], to_change[3][2], to_change[3][3]};
+//	return ret;
+//}
 
 
 void ModuleRenderer3D::enable_flag_depth_test()

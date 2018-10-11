@@ -161,10 +161,10 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)//REDO PROVISIONAL
+	/*if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)//REDO PROVISIONAL
 	{
 		App->Close();
-	}
+	}*/
 
 	if (keyboard[SDL_SCANCODE_G] == KEY_DOWN)
 	{

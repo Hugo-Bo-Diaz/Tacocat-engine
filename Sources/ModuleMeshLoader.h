@@ -12,7 +12,7 @@
 
 #define MAX_SNAKE 2
 
-class NOTmesh 
+class NOTmesh : public NOTprimitive
 {
 public:
 	uint buffer_id;
