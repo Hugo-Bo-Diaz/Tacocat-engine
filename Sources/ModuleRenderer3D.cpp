@@ -79,7 +79,9 @@ bool ModuleRenderer3D::Init()
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
+
+		glClearColor(0.5f, 0.5f, 0.5f, 1.f);
+
 		/*glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 		glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -274,7 +276,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	//App->scene_controller->Draw();
 	glBindTexture(GL_TEXTURE_2D,0);
-	glColor3f(1, 1, 1);
+	glColor3f(0.25f, 0.25f, 0.25f);
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
 	float d = 200.0f;
