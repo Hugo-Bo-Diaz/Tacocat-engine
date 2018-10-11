@@ -101,7 +101,7 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		App->UI->console->AddLog("Loaded %s\n", file);
 
 		int i = 0;
-		for (std::vector<NOTprimitive*>::iterator it = App->renderer3D->primitive_vector.begin(); it != App->renderer3D->primitive_vector.end(); it++)
+		for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
 		{
 			//if (i==0)
 				(*it)->texture = buffernumber;

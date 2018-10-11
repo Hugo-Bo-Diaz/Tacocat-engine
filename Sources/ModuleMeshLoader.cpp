@@ -91,7 +91,7 @@ uint* ModuleMeshLoader::Load(const char* file)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		App->renderer3D->AddElement(m);
+		App->renderer3D->AddMesh(m);
 
 		}
 

@@ -15,6 +15,7 @@ class NOTlinder;
 class NOTarrow;
 class NOTcube;
 class NOTprimitive;
+class NOTmesh;
 
 class ModuleRenderer3D : public Module
 {

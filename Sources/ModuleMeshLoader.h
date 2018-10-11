@@ -15,6 +15,11 @@
 class NOTmesh 
 {
 public:
+	uint buffer_id;
+
+	uint texture;
+	float* tex_coords;
+
 	//uint id_index = 0; // index in VRAM
 	uint num_index = 0;
 	uint* index = nullptr;

@@ -332,6 +332,12 @@ void ModuleRenderer3D::AddElement(NOTprimitive* p)
 	primitive_vector.push_back(p);
 }
 
+void ModuleRenderer3D::AddMesh(NOTmesh* p)
+{
+	mesh_vector.push_back(p);
+}
+
+
 void ModuleRenderer3D::FillDraw()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -343,6 +349,12 @@ void ModuleRenderer3D::FillDraw()
 		(*it)->draw();
 	}
 
+	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
+
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
@@ -353,6 +365,10 @@ void ModuleRenderer3D::LineDraw()
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		(*it)->draw();
+	}
+	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
 	{
 		(*it)->draw();
 	}
