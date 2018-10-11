@@ -25,6 +25,8 @@ bool ModuleCamera3D::Start()
 	App->UI->console->AddLog("Setting up the camera");
 	bool ret = true;
 
+	newPos = { 0,0,0 };
+
 	return ret;
 }
 
@@ -42,7 +44,6 @@ update_status ModuleCamera3D::Update(float dt)
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 
-	vec3 newPos(0,0,0);//TOCHANGE
 	float speed = 3.0f * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * dt;
@@ -59,6 +60,9 @@ update_status ModuleCamera3D::Update(float dt)
 
 	Position.Set(newPos.x + Position.x, newPos.y + Position.y, newPos.z + Position.z);
 	Reference.Set(newPos.x + Position.x, newPos.y + Position.y, newPos.z + Position.z);
+
+	newPos = { 0,0,0 };
+
 
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{

@@ -28,6 +28,8 @@ bool ModuleInput::Start()
 	bool ret = true;
 	SDL_Init(0);
 
+
+
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		App->UI->console->AddLog("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -109,6 +111,16 @@ update_status ModuleInput::PreUpdate(float dt)
 		{
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
+			App->camera->newPos -= App->camera->Z * e.wheel.y * 30 * dt;//TODO
+
+			//if (e.wheel.y > 0)
+			//{
+			//	App->camera->newPos -= App->camera->Z * 7.0f * dt;//TODO
+			//}
+			//else if (e.wheel.y < 0)
+			//{
+			//	App->camera->newPos += App->camera->Z * 7.0f * dt;//TODO
+			//}
 			break;
 
 			case SDL_MOUSEMOTION:

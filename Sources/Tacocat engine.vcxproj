@@ -162,7 +162,6 @@
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="Primitive.h" />
-    <ClInclude Include="Primitivedelete.h" />
     <ClInclude Include="SphereMine.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
@@ -229,7 +228,6 @@
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="PhysBody3D.cpp" />
     <ClCompile Include="Primitive.cpp" />
-    <ClCompile Include="Primitivedelete.cpp" />
     <ClCompile Include="SphereMine.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI.cpp" />
