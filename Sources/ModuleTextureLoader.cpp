@@ -31,7 +31,7 @@ bool ModuleTextureLoader::Start()
 {
 	bool ret = true;
 
-	texturelol = LoadTexture("Baker_house.png");
+	//texturelol = LoadTexture("Baker_house.png");
 
 	return ret;
 }

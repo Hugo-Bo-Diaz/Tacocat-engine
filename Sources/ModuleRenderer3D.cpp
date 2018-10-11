@@ -79,7 +79,9 @@ bool ModuleRenderer3D::Init()
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
+
+		glClearColor(0.5f, 0.5f, 0.5f, 1.f);
+
 		/*glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 		glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -117,9 +119,9 @@ bool ModuleRenderer3D::Init()
 			glEnable(GL_CULL_FACE);
 		if (conf_lighting)
 			glEnable(GL_LIGHTING);
-		if (conf_color_material)
+		if (conf_draw == 0)
 			glEnable(GL_COLOR_MATERIAL);
-		if (conf_texture_2D)
+		else if (conf_draw == 1)
 			glEnable(GL_TEXTURE_2D);
 	}
 
@@ -274,7 +276,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	//App->scene_controller->Draw();
 	glBindTexture(GL_TEXTURE_2D,0);
-	glColor3f(1, 1, 1);
+	glColor3f(0.25f, 0.25f, 0.25f);
 	glLineWidth(1.0f);
 	glBegin(GL_LINES);
 	float d = 200.0f;
@@ -301,7 +303,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		LineDraw();
 	}
 	
-	//glColor3f(1, 1, 0);
+	glColor3f(1, 1, 1);
 
 	
 	/*
@@ -682,8 +684,7 @@ void ModuleRenderer3D::Configuration()
 	bool prev_conf_depth_test = conf_depth_test;
 	bool prev_conf_cull_face = conf_cull_face;
 	bool prev_conf_lighting = conf_lighting;
-	bool prev_conf_color_material = conf_color_material;
-	bool prev_conf_texture_2D = conf_texture_2D;
+	int prev_conf_texture = conf_texture;
 
 	if (ImGui::CollapsingHeader("OpenGL Settings"))
 	{
@@ -695,9 +696,10 @@ void ModuleRenderer3D::Configuration()
 		ImGui::Text("Draw settings");
 		ImGui::Checkbox("depth_test", &conf_depth_test); ImGui::SameLine(150);
 		ImGui::Checkbox("cull_face", &conf_cull_face);
-		ImGui::Checkbox("lighting", &conf_lighting); ImGui::SameLine(150);
-		ImGui::Checkbox("color_material", &conf_color_material);
-		ImGui::Checkbox("texture_2D", &conf_texture_2D);	
+		ImGui::Checkbox("lighting", &conf_lighting);
+		ImGui::RadioButton("Flat color", &conf_texture, 0); ImGui::SameLine();
+		ImGui::RadioButton("Texture", &conf_texture, 1); ImGui::SameLine();
+		ImGui::RadioButton("Checker", &conf_texture, 2);	
 	}
 
 	if (prev_conf_depth_test != conf_depth_test)
@@ -736,27 +738,22 @@ void ModuleRenderer3D::Configuration()
 		}
 	}
 
-	if (prev_conf_color_material != conf_color_material)
+	if (prev_conf_texture != conf_texture)
 	{
-		if (conf_color_material)
+		disable_flag_color_material();
+		disable_flag_texture_2D();
+
+		if (conf_texture == 0)
 		{
 			enable_flag_color_material();
 		}
-		else
-		{
-			disable_flag_color_material();
-		}
-	}
-
-	if (prev_conf_texture_2D != conf_texture_2D)
-	{
-		if (conf_texture_2D)
+		else if (conf_texture == 1)
 		{
 			enable_flag_texture_2D();
 		}
 		else
 		{
-			disable_flag_texture_2D();
+			//draw checker
 		}
 	}
 }
