@@ -6,7 +6,6 @@ Application::Application()
 
 	window = new ModuleWindow(true);
 	input = new ModuleInput(true);
-	audio = new ModuleAudio(true);
 	scene_controller = new ModuleSceneController(true);
 	mesh_loader = new ModuleMeshLoader(true);
 	renderer3D = new ModuleRenderer3D(true);
@@ -25,7 +24,6 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(audio);
 	AddModule(mesh_loader);
 	AddModule(tex_loader);
 	
@@ -159,8 +157,6 @@ void Application::SaveConfig(const char* filename)
 	JSON_Object* root_object = json_value_get_object(config);
 
 	json_object_set_number(root_object, "fps", confg_fps);
-	
-	json_object_dotset_number(root_object, "Audio.volume", App->audio->volume);
 
 	json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
 	json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
@@ -188,8 +184,6 @@ void Application::LoadConfig(const char* filename)
 	root_object = json_value_get_object(root_value);
 
 	confg_fps = json_object_get_number(root_object, "fps");
-
-	App->audio->volume = json_object_dotget_number(root_object, "Audio.volume");
 
 	App->window->fullscreen = json_object_dotget_boolean(root_object, "Window.fullscreen");
 	App->window->borderless = json_object_dotget_boolean(root_object, "Window.borderless");
