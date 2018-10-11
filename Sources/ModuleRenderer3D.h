@@ -68,9 +68,8 @@ public:
 	bool conf_depth_test = true;
 	bool conf_cull_face = true;
 	bool conf_lighting = true;
-	bool conf_color_material = false;
-	bool conf_texture_2D = false;
 	int conf_draw = 0;
+	int conf_texture = 0;
 
 	void Configuration();
 
