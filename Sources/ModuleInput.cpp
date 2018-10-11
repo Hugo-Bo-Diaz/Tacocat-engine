@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleUI.h"
+#include <string.h>
 
 #define MAX_KEYS 300
 
@@ -135,28 +136,42 @@ update_status ModuleInput::PreUpdate(float dt)
 
 			case SDL_DROPFILE:
 				App->UI->console->AddLog("File dropped in window %s", e.drop.file);
-				std::string filename = e.drop.file;
-				std::string extension;
-				bool isextension = false;
-				for (int i = 0; i < filename.length(); ++i)
-				{
-					if (filename[i] == 46)//46 is the . in ascii
-					{
-						isextension = true;
-					}
-					if (isextension)
-					{
-						extension += filename[i];
-					}
+				//std::string filename = e.drop.file;
+				//PathFindExtensionA(e.drop.file);;
+				//bool isextension = false;
+				//for (int i = 0; i < filename.length(); ++i)
+				//{
+				//	if (filename[i] == 46)//46 is the . in ascii
+				//	{
+				//		isextension = true;
+				//	}
+				//	if (isextension)
+				//	{
+				//		extension += filename[i];
+				//	}
+				//}
+				char* extension = std::strrchr(e.drop.file, '.');
+				if (output)
+					std::cout << output + 1 << '\n';
+
+					// Increment result, otherwise we'll find target at the same location
 				}
-				if (extension == ".FBX" || extension == ".fbx")
+				if (strchr(".FBX",*e.drop.file)!= NULL || strchr(".fbx", *e.drop.file) != NULL)
 				{
 					App->mesh_loader->Load(e.drop.file);
 				}
-				else if (extension == ".png" || extension == ".dss")
+				else if (strchr(".png", *e.drop.file) !=NULL || strchr(".dss", *e.drop.file) !=NULL)
 				{
 					App->tex_loader->LoadTexture(e.drop.file);
 				}
+				//if (extension == ".FBX" || extension == ".fbx")
+				//{
+				//	App->mesh_loader->Load(e.drop.file);
+				//}
+				//else if (extension == ".png" || extension == ".dss")
+				//{
+				//	App->tex_loader->LoadTexture(e.drop.file);
+				//}
 			break;
 		}
 	}
@@ -202,8 +217,3 @@ void ModuleInput::Configuration()
 	}
 }
 
-void ModuleInput::OnDrag(const char* file)
-{
-	if (file != NULL)
-		App->mesh_loader->Load(file);
-}
