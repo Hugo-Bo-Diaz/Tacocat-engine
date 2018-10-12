@@ -18,6 +18,7 @@ void UI_Primitives::Render()
 {
 	ImGui::SetNextWindowPos(getPos(), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextWindowBgAlpha(0.0f);
 	ImGui::Begin("Primitives", &enabled);
 	ImGui::Text("Create Primitives");
 	ImGui::DragFloat("Size", &size, 1.0f, 0.0f, 100.0f, "%.2f", 1.0f);

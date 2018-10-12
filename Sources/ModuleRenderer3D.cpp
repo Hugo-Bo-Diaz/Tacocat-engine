@@ -133,8 +133,6 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
- 
-
 	for (int i = 0; i < 100; i++) {
 		for (int j = 0; j < 100; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;

@@ -88,16 +88,15 @@ public:
 	std::vector<NOTprimitive*> primitive_vector;
 	std::vector<NOTmesh*> mesh_vector;
 
-	GLuint texture_buffer =0;
+	GLuint texture_buffer = 0;
 	GLubyte checkImage[100][100][4];
-
 
 	//void DrawQuad(	std::vector<float> point1,
 	//				std::vector<float> point2,
 	//				std::vector<float> point3,
 	//				std::vector<float> point4);
 
-		//DOESN'T ACTUALLY DRAW QUADS
+	//DOESN'T ACTUALLY DRAW QUADS
 private:
 	void FillDraw();
 	void LineDraw();

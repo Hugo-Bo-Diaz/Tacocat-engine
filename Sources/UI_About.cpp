@@ -19,6 +19,7 @@ UI_About::~UI_About()
 void UI_About::Render()
 {
 	ImGui::SetNextWindowPos(getPos() , ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextWindowBgAlpha(0.0f);
 	ImGui::Begin("About",&enabled);
 	ImGui::Text("TacocaT Engine"); // Some help required to write it like this TɑcoɔɒT
 	ImGui::Text("It's a palindrome");

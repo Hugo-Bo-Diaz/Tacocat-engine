@@ -1,7 +1,7 @@
 #ifndef UI_CLASS
 #define UI_CLASS
 
-#include "imgui-1.65/imgui.h"
+#include "imgui-docking/imgui.h"
 
 class UI
 {
