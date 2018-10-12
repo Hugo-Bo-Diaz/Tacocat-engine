@@ -24,7 +24,6 @@ void UI_Configuration::Render()
 
 	//int prevwidth = App->window->width;
 	//int prevheight = App->window->height;
-
 	ImGui::SetNextWindowPos(getPos(), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300,300), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowBgAlpha(0.0f);

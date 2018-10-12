@@ -39,7 +39,7 @@ private:
 
 	//UI Components
 	bool draw_menu = true;
-	bool draw_demo;
+	bool draw_demo = true;
 
 
 

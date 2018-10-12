@@ -55,7 +55,7 @@ update_status ModuleUI::Update(float dt)
 	// Docking window ---
 
 	static bool opt_fullscreen_persistant = true;
-	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+	static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_PassthruDockspace;
 	bool opt_fullscreen = opt_fullscreen_persistant;
 
 	// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
@@ -71,7 +71,6 @@ update_status ModuleUI::Update(float dt)
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-		opt_flags = ImGuiDockNodeFlags_PassthruDockspace;
 	}
 
 	// When using ImGuiDockNodeFlags_PassthruDockspace, DockSpace() will render our background and handle the pass-thru hole, so we ask Begin() to not render a background.
@@ -91,8 +90,14 @@ update_status ModuleUI::Update(float dt)
 	{
 		ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
+	
 	}
 
+	ImGuiStyle& style =  ImGui::GetStyle();
+
+	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.05882352941, 0.05882352941, 0.05882352941,1);
+	style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.03921568627, 0.03921568627, 0.03921568627, 1);
+	style.Colors[ImGuiCol_ChildBg] = ImVec4(0.05882352941, 0.05882352941, 0.05882352941, 1);
 	// Test window ------
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		draw_demo = !draw_demo;
