@@ -101,4 +101,5 @@ public:
 private:
 	void FillDraw();
 	void LineDraw();
+	void BoundingBoxDraw();
 };

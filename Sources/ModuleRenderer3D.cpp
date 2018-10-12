@@ -198,14 +198,21 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glEnd();
 
 	if (conf_draw == 0)
+	{
+		glColor3f(1, 1, 1);
 		FillDraw();
+	}
+
 	else if (conf_draw == 1)
+	{		
+		glColor3f(1, 1, 1);
 		LineDraw();
+	}
 	else
 	{
 		FillDraw();
 		glLineWidth(2.0f);
-		glColor3f(0, 0, 0);
+		BoundingBoxDraw();
 		LineDraw();
 	}
 	
@@ -338,6 +345,8 @@ void ModuleRenderer3D::FillDraw()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
 	{
 		(*it)->draw();
@@ -348,6 +357,7 @@ void ModuleRenderer3D::FillDraw()
 		(*it)->draw();
 	}
 
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -366,8 +376,22 @@ void ModuleRenderer3D::LineDraw()
 	{
 		(*it)->draw();
 	}
-
 	glDisableClientState(GL_VERTEX_ARRAY);
+
+}
+
+void ModuleRenderer3D::BoundingBoxDraw()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINES);
+	glColor3f(0.0f, 0.75f, 0.0f);
+	glLineWidth(2.0f);
+	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	{
+		(*it)->draw_bounding_box();
+	}
+	glColor3f(1.0f, 1.0f, 1.0f);
+
 }
 
 void ModuleRenderer3D::Configuration()

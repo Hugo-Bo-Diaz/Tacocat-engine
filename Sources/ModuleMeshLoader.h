@@ -8,6 +8,8 @@
 #include "Assimp\include\scene.h"
 #include "Assimp\include\postprocess.h"
 
+#include "MathGeoLib/MathGeoLib.h"
+
 #include "pcg32\pcg_variants.h"
 
 #define MAX_SNAKE 2
@@ -36,7 +38,11 @@ public:
 	aiVector3t< float > rotation;
 	aiVector3t< float > position;
 
+	AABB bounding_box;
+
 	void draw();
+
+	void draw_bounding_box();
 
 	void Scale(float scalex,float scaley, float scalez)
 	{
