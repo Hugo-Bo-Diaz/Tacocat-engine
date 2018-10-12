@@ -39,12 +39,6 @@ public:
 	SDL_GLContext context;
 	//math::float3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-	
-	uint my_id = 0;
-	uint my_id2 = 0;
-	std::vector<float> vertices;
-	std::vector<float> vertices2;
-	std::vector<uint> vertex_order;
 
 
 	//mat3x3 NormalMatrix;
