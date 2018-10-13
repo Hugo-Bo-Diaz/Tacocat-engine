@@ -54,9 +54,12 @@ void ModuleMeshLoader::Load(const char* file)
 		(*it)->~NOTmesh();
 	}
 	App->renderer3D->mesh_vector.clear();
+	
+	total_scene_bounding_box = new AABB({100,100,100}, {-100,-100,-100});
+
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
-	{	
+	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
@@ -78,17 +81,17 @@ void ModuleMeshLoader::Load(const char* file)
 					else
 						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
-			}				
+			}
 			if (iterator->HasTextureCoords(0))
 			{
 				//m->num_index = iterator->mNumFaces * 3;
 				//m->index = new uint[m->num_index]; // assume each face is a triangle
 				m->tex_coords = new float[m->num_index * 2];
 				uint w = 0;
-				for (uint i = 0; i < iterator->mNumVertices*2; i+=2)
+				for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
 				{
 					memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
-					memcpy(&m->tex_coords[i+1], &iterator->mTextureCoords[0][w].y, sizeof(float));
+					memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
 					++w;
 				}
 			}
@@ -103,35 +106,35 @@ void ModuleMeshLoader::Load(const char* file)
 			//	}
 			//}
 
-		m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex,m->num_vertex);
-		//we want to move the model so that the center of this box is on the 0, 1/2height, 0
-		if (scene->mNumMeshes < 2 )
-		{
-			float to_move_x, to_move_y, to_move_z;
+			m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
+			//we want to move the model so that the center of this box is on the 0, 1/2height, 0
+			if (scene->mNumMeshes < 2)
+			{
+				float to_move_x, to_move_y, to_move_z;
 
-			to_move_x = (m->bounding_box.maxPoint.x - m->bounding_box.minPoint.x) / 2 - m->bounding_box.maxPoint.x;//width/2 - max_x
-			to_move_z = (m->bounding_box.maxPoint.z - m->bounding_box.minPoint.z) / 2 - m->bounding_box.maxPoint.z;//width/2 - max_z
+				to_move_x = (m->bounding_box.maxPoint.x - m->bounding_box.minPoint.x) / 2 - m->bounding_box.maxPoint.x;//width/2 - max_x
+				to_move_z = (m->bounding_box.maxPoint.z - m->bounding_box.minPoint.z) / 2 - m->bounding_box.maxPoint.z;//width/2 - max_z
 
-			to_move_y = (m->bounding_box.maxPoint.y - m->bounding_box.minPoint.y) - m->bounding_box.maxPoint.y;
+				to_move_y = (m->bounding_box.maxPoint.y - m->bounding_box.minPoint.y) - m->bounding_box.maxPoint.y;
 
 
-			m->bounding_box.minPoint += {to_move_x, to_move_y, to_move_z};
-			m->bounding_box.maxPoint += {to_move_x, to_move_y, to_move_z};
-			m->Move(to_move_x, to_move_y, to_move_z);
+				m->bounding_box.minPoint += {to_move_x, to_move_y, to_move_z};
+				m->bounding_box.maxPoint += {to_move_x, to_move_y, to_move_z};
+				m->Move(to_move_x, to_move_y, to_move_z);
+			}
+			name = iterator->mName.C_Str();
+			aiQuaterniont <float> quat;
+			scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, quat, m->position);
+			m->rotation = quat.GetEuler();
+
+			glGenBuffers(1, (GLuint*) &(m->buffer_id));
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+			App->renderer3D->AddMesh(m);
 		}
-		name = iterator->mName.C_Str();
-		aiQuaterniont <float> quat;
-		scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling,quat,m->position);
-		m->rotation = quat.GetEuler();
 
-		glGenBuffers(1, (GLuint*) &(m->buffer_id));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		App->renderer3D->AddMesh(m);
-		}
-		
 		App->UI->console->AddLog("Loaded %d meshes %s", scene->mNumMeshes, file);
 
 		if (scene->HasMaterials())
@@ -152,6 +155,48 @@ void ModuleMeshLoader::Load(const char* file)
 			}
 
 		}
+		for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
+		{
+			if ((*it)->bounding_box.minPoint.x < total_scene_bounding_box->minPoint.x)
+				total_scene_bounding_box->minPoint.x = (*it)->bounding_box.minPoint.x;
+			if ((*it)->bounding_box.minPoint.y < total_scene_bounding_box->minPoint.y)
+				total_scene_bounding_box->minPoint.y = (*it)->bounding_box.minPoint.y;
+			if ((*it)->bounding_box.minPoint.z < total_scene_bounding_box->minPoint.z)
+				total_scene_bounding_box->minPoint.z = (*it)->bounding_box.minPoint.z;
+
+			if ((*it)->bounding_box.maxPoint.x > total_scene_bounding_box->maxPoint.x)
+				total_scene_bounding_box->maxPoint.x = (*it)->bounding_box.maxPoint.x;
+			if ((*it)->bounding_box.maxPoint.y > total_scene_bounding_box->maxPoint.y)
+				total_scene_bounding_box->maxPoint.y = (*it)->bounding_box.maxPoint.y;
+			if ((*it)->bounding_box.maxPoint.z > total_scene_bounding_box->maxPoint.z)
+				total_scene_bounding_box->maxPoint.z = (*it)->bounding_box.maxPoint.z;
+		}
+
+		//now we have to get the biggest size of the model
+
+		float biggestsize = 0;
+
+		if (biggestsize < total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x)
+			biggestsize = total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x;
+		if (biggestsize < total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y)
+			biggestsize = total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y;
+		if (biggestsize < total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z)
+			biggestsize = total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z; 
+
+		//math magics(tan(fov/2) = (biggestsize/2)/distance to the center point)
+		//distance to the center point = (biggestsize/2)/tan(fov/2)
+
+		//float distance_x = ((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(60* DEGTORAD);
+		//float distance_y = ((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(60 * DEGTORAD);
+		//float distance_z = ((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(60 * DEGTORAD);
+
+		float distance = (biggestsize / 2) / tan(30 * DEGTORAD);
+
+		float distance_x = (((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(20 * DEGTORAD)) * cos(45 * DEGTORAD);
+		float distance_y = (((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
+		float distance_z = (((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
+
+		App->camera->Look({ distance_x,distance_y,distance_z }, {0,0,0});
 
 		aiReleaseImport(scene);
 	}
@@ -243,6 +288,63 @@ void NOTmesh::draw_bounding_box()
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+
+	glEnd();
+}
+
+void ModuleMeshLoader::DrawSceneBoundingBox()
+{
+	glBegin(GL_LINES);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->minPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+
+	glVertex3f(total_scene_bounding_box->minPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->minPoint.z);
+	glVertex3f(total_scene_bounding_box->maxPoint.x, total_scene_bounding_box->maxPoint.y, total_scene_bounding_box->maxPoint.z);
 
 
 	glEnd();

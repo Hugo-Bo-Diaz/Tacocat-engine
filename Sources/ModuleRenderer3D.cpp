@@ -211,6 +211,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glLineWidth(2.0f);
 		BoundingBoxDraw();
 		LineDraw();
+		App->mesh_loader->DrawSceneBoundingBox();
 	}
 	
 	App->UI->Draw();
