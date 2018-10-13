@@ -66,6 +66,7 @@ public:
 	int conf_texture = 0;
 
 	void Configuration();
+	void Properties();
 
 	NOTphere* sph;
 	NOTlinder* lin;

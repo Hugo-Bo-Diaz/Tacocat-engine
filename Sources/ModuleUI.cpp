@@ -42,6 +42,7 @@ bool ModuleUI::Init()
 	UI_Elements.push_back(config);
 	UI_Elements.push_back(console);
 	UI_Elements.push_back(primitives);
+	UI_Elements.push_back(properties);
 
 	return ret;
 }

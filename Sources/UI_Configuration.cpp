@@ -26,7 +26,6 @@ void UI_Configuration::Render()
 	//int prevheight = App->window->height;
 	ImGui::SetNextWindowPos(getPos(), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300,300), ImGuiSetCond_FirstUseEver);
-	ImGui::SetNextWindowBgAlpha(0.0f);
 	ImGui::Begin("Configuration",&enabled);
 	ImGui::Text("Options");
 	if (ImGui::CollapsingHeader("Application"))

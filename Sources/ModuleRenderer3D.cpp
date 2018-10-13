@@ -7,6 +7,7 @@
 #include "CubeMine.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
+#include "glmath.h"
 
 //#include <gl/GL.h>
 //#include <gl/GLU.h>
@@ -467,5 +468,25 @@ void ModuleRenderer3D::Configuration()
 		{
 			//draw checker
 		}
+	}
+}
+
+void ModuleRenderer3D::Properties()
+{
+	vec3 pos, rot, scale;
+
+	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	{
+		pos.Set((*it)->position.x, (*it)->position.y, (*it)->position.z);
+		rot.Set((*it)->rotation.x, (*it)->rotation.y, (*it)->rotation.z);
+		scale.Set((*it)->scaling.x, (*it)->scaling.y, (*it)->scaling.z);
+
+		ImGui::Text("Name: %s", (*it)->name);
+		ImGui::Text("Num. vertices: %u", (*it)->num_index);
+		ImGui::Text("");
+		ImGui::SliderFloat3("Pos", &pos, 0.0f, 100.0f, "%.2f");
+		ImGui::SliderFloat3("Rot", &rot, 0.0f, 100.0f, "%.2f");
+		ImGui::SliderFloat3("Scale", &scale, 0.0f, 100.0f, "%.2f");
+		ImGui::Separator();
 	}
 }
