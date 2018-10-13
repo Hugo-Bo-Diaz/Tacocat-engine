@@ -45,10 +45,15 @@ bool ModuleMeshLoader::CleanUp()
 	return true;
 }
 
-uint* ModuleMeshLoader::Load(const char* file)
+void ModuleMeshLoader::Load(const char* file)
 {
 	names.clear();
-
+	//PROVISIONAL
+	for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
+	{
+		(*it)->~NOTmesh();
+	}
+	App->renderer3D->mesh_vector.clear();
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{	
@@ -97,17 +102,34 @@ uint* ModuleMeshLoader::Load(const char* file)
 			//		m->normals[i] = iterator->mNormals[i++].z;
 			//	}
 			//}
-		
+
+		m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex,m->num_vertex);
+		//we want to move the model so that the center of this box is on the 0, 1/2height, 0
+		if (scene->mNumMeshes < 2 )
+		{
+			float to_move_x, to_move_y, to_move_z;
+
+			to_move_x = (m->bounding_box.maxPoint.x - m->bounding_box.minPoint.x) / 2 - m->bounding_box.maxPoint.x;//width/2 - max_x
+			to_move_z = (m->bounding_box.maxPoint.z - m->bounding_box.minPoint.z) / 2 - m->bounding_box.maxPoint.z;//width/2 - max_z
+
+			to_move_y = (m->bounding_box.maxPoint.y - m->bounding_box.minPoint.y) - m->bounding_box.maxPoint.y;
+
+
+			m->bounding_box.minPoint += {to_move_x, to_move_y, to_move_z};
+			m->bounding_box.maxPoint += {to_move_x, to_move_y, to_move_z};
+			m->Move(to_move_x, to_move_y, to_move_z);
+		}
+		name = iterator->mName.C_Str();
+		aiQuaterniont <float> quat;
+		scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling,quat,m->position);
+		m->rotation = quat.GetEuler();
+
 		glGenBuffers(1, (GLuint*) &(m->buffer_id));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		App->renderer3D->AddMesh(m);
-		name = iterator->mName.C_Str();
-		aiQuaterniont <float> quat;
-		scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling,quat,m->position);
-		m->rotation = quat.GetEuler();
 		}
 		
 		App->UI->console->AddLog("Loaded %d meshes %s", scene->mNumMeshes, file);
@@ -128,8 +150,9 @@ uint* ModuleMeshLoader::Load(const char* file)
 				}
 
 			}
+
 		}
-		
+
 		aiReleaseImport(scene);
 	}
 	else
@@ -137,7 +160,7 @@ uint* ModuleMeshLoader::Load(const char* file)
 		App->UI->console->AddLog("file not found");
 	}
 	
-	return 0;
+	return;
 }
 void NOTmesh::draw()
 {
@@ -145,7 +168,6 @@ void NOTmesh::draw()
 
 	if (texture != 0)
 	{
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, texture);	
 	}
 	else
@@ -162,10 +184,66 @@ void NOTmesh::draw()
 	if (texture != 0)
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	}	
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+}
+
+void NOTmesh::draw_bounding_box()
+{
+	glBegin(GL_LINES);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+
+	glEnd();
 }
