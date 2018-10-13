@@ -2,7 +2,7 @@
 #include "Module.h"
 #include <array>
 #include "Globals.h"
-//#include "Primitive.h"
+#include "Primitive.h"
 
 //#include "MathGeoLib/MathGeoLib.h"
 

@@ -14,7 +14,7 @@
 
 #define MAX_SNAKE 2
 
-class NOTmesh : public NOTprimitive
+class NOTmesh
 {
 public:
 	uint buffer_id;
@@ -44,6 +44,16 @@ public:
 
 	void draw_bounding_box();
 
+	void Move(float x, float y, float z)
+	{
+		for (int i = 0; i < num_vertex*3; i += 3)
+		{
+			vertex[i] += x;
+			vertex[i + 1] += y;
+			vertex[i + 2] += z;
+		}
+	}
+
 	void Scale(float scalex,float scaley, float scalez)
 	{
 		for (int i = 0; i < num_index; i += 3)
@@ -68,7 +78,8 @@ public:
 	std::list<std::string> names;
 
 	//returns the memory index given by opengl
-	uint* Load(const char* filename);
+	void Load(const char* filename);
+
 public:
 
 };
