@@ -76,6 +76,9 @@ public:
 	bool CleanUp();
 	
 	std::list<std::string> names;
+	AABB* total_scene_bounding_box;
+
+	void DrawSceneBoundingBox();
 
 	//returns the memory index given by opengl
 	void Load(const char* filename);
