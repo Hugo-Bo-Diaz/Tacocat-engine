@@ -3,6 +3,13 @@
 #include "SDL\include\SDL_version.h"
 #include <stdlib.h>
 #include <Windows.h>
+
+#include "Glew/include/glew.h"
+
+#include "Assimp/include/version.h"
+
+#include "Devil/include/il.h"
+
 //#include "Bullet/include/LinearMath/btScalar.h"
 
 UI_About::UI_About() 
@@ -28,12 +35,15 @@ void UI_About::Render()
 	ImGui::Text("Made with:");
 	//Add the resources used in the engine
 
-	ImGui::Text("Dear ImGui - %s",ImGui::GetVersion());
 	SDL_version version;
 	SDL_GetVersion(&version);
-	ImGui::Text("SDL        - %d.%d.%d",version.major,version.minor,version.patch);
-	//ImGui::Text("Bullet     - %d.%d", btGetVersion()/100, btGetVersion()- (btGetVersion()/100)*100);
-	ImGui::Text("PCG        - help");
+	ImGui::Text("Dear ImGui      - %s",ImGui::GetVersion());
+	ImGui::Text("SDL             - %d.%d.%d",version.major,version.minor,version.patch);
+	ImGui::Text("PCG             - %f", 0.9);
+	ImGui::Text("DevIL           - %d",IL_VERSION);
+	ImGui::Text("Opengl          - %s", glGetString(GL_VERSION));
+	ImGui::Text("Assimp          - %d.%d.%d",aiGetVersionMajor(),aiGetVersionMinor(),aiGetVersionRevision());
+	
 	
 	ImGui::Separator();
 	ImGui::Text("MIT License");

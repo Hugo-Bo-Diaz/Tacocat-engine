@@ -74,6 +74,7 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		//	//Create texture from file pixels
 		//	textureLoaded = loadTextureFromPixels32((GLuint*)ilGetData(), (GLuint)ilGetInteger(IL_IMAGE_WIDTH), (GLuint)ilGetInteger(IL_IMAGE_HEIGHT));
 		//}
+		
 		ILinfo ImageInfo;
 		iluGetImageInfo(&ImageInfo);
 		if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)

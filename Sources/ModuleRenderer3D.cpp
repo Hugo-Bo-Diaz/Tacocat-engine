@@ -344,6 +344,7 @@ void ModuleRenderer3D::FillDraw()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
+
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
