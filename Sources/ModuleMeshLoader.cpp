@@ -174,29 +174,7 @@ void ModuleMeshLoader::Load(const char* file)
 
 		//now we have to get the biggest size of the model
 
-		float biggestsize = 0;
-
-		if (biggestsize < total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x)
-			biggestsize = total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x;
-		if (biggestsize < total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y)
-			biggestsize = total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y;
-		if (biggestsize < total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z)
-			biggestsize = total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z; 
-
-		//math magics(tan(fov/2) = (biggestsize/2)/distance to the center point)
-		//distance to the center point = (biggestsize/2)/tan(fov/2)
-
-		//float distance_x = ((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(60* DEGTORAD);
-		//float distance_y = ((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(60 * DEGTORAD);
-		//float distance_z = ((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(60 * DEGTORAD);
-
-		float distance = (biggestsize / 2) / tan(30 * DEGTORAD);
-
-		float distance_x = (((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(20 * DEGTORAD)) * cos(45 * DEGTORAD);
-		float distance_y = (((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
-		float distance_z = (((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
-
-		App->camera->Look({ distance_x,distance_y,distance_z }, {0,0,0});
+		FocusCamera();
 
 		aiReleaseImport(scene);
 	}
@@ -206,6 +184,32 @@ void ModuleMeshLoader::Load(const char* file)
 	}
 	
 	return;
+}
+void ModuleMeshLoader::FocusCamera()
+{
+	float biggestsize = 0;
+
+	if (biggestsize < total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x)
+		biggestsize = total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x;
+	if (biggestsize < total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y)
+		biggestsize = total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y;
+	if (biggestsize < total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z)
+		biggestsize = total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z;
+
+	//math magics(tan(fov/2) = (biggestsize/2)/distance to the center point)
+	//distance to the center point = (biggestsize/2)/tan(fov/2)
+
+	//float distance_x = ((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(60* DEGTORAD);
+	//float distance_y = ((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(60 * DEGTORAD);
+	//float distance_z = ((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(60 * DEGTORAD);
+
+	float distance = (biggestsize / 2) / tan(30 * DEGTORAD);
+
+	float distance_x = (((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(20 * DEGTORAD)) * cos(45 * DEGTORAD);
+	float distance_y = (((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
+	float distance_z = (((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
+
+	App->camera->Look({ distance_x,distance_y,distance_z }, { 0,0,0 });
 }
 void NOTmesh::draw()
 {

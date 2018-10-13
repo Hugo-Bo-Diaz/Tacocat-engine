@@ -43,12 +43,20 @@ bool ModuleSceneController::CleanUp()
 // Update
 update_status ModuleSceneController::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		App->mesh_loader->FocusCamera();
+	}
 	
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		App->SaveConfig("config.json");
+	}
 
-
-
-	
-	
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		App->LoadConfig("config.json");
+	}
 
 	return UPDATE_CONTINUE;
 }

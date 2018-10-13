@@ -168,15 +168,7 @@ update_status ModuleInput::PreUpdate(float dt)
 		App->Close();
 	}*/
 
-	if (keyboard[SDL_SCANCODE_G] == KEY_DOWN)
-	{
-		App->SaveConfig("config.json");
-	}
-
-	if (keyboard[SDL_SCANCODE_H] == KEY_DOWN)
-	{
-		App->LoadConfig("config.json");
-	}
+	
 
 	if (App->quit)
 	{

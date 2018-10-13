@@ -83,6 +83,5 @@ public:
 	//returns the memory index given by opengl
 	void Load(const char* filename);
 
-public:
-
+	void FocusCamera();
 };
