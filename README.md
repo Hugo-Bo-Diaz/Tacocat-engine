@@ -1,6 +1,10 @@
 # Tacocat-engine
 3D game engine for the game engines subject
 
+Made by
+* [Hugo Bó Diaz](https://github.com/Hugo-Bo-Diaz)
+* [Daniel Garcia Ortega](https://github.com/viriato22)
+
 ## Controls
 
 ### Camera

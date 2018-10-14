@@ -490,15 +490,19 @@ void ModuleRenderer3D::Properties()//imgui type function to output the meshes pr
 		ImGui::Text("Name: %s", (*it)->name);
 		ImGui::Text("Num. vertices: %u", (*it)->num_index);
 		ImGui::Text("");
-		//ImGui::SliderFloat3("Pos", &pos, 0.0f, 100.0f, "%.2f");
-		//ImGui::SliderFloat3("Rot", &rot, 0.0f, 100.0f, "%.2f");
-		//ImGui::SliderFloat3("Scale", &scale, 0.0f, 100.0f, "%.2f");
-
 		ImGui::InputFloat3("Pos", &pos, 2);
 		ImGui::InputFloat3("Rot", &rot, 2);
 		ImGui::InputFloat3("Scale", &scale, 2);
 		ImGui::Separator();
 	}
+}
+
+void ModuleRenderer3D::TexProperties()//same as the function above
+{
+	ImGui::Text("Texture id: %u", App->tex_loader->texture_id);
+	ImGui::Text("Used in %u meshes", App->tex_loader->num_meshes);
+	ImGui::Text("Width: %u", App->tex_loader->tex_width); ImGui::SameLine();
+	ImGui::Text("Height: %u", App->tex_loader->tex_height);
 }
 
 void ModuleRenderer3D::CleanPrimitives()
@@ -509,3 +513,4 @@ void ModuleRenderer3D::CleanPrimitives()
 	}
 	primitive_vector.clear();
 }
+
