@@ -8,12 +8,12 @@ class NOTprimitive
 public:
 	std::vector<float> vertices;
 	std::vector<uint> indices;
-	float* tex_coords;
 	uint buffer_id;
 
 	uint texture = 0;
 
 	NOTprimitive() {};
+	~NOTprimitive();
 
 	/*
 	//{

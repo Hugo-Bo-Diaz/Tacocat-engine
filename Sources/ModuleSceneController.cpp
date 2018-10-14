@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModuleSceneController.h"
 #include "Primitive.h"
-#include "PhysBody3D.h"
 
 //#include "mathgeolib/Geometry/Sphere.h"
 //#include "mathgeolib/Geometry/AABB.h"
@@ -59,10 +58,4 @@ update_status ModuleSceneController::Update(float dt)
 	}
 
 	return UPDATE_CONTINUE;
-}
-
-void ModuleSceneController::Draw()
-{
-
-	
 }

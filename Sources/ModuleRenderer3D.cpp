@@ -3,7 +3,6 @@
 #include "ModuleRenderer3D.h"
 #include "SphereMine.h"
 #include "CylinderMine.h"
-#include "ArrowMine.h"
 #include "CubeMine.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -52,9 +51,11 @@ bool ModuleRenderer3D::Init()
 	if(ret == true)
 	{
 		//Use Vsync
-		//if(VSYNC &&  < 0)//TODO
-		//CONSOLE_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
-		SDL_GL_SetSwapInterval(0);
+		if (App->confg_vsync)
+			SDL_GL_SetSwapInterval(0);
+		else
+			SDL_GL_SetSwapInterval(1);
+
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -83,13 +84,6 @@ bool ModuleRenderer3D::Init()
 		glClearDepth(1.0f);
 
 		glClearColor(0.5f, 0.5f, 0.5f, 1.f);
-
-		/*glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-		glClearDepth(1.0f);
-		glClearColor(0.f, 0.f, 0.f, 1.f);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);*/
 
 		//Check for error
 		error = glGetError();
@@ -310,14 +304,6 @@ NOTphere* ModuleRenderer3D::AddSphere(float radius, double rings, double stacks,
 	return prim;
 }
 
-NOTarrow* ModuleRenderer3D::AddArrow(float x1, float y1, float z1, float x2, float y2, float z2)
-{
-	NOTarrow* prim = new NOTarrow(x1, y1, z1, x2, y2, z2);
-	primitive_vector.push_back(prim);
-
-	return prim;
-}
-
 NOTcube* ModuleRenderer3D::AddCube(float widthx, float height, float widthz, float x, float y, float z)
 {
 	NOTcube* prim = new NOTcube(widthx, height, widthz);
@@ -491,22 +477,35 @@ void ModuleRenderer3D::Configuration()
 	}
 }
 
-void ModuleRenderer3D::Properties()
+void ModuleRenderer3D::Properties()//imgui type function to output the meshes properties
 {
 	vec3 pos, rot, scale;
 
 	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
 	{
 		pos.Set((*it)->position.x, (*it)->position.y, (*it)->position.z);
-		rot.Set((*it)->rotation.x, (*it)->rotation.y, (*it)->rotation.z);
+		rot.Set((*it)->rotation.x * RADTODEG, (*it)->rotation.y * RADTODEG, (*it)->rotation.z* RADTODEG);
 		scale.Set((*it)->scaling.x, (*it)->scaling.y, (*it)->scaling.z);
 
 		ImGui::Text("Name: %s", (*it)->name);
 		ImGui::Text("Num. vertices: %u", (*it)->num_index);
 		ImGui::Text("");
-		ImGui::SliderFloat3("Pos", &pos, 0.0f, 100.0f, "%.2f");
-		ImGui::SliderFloat3("Rot", &rot, 0.0f, 100.0f, "%.2f");
-		ImGui::SliderFloat3("Scale", &scale, 0.0f, 100.0f, "%.2f");
+		//ImGui::SliderFloat3("Pos", &pos, 0.0f, 100.0f, "%.2f");
+		//ImGui::SliderFloat3("Rot", &rot, 0.0f, 100.0f, "%.2f");
+		//ImGui::SliderFloat3("Scale", &scale, 0.0f, 100.0f, "%.2f");
+
+		ImGui::InputFloat3("Pos", &pos, 2);
+		ImGui::InputFloat3("Rot", &rot, 2);
+		ImGui::InputFloat3("Scale", &scale, 2);
 		ImGui::Separator();
 	}
+}
+
+void ModuleRenderer3D::CleanPrimitives()
+{
+	for (std::vector<NOTprimitive*>::iterator it = primitive_vector.begin(); it != primitive_vector.end(); it++)
+	{
+		delete(*it);
+	}
+	primitive_vector.clear();
 }

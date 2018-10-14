@@ -159,6 +159,7 @@ void Application::SaveConfig(const char* filename)
 	JSON_Object* root_object = json_value_get_object(config);
 
 	json_object_set_number(root_object, "fps", confg_fps);
+	json_object_set_number(root_object, "vsync", confg_vsync);
 
 	json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
 	json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
@@ -193,6 +194,7 @@ void Application::LoadConfig(const char* filename)
 	root_object = json_value_get_object(root_value);
 
 	confg_fps = json_object_get_number(root_object, "fps");
+	confg_vsync = json_object_get_number(root_object, "vsync");
 
 	App->window->fullscreen = json_object_dotget_boolean(root_object, "Window.fullscreen");
 	App->window->borderless = json_object_dotget_boolean(root_object, "Window.borderless");

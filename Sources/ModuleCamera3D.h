@@ -18,6 +18,11 @@ public:
 	//void LookAt(const float3 &Spot);
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
+	
+	void Configuration();
+
+	float speed = 5.0f;
+	float sensibility = 1;
 
 private:
 

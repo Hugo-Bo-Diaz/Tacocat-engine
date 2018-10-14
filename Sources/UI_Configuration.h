@@ -27,8 +27,9 @@ public:
 	bool conf_color_material = false;
 	bool conf_texture_2D = false;
 
-	//float width = SCREEN_WIDTH;
-	//float height = SCREEN_HEIGHT;
+	bool conf_vsync = true;
+
+	float conf_fps;
 
 private:
 	//Vectors to store the data for the graphs

@@ -5,9 +5,6 @@
 
 #include "pcg32\pcg_variants.h"
 
-//todo TEXTURE STRUCT
-
-
 class ModuleTextureLoader : public Module
 {
 public:
@@ -15,7 +12,6 @@ public:
 	~ModuleTextureLoader();
 
 	bool Start();
-	update_status Update(float dt);
 	bool CleanUp();
 
 	uint LoadTexture(const char* file);

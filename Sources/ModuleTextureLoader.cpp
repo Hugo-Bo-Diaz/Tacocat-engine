@@ -31,8 +31,6 @@ bool ModuleTextureLoader::Start()
 {
 	bool ret = true;
 
-	//texturelol = LoadTexture("Baker_house.png");
-
 	return ret;
 }
 
@@ -44,13 +42,6 @@ bool ModuleTextureLoader::CleanUp()
 	return true;
 }
 
-// Update
-update_status ModuleTextureLoader::Update(float dt)
-{
-
-
-	return UPDATE_CONTINUE;
-}
 
 uint ModuleTextureLoader::LoadTexture(const char* file)
 {

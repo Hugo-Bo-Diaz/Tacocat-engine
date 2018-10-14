@@ -121,6 +121,13 @@ void ModuleMeshLoader::Load(const char* file)
 			//	}
 			//}
 
+			if (iterator->HasNormals())
+			{
+				m->num_normals = iterator->mNumVertices;
+				m->normals = new float[m->num_normals * 3];
+				memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
+			}
+
 			m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
 
 			//we want to move the model so that the center of this box is on the 0, 1/2height, 0
@@ -216,21 +223,20 @@ void NOTmesh::draw()
 	if (App->renderer3D->draw_checkers)
 	{
 		glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
+		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}	
 	else if (texture != 0)
 	{
-		glBindTexture(GL_TEXTURE_2D, texture);	
+		glBindTexture(GL_TEXTURE_2D, texture);		
+		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
 	else
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
-
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
-
 
 	if (texture != 0)
 	{

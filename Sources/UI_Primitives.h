@@ -4,6 +4,8 @@
 #include "UI.h"
 #include "glmath.h"
 
+class NOTprimitive;
+
 class UI_Primitives : public UI
 {
 public:
@@ -21,6 +23,8 @@ private:
 
 	int segments;
 	int rings;
+
+	NOTprimitive* primitive = nullptr;
 };
 
 #endif // !UI_Primitives_H

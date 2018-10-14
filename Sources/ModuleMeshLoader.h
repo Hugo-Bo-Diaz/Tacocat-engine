@@ -28,6 +28,7 @@ public:
 	uint num_vertex = 0;
 	float* vertex = nullptr;
 
+	uint num_normals = 0;
 	float* normals = nullptr;
 
 	std::string name;

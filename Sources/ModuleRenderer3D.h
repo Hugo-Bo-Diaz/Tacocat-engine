@@ -12,7 +12,6 @@
 
 class NOTphere;
 class NOTlinder;
-class NOTarrow;
 class NOTcube;
 class NOTprimitive;
 class NOTmesh;
@@ -33,16 +32,10 @@ public:
 
 public:
 
-	//float* float4x4_to_float(float4x4 to_change);
-
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	//math::float3x3 NormalMatrix;
+
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-
-
-	//mat3x3 NormalMatrix;
-	//mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	void enable_flag_depth_test();
 	void disable_flag_depth_test();
@@ -80,9 +73,9 @@ public:
 	NOTphere* AddSphere(float radius, double rings, double stacks,				 float x = 0, float y = 0, float z = 0);
 	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
 	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
-	NOTarrow* AddArrow(float x1,float y1, float z1, float x2, float y2, float z2);
 	void AddElement(NOTprimitive*);
 	void AddMesh(NOTmesh*);
+	void CleanPrimitives();
 
 	std::vector<NOTprimitive*> primitive_vector;
 	std::vector<NOTmesh*> mesh_vector;

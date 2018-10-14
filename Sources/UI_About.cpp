@@ -43,6 +43,7 @@ void UI_About::Render()
 	ImGui::Text("DevIL           - %d",IL_VERSION);
 	ImGui::Text("Opengl          - %s", glGetString(GL_VERSION));
 	ImGui::Text("Assimp          - %d.%d.%d",aiGetVersionMajor(),aiGetVersionMinor(),aiGetVersionRevision());
+	ImGui::Text("MMGR            - unknown version");
 	
 	
 	ImGui::Separator();

@@ -25,18 +25,31 @@ void UI_Primitives::Render()
 	ImGui::DragFloat3("Position", &pos, 0.2f, -100.0f, 100.0f, "%.2f", 1.0f);
 	if (ImGui::Button("Cube"))
 	{
-		App->renderer3D->AddCube(size, size, size, pos.x, pos.y, pos.z);
-		Init();
+		if (primitive != nullptr)
+		{
+			App->renderer3D->CleanPrimitives();
+		}
+			primitive = (NOTprimitive*)App->renderer3D->AddCube(size, size, size, pos.x, pos.y, pos.z);
+			Init();
+
 	} ImGui::SameLine(50);
 	if (ImGui::Button("Sphere"))
 	{
-		App->renderer3D->AddSphere(size, pol.x, pol.y, pos.x, pos.y, pos.z);
-		Init();
+		if (primitive != nullptr)
+		{
+			App->renderer3D->CleanPrimitives();
+		}
+			primitive = (NOTprimitive*)App->renderer3D->AddSphere(size, pol.x, pol.y, pos.x, pos.y, pos.z);
+			Init();
 	} ImGui::SameLine(105);
 	if (ImGui::Button("Cylinder"))
 	{
-		App->renderer3D->AddCylinder(size, pol.x, pol.y, pos.x, pos.y, pos.z);
-		Init();
+		if (primitive != nullptr)
+		{
+			App->renderer3D->CleanPrimitives();
+		}
+			primitive = (NOTprimitive*)App->renderer3D->AddCylinder(size, pol.x, pol.y, pos.x, pos.y, pos.z);
+			Init();
 	}
 	ImGui::End();
 }

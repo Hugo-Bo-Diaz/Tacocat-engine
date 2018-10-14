@@ -44,6 +44,25 @@ void UI_Configuration::Render()
 		sprintf_s(title, 25, "%.1f FPS", avg);
 		ImGui::PlotHistogram("", &fps_app[0], fps_app.size(), 0, title, 0.0f, /*float(fps)*/100.0f, ImVec2(200, 100));
 
+		bool prev_conf_vsync = conf_vsync;
+		ImGui::Checkbox("Vsync",&conf_vsync);
+		if (prev_conf_vsync != conf_vsync)
+		{
+			if (conf_vsync)
+			{
+				SDL_GL_SetSwapInterval(1);
+			}
+			else
+			{
+				SDL_GL_SetSwapInterval(0);
+			}
+		}
+		ImGui::SliderFloat("FPS",&App->confg_fps,1,1000);
+		if (conf_vsync)
+		{
+			App->confg_fps = 60;
+		}
+
 		//TODO: Plot histogram milliseconds
 		ImGui::Text("Miliseconds");
 		//char title[25];

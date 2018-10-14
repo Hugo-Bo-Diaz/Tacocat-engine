@@ -44,12 +44,9 @@ update_status ModuleCamera3D::Update(float dt)
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 
-	float speed = 3.0f * dt;
+	float real_speed = speed * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 8.0f * dt;
-
-	/*if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;*/
+		real_speed =speed*2 * dt;
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
@@ -63,10 +60,6 @@ update_status ModuleCamera3D::Update(float dt)
 
 	newPos = { 0,0,0 };
 
-	//Position.setX(newPos.x);
-	//Position.setY(newPos.y);
-	//Position.setZ(newPos.z);
-	//Reference += newPos;
 
 	// Mouse motion ----------------
 
@@ -77,8 +70,8 @@ update_status ModuleCamera3D::Update(float dt)
 			Reference = (0,0,0);
 		}
 
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
+		int dx = -App->input->GetMouseXMotion() * sensibility;
+		int dy = -App->input->GetMouseYMotion() * sensibility;
 
 		float Sensitivity = 0.25f;
 
@@ -122,20 +115,7 @@ void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool Rota
 	this->Position = Position;
 	this->Reference = Reference;
 
-	//float3 to_normalize = Position - Reference;
-	//float normalizing_factor = sqrt(to_normalize.x * to_normalize.x + to_normalize.y * to_normalize.y + to_normalize.z * to_normalize.z);
 
-	//Z = {to_normalize.x/normalizing_factor,to_normalize.y / normalizing_factor,to_normalize.z / normalizing_factor };
-
-
-	//to_normalize = { 1.0f * Z.z - 0.0f * Z.y, 0.0f * Z.x - 0.0f * Z.z, 0.0f * Z.y - 1.0f * Z.x };
-	//normalizing_factor = sqrt(to_normalize.x * to_normalize.x + to_normalize.y * to_normalize.y + to_normalize.z * to_normalize.z);//cross product
-
-	//X = {to_normalize.x / normalizing_factor, to_normalize.y / normalizing_factor, to_normalize.z / normalizing_factor };//normalized
-
-	//Y = {	Z.y * X.z - Z.z * X.y,
-	//		Z.z * X.x - Z.x * X.z,
-	//		Z.x * X.y - Z.y * X.x};
 
 	Z = normalize(Position - Reference);
 	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
@@ -150,19 +130,6 @@ void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool Rota
 	CalculateViewMatrix();
 }
 
-// -----------------------------------------------------------------
-//void ModuleCamera3D::LookAt( const float3 &Spot)
-//{
-//	Reference = Spot;
-//
-//	//float3x3::LookAt(, {});
-//
-//	Z = normalize(Position - Reference);
-//	X = normalize(cross(float3(0.0f, 1.0f, 0.0f), Z));
-//	Y = cross(Z, X);
-//
-//	CalculateViewMatrix();
-//}
 
 
 // -----------------------------------------------------------------
@@ -184,11 +151,6 @@ float* ModuleCamera3D::GetViewMatrix()
 // -----------------------------------------------------------------
 void ModuleCamera3D::CalculateViewMatrix()
 {
-	//ViewMatrix = mat4x4(	X.x,				Y.x,				Z.x,				0.0f,
-	//						X.y,				Y.y,				Z.y,				0.0f,
-	//						X.z,				Y.z,				Z.z,				0.0f, 
-	//						(X.x*Position.x+X.y*Position.y+X.z*Position.z), (Y.x*Position.x + Y.y*Position.y + Y.z*Position.z), (Z.x*Position.x + Z.y*Position.y + Z.z*Position.z),	1.0f);
-	//ViewMatrixInverse = ViewMatrix.Inverted();
 
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f,
 		X.y, Y.y, Z.y, 0.0f,
@@ -196,5 +158,16 @@ void ModuleCamera3D::CalculateViewMatrix()
 		-dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 
 	ViewMatrixInverse = inverse(ViewMatrix);
+
+}
+
+void ModuleCamera3D::Configuration()
+{
+
+	if (ImGui::CollapsingHeader("Camera settings"))
+	{
+		ImGui::SliderFloat("Camera speed", &speed, 0 , 20);
+		ImGui::SliderFloat("Camera sensibility", &sensibility, 1,5);
+	}
 
 }

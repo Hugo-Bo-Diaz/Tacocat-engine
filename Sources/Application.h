@@ -51,7 +51,8 @@ public:
 	void SaveConfig(const char* filename);
 	void LoadConfig(const char* filename);
 
-	double confg_fps = 60.0f;
+	float confg_fps = 60.0f;
+	bool confg_vsync = true;
 
 private:
 

@@ -100,8 +100,8 @@ update_status ModuleUI::Update(float dt)
 	style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.03921568627, 0.03921568627, 0.03921568627, 1);
 	style.Colors[ImGuiCol_ChildBg] = ImVec4(0.05882352941, 0.05882352941, 0.05882352941, 1);
 	// Test window ------
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		draw_demo = !draw_demo;
+	//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	//	draw_demo = !draw_demo;
 
 	// Draw menu bar ----
 	if (ImGui::BeginMainMenuBar())
