@@ -1,4 +1,4 @@
-# Tacocat-engine
+﻿# Tacocat-engine
 3D game engine for the game engines subject
 
 Made by
@@ -20,3 +20,12 @@ Made by
 * Files accepted
   * 3d models --> .fbx
   * Textures --> .png
+* With the primitives window you can display one primitive primitive at a time changing the parameters and clicking the button of the primitive you want
+
+### UI
+
+*Thanks to ImGui we are able to give ample information on all the things happenning on the screen:
+  * Model data: number of vertices, number of indices, transformations, number of meshes...
+  * Texture data: width, height, buffer id...
+  * Application: memory usage, fps, vsync... 
+  * Window: width, height...
