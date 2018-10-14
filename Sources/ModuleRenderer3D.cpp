@@ -287,10 +287,18 @@ void ModuleRenderer3D::disable_flag_color_material()
 void ModuleRenderer3D::enable_flag_texture_2D()
 {
 	glEnable(GL_TEXTURE_2D);
+	draw_checkers = false;
 }
 void ModuleRenderer3D::disable_flag_texture_2D()
 {
 	glDisable(GL_TEXTURE_2D);
+	draw_checkers = false;
+}
+
+void ModuleRenderer3D::enable_flag_draw_checkers()
+{
+	glEnable(GL_TEXTURE_2D);
+	draw_checkers = true;
 }
 
 NOTphere* ModuleRenderer3D::AddSphere(float radius, double rings, double stacks, float x, float y, float z)
@@ -478,7 +486,7 @@ void ModuleRenderer3D::Configuration()
 		}
 		else
 		{
-			//draw checker
+			enable_flag_draw_checkers();
 		}
 	}
 }

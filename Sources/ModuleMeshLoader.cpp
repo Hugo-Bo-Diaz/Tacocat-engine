@@ -212,7 +212,12 @@ void NOTmesh::draw()
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 
-	if (texture != 0)
+
+	if (App->renderer3D->draw_checkers)
+	{
+		glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
+	}	
+	else if (texture != 0)
 	{
 		glBindTexture(GL_TEXTURE_2D, texture);	
 	}

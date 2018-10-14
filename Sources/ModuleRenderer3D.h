@@ -58,6 +58,9 @@ public:
 
 	void enable_flag_texture_2D();
 	void disable_flag_texture_2D();
+	void enable_flag_draw_checkers();
+
+	bool draw_checkers = false;
 
 	bool conf_depth_test = true;
 	bool conf_cull_face = true;
