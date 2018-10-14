@@ -62,16 +62,17 @@ public:
 	bool conf_depth_test = true;
 	bool conf_cull_face = true;
 	bool conf_lighting = true;
-	int conf_draw = 0;
-	int conf_texture = 0;
+	int conf_draw = -1;
+	int conf_texture = -1;
 
+	bool prev_conf_depth_test = false;
+	bool prev_conf_cull_face = false;
+	bool prev_conf_lighting = false;
+	int prev_conf_texture = -1;
+
+	bool justloaded = true;
 	void Configuration();
 	void Properties();
-
-	NOTphere* sph;
-	NOTlinder* lin;
-	NOTarrow* arr;
-	NOTcube* cub;
 
 	NOTphere* AddSphere(float radius, double rings, double stacks,				 float x = 0, float y = 0, float z = 0);
 	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
@@ -84,14 +85,8 @@ public:
 	std::vector<NOTmesh*> mesh_vector;
 
 	GLuint texture_buffer = 0;
-	GLubyte checkImage[100][100][4];
+	GLubyte checkImage[128][128][4];
 
-	//void DrawQuad(	std::vector<float> point1,
-	//				std::vector<float> point2,
-	//				std::vector<float> point3,
-	//				std::vector<float> point4);
-
-	//DOESN'T ACTUALLY DRAW QUADS
 private:
 	void FillDraw();
 	void LineDraw();

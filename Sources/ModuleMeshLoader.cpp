@@ -18,6 +18,10 @@
 
 #pragma comment(lib,"Assimp/libx86/assimp.lib")
 
+void aiLog(const char* str, char* user)
+{
+	App->UI->console->AddLog(str);
+}
 
 ModuleMeshLoader::ModuleMeshLoader(bool start_enabled) : Module(start_enabled)
 {
@@ -32,7 +36,10 @@ bool ModuleMeshLoader::Start()
 {
 	bool ret = true;
 
-	//Load("warrior.FBX");
+	struct aiLogStream stream;
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	stream.callback = aiLog;
+	aiAttachLogStream(&stream);
 
 	return ret;
 }
@@ -41,20 +48,28 @@ bool ModuleMeshLoader::Start()
 bool ModuleMeshLoader::CleanUp()
 {
 	App->UI->console->AddLog("Unloading Intro scene");
+	//aiDetachAllLogStreams();
 
 	return true;
 }
 
 void ModuleMeshLoader::Load(const char* file)
 {
-	names.clear();
 	//PROVISIONAL
 	for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
 	{
-		(*it)->~NOTmesh();
+		//(*it)->~NOTmesh();
+		delete (*it);
+		(*it) = nullptr;
 	}
 	App->renderer3D->mesh_vector.clear();
 	
+	if (total_scene_bounding_box != nullptr)
+	{
+		delete total_scene_bounding_box;
+		total_scene_bounding_box = nullptr;
+	}
+
 	total_scene_bounding_box = new AABB({100,100,100}, {-100,-100,-100});
 
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -107,8 +122,9 @@ void ModuleMeshLoader::Load(const char* file)
 			//}
 
 			m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
+
 			//we want to move the model so that the center of this box is on the 0, 1/2height, 0
-			if (scene->mNumMeshes < 2)
+			if (scene->mNumMeshes < 2)//if i moved more than 1 the scene would not be in its place
 			{
 				float to_move_x, to_move_y, to_move_z;
 
@@ -151,9 +167,7 @@ void ModuleMeshLoader::Load(const char* file)
 					material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
 					App->tex_loader->LoadTexture(texturePath.C_Str());
 				}
-
 			}
-
 		}
 		for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
 		{
@@ -187,29 +201,12 @@ void ModuleMeshLoader::Load(const char* file)
 }
 void ModuleMeshLoader::FocusCamera()
 {
-	float biggestsize = 0;
-
-	if (biggestsize < total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x)
-		biggestsize = total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x;
-	if (biggestsize < total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y)
-		biggestsize = total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y;
-	if (biggestsize < total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z)
-		biggestsize = total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z;
-
-	//math magics(tan(fov/2) = (biggestsize/2)/distance to the center point)
-	//distance to the center point = (biggestsize/2)/tan(fov/2)
-
-	//float distance_x = ((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(60* DEGTORAD);
-	//float distance_y = ((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(60 * DEGTORAD);
-	//float distance_z = ((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(60 * DEGTORAD);
-
-	float distance = (biggestsize / 2) / tan(30 * DEGTORAD);
 
 	float distance_x = (((total_scene_bounding_box->maxPoint.x - total_scene_bounding_box->minPoint.x) / 2) / tan(20 * DEGTORAD)) * cos(45 * DEGTORAD);
 	float distance_y = (((total_scene_bounding_box->maxPoint.y - total_scene_bounding_box->minPoint.y) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
 	float distance_z = (((total_scene_bounding_box->maxPoint.z - total_scene_bounding_box->minPoint.z) / 2) / tan(20 * DEGTORAD)) * sin(45 * DEGTORAD);
 
-	App->camera->Look({ distance_x,distance_y,distance_z }, { 0,0,0 });
+	App->camera->Look({ distance_x,distance_y,distance_z }, { total_scene_bounding_box->CenterPoint().x,total_scene_bounding_box->CenterPoint().y, total_scene_bounding_box->CenterPoint().z });
 }
 void NOTmesh::draw()
 {
@@ -352,4 +349,32 @@ void ModuleMeshLoader::DrawSceneBoundingBox()
 
 
 	glEnd();
+}
+
+NOTmesh::~NOTmesh()
+{
+	if (tex_coords != nullptr)
+	{
+		delete[] tex_coords;
+		tex_coords = nullptr;
+	}
+	if (vertex != nullptr)
+	{
+		delete[] vertex;
+		vertex = nullptr;
+	}
+	if (index != nullptr)
+	{
+		delete[] index;
+		index = nullptr;
+	}
+
+	glDeleteBuffers(1 , &buffer_id);
+	if (texture != 0)
+		glDeleteTextures(1, &texture);
+
+	//delete &scaling;
+	//delete &rotation;
+	//delete &position;
+
 }

@@ -5,7 +5,6 @@
 
 #include "pcg32\pcg_variants.h"
 
-#define MAX_SNAKE 2
 //todo TEXTURE STRUCT
 
 
@@ -20,8 +19,6 @@ public:
 	bool CleanUp();
 
 	uint LoadTexture(const char* file);
-
-	uint texturelol = 0;
 
 public:
 

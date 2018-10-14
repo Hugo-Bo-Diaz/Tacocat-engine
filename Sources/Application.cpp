@@ -124,6 +124,8 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 
+	SaveConfig("config.json");
+
 	for (std::list<Module*>::reverse_iterator it = list_modules.rbegin(); it != list_modules.rend(); it++)
 		if (!(*it)->CleanUp()) return false;
 
@@ -166,6 +168,13 @@ void Application::SaveConfig(const char* filename)
 	json_object_dotset_number(root_object, "Window.width", App->window->width);
 	json_object_dotset_number(root_object, "Window.height", App->window->height);
 
+
+	json_object_dotset_boolean(root_object, "Render.cull_face", App->renderer3D->conf_cull_face);
+	json_object_dotset_boolean(root_object, "Render.depth_test", App->renderer3D->conf_depth_test);
+	json_object_dotset_number(root_object, "Render.draw", App->renderer3D->conf_draw);
+	json_object_dotset_boolean(root_object, "Render.lighting", App->renderer3D->conf_lighting);
+	json_object_dotset_number(root_object, "Render.texture", App->renderer3D->conf_texture);
+
 	json_serialize_to_file(config, "config.json");
 
 	App->UI->console->AddLog("saved succesfully %s",filename);//CHANGE THIS FUNCTION
@@ -193,6 +202,10 @@ void Application::LoadConfig(const char* filename)
 	App->window->width = json_object_dotget_number(root_object, "Window.width");
 	App->window->height = json_object_dotget_number(root_object, "Window.height");
 
-
+	App->renderer3D->conf_cull_face = json_object_dotget_boolean(root_object, "Render.cull_face");
+	App->renderer3D->conf_depth_test = json_object_dotget_boolean(root_object, "Render.depth_test");
+	App->renderer3D->conf_draw = json_object_dotget_number(root_object, "Render.draw");
+	App->renderer3D->conf_lighting = json_object_dotget_boolean(root_object, "Render.lighting");
+	App->renderer3D->conf_texture = json_object_dotget_number(root_object, "Render.texture");
 
 }

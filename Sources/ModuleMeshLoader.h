@@ -12,15 +12,13 @@
 
 #include "pcg32\pcg_variants.h"
 
-#define MAX_SNAKE 2
-
 class NOTmesh
 {
 public:
 	uint buffer_id;
 
-	uint texture;
-	float* tex_coords;
+	uint texture = 0;
+	float* tex_coords = nullptr;
 
 	//uint id_index = 0; // index in VRAM
 	uint num_index = 0;
@@ -43,6 +41,8 @@ public:
 	void draw();
 
 	void draw_bounding_box();
+
+	~NOTmesh();
 
 	void Move(float x, float y, float z)
 	{
@@ -75,8 +75,7 @@ public:
 	bool Start();
 	bool CleanUp();
 	
-	std::list<std::string> names;
-	AABB* total_scene_bounding_box;
+	AABB* total_scene_bounding_box = 0;
 
 	void DrawSceneBoundingBox();
 

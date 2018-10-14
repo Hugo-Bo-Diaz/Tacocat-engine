@@ -18,6 +18,7 @@
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 
+
 ModuleRenderer3D::ModuleRenderer3D( bool start_enabled) : Module(start_enabled)
 {
 	name = "Render3D";
@@ -133,8 +134,8 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	for (int i = 0; i < 100; i++) {
-		for (int j = 0; j < 100; j++) {
+	for (int i = 0; i < 128; i++) {
+		for (int j = 0; j < 128; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
 			checkImage[i][j][0] = (GLubyte)c;
 			checkImage[i][j][1] = (GLubyte)c;
@@ -149,8 +150,10 @@ bool ModuleRenderer3D::Start()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 100, 100,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128,
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+
+	//delete[] checkImage;
 
 	return true;
 
@@ -396,10 +399,17 @@ void ModuleRenderer3D::BoundingBoxDraw()
 
 void ModuleRenderer3D::Configuration()
 {
-	bool prev_conf_depth_test = conf_depth_test;
-	bool prev_conf_cull_face = conf_cull_face;
-	bool prev_conf_lighting = conf_lighting;
-	int prev_conf_texture = conf_texture;
+	if (!justloaded)
+	{
+	prev_conf_depth_test = conf_depth_test;
+	prev_conf_cull_face = conf_cull_face;
+	prev_conf_lighting = conf_lighting;
+	prev_conf_texture = conf_texture;
+	}
+	else
+	{
+		justloaded = false;
+	}
 
 	if (ImGui::CollapsingHeader("OpenGL Settings"))
 	{

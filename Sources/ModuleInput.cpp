@@ -112,15 +112,6 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
 			App->camera->newPos -= App->camera->Z * e.wheel.y * 30 * dt;//TODO
-
-			//if (e.wheel.y > 0)
-			//{
-			//	App->camera->newPos -= App->camera->Z * 7.0f * dt;//TODO
-			//}
-			//else if (e.wheel.y < 0)
-			//{
-			//	App->camera->newPos += App->camera->Z * 7.0f * dt;//TODO
-			//}
 			break;
 
 			case SDL_MOUSEMOTION:
@@ -162,12 +153,6 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 		}
 	}
-
-	/*if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)//REDO PROVISIONAL
-	{
-		App->Close();
-	}*/
-
 	
 
 	if (App->quit)

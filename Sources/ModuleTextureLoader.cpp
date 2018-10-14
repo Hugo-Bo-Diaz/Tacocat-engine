@@ -69,12 +69,7 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 	{
 		////Convert image to RGBA
 		success = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-		//if (success == IL_TRUE)
-		//{
-		//	//Create texture from file pixels
-		//	textureLoaded = loadTextureFromPixels32((GLuint*)ilGetData(), (GLuint)ilGetInteger(IL_IMAGE_WIDTH), (GLuint)ilGetInteger(IL_IMAGE_HEIGHT));
-		//}
-		
+
 		ILinfo ImageInfo;
 		iluGetImageInfo(&ImageInfo);
 		if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
@@ -97,16 +92,18 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 			0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
+		delete[] pixmap;
+		pixmap = nullptr;
+
 		//Delete file from memory
 		ilDeleteImages(1, &buffernumber);
-		App->UI->console->AddLog("Loaded %s\n", file);
 
+		App->UI->console->AddLog("Loaded %s\n", file);
+		//provisional
 		int i = 0;
 		for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
 		{
-			//if (i==0)
-				(*it)->texture = buffernumber;
-
+			(*it)->texture = buffernumber;
 			++i;
 		}
 		App->UI->console->AddLog("Applied texture to %d mesh(es)", i);
@@ -116,7 +113,6 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		App->UI->console->AddLog("Unable to load %s\n",file);
 
 	}
-
 
 	return buffernumber;
 }
