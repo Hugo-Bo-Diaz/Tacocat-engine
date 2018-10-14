@@ -107,6 +107,11 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 			++i;
 		}
 		App->UI->console->AddLog("Applied texture to %d mesh(es)", i);
+
+		texture_id = buffernumber;
+		num_meshes = i;
+		tex_width = width;
+		tex_height = height;
 	}
 	else
 	{

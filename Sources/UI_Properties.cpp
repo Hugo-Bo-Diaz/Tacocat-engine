@@ -17,9 +17,13 @@ void UI_Properties::Render()
 	ImGui::SetNextWindowPos(getPos(), ImGuiSetCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiSetCond_FirstUseEver);
 	ImGui::Begin("Properties", &enabled);
-	if (ImGui::CollapsingHeader("Info"))
+	if (ImGui::CollapsingHeader("Model"))
 	{
 		App->renderer3D->Properties();
+	}
+	if (ImGui::CollapsingHeader("Texture"))
+	{
+		App->renderer3D->TexProperties();
 	}
 	ImGui::End();
 }

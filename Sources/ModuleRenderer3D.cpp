@@ -510,3 +510,11 @@ void ModuleRenderer3D::Properties()
 		ImGui::Separator();
 	}
 }
+
+void ModuleRenderer3D::TexProperties()
+{
+	ImGui::Text("Texture id: %u", App->tex_loader->texture_id);
+	ImGui::Text("Used in %u meshes", App->tex_loader->num_meshes);
+	ImGui::Text("Width: %u", App->tex_loader->tex_width); ImGui::SameLine();
+	ImGui::Text("Height: %u", App->tex_loader->tex_height);
+}

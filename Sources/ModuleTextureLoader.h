@@ -21,5 +21,7 @@ public:
 	uint LoadTexture(const char* file);
 
 public:
-
+	int texture_id = 0;
+	int num_meshes = 0;
+	int tex_width = 0, tex_height = 0;
 };

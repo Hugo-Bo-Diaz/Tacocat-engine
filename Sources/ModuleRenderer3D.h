@@ -76,6 +76,7 @@ public:
 	bool justloaded = true;
 	void Configuration();
 	void Properties();
+	void TexProperties();
 
 	NOTphere* AddSphere(float radius, double rings, double stacks,				 float x = 0, float y = 0, float z = 0);
 	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
