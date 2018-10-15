@@ -15,6 +15,7 @@ class NOTlinder;
 class NOTcube;
 class NOTprimitive;
 class NOTmesh;
+class FBO;
 
 class ModuleRenderer3D : public Module
 {
@@ -84,8 +85,11 @@ public:
 	GLuint texture_buffer = 0;
 	GLubyte checkImage[128][128][4];
 
+	FBO* fbo = nullptr;
+
 private:
 	void FillDraw();
 	void LineDraw();
 	void BoundingBoxDraw();
+
 };

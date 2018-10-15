@@ -7,6 +7,7 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include "glmath.h"
+#include "FboTexture.h"
 
 //#include <gl/GL.h>
 //#include <gl/GLU.h>
@@ -123,6 +124,10 @@ bool ModuleRenderer3D::Init()
 
 	// Projection matrix for
 	OnResize(App->window->width, App->window->height);
+
+	fbo = new FBO();
+	fbo->Create(App->window->window_width, App->window->window_height);
+
 	return ret;
 }
 
@@ -156,6 +161,8 @@ bool ModuleRenderer3D::Start()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	fbo->Bind(App->window->width, App->window->height);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity(); 
 
@@ -211,7 +218,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		LineDraw();
 		App->mesh_loader->DrawSceneBoundingBox();
 	}
-	
+
+	fbo->Unbind();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	App->UI->Draw();
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -221,6 +232,9 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
+	fbo->Unbind();
+	delete fbo;
+
 	App->UI->console->AddLog("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(context);

@@ -10,6 +10,10 @@
 
 #include "Devil/include/il.h"
 
+#include "Application.h"
+#include "FboTexture.h"
+#include "ModuleRenderer3D.h"
+
 //#include "Bullet/include/LinearMath/btScalar.h"
 
 UI_About::UI_About() 
@@ -51,5 +55,11 @@ void UI_About::Render()
 	if (ImGui::Button("License")) ShellExecute(0, 0, "https://github.com/Hugo-Bo-Diaz/Tacocat-engine/blob/master/LICENSE", 0, 0, SW_SHOW);
 	ImGui::Separator();
 	if (ImGui::Button("Github")) ShellExecute(0, 0, "https://github.com/Hugo-Bo-Diaz/Tacocat-engine", 0, 0, SW_SHOW);
+	ImGui::End();
+
+	ImGui::Begin("Scene");
+
+	ImGui::Image((void*)App->renderer3D->fbo->GetTexture(), ImVec2(300, 300));
+
 	ImGui::End();
 }

@@ -318,6 +318,9 @@
     <ClInclude Include="imgui-docking\imstb_truetype.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="FboTexture.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -508,6 +511,9 @@
     </ClCompile>
     <ClCompile Include="imgui-docking\imgui_widgets.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="FboTexture.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
