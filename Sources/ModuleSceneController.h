@@ -8,6 +8,7 @@
 
 #include "pcg32\pcg_variants.h"
 
+#include "Scene.h"
 
 class ModuleSceneController : public Module
 {
@@ -19,6 +20,20 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-public:
+	Scene* CreateScene();
+	Scene* CreateScene(const char* name);
+	void DeleteScene(Scene*);
+
+	void ChangeScene(Scene*);
+	void ChangeScene(int id);
+
+	Scene* current_scene = nullptr;
+
+	int scene_number;
+
+private:
+
+	std::vector<Scene*> scenes;
+	Scene* FindSceneById(int id);
 
 };

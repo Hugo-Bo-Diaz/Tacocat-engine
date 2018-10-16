@@ -19,9 +19,6 @@
     <Filter Include="Sources\Modules\Engine">
       <UniqueIdentifier>{83f46af7-e02f-40c0-9e56-41d76082527b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Modules\UI">
-      <UniqueIdentifier>{3283fc2b-f62e-456e-baff-35986cb7a4d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Modules\Scenes">
       <UniqueIdentifier>{b6d5c40a-08de-4492-a492-40b78048011c}</UniqueIdentifier>
     </Filter>
@@ -31,7 +28,13 @@
     <Filter Include="Sources\parson">
       <UniqueIdentifier>{d484c960-fa41-4a02-9ae1-5abfa48b8617}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Primitives">
+    <Filter Include="Sources\Components">
+      <UniqueIdentifier>{a5cc54c8-a914-430e-ac92-e336d7cb2dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\UI">
+      <UniqueIdentifier>{3283fc2b-f62e-456e-baff-35986cb7a4d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Components\Primitives">
       <UniqueIdentifier>{e77c686e-c486-4a90-b198-5ce7ca95c047}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -73,28 +76,28 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneController.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="UI_About.h">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_Configuration.h">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Sources\parson</Filter>
     </ClInclude>
     <ClInclude Include="UI_Console.h">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClInclude>
     <ClInclude Include="glmath.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="SphereMine.h">
-      <Filter>Sources\Primitives</Filter>
+      <Filter>Sources\Components\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\MathBuildConfig.h">
       <Filter>Sources\mathgeolib</Filter>
@@ -271,7 +274,7 @@
       <Filter>Sources\mathgeolib</Filter>
     </ClInclude>
     <ClInclude Include="CylinderMine.h">
-      <Filter>Sources\Primitives</Filter>
+      <Filter>Sources\Components\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="mmgr\mmgr.h">
       <Filter>Sources\Helpers</Filter>
@@ -280,7 +283,7 @@
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="CubeMine.h">
-      <Filter>Sources\Primitives</Filter>
+      <Filter>Sources\Components\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTextureLoader.h">
       <Filter>Sources\Modules</Filter>
@@ -289,10 +292,10 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="UI_Primitives.h">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_Properties.h">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClInclude>
     <ClInclude Include="imgui-docking\imconfig.h">
       <Filter>Sources\Helpers</Filter>
@@ -317,6 +320,15 @@
     </ClInclude>
     <ClInclude Include="imgui-docking\imstb_truetype.h">
       <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Sources\Modules\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -360,25 +372,25 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_About.cpp">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Configuration.cpp">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="parson\parson.c">
       <Filter>Sources\parson</Filter>
     </ClCompile>
     <ClCompile Include="UI_Console.cpp">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="glmath.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="SphereMine.cpp">
-      <Filter>Sources\Primitives</Filter>
+      <Filter>Sources\Components\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp">
       <Filter>Sources\mathgeolib</Filter>
@@ -471,13 +483,13 @@
       <Filter>Sources\mathgeolib</Filter>
     </ClCompile>
     <ClCompile Include="CylinderMine.cpp">
-      <Filter>Sources\Primitives</Filter>
+      <Filter>Sources\Components\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="CubeMine.cpp">
-      <Filter>Sources\Primitives</Filter>
+      <Filter>Sources\Components\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTextureLoader.cpp">
       <Filter>Sources\Modules</Filter>
@@ -486,10 +498,10 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="UI_Primitives.cpp">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Properties.cpp">
-      <Filter>Sources\Modules\UI</Filter>
+      <Filter>Sources\UI</Filter>
     </ClCompile>
     <ClCompile Include="imgui-docking\imgui.cpp">
       <Filter>Sources\Helpers</Filter>
@@ -508,6 +520,12 @@
     </ClCompile>
     <ClCompile Include="imgui-docking\imgui_widgets.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
