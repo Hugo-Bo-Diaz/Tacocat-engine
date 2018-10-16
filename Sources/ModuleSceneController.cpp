@@ -22,6 +22,8 @@ ModuleSceneController::~ModuleSceneController()
 // Load assets
 bool ModuleSceneController::Start()
 {
+	current_scene = CreateScene("MAIN");
+
 	App->UI->console->AddLog("Loading Intro assets");
 	bool ret = true;
 
@@ -32,6 +34,8 @@ bool ModuleSceneController::Start()
 		(*it)->Init();
 		delete(*it);
 	}
+
+	current_scene->LoadToScene("BakerHouse.fbx");
 
 	return ret;
 }

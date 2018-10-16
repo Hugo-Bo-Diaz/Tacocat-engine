@@ -1,24 +1,26 @@
 #ifndef GAMEOBJECT
 #define GAMEOBJECT
 
-#include "Component.h"
 #include <list>
 
+class Component;
 
 class GameObject
 {
 public:
 
 	GameObject() {};
-	std::list<Component*> components;
+	~GameObject();
 	std::list<GameObject*> children;
 	GameObject* parent = nullptr;
 
-	//Component* AddComponent();
+	void AddComponent(Component* comp);
 
 	void Update(float dt);
 
 private:
+
+	std::list<Component*> components;
 
 
 };

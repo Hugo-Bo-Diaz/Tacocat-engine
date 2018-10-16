@@ -15,15 +15,11 @@ public:
 	Scene(const char* _name) { name = _name; };
 
 	virtual void Init() {};
-	void Update(float dt) 
-	{
-		for (std::list<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
-		{
-			(*it)->Update(dt);
-			delete(*it);
-		}
-	}
+	void Update(float dt);
+
 	virtual void CleanUp() {};
+
+	void LoadToScene(const char* file);
 
 	void Enable() { enabled = true; };
 	void Disable() { enabled = false; };

@@ -330,6 +330,9 @@
     <ClInclude Include="Scene.h">
       <Filter>Sources\Modules\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -525,6 +528,12 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Sources\Modules\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
