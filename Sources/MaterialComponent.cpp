@@ -10,12 +10,7 @@
 
 Component_Material::Component_Material()
 {
-	type = MESH;
-}
-
-void Component_Material::Load(const char* file)
-{
-
+	type = MATERIAL;
 }
 
 //void Component_Mesh::generate_buffer()

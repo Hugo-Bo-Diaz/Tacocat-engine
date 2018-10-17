@@ -2,7 +2,9 @@
 #include "Application.h"
 #include "ModuleMeshLoader.h"
 #include "parson\parson.h"
+
 #include "MeshComponent.h"
+#include "MaterialComponent.h"
 
 #include "Assimp\include\cimport.h"
 #include "Assimp\include\scene.h"
@@ -130,7 +132,8 @@ void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SC
 			//	m->bounding_box.minPoint += {to_move_x, to_move_y, to_move_z};
 			//	m->bounding_box.maxPoint += {to_move_x, to_move_y, to_move_z};
 			//	m->Move(to_move_x, to_move_y, to_move_z);
-			//}			
+			//}
+
 			m->material_index = iterator->mMaterialIndex;
 
 			name = iterator->mName.C_Str();
@@ -148,32 +151,45 @@ void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SC
 		{
 			for (std::list<Component*>::iterator it_1 = (*it)->components.begin(); it_1 != (*it)->components.end(); it_1++)
 			{
-				if ((*it_1)->type == MESH || ((Component_Mesh*)(*it_1))->material_index != -1)
+				if ((*it_1)->type == MESH && ((Component_Mesh*)(*it_1))->material_index != -1 && ((Component_Mesh*)(*it_1))->material_index < scene->mNumMaterials && scene->HasMaterials())
 				{
+					Component_Material* mat = new Component_Material();
+					(*it)->AddComponent((Component*)mat);
+					mat->material_index = ((Component_Mesh*)(*it_1))->material_index;
+
 					//now we know which texture does this mesh need and we add it to the game object as a component
-					
+					const aiMaterial* material = scene->mMaterials[((Component_Mesh*)(*it_1))->material_index];
+					aiString texturePath;
+
+					unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+
+					if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+					{
+						material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+						mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(),&(mat->tex_width),&(mat->tex_height));
+					}
 				}
 			}
 		}
 
 		App->UI->console->AddLog("Loaded %d meshes %s", scene->mNumMeshes, file);
 
-		if (scene->HasMaterials())
-		{
-			for (unsigned int i = 0; i < scene->mNumMaterials; i++)
-			{
-				const aiMaterial* material = scene->mMaterials[i];
-				aiString texturePath;
+		//if (scene->HasMaterials())
+		//{
+		//	for (unsigned int i = 0; i < scene->mNumMaterials; i++)
+		//	{
+		//		const aiMaterial* material = scene->mMaterials[i];
+		//		aiString texturePath;
 
-				unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+		//		unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
 
-				if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-				{
-					material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-					App->tex_loader->LoadTexture(texturePath.C_Str());
-				}
-			}
-		}
+		//		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+		//		{
+		//			material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+		//			App->tex_loader->LoadTexture(texturePath.C_Str());
+		//		}
+		//	}
+		//}
 		//for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
 		//{
 		//	if ((*it)->bounding_box.minPoint.x < total_scene_bounding_box->minPoint.x)

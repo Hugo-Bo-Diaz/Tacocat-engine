@@ -43,7 +43,7 @@ bool ModuleTextureLoader::CleanUp()
 }
 
 
-uint ModuleTextureLoader::LoadTexture(const char* file)
+uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _height)
 {
 	ILuint buffernumber = 0;
 
@@ -67,7 +67,9 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 			iluFlipImage();
 	
 		ILuint width = ilGetInteger(IL_IMAGE_WIDTH);
+		*_width = width;
 		ILuint height = ilGetInteger(IL_IMAGE_HEIGHT);
+		*_height = height;
 		ILbyte* pixmap = new ILbyte[width * height * 4];
 		ilCopyPixels(0, 0, 0, width, height, 1, IL_RGBA,
 			IL_UNSIGNED_BYTE, pixmap);
@@ -90,17 +92,8 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		ilDeleteImages(1, &buffernumber);
 
 		App->UI->console->AddLog("Loaded %s\n", file);
-		//provisional
-		int i = 0;
-		//for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
-		//{
-		//	(*it)->texture = buffernumber;
-		//	++i;
-		//}
-		App->UI->console->AddLog("Applied texture to %d mesh(es)", i);
 
 		texture_id = buffernumber;
-		num_meshes = i;
 		tex_width = width;
 		tex_height = height;
 	}

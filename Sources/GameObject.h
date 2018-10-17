@@ -2,6 +2,7 @@
 #define GAMEOBJECT
 
 #include <list>
+#include "Globals.h"
 
 class Component;
 
@@ -20,6 +21,8 @@ public:
 
 	std::list<Component*> components;
 	std::list<GameObject*> children;
+
+	uint GetTexture(uint index);
 
 private:
 

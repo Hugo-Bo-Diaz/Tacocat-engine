@@ -14,7 +14,7 @@ public:
 	bool Start();
 	bool CleanUp();
 
-	uint LoadTexture(const char* file);
+	uint LoadTexture(const char* file, uint* width, uint* height);
 
 public:
 	int texture_id = 0;

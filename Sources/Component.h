@@ -1,6 +1,8 @@
 #ifndef COMPONENT
 #define COMPONENT
 
+class GameObject;
+
 enum ComponentType
 {
 	MESH,
@@ -23,6 +25,7 @@ public:
 	~Component() {};
 	virtual void Update(float dt) {};
 
+	GameObject* parent;
 
 };
 

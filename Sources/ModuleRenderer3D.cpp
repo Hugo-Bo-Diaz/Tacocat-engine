@@ -64,7 +64,7 @@ bool ModuleRenderer3D::Init()
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->UI->console->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -76,7 +76,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->UI->console->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -89,7 +89,7 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			CONSOLE_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->UI->console->AddLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -334,7 +334,6 @@ void ModuleRenderer3D::FillDraw()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-
 
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 

@@ -34,9 +34,13 @@ void Component_Mesh::Scale(float scalex, float scaley, float scalez)
 }
 
 void Component_Mesh::draw()
-{
+{	
+	
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 
@@ -46,9 +50,9 @@ void Component_Mesh::draw()
 		glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
 		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
-	else if (texture != 0)
+	else if (parent->GetTexture(material_index) != 0)
 	{
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glBindTexture(GL_TEXTURE_2D, parent->GetTexture(material_index));
 		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
 	else
@@ -59,13 +63,15 @@ void Component_Mesh::draw()
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
 
-	if (texture != 0)
+	if (parent->GetTexture(material_index) != 0)
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -156,9 +162,5 @@ Component_Mesh::~Component_Mesh()
 		delete[] index;
 		index = nullptr;
 	}
-
 	glDeleteBuffers(1, &buffer_id);
-	if (texture != 0)
-		glDeleteTextures(1, &texture);
-
 }

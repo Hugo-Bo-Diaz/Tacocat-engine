@@ -22,11 +22,11 @@ void Scene::LoadToScene(const char* file)
 		App->UI->console->AddLog("model file detected, sending to mesh loader");
 		App->mesh_loader->Load(file, this); 
 	}
-	else if (extension == ".png" || extension == ".dss")
-	{
-		App->UI->console->AddLog("image file detected, sending to texture loader");
-		App->tex_loader->LoadTexture(file);
-	}
+	//else if (extension == ".png" || extension == ".dss")
+	//{
+	//	App->UI->console->AddLog("image file detected, sending to texture loader");
+	//	App->tex_loader->LoadTexture(file);
+	//}
 	//SECOND: call the correspondant loader
 	//THIRD: generate the gameobjects needed
 	//FOURTH: profit

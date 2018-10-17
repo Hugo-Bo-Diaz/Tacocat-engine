@@ -14,7 +14,7 @@ class Component_Mesh : public Component
 {
 public:
 	uint buffer_id;
-	uint texture = 0;
+
 	float* tex_coords = nullptr;
 
 	//uint id_index = 0; // index in VRAM

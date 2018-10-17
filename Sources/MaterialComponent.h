@@ -18,8 +18,6 @@ public:
 	uint tex_width;
 	uint tex_height;
 
-	void Load(const char* file);
-
 	uint material_index = -1;
 
 	Component_Material();
