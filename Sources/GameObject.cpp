@@ -23,6 +23,13 @@ void GameObject::AddComponent(Component* comp)
 
 }
 
+void GameObject::AddChild(GameObject * child)
+{
+	child->parent = this;
+	children.push_back(child);
+
+}
+
 GameObject::~GameObject()
 {
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)

@@ -8,6 +8,11 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+Component_Mesh::Component_Mesh()
+{
+	type = MESH;
+}
+
 void Component_Mesh::Move(float x, float y, float z)
 {
 	for (int i = 0; i < num_vertex * 3; i += 3)
@@ -30,6 +35,9 @@ void Component_Mesh::Scale(float scalex, float scaley, float scalez)
 
 void Component_Mesh::draw()
 {
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 
 
@@ -58,6 +66,9 @@ void Component_Mesh::draw()
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+
 }
 
 void Component_Mesh::draw_bounding_box()
@@ -117,11 +128,16 @@ void Component_Mesh::draw_bounding_box()
 	glEnd();
 }
 
-void Component_Mesh::generate_buffer()
+void Component_Mesh::Update(float dt)
 {
-
-
+	draw();
 }
+
+//void Component_Mesh::generate_buffer()
+//{
+//
+//
+//}
 
 Component_Mesh::~Component_Mesh()
 {

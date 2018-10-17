@@ -139,17 +139,9 @@ update_status ModuleInput::PreUpdate(float dt)
 
 			case SDL_DROPFILE:
 				App->UI->console->AddLog("File dropped in window %s", e.drop.file);
-				std::string extension = std::strrchr(e.drop.file, '.');
-				if (extension == ".FBX" || extension == ".fbx")
-				{
-					App->UI->console->AddLog("model file detected, sending to mesh loader");
-					App->mesh_loader->Load(e.drop.file);
-				}
-				else if (extension == ".png" || extension == ".dss")
-				{
-					App->UI->console->AddLog("image file detected, sending to texture loader");
-					App->tex_loader->LoadTexture(e.drop.file);
-				}
+				
+				App->scene_controller->current_scene->LoadToScene(e.drop.file);
+
 			break;
 		}
 	}

@@ -11,16 +11,19 @@ public:
 
 	GameObject() {};
 	~GameObject();
-	std::list<GameObject*> children;
 	GameObject* parent = nullptr;
 
 	void AddComponent(Component* comp);
+	void AddChild(GameObject* child);
 
 	void Update(float dt);
 
+	std::list<Component*> components;
+	std::list<GameObject*> children;
+
 private:
 
-	std::list<Component*> components;
+
 
 
 };

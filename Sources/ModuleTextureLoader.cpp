@@ -92,11 +92,11 @@ uint ModuleTextureLoader::LoadTexture(const char* file)
 		App->UI->console->AddLog("Loaded %s\n", file);
 		//provisional
 		int i = 0;
-		for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
-		{
-			(*it)->texture = buffernumber;
-			++i;
-		}
+		//for (std::vector<NOTmesh*>::iterator it = App->renderer3D->mesh_vector.begin(); it != App->renderer3D->mesh_vector.end(); it++)
+		//{
+		//	(*it)->texture = buffernumber;
+		//	++i;
+		//}
 		App->UI->console->AddLog("Applied texture to %d mesh(es)", i);
 
 		texture_id = buffernumber;

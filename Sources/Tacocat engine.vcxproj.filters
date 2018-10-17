@@ -333,6 +333,9 @@
     <ClInclude Include="MeshComponent.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="MaterialComponent.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -534,6 +537,9 @@
       <Filter>Sources\Modules\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialComponent.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>

@@ -29,15 +29,20 @@ public:
 
 	std::string name;
 
+	uint material_index = -1;
+
+	Component_Mesh();
+
 	aiVector3t<float> scaling;
 	aiVector3t< float > rotation;
 	aiVector3t< float > position;
 	AABB bounding_box;
-	void draw() ;
+	void draw();
 	void draw_bounding_box();
-	void generate_buffer();
+	//void generate_buffer();
+	void Update(float dt);
 
-	~Component_Mesh() {};
+	~Component_Mesh();
 	void Move(float x, float y, float z);
 
 	void Scale(float scalex, float scaley, float scalez);

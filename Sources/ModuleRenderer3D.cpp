@@ -329,12 +329,6 @@ void ModuleRenderer3D::AddElement(NOTprimitive* p)
 	primitive_vector.push_back(p);
 }
 
-void ModuleRenderer3D::AddMesh(NOTmesh* p)
-{
-	mesh_vector.push_back(p);
-}
-
-
 void ModuleRenderer3D::FillDraw()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -349,10 +343,10 @@ void ModuleRenderer3D::FillDraw()
 		(*it)->draw();
 	}
 
-	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
-	{
-		(*it)->draw();
-	}
+	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	//{
+	//	(*it)->draw();
+	//}
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -369,10 +363,10 @@ void ModuleRenderer3D::LineDraw()
 	{
 		(*it)->draw();
 	}
-	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
-	{
-		(*it)->draw();
-	}
+	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	//{
+	//	(*it)->draw();
+	//}
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 }
@@ -383,10 +377,10 @@ void ModuleRenderer3D::BoundingBoxDraw()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINES);
 	glColor3f(0.0f, 0.75f, 0.0f);
 	glLineWidth(2.0f);
-	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
-	{
-		(*it)->draw_bounding_box();
-	}
+	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	//{
+	//	(*it)->draw_bounding_box();
+	//}
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 }
@@ -481,20 +475,20 @@ void ModuleRenderer3D::Properties()//imgui type function to output the meshes pr
 {
 	vec3 pos, rot, scale;
 
-	for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
-	{
-		pos.Set((*it)->position.x, (*it)->position.y, (*it)->position.z);
-		rot.Set((*it)->rotation.x * RADTODEG, (*it)->rotation.y * RADTODEG, (*it)->rotation.z* RADTODEG);
-		scale.Set((*it)->scaling.x, (*it)->scaling.y, (*it)->scaling.z);
+	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+	//{
+	//	pos.Set((*it)->position.x, (*it)->position.y, (*it)->position.z);
+	//	rot.Set((*it)->rotation.x * RADTODEG, (*it)->rotation.y * RADTODEG, (*it)->rotation.z* RADTODEG);
+	//	scale.Set((*it)->scaling.x, (*it)->scaling.y, (*it)->scaling.z);
 
-		ImGui::Text("Name: %s", (*it)->name);
-		ImGui::Text("Num. vertices: %u", (*it)->num_index);
-		ImGui::Text("");
-		ImGui::InputFloat3("Pos", &pos, 2);
-		ImGui::InputFloat3("Rot", &rot, 2);
-		ImGui::InputFloat3("Scale", &scale, 2);
-		ImGui::Separator();
-	}
+	//	ImGui::Text("Name: %s", (*it)->name);
+	//	ImGui::Text("Num. vertices: %u", (*it)->num_index);
+	//	ImGui::Text("");
+	//	ImGui::InputFloat3("Pos", &pos, 2);
+	//	ImGui::InputFloat3("Rot", &rot, 2);
+	//	ImGui::InputFloat3("Scale", &scale, 2);
+	//	ImGui::Separator();
+	//}
 }
 
 void ModuleRenderer3D::TexProperties()//same as the function above

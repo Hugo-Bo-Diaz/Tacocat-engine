@@ -75,11 +75,9 @@ public:
 	NOTcube* AddCube(float widthx, float height, float widthz ,					 float x = 0, float y = 0, float z = 0);
 	NOTlinder* AddCylinder(float radius, float sector, float stacks, float height, float x = 0, float y = 0, float z = 0);
 	void AddElement(NOTprimitive*);
-	void AddMesh(NOTmesh*);
 	void CleanPrimitives();
 
 	std::vector<NOTprimitive*> primitive_vector;
-	std::vector<NOTmesh*> mesh_vector;
 
 	GLuint texture_buffer = 0;
 	GLubyte checkImage[128][128][4];

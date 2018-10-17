@@ -32,7 +32,6 @@ bool ModuleSceneController::Start()
 	for (std::vector<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++)
 	{
 		(*it)->Init();
-		delete(*it);
 	}
 
 	current_scene->LoadToScene("BakerHouse.fbx");
@@ -57,6 +56,8 @@ bool ModuleSceneController::CleanUp()
 // Update
 update_status ModuleSceneController::Update(float dt)
 {
+
+	current_scene->Update(dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{

@@ -24,6 +24,8 @@ public:
 	void Enable() { enabled = true; };
 	void Disable() { enabled = false; };
 
+	GameObject* AddGameObject();
+
 private:
 
 	//todo
