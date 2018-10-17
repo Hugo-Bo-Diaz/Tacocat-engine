@@ -25,6 +25,7 @@ public:
 	void Disable() { enabled = false; };
 
 	GameObject* AddGameObject();
+	std::list<GameObject*> GameObjects;
 
 private:
 
@@ -33,7 +34,6 @@ private:
 	//add camera
 	//add root(empty object on 0,0,0)
 
-	std::list<GameObject*> GameObjects;
 	bool enabled = false;
 
 };

@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "MaterialComponent.h"
+#include "imgui-docking/imgui.h"
 
 
 void GameObject::Update(float dt)
@@ -51,5 +52,11 @@ GameObject::~GameObject()
 		delete(*it);
 	}
 	components.clear();
+
+}
+
+
+void GameObject::Hierarchy()
+{
 
 }

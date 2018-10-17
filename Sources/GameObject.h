@@ -24,6 +24,8 @@ public:
 
 	uint GetTexture(uint index);
 
+	void Hierarchy();
+
 private:
 
 
