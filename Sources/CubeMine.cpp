@@ -1,5 +1,4 @@
 #include "CubeMine.h"
-#include "glmath.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 

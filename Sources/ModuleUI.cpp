@@ -35,13 +35,13 @@ bool ModuleUI::Init()
 	about = new UI_About();
 	config = new UI_Configuration();
 	console = new UI_Console();
-	primitives = new UI_Primitives();
+	//primitives = new UI_Primitives();
 	properties = new UI_Properties();
 
 	UI_Elements.push_back(about);
 	UI_Elements.push_back(config);
 	UI_Elements.push_back(console);
-	UI_Elements.push_back(primitives);
+	//UI_Elements.push_back(primitives);
 	UI_Elements.push_back(properties);
 
 	return ret;
@@ -135,8 +135,8 @@ update_status ModuleUI::Update(float dt)
 		}
 		if (ImGui::BeginMenu("GameObject"))
 		{
-			if (ImGui::MenuItem("Primitives"))
-				primitives->Enable(!primitives->isEnabled());
+			//if (ImGui::MenuItem("Primitives"))
+			//	primitives->Enable(!primitives->isEnabled());
 			if (ImGui::MenuItem("Model Properties"))
 				properties->Enable(!properties->isEnabled());
 			ImGui::EndMenu();

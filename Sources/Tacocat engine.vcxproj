@@ -81,7 +81,6 @@
     <ClInclude Include="CubeMine.h" />
     <ClInclude Include="CylinderMine.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui-docking\imconfig.h" />
     <ClInclude Include="imgui-docking\imgui.h" />
@@ -184,7 +183,6 @@
     <ClCompile Include="CubeMine.cpp" />
     <ClCompile Include="CylinderMine.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="glmath.cpp" />
     <ClCompile Include="imgui-docking\imgui.cpp" />
     <ClCompile Include="imgui-docking\imgui_demo.cpp" />
     <ClCompile Include="imgui-docking\imgui_draw.cpp" />

@@ -8,7 +8,7 @@
 #include "ModuleInput.h"
 #include "ModuleSceneController.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
+//#include "ModuleCamera3D.h"
 #include "ModuleMeshLoader.h"
 #include "ModuleTextureLoader.h"
 #include "ModuleUI.h"
@@ -20,7 +20,7 @@ public:
 	ModuleInput* input;
 	ModuleSceneController* scene_controller;
 	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
+	//ModuleCamera3D* camera;
 	ModuleUI* UI;
 	ModuleMeshLoader* mesh_loader;
 	ModuleTextureLoader* tex_loader;

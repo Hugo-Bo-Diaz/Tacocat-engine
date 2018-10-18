@@ -6,7 +6,6 @@
 #include "CubeMine.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
-#include "glmath.h"
 
 //#include <gl/GL.h>
 //#include <gl/GLU.h>
@@ -165,7 +164,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->scene_controller->current_scene->spookamera->Position.x, App->scene_controller->current_scene->spookamera->Position.y, App->scene_controller->current_scene->spookamera->Position.z);
-	lights[0].SetPos(App->scene_controller->current_scene->spookamera->Position.x, App->scene_controller->current_scene->spookamera->Position.y, App->camera->Position.z);
+	//lights[0].SetPos(App->scene_controller->current_scene->spookamera->Position.x, App->scene_controller->current_scene->spookamera->Position.y, App->camera->Position.z);
 
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
@@ -240,6 +239,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 	if (App->scene_controller->current_scene)
 		ProjectionMatrix = App->scene_controller->current_scene->spookamera->frustum.ProjectionMatrix();
+		/*App->scene_controller->current_scene->spookamera->projection_matrix_todelete(60.0f, (float)width / (float)height, 0.125f, 512.0f).Transposed();*/
 		//perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
 	glLoadMatrixf(&ProjectionMatrix[0][0]);
 
@@ -477,7 +477,7 @@ void ModuleRenderer3D::Configuration()
 
 void ModuleRenderer3D::Properties()//imgui type function to output the meshes properties
 {
-	vec3 pos, rot, scale;
+	//vec3 pos, rot, scale;
 
 	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
 	//{

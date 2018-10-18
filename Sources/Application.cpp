@@ -9,7 +9,7 @@ Application::Application()
 	scene_controller = new ModuleSceneController(true);
 	mesh_loader = new ModuleMeshLoader(true);
 	renderer3D = new ModuleRenderer3D(true);
-	camera = new ModuleCamera3D(true);
+	//camera = new ModuleCamera3D(true);
 	//physics = new ModulePhysics3D(true);
 	UI = new ModuleUI(true);
 	tex_loader = new ModuleTextureLoader(true);
@@ -22,7 +22,7 @@ Application::Application()
 	// They will CleanUp() in reverse order
 	// Main Modules
 	AddModule(window);
-	AddModule(camera);
+	//AddModule(camera);
 	AddModule(input);
 	AddModule(mesh_loader);
 	AddModule(tex_loader);

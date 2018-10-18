@@ -1,5 +1,4 @@
 #include "Primitive.h"
-#include "glmath.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "Glew/include/glew.h"

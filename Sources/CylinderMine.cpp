@@ -1,22 +1,22 @@
 #include "CylinderMine.h"
-#include "glmath.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
+#include "MathGeoLib/MathGeoLib.h"
 
 NOTlinder::NOTlinder(float radius, unsigned int sector_count,unsigned int stack_count, unsigned int height)
 {
 
 	float x, y, z;                              // vertex position
 
-	float sectorStep = 2 * M_PI / sector_count;
-	float stackStep = M_PI / stack_count;
+	float sectorStep = 2 * pi / sector_count;
+	float stackStep = pi / stack_count;
 	float sectorAngle, stackAngle;
 	float height_gained_per_level = height / stack_count;
 
 	//all the vertices
 	for (int i = 0; i <= stack_count; ++i)
 	{
-		stackAngle = M_PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+		stackAngle = pi / 2 - i * stackStep;        // starting from pi/2 to -pi/2
 		y = height_gained_per_level * i;              // r * sin(u)
 												  // add (sectorCount+1) vertices per stack
 												  // the first and last vertices have same position and normal, but different tex coods

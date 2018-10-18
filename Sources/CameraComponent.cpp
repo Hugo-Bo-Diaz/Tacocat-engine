@@ -14,13 +14,14 @@ Component_Camera::Component_Camera()
 	Reference = float3(0.0f, 0.0f, 0.0f);
 
 	//frustum.horizontalFov = fov_x;
-	frustum.horizontalFov = 106.67;
-	frustum.verticalFov = 60.0f;
-	frustum.nearPlaneDistance = 0.125;
+	frustum.horizontalFov = DegToRad(90);
+	frustum.verticalFov = DegToRad(60);
+	frustum.nearPlaneDistance = 0.5;
 	frustum.farPlaneDistance = 512;
 	//frustum.orthographicWidth = 1000;
 	//frustum.orthographicHeight = 800;
-	//frustum.type = FrustumType::PerspectiveFrustum;
+	frustum.type = FrustumType::PerspectiveFrustum;
+
 	frustum.SetWorldMatrix(float3x4::identity);
 
 }
@@ -145,3 +146,19 @@ void Component_Camera::CalculateViewMatrix()
 	ViewMatrixInverse = ViewMatrix.Inverted();
 		//inverse(ViewMatrix);
 }
+
+//float4x4 Component_Camera::projection_matrix_todelete(float fovy, float aspect, float n, float f)
+//{
+//	float4x4 Perspective;
+//
+//	float coty = 1.0f / tan(fovy * (float)pi / 360.0f);
+//
+//	Perspective[0][0] = coty / aspect;					//0 0
+//	Perspective[1][1] = coty;							//1 1
+//	Perspective[2][2] = (n + f) / (n - f);				//2 2
+//	Perspective[3][2] = -1.0f;							//3 2
+//	Perspective[2][3] = 2.0f * n * f / (n - f);			//2 3
+//	Perspective[3][3] = 0.0f;							//3 3
+//
+//	return Perspective;
+//}

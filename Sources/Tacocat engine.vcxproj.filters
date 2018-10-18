@@ -93,9 +93,6 @@
     <ClInclude Include="UI_Console.h">
       <Filter>Sources\UI</Filter>
     </ClInclude>
-    <ClInclude Include="glmath.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
     <ClInclude Include="SphereMine.h">
       <Filter>Sources\Components\Primitives</Filter>
     </ClInclude>
@@ -397,9 +394,6 @@
     </ClCompile>
     <ClCompile Include="UI_Console.cpp">
       <Filter>Sources\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="glmath.cpp">
-      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="SphereMine.cpp">
       <Filter>Sources\Components\Primitives</Filter>
