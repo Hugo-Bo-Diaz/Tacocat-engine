@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-//#include "glmath.h"//TOCHANGE
+#include "glmath.h"//TOCHANGE
 #include "Light.h"
 #include <vector>
 
@@ -35,7 +35,7 @@ public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	void enable_flag_depth_test();
 	void disable_flag_depth_test();

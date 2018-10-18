@@ -27,7 +27,7 @@ bool ModuleSceneController::Start()
 	App->UI->console->AddLog("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	App->scene_controller->current_scene->spookamera->Move(float3(1.0f, 1.0f, 0.0f));
 
 	for (std::vector<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++)
 	{

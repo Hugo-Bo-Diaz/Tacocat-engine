@@ -14,7 +14,7 @@
     <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
     <ProjectName>Tacocat engine</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -75,6 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CubeMine.h" />
@@ -171,11 +172,13 @@
     <ClInclude Include="UI_About.h" />
     <ClInclude Include="UI_Configuration.h" />
     <ClInclude Include="UI_Console.h" />
+    <ClInclude Include="UI_Gameobject.h" />
     <ClInclude Include="UI_Primitives.h" />
     <ClInclude Include="UI_Properties.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CubeMine.cpp" />
@@ -241,6 +244,7 @@
     <ClCompile Include="UI_About.cpp" />
     <ClCompile Include="UI_Configuration.cpp" />
     <ClCompile Include="UI_Console.cpp" />
+    <ClCompile Include="UI_GameObject.cpp" />
     <ClCompile Include="UI_Primitives.cpp" />
     <ClCompile Include="UI_Properties.cpp" />
   </ItemGroup>

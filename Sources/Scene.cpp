@@ -2,12 +2,24 @@
 #include "Application.h"
 #include "ModuleUI.h"
 
+Scene::~Scene()
+{
+
+	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+	{
+		delete (*it);
+	}
+	GameObjects.clear();
+
+}
+
 void Scene::Update(float dt)
 {
-	for (std::list<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
 		(*it)->Update(dt);
 	}
+	spookamera->Update(dt);
 }
 
 void Scene::LoadToScene(const char* file)

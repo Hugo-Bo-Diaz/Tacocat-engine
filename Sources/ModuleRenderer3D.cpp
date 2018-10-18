@@ -160,10 +160,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity(); 
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	//glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(App->scene_controller->current_scene->spookamera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(App->scene_controller->current_scene->spookamera->Position.x, App->scene_controller->current_scene->spookamera->Position.y, App->scene_controller->current_scene->spookamera->Position.z);
+	lights[0].SetPos(App->scene_controller->current_scene->spookamera->Position.x, App->scene_controller->current_scene->spookamera->Position.y, App->camera->Position.z);
+
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -235,8 +238,10 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	if (App->scene_controller->current_scene)
+		ProjectionMatrix = App->scene_controller->current_scene->spookamera->frustum.ProjectionMatrix();
+		//perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	glLoadMatrixf(&ProjectionMatrix[0][0]);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

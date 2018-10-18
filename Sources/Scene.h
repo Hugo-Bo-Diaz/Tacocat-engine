@@ -2,7 +2,9 @@
 #define SCENE
 
 #include "GameObject.h"
+#include "CameraComponent.h"
 #include <string>
+#include <vector>
 
 class Scene
 {
@@ -12,7 +14,9 @@ public:
 	std::string name;
 
 	Scene() {};
-	Scene(const char* _name) { name = _name; };
+	Scene(const char* _name) { name = _name; spookamera = new Component_Camera(); };
+
+	~Scene();
 
 	virtual void Init() {};
 	void Update(float dt);
@@ -25,7 +29,10 @@ public:
 	void Disable() { enabled = false; };
 
 	GameObject* AddGameObject();
-	std::list<GameObject*> GameObjects;
+
+	std::vector<GameObject*> GameObjects;
+
+	Component_Camera* spookamera;
 
 private:
 

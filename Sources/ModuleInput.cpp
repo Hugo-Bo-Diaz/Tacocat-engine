@@ -111,7 +111,7 @@ update_status ModuleInput::PreUpdate(float dt)
 		{
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
-			App->camera->newPos -= App->camera->Z * e.wheel.y * 30 * dt;//TODO
+			App->scene_controller->current_scene->spookamera->newPos -= App->scene_controller->current_scene->spookamera->Z * e.wheel.y * 30 * dt;//TODO
 			break;
 
 			case SDL_MOUSEMOTION:

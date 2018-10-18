@@ -336,6 +336,12 @@
     <ClInclude Include="MaterialComponent.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="UI_Gameobject.h">
+      <Filter>Sources\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -540,6 +546,12 @@
       <Filter>Sources\Components</Filter>
     </ClCompile>
     <ClCompile Include="MaterialComponent.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_GameObject.cpp">
+      <Filter>Sources\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>

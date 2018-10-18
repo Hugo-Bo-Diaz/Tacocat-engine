@@ -18,7 +18,7 @@ void UI_GameObject::Render()
 	ImGui::Begin("Hierarchy", &enabled);
 	if (ImGui::CollapsingHeader("Scene"))
 	{
-		for (std::list<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
+		for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
 		{
 			
 		}

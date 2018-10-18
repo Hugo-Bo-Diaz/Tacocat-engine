@@ -9,6 +9,7 @@ enum ComponentType
 	MATERIAL,
 	TRANSFORM,
 	LIGHT,
+	CAMERA,
 	MISCELANEOUS
 };
 
