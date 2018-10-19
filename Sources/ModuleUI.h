@@ -25,7 +25,7 @@ public:
 	UI_About* about;
 	UI_Configuration* config;
 	UI_Console* console;
-	//UI_Primitives* primitives;
+	UI_Primitives* primitives;
 	UI_Properties* properties;
 
 	//Send the fps data to the config window

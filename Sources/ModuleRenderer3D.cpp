@@ -238,7 +238,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	if (App->scene_controller->current_scene)
-		ProjectionMatrix = App->scene_controller->current_scene->spookamera->frustum.ProjectionMatrix();
+		ProjectionMatrix = App->scene_controller->GetMainCamera()->frustum.ProjectionMatrix();
 		/*App->scene_controller->current_scene->spookamera->projection_matrix_todelete(60.0f, (float)width / (float)height, 0.125f, 512.0f).Transposed();*/
 		//perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
 	glLoadMatrixf(&ProjectionMatrix[0][0]);

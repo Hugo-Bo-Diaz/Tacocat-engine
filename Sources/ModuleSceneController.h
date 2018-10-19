@@ -31,6 +31,8 @@ public:
 
 	int scene_number;
 
+	Component_Camera* GetMainCamera();
+
 private:
 
 	std::vector<Scene*> scenes;

@@ -44,6 +44,18 @@ public:
 	float fov_x;
 	float fov_y = 60;
 
+	float angle_XZ = 0;
+	float angle_Y = 0;
+	
+	//this is for the frustum geometry
+	float* vertices;
+	uint* indices;
+	uint buffer_id;
+
+	void Generate_frustum();
+	void Draw_frustum();
+	
+
 private:
 
 	float4x4 ViewMatrix, ViewMatrixInverse;

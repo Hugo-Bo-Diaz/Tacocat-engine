@@ -36,6 +36,8 @@ bool ModuleSceneController::Start()
 
 	current_scene->LoadToScene("BakerHouse.fbx");
 
+	App->renderer3D->OnResize(App->window->width, App->window->height);//TODO
+
 	return ret;
 }
 
@@ -146,6 +148,11 @@ void ModuleSceneController::ChangeScene(int id)
 	current_scene->Disable();
 	current_scene = (NewCurrentScene);
 	current_scene->Enable();
+}
+
+Component_Camera * ModuleSceneController::GetMainCamera()
+{
+	return current_scene->spookamera;
 }
 
 Scene* ModuleSceneController::FindSceneById(int id)

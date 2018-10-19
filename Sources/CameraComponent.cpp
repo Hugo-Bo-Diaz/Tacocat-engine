@@ -46,7 +46,6 @@ void Component_Camera::Update(float dt)
 
 	newPos = { 0,0,0 };
 
-
 	//// Mouse motion ----------------
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT || (App->input->GetKey(SDL_SCANCODE_LALT) && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT))
@@ -58,8 +57,26 @@ void Component_Camera::Update(float dt)
 			Reference.z = 0;
 		}
 
+
+
 		int dx = -App->input->GetMouseXMotion()* sensibility;
 		int dy = -App->input->GetMouseYMotion()* sensibility;
+
+		float3x3 transform_x = 
+		{cos(DegToRad(dx)),sin(DegToRad(dx)),0,
+		-sin(DegToRad(dx)),cos(DegToRad(dx)),0,
+		0,					0,				 1};
+
+		float3x3 transform_y =
+		{cos(DegToRad(dy)),sin(DegToRad(dy)),0,
+		-sin(DegToRad(dy)),cos(DegToRad(dy)),0,
+		0,					0,				 1 };
+
+		float3x3 transform = transform_x * transform_y;
+
+		frustum.Transform(transform);
+		
+
 
 		float Sensitivity = 0.01f;
 
@@ -90,6 +107,7 @@ void Component_Camera::Update(float dt)
 
 		Position = Reference + Z * Position.Length();
 	}
+	Draw_frustum();
 	CalculateViewMatrix();
 }
 
@@ -145,6 +163,14 @@ void Component_Camera::CalculateViewMatrix()
 
 	ViewMatrixInverse = ViewMatrix.Inverted();
 		//inverse(ViewMatrix);
+}
+
+void Component_Camera::Generate_frustum()
+{
+}
+
+void Component_Camera::Draw_frustum()
+{
 }
 
 //float4x4 Component_Camera::projection_matrix_todelete(float fovy, float aspect, float n, float f)

@@ -153,7 +153,6 @@
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="mmgr\mmgr.h" />
     <ClInclude Include="mmgr\nommgr.h" />
-    <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleMeshLoader.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleTextureLoader.h" />
@@ -225,7 +224,6 @@
     <ClCompile Include="MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="mmgr\mmgr.cpp" />
-    <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleMeshLoader.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />

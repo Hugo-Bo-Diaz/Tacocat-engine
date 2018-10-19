@@ -59,9 +59,12 @@ void Component_Mesh::draw()
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+	//glRotatef(imdumb++, 0, 1, 0);
 
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
+
+	//glRotatef(-imdumb, 0, 1, 0);
 
 	if (parent->GetTexture(material_index) != 0)
 	{

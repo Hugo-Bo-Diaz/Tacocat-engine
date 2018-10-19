@@ -47,5 +47,6 @@ public:
 
 	void Scale(float scalex, float scaley, float scalez);
 
+	//float imdumb = 0;
 
 };

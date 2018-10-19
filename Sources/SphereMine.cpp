@@ -1,7 +1,7 @@
 #include "SphereMine.h"
-#include "glmath.h"
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
+#include "MathGeoLib/MathGeoLib.h"
 
 NOTphere::NOTphere(float radius, unsigned int sector_count, unsigned int stack_count)
 {
@@ -9,13 +9,13 @@ NOTphere::NOTphere(float radius, unsigned int sector_count, unsigned int stack_c
 
 	float x, y, z, xy;                              // vertex position
 
-	float sectorStep = 2 * M_PI / sector_count;
-	float stackStep = M_PI / stack_count;
+	float sectorStep = 2 * pi / sector_count;
+	float stackStep = pi / stack_count;
 	float stackAngle, sectorAngle;
 
 	for (int i = 0; i <= stack_count; ++i)
 	{
-		stackAngle = M_PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+		stackAngle = pi / 2 - i * stackStep;        // starting from pi/2 to -pi/2
 		xy = radius * cosf(stackAngle);             // r * cos(u)
 		z = radius * sinf(stackAngle);              // r * sin(u)
 
