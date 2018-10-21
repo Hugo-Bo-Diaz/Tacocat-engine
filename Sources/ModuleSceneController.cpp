@@ -28,6 +28,7 @@ bool ModuleSceneController::Start()
 	bool ret = true;
 
 	App->scene_controller->current_scene->spookamera->Move(float3(1.0f, 1.0f, 0.0f));
+	//App->scene_controller->current_scene->spookamera->frustum.farPlaneDistance = 500;
 
 	for (std::vector<Scene*>::iterator it = scenes.begin(); it != scenes.end(); it++)
 	{

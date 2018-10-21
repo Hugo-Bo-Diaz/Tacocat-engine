@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include "Globals.h"
 #include "Component.h"
 
@@ -45,15 +46,24 @@ public:
 	float fov_y = 60;
 
 	float angle_XZ = 0;
-	float angle_Y = 0;
-	
+	float3x3 transform_y;
+	float angle_Y=0;
+	float3x3 transform_xz;
+
+	void RotateFrustum_Yaxis(float angle);
+
+	void RotateFrustum_XZaxis(float angle);
+
 	//this is for the frustum geometry
-	float* vertices;
-	uint* indices;
-	uint buffer_id;
+	//float* vertices;
+	//std::vector<uint> indices;
+	//uint buffer_id;
+
+	float3 vert[8];
 
 	void Generate_frustum();
 	void Draw_frustum();
+
 	
 
 private:

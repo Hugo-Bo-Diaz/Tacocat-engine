@@ -1,1 +1,1 @@
-{"fps":41.610000610351563,"vsync":0,"Window":{"fullscreen":false,"borderless":false,"resizable":true,"full_desktop":false,"brightness":0,"width":1680,"height":970},"Render":{"cull_face":true,"depth_test":true,"draw":0,"lighting":true,"texture":1}}
+{"fps":17.243999481201172,"vsync":0,"Window":{"fullscreen":false,"borderless":false,"resizable":true,"full_desktop":false,"brightness":0,"width":1680,"height":970},"Render":{"cull_face":false,"depth_test":true,"draw":1,"lighting":true,"texture":1}}
