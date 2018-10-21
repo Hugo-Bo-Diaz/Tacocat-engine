@@ -35,8 +35,7 @@ void Component_Mesh::Scale(float scalex, float scaley, float scalez)
 
 bool Component_Mesh::CheckFrustumCulling(Component_Camera * camera_to_check)
 {
-	Plane* p;
-	p->
+
 
 	return false;
 }
