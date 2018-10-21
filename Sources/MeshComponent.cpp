@@ -33,9 +33,18 @@ void Component_Mesh::Scale(float scalex, float scaley, float scalez)
 	}
 }
 
+bool Component_Mesh::CheckFrustumCulling(Component_Camera * camera_to_check)
+{
+	Plane* p;
+	p->
+
+	return false;
+}
+
 void Component_Mesh::draw()
 {	
-	
+	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()))
+	{
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -77,7 +86,7 @@ void Component_Mesh::draw()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
-
+	}
 }
 
 void Component_Mesh::draw_bounding_box()

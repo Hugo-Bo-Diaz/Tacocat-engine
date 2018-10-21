@@ -57,6 +57,8 @@ void Component_Camera::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)  RotateFrustum_XZaxis(10);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)  RotateFrustum_XZaxis(-10);
 
+	//if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) frustum.pos.z +=5;
+	//if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) frustum.pos.x += 5;
 
 	Position.Set(newPos.x + Position.x, newPos.y + Position.y, newPos.z + Position.z);
 	Reference.Set(newPos.x + Position.x, newPos.y + Position.y, newPos.z + Position.z);
@@ -67,7 +69,11 @@ void Component_Camera::Update(float dt)
 	int dy = -App->input->GetMouseYMotion()* sensibility;
 
 	float3 pos_now = frustum.pos;//saving the position of the frustum
-	//frustum.pos = float3(0, 0, 0);//setting it to 0 so that the transforms apply right
+
+	frustum.pos = float3(0, 0, 0);
+	frustum.Transform((transform_y * transform_xz).Inverted());//we revert the changes so that they don't stack up
+
+	frustum.pos = float3(0, 0, 0);//setting it to 0 so that the transforms apply right
 
 	transform_y =//calculating transform matrices
 	{ cos(DegToRad(angle_XZ)),		0,	sin(DegToRad(angle_XZ)),
@@ -85,8 +91,6 @@ void Component_Camera::Update(float dt)
 	frustum.pos = pos_now;//we move the transformed frustum to its position
 	Generate_frustum();
 	Draw_frustum();//we draw it
-	frustum.pos = float3(0, 0, 0);
-	frustum.Transform(transform.Inverted());//we revert the changes so that they don't stack up
 
 	frustum.pos = pos_now;//we move the transformed frustum to its position
 

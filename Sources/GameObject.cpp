@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "MaterialComponent.h"
+#include "MeshComponent.h"
 #include "imgui-docking/imgui.h"
 
 
@@ -29,6 +30,33 @@ uint GameObject::GetTexture(uint index)
 	}
 
 	return 0;
+}
+
+AABB GameObject::GetBoundingBox()
+{
+	AABB box = {float3(100,100,100),float3(-100-100-100)};
+
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		if ((*it)->type == MESH)
+		{
+			if (((Component_Mesh*)(*it))->bounding_box.minPoint.x < box.minPoint.x)
+				box.minPoint.x = ((Component_Mesh*)(*it))->bounding_box.minPoint.x;
+			if (((Component_Mesh*)(*it))->bounding_box.minPoint.y < box.minPoint.y)
+				box.minPoint.y = ((Component_Mesh*)(*it))->bounding_box.minPoint.y;
+			if (((Component_Mesh*)(*it))->bounding_box.minPoint.z < box.minPoint.z)
+				box.minPoint.z = ((Component_Mesh*)(*it))->bounding_box.minPoint.z;
+
+			if (((Component_Mesh*)(*it))->bounding_box.maxPoint.x > box.maxPoint.x)
+				box.maxPoint.x = ((Component_Mesh*)(*it))->bounding_box.maxPoint.x;
+			if (((Component_Mesh*)(*it))->bounding_box.maxPoint.y > box.maxPoint.y)
+				box.maxPoint.y = ((Component_Mesh*)(*it))->bounding_box.maxPoint.y;
+			if (((Component_Mesh*)(*it))->bounding_box.maxPoint.z > box.maxPoint.z)
+				box.maxPoint.z = ((Component_Mesh*)(*it))->bounding_box.maxPoint.z;
+		}
+	}
+
+	return box;
 }
 
 void GameObject::AddComponent(Component* comp)

@@ -3,6 +3,7 @@
 
 #include <list>
 #include "Globals.h"
+#include "MathGeoLib/MathGeoLib.h"
 
 class Component;
 
@@ -23,6 +24,8 @@ public:
 	std::list<GameObject*> children;
 
 	uint GetTexture(uint index);
+
+	AABB GetBoundingBox();
 
 	void Hierarchy();
 

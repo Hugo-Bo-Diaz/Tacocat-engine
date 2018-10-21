@@ -46,9 +46,9 @@ public:
 	float fov_y = 60;
 
 	float angle_XZ = 0;
-	float3x3 transform_y;
+	float3x3 transform_y = transform_y.identity;
 	float angle_Y=0;
-	float3x3 transform_xz;
+	float3x3 transform_xz = transform_xz.identity;
 
 	void RotateFrustum_Yaxis(float angle);
 

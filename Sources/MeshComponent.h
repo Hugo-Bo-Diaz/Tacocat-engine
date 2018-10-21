@@ -10,6 +10,8 @@
 
 #include "MathGeoLib/MathGeoLib.h"
 
+class Component_Camera;
+
 class Component_Mesh : public Component
 {
 public:
@@ -46,6 +48,8 @@ public:
 	void Move(float x, float y, float z);
 
 	void Scale(float scalex, float scaley, float scalez);
+
+	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 
 	//float imdumb = 0;
 
