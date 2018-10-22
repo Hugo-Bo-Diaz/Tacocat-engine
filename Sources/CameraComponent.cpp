@@ -10,7 +10,7 @@ Component_Camera::Component_Camera()
 	Y = float3(0.0f, 1.0f, 0.0f);
 	Z = float3(0.0f, 0.0f, 1.0f);
 
-	Position = float3(0.0f, 0.0f,5.0f);
+	Position = float3(0.0f, 0.0f,10.0f);
 	Reference = float3(0.0f, 0.0f, 0.0f);
 
 	//frustum.horizontalFov = fov_x;
@@ -51,11 +51,11 @@ void Component_Camera::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) RotateFrustum_Yaxis(10);
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)  RotateFrustum_Yaxis(-10);
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) RotateFrustum_Yaxis(0.5);
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)  RotateFrustum_Yaxis(-0.5);
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)  RotateFrustum_XZaxis(10);
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)  RotateFrustum_XZaxis(-10);
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)  RotateFrustum_XZaxis(0.5);
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)  RotateFrustum_XZaxis(-0.5);
 
 	//if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) frustum.pos.z +=5;
 	//if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) frustum.pos.x += 5;
@@ -210,47 +210,47 @@ void Component_Camera::Draw_frustum()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	glBegin(GL_LINES);
+	glBegin(GL_QUADS);
 
 	glVertex3fv((GLfloat*)&vert[1]);
 	glVertex3fv((GLfloat*)&vert[5]);
 	glVertex3fv((GLfloat*)&vert[7]);
 	glVertex3fv((GLfloat*)&vert[3]);
 
-	glVertex3fv((GLfloat*)&vert[3]);
-	glVertex3fv((GLfloat*)&vert[1]);
+	//glVertex3fv((GLfloat*)&vert[3]);
+	//glVertex3fv((GLfloat*)&vert[1]);
 
 	glVertex3fv((GLfloat*)&vert[4]);
 	glVertex3fv((GLfloat*)&vert[0]);
 	glVertex3fv((GLfloat*)&vert[2]);
 	glVertex3fv((GLfloat*)&vert[6]);
 
-	glVertex3fv((GLfloat*)&vert[6]);
-	glVertex3fv((GLfloat*)&vert[4]);
+	//glVertex3fv((GLfloat*)&vert[6]);
+	//glVertex3fv((GLfloat*)&vert[4]);
 
 	glVertex3fv((GLfloat*)&vert[5]);
 	glVertex3fv((GLfloat*)&vert[4]);
 	glVertex3fv((GLfloat*)&vert[6]);
 	glVertex3fv((GLfloat*)&vert[7]);
 	
-	glVertex3fv((GLfloat*)&vert[7]);
-	glVertex3fv((GLfloat*)&vert[5]);
+	//glVertex3fv((GLfloat*)&vert[7]);
+	//glVertex3fv((GLfloat*)&vert[5]);
 
 	glVertex3fv((GLfloat*)&vert[0]);
 	glVertex3fv((GLfloat*)&vert[1]);
 	glVertex3fv((GLfloat*)&vert[3]);
 	glVertex3fv((GLfloat*)&vert[2]);
 
-	glVertex3fv((GLfloat*)&vert[2]);
-	glVertex3fv((GLfloat*)&vert[6]);
+	//glVertex3fv((GLfloat*)&vert[2]);
+	//glVertex3fv((GLfloat*)&vert[6]);
 	
 	glVertex3fv((GLfloat*)&vert[3]);
 	glVertex3fv((GLfloat*)&vert[7]);
 	glVertex3fv((GLfloat*)&vert[6]);
 	glVertex3fv((GLfloat*)&vert[2]);
 
-	glVertex3fv((GLfloat*)&vert[2]);
-	glVertex3fv((GLfloat*)&vert[0]);
+	//glVertex3fv((GLfloat*)&vert[2]);
+	//glVertex3fv((GLfloat*)&vert[0]);
 
 	glVertex3fv((GLfloat*)&vert[0]);
 	glVertex3fv((GLfloat*)&vert[4]);

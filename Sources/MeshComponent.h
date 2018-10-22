@@ -45,6 +45,7 @@ public:
 	void Update(float dt);
 
 	~Component_Mesh();
+	bool ContainsAaBox(const AABB & refBox, const Frustum& frustum) const;
 	void Move(float x, float y, float z);
 
 	void Scale(float scalex, float scaley, float scalez);
