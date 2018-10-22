@@ -37,6 +37,9 @@
     <Filter Include="Sources\Components\Primitives">
       <UniqueIdentifier>{e77c686e-c486-4a90-b198-5ce7ca95c047}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Importer">
+      <UniqueIdentifier>{3a1fca6b-10b8-4e71-8c41-6503d2d02e8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -335,6 +338,15 @@
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Sources\Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshImporter.h">
+      <Filter>Sources\Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleImporter.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
