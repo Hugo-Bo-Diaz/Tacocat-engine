@@ -5,13 +5,15 @@
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
 
+#include "TransformComponent.h"
+
 class Component;
 
 class GameObject
 {
 public:
 
-	GameObject() {};
+	GameObject();
 	~GameObject();
 	GameObject* parent = nullptr;
 
@@ -31,7 +33,6 @@ public:
 
 private:
 	bool isstatic;
-
 };
 
 #endif // !1

@@ -73,6 +73,10 @@ void GameObject::AddChild(GameObject * child)
 
 }
 
+GameObject::GameObject()
+{
+}
+
 GameObject::~GameObject()
 {
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
