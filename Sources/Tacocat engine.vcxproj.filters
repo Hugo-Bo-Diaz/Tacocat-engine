@@ -348,7 +348,9 @@
     <ClInclude Include="ModuleImporter.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -555,7 +557,9 @@
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">
