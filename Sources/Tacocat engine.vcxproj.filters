@@ -37,7 +37,7 @@
     <Filter Include="Sources\Components\Primitives">
       <UniqueIdentifier>{e77c686e-c486-4a90-b198-5ce7ca95c047}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Importer">
+    <Filter Include="Sources\Importers">
       <UniqueIdentifier>{3a1fca6b-10b8-4e71-8c41-6503d2d02e8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -340,10 +340,10 @@
       <Filter>Sources\Components</Filter>
     </ClInclude>
     <ClInclude Include="Importer.h">
-      <Filter>Sources\Importer</Filter>
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
     <ClInclude Include="MeshImporter.h">
-      <Filter>Sources\Importer</Filter>
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
     <ClInclude Include="ModuleImporter.h">
       <Filter>Sources\Modules</Filter>
@@ -554,6 +554,10 @@
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleImporter.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

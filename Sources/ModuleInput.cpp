@@ -140,7 +140,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 				App->UI->console->AddLog("File dropped in window %s", e.drop.file);
 				
-				App->scene_controller->current_scene->LoadToScene(e.drop.file);
+				App->importer->Load(e.drop.file, App->scene_controller->current_scene);
 
 			break;
 		}
