@@ -30,9 +30,7 @@ public:
 	void Hierarchy();
 
 private:
-
-
-
+	bool isstatic;
 
 };
 

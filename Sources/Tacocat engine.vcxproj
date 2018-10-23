@@ -169,6 +169,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SphereMine.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UI_About.h" />
     <ClInclude Include="UI_Configuration.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SphereMine.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UI_About.cpp" />
     <ClCompile Include="UI_Configuration.cpp" />
