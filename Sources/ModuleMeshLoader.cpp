@@ -99,7 +99,7 @@ void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SC
 			}
 			if (iterator->HasTextureCoords(0))
 			{
-				m->tex_coords = new float[m->num_index * 2];
+				m->tex_coords = new float[m->num_vertex * 2];
 				uint w = 0;
 				for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
 				{
@@ -136,7 +136,7 @@ void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SC
 
 			m->material_index = iterator->mMaterialIndex;
 
-			name = iterator->mName.C_Str();
+			m->name = iterator->mName.C_Str();
 			aiQuaterniont <float> quat;
 			scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, quat, m->position);
 			m->rotation = quat.GetEuler();

@@ -47,22 +47,30 @@ void Component_Mesh::draw()
 {	
 	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()))
 	{
+
+		if (buffer_id > 2)
+		{
+			bounding_box.Translate(float3(0, 0.1, 0));
+		}
+
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 
 
 	if (App->renderer3D->draw_checkers)
-	{
+	{	
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
 		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
 	else if (parent->GetTexture(material_index) != 0)
 	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindTexture(GL_TEXTURE_2D, parent->GetTexture(material_index));
 		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
@@ -88,8 +96,11 @@ void Component_Mesh::draw()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+
+
 	}
 	draw_bounding_box();
+
 }
 
 void Component_Mesh::draw_bounding_box()
@@ -152,6 +163,17 @@ void Component_Mesh::draw_bounding_box()
 void Component_Mesh::Update(float dt)
 {
 	draw();
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		App->importer->mesh->CreateOwnFile(this);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		Move(10, 0, 10);
+		bounding_box.Translate(float3(10, 0, 10));
+		//App->importer->mesh->Import();
+	}
 }
 
 //void Component_Mesh::generate_buffer()

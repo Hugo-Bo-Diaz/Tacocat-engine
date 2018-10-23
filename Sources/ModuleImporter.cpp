@@ -10,15 +10,20 @@ ModuleImporter::~ModuleImporter()
 
 bool ModuleImporter::Start()
 {
-	return false;
+	mesh = new MeshImporter();
+	return true;
 }
 
 bool ModuleImporter::CleanUp()
 {
-	return false;
+	return true;
 }
 
 void ModuleImporter::Load(const char * filename, Scene * scene_to)
 {
-
+	//std::string extension = std::strrchr(filename, '.');
+	//if (extension == ".FBX" || extension == ".fbx")
+	//{
+	//	mesh->CreateOwnFile(filename,nullptr);
+	//}
 }

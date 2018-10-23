@@ -76,6 +76,12 @@ update_status ModuleSceneController::Update(float dt)
 	{
 		App->LoadConfig("config.json");
 	}
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		App->importer->mesh->Import();
+		App->importer->mesh->LoadCustomMeshFiles(current_scene);
+	}
+
 
 	return UPDATE_CONTINUE;
 }

@@ -52,6 +52,8 @@ public:
 
 	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 
+	
+
 	//float imdumb = 0;
 
 };

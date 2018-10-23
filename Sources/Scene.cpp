@@ -20,6 +20,7 @@ void Scene::Update(float dt)
 		(*it)->Update(dt);
 	}
 	spookamera->Update(dt);
+
 }
 
 void Scene::LoadToScene(const char* file)
