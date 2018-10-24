@@ -29,10 +29,13 @@ void MeshImporter::CreateOwnFile(Component_Mesh* mesh)
 	cursor += bytes; // Store indices
 
 	bytes = sizeof(uint) * mesh->num_index;
-	memcpy(cursor, mesh->index, bytes);	cursor += bytes; // Store vertices
+	memcpy(cursor, mesh->index, bytes);
+
+	cursor += bytes; // Store vertices
 
 	bytes = sizeof(float) * mesh->num_vertex * 3;
-	memcpy(cursor, mesh->vertex, bytes);
+	memcpy(cursor, mesh->vertex, bytes);
+
 	cursor += bytes;// Store texcoords
 
 	bytes = sizeof(float) * mesh->num_vertex * 2;
@@ -42,7 +45,7 @@ void MeshImporter::CreateOwnFile(Component_Mesh* mesh)
 	name += mesh->name;
 	name += ".taco";
 
-	FILE* file = fopen(name.c_str(),"w");
+	FILE* file = fopen(name.c_str(),"wb");
 	fwrite(data,sizeof(char),size,file);
 	fclose(file);
 }
@@ -73,7 +76,7 @@ void MeshImporter::LoadCustomMeshFiles(Scene* scene_to)
 		Component_Mesh* mesh = new Component_Mesh();
 		object->AddComponent(mesh);
 
-		FILE* file = fopen(it->data(),"r");
+		FILE* file = fopen(it->data(),"rb");
 		if (file != NULL)
 		{
 			mesh->name = (*it);//TODO GET THE NAME FROM HERE
@@ -86,9 +89,9 @@ void MeshImporter::LoadCustomMeshFiles(Scene* scene_to)
 
 			char* cursor = buffer;
 			uint ranges[2];
-			uint bytes = sizeof(ranges);
+			uint bytes = sizeof(uint) * 2;
 
-			memcpy(ranges, cursor, bytes);
+			memcpy(ranges, buffer, bytes);
 
 			mesh->num_index = ranges[0];
 			mesh->num_vertex = ranges[1];
@@ -105,7 +108,7 @@ void MeshImporter::LoadCustomMeshFiles(Scene* scene_to)
 
 			bytes = sizeof(float) * mesh->num_vertex * 3;
 			mesh->vertex = new float[mesh->num_vertex * 3];
-			memcpy(mesh->vertex, cursor, bytes);
+			memcpy(mesh->vertex, cursor,bytes);
 
 			// Load texcoords
 			cursor += bytes;
@@ -119,6 +122,8 @@ void MeshImporter::LoadCustomMeshFiles(Scene* scene_to)
 			App->UI->console->AddLog("Loaded  %s", mesh->name.c_str());
 
 			mesh->bounding_box = mesh->bounding_box.MinimalEnclosingAABB((float3*)mesh->vertex, mesh->num_vertex);
+			//mesh->bounding_box.minPoint = float3(-0.5, -0.5, -0.5);
+			//mesh->bounding_box.maxPoint = float3(0.5, 0.5, 0.5);
 
 			//GENERATE BUFFER
 			glGenBuffers(1, (GLuint*) &(mesh->buffer_id));

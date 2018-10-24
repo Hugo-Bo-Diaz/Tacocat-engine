@@ -11,6 +11,8 @@
 Component_Mesh::Component_Mesh()
 {
 	type = MESH;
+	vertex = nullptr;
+	index = nullptr;
 }
 
 void Component_Mesh::Move(float x, float y, float z)
@@ -51,6 +53,7 @@ void Component_Mesh::draw()
 		if (buffer_id > 2)
 		{
 			bounding_box.Translate(float3(0, 0.1, 0));
+			Move(0, 0.1, 0);
 		}
 
 
