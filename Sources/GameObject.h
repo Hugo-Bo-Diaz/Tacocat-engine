@@ -4,6 +4,7 @@
 #include <list>
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
+#include <time.h>
 
 class Component;
 
@@ -11,7 +12,7 @@ class GameObject
 {
 public:
 
-	GameObject() {};
+	GameObject();
 	~GameObject();
 	GameObject* parent = nullptr;
 
@@ -30,6 +31,8 @@ public:
 	AABB GetBoundingBox();
 
 	void Hierarchy();
+
+	uint UID;
 
 private:
 

@@ -3,7 +3,7 @@
 #include "MaterialComponent.h"
 #include "MeshComponent.h"
 #include "imgui-docking/imgui.h"
-
+#include "Application.h"
 
 void GameObject::Update(float dt)
 {
@@ -70,6 +70,31 @@ void GameObject::AddChild(GameObject * child)
 {
 	child->parent = this;
 	children.push_back(child);
+
+}
+
+GameObject::GameObject()
+{
+	//NOTATION day-month-6 number random
+
+	//it should be unique unless there are more than 1.000.000 objects added in the scene in the span of a day
+
+	//this uid can be decoded to get when approximately was created
+
+	UID = 0;
+
+	time_t theTime = time(NULL);
+	struct tm *aTime = localtime(&theTime);
+
+	uint hours = aTime->tm_hour;//2 digits
+	uint day = aTime->tm_mday; // 2 digits
+	uint month = aTime->tm_mon + 1;//from 0-11 to 1-12  //2 digits
+
+	uint random = App->random_int(0,999999);
+
+	UID += day *   100000000;
+	UID += month * 1000000;
+	UID += random ;
 
 }
 
