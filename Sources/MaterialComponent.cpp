@@ -25,3 +25,16 @@ Component_Material::~Component_Material()
 	glDeleteTextures(1, &texture_buffer_id);
 
 }
+
+void Component_Material::Save_Component(JSON_Object* root, const char* prev)
+{
+	std::string temp = prev;
+	temp += ".type";
+	json_object_dotset_number(root, temp.c_str(), (uint)type);
+
+}
+
+void Component_Material::Load_Component(JSON_Object* root, const char* prev)
+{
+
+}

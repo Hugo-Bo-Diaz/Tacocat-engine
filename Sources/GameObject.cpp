@@ -113,3 +113,38 @@ void GameObject::Hierarchy()
 {
 
 }
+
+void GameObject::Save(const char* prev, JSON_Object* root)
+{
+	std::string temp;
+	temp  = prev;
+	temp += ".UID";
+	json_object_dotset_number(root, temp.c_str(), UID);
+
+	if (parent != nullptr)
+	{
+		temp = prev;
+		temp += ".parent UID";
+		json_object_dotset_number(root, temp.c_str(),parent->UID);
+	}
+
+
+	std::string comp = prev;
+	comp += ".component";
+
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		(*it)->Save_Component(root,comp.c_str());
+	}
+
+
+	std::string child=prev;
+	child += ".child";
+
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->Save(child.c_str(),root);
+	}
+
+
+}

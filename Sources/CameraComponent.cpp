@@ -276,3 +276,16 @@ void Component_Camera::Draw_frustum()
 //
 //	return Perspective;
 //}
+
+
+void Component_Camera::Save_Component(JSON_Object* root, const char* prev)
+{
+	std::string temp = prev;
+	temp += ".type";
+	json_object_dotset_number(root, temp.c_str(), (uint)type);
+}
+
+void Component_Camera::Load_Component(JSON_Object* root, const char* prev)
+{
+
+}

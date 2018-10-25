@@ -43,6 +43,9 @@ public:
 
 	NOTQuadtree* tree;
 
+	void Save(const char* filename);
+	void Load(const char* filename);
+
 private:
 
 	//todo

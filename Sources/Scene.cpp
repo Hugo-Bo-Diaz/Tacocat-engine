@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include "Application.h"
 #include "ModuleUI.h"
+#include "parson/parson.h"
+
 
 Scene::~Scene()
 {
@@ -23,6 +25,11 @@ void Scene::Update(float dt)
 
 	tree->draw();
 	tree->Recalculate_tree();
+
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		Save("scenelol.json");
+	}
 
 }
 
@@ -55,4 +62,24 @@ GameObject* Scene::AddGameObject()
 	GameObjects.push_back(object);
 	tree->objects.push_back(object);
 	return object;
+}
+
+void Scene::Save(const char * filename)
+{
+	JSON_Value *config = json_parse_file(filename);
+	config = json_value_init_object();
+	JSON_Object* root_object = json_value_get_object(config);
+
+	json_object_set_string(root_object, "Name", name.c_str());
+
+	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+	{
+		(*it)->Save(".Objects",root_object);
+	}
+
+	json_serialize_to_file(config, filename);
+}
+
+void Scene::Load(const char * filename)
+{
 }

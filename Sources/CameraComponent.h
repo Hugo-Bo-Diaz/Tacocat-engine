@@ -64,7 +64,9 @@ public:
 	void Generate_frustum();
 	void Draw_frustum();
 
-	
+	void Save_Component(JSON_Object*, const char* prev);
+	void Load_Component(JSON_Object*, const char* prev);
+
 
 private:
 
