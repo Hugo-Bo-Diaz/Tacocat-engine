@@ -21,6 +21,9 @@ void Scene::Update(float dt)
 	}
 	spookamera->Update(dt);
 
+	tree->draw();
+	tree->Recalculate_tree();
+
 }
 
 void Scene::LoadToScene(const char* file)
@@ -50,5 +53,6 @@ GameObject* Scene::AddGameObject()
 {
 	GameObject* object = new GameObject();
 	GameObjects.push_back(object);
+	tree->objects.push_back(object);
 	return object;
 }

@@ -166,6 +166,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="parson\parson.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SphereMine.h" />
     <ClInclude Include="Timer.h" />

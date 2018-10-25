@@ -25,6 +25,8 @@ public:
 
 	uint GetTexture(uint index);
 
+	bool static_object = true;
+
 	AABB GetBoundingBox();
 
 	void Hierarchy();

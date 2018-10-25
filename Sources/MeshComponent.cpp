@@ -50,11 +50,11 @@ void Component_Mesh::draw()
 	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()))
 	{
 
-		if (buffer_id > 2)
-		{
-			bounding_box.Translate(float3(0, 0.1, 0));
-			Move(0, 0.1, 0);
-		}
+		//if (buffer_id > 2)
+		//{
+		//	bounding_box.Translate(float3(0, 0.1, 0));
+		//	Move(0, 0.1, 0);
+		//}
 
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

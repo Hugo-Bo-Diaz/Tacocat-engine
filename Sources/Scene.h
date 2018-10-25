@@ -1,10 +1,12 @@
 #ifndef SCENE
 #define SCENE
 
+#include "Quadtree.h"
 #include "GameObject.h"
 #include "CameraComponent.h"
 #include <string>
 #include <vector>
+
 
 class Scene
 {
@@ -14,7 +16,12 @@ public:
 	std::string name;
 
 	Scene() {};
-	Scene(const char* _name) { name = _name; spookamera = new Component_Camera(); };
+	Scene(const char* _name) 
+	{ 
+		name = _name;
+		spookamera = new Component_Camera(); 
+		tree = new NOTQuadtree(float3(-100,-1,-100),float3(100,1,100));
+	};
 
 	~Scene();
 
@@ -33,6 +40,8 @@ public:
 	std::vector<GameObject*> GameObjects;
 
 	Component_Camera* spookamera;
+
+	NOTQuadtree* tree;
 
 private:
 
