@@ -165,17 +165,26 @@ float Application::random_between_0_1()
 
 void Application::SaveConfig(const char* filename)
 {
-	rapidjson::Document yourJsonDoc;
+	rapidjson::Document document;
+	document.SetObject();
+	FILE* fp = fopen("save.json", "wb");
+	char writeBuffer[655360];
 
-	rapidjson::StringBuffer s;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(s);
+	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 
-	writer.StartObject();
-	writer.Key("string1");
-	writer.String("string");
-	writer.EndObject();
+	rapidjson::Document::AllocatorType& all = document.GetAllocator();
 
-	rapidjson::ParseResult x = yourJsonDoc.Parse(s.GetString());
+	rapidjson::Value object(rapidjson::kObjectType);
+	object.AddMember("l",0,all);
+	//for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+	//{
+	//	(*it)->Save(document, os);
+	//}
+	document.AddMember("lol", object, all);
+
+	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+	document.Accept(writer);
+	fclose(fp);
 	//JSON_Value *config = json_parse_file("config.json");
 	//config = json_value_init_object();
 	//JSON_Object* root_object = json_value_get_object(config);

@@ -1,1 +1,21 @@
-{"fps":60,"vsync":0,"Window":{"fullscreen":false,"borderless":false,"resizable":true,"full_desktop":false,"brightness":0,"width":1680,"height":970},"Render":{"cull_face":true,"depth_test":true,"draw":2,"lighting":true,"texture":1}}
+{
+  
+  "fps": 60,
+  "vsync": 0,
+  "Window": {
+    "fullscreen": false,
+    "borderless": false,
+    "resizable": true,
+    "full_desktop": false,
+    "brightness": 0,
+    "width": 1680,
+    "height": 970
+  },
+  "Render": {
+    "cull_face": true,
+    "depth_test": true,
+    "draw": 2,
+    "lighting": true,
+    "texture": 1
+  }
+}
