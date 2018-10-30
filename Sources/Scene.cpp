@@ -2,6 +2,11 @@
 #include "Application.h"
 #include "ModuleUI.h"
 
+Scene::Scene()
+{
+	tree = new Spooktree(ROOT, -100, -100, 100, 100);
+}
+
 Scene::~Scene()
 {
 
@@ -21,9 +26,7 @@ void Scene::Update(float dt)
 	}
 	spookamera->Update(dt);
 
-	tree->draw();
-	tree->Recalculate_tree();
-
+	tree->Draw();
 }
 
 void Scene::LoadToScene(const char* file)
@@ -53,6 +56,6 @@ GameObject* Scene::AddGameObject()
 {
 	GameObject* object = new GameObject();
 	GameObjects.push_back(object);
-	tree->objects.push_back(object);
+	//tree->objects.push_back(object);
 	return object;
 }

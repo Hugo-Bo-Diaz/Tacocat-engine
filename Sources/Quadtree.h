@@ -4,6 +4,9 @@
 #include "GameObject.h"
 #include "MathGeoLib/MathGeoLib.h"
 
+#include "Glew/include/glew.h"
+#include "SDL\include\SDL_opengl.h"
+
 enum sector 
 {
 	ROOT,
@@ -18,12 +21,12 @@ struct Spooktree
 public:
 	Spooktree() 
 	{
-		x = 0.0f;
-		z = 0.0f;
-		width = 0.0f;
-		height = 0.0f;
+		minx = 0.0f;
+		minz = 0.0f;
+		maxx = 0.0f;
+		maxz = 0.0f;
 	};
-	Spooktree(sector type, float x, float y, float width, float height) : type(type), x(x), z(z), width(width), height(height) {};
+	Spooktree(sector type, float minx, float minz, float maxx, float maxz) : type(type), minx(minx), minz(minz), maxx(maxx), maxz(maxz) {};
 	~Spooktree() {};
 
 	int max = 2;
@@ -61,19 +64,47 @@ public:
 
 	void Divide(std::vector<GameObject*> GameObjects)
 	{
-		NWS = new Spooktree(NW, x, z, width / 2, height / 2);
-		NES = new Spooktree(NE, x, z + (width / 2), height / 2, width / 2);
-		SWS = new Spooktree(SW, x + (height / 2), z, height / 2, width / 2);
-		SES = new Spooktree(SE, x + (height / 2), z + (height / 2), height / 2, width / 2);
+		NWS = new Spooktree(NW, minx, minz, minx + maxx, minz + maxz);
+		NES = new Spooktree(NE, minx, minz + maxz, minx + maxz, maxz);
+		SWS = new Spooktree(SW, minx + maxx, minz, maxx, minz + maxz);
+		SES = new Spooktree(SE, minx + maxx, minz + maxz, maxx, maxz);
+
+		float sX, sZ, mX, mZ;
 
 		for (int aux = 0; aux < GameObjects.size(); aux++)
 		{
-			//if (GameObjects[aux]->GetBoundingBox() >= aux) //dunno how to get the size of the bounding box
-			//{
-			//	NWS->children.push_back(GameObjects[aux]);
-			//}
+			bool assigned = false;
 
-			//same for the other ones
+			sX = GameObjects[aux]->GetBoundingBox().MinX();
+			mX = GameObjects[aux]->GetBoundingBox().MaxX();
+			sZ = GameObjects[aux]->GetBoundingBox().MinZ();
+			mZ = GameObjects[aux]->GetBoundingBox().MaxZ();
+
+			if ((sX >= NWS->minx && mX <= NWS->maxx) || (sZ >= NWS->minz && mZ <= NWS->maxz))
+			{
+				NWS->children.push_back(GameObjects[aux]);
+				assigned = true;
+			}
+			if ((sX >= NES->minx && mX <= NES->maxx) || (sZ >= NES->minz && mZ <= NES->maxz))
+			{
+				NWS->children.push_back(GameObjects[aux]);
+				assigned = true;
+			}
+			if ((sX >= SWS->minx && mX <= SWS->maxx) || (sZ >= SWS->minz && mZ <= SWS->maxz))
+			{
+				NWS->children.push_back(GameObjects[aux]);
+				assigned = true;
+			}
+			if ((sX >= SES->minx && mX <= SES->maxx) || (sZ >= SES->minz && mZ <= SES->maxz))
+			{
+				NWS->children.push_back(GameObjects[aux]);
+				assigned = true;
+			}
+
+			if (assigned)
+			{
+				GameObjects.erase(GameObjects.begin() + aux);
+			}
 		}
 
 		sectors.push_back(NWS);
@@ -89,7 +120,7 @@ public:
 
 		for (std::list<Spooktree*>::iterator it = sectors.begin(); it != sectors.end(); it++)
 		{
-			if (children.size >= max)
+			if (children.size() >= max)
 			{
 				(*it)->Divide(children);
 				(*it)->ResizeContainers();
@@ -104,6 +135,8 @@ public:
 		ResizeContainers();
 	};
 
+	void Draw();
+
 private:
 	std::list<Spooktree*> sectors; //It should have 0 or 4 sectors
 	std::vector<GameObject*> children;
@@ -111,7 +144,7 @@ private:
 	sector type;
 
 	AABB container;
-	float x, z, width, height;
+	float minx, minz, maxx, maxz;
 
 	Spooktree* NWS;
 	Spooktree* NES;
@@ -119,4 +152,17 @@ private:
 	Spooktree* SES;
 };
 
+
+inline void Spooktree::Draw()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glLineWidth(2.5);
+	glColor3f(1.0, 0.0, 0.0);
+
+	glBegin(GL_LINES);
+	glVertex3f(minx, 0.0, minz);
+	glVertex3f(maxx, 0.0, minz);
+	glEnd();
+}
 #endif // !QUADTREE_CLASS

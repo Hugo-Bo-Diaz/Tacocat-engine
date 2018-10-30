@@ -5,7 +5,7 @@
 #include "CameraComponent.h"
 #include <string>
 #include <vector>
-
+#include "Quadtree.h"
 
 class Scene
 {
@@ -14,11 +14,12 @@ public:
 	int id = -1;
 	std::string name;
 
-	Scene() {};
+	Scene();
 	Scene(const char* _name) 
 	{ 
 		name = _name;
-		spookamera = new Component_Camera(); 
+		spookamera = new Component_Camera();
+		tree = new Spooktree(ROOT, -100, -100, 100, 100);
 	};
 
 	~Scene();
@@ -40,7 +41,7 @@ public:
 	Component_Camera* spookamera;
 
 private:
-
+	Spooktree* tree;
 	//todo
 	//add light
 	//add camera
