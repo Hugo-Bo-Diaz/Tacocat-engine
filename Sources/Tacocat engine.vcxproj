@@ -164,7 +164,6 @@
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleSceneController.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="parson\parson.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Scene.h" />
@@ -237,7 +236,6 @@
     <ClCompile Include="ModuleTextureLoader.cpp" />
     <ClCompile Include="ModuleUI.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="parson\parson.c" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SphereMine.cpp" />

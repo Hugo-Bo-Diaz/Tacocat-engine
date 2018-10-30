@@ -26,15 +26,12 @@ Component_Material::~Component_Material()
 
 }
 
-void Component_Material::Save_Component(JSON_Object* root, const char* prev)
+void Component_Material::Save_Component()
 {
-	std::string temp = prev;
-	temp += ".type";
-	json_object_dotset_number(root, temp.c_str(), (uint)type);
 
 }
 
-void Component_Material::Load_Component(JSON_Object* root, const char* prev)
+void Component_Material::Load_Component()
 {
 
 }

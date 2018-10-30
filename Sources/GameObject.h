@@ -5,7 +5,6 @@
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include <time.h>
-#include "parson/parson.h"
 
 class Component;
 
@@ -37,7 +36,7 @@ public:
 
 	uint UID;
 
-	void Save(const char* prev, JSON_Object* root);
+	void Save();
 
 private:
 

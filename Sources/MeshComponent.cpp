@@ -239,14 +239,12 @@ bool Component_Mesh::ContainsAaBox(const AABB& refBox, const Frustum & frustum) 
 	return true;
 }
 
-void Component_Mesh::Save_Component(JSON_Object* root,const char* prev)
+void Component_Mesh::Save_Component()
 {
-	std::string temp = prev;
-	temp += ".type";
-	json_object_dotset_number(root, temp.c_str(), (uint)type);
+
 }
 
-void Component_Mesh::Load_Component(JSON_Object* root, const char* prev)
+void Component_Mesh::Load_Component()
 {
 
 }

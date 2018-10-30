@@ -6,8 +6,6 @@
 //#include "mathgeolib/Geometry/Sphere.h"
 //#include "mathgeolib/Geometry/AABB.h"
 
-#include "parson\parson.h"
-
 //#include "mmgr\mmgr.h"
 
 ModuleSceneController::ModuleSceneController(bool start_enabled) : Module(start_enabled)
