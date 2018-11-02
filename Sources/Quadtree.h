@@ -163,6 +163,15 @@ inline void Spooktree::Draw()
 	glBegin(GL_LINES);
 	glVertex3f(minx, 0.0, minz);
 	glVertex3f(maxx, 0.0, minz);
+
+	glVertex3f(minx, 0.0, minz);
+	glVertex3f(minx, 0.0, maxz);
+
+	glVertex3f(minx, 0.0, maxz);
+	glVertex3f(maxx, 0.0, maxz);
+
+	glVertex3f(maxx, 0.0, minz);
+	glVertex3f(maxx, 0.0, maxz);
 	glEnd();
 }
 #endif // !QUADTREE_CLASS
