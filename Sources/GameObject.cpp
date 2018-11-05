@@ -114,8 +114,17 @@ void GameObject::Hierarchy()
 
 }
 
-void GameObject::Save()
+void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
+
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("UID", UID, all);
+
+
+
+	v->AddMember("OBJECT", module_obj, all);
 	//std::string temp;
 	//temp  = prev;
 	//temp += ".UID";

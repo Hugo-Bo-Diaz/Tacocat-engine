@@ -34,6 +34,8 @@ public:
 
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 
+	void Load(rapidjson::Value& v);
+
 	//int width = SCREEN_WIDTH;
 	//int height = SCREEN_HEIGHT;
 

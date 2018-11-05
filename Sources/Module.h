@@ -63,16 +63,7 @@ public:
 
 	virtual void Configuration() {};
 
-	virtual void Save(rapidjson::Document* d, rapidjson::Value* v) 
-	{
-	
-		//rapidjson::Document::AllocatorType& all = d->GetAllocator();
+	virtual void Save(rapidjson::Document* d, rapidjson::Value* v) {};
 
-		//rapidjson::Value module_obj(rapidjson::kObjectType);
-		//
-		//module_obj.AddMember("value i wanna save", 5 , all);
-
-		//v->AddMember("modulename", module_obj, all);
-
-	};
+	virtual void Load(rapidjson::Value& v) {};
 };

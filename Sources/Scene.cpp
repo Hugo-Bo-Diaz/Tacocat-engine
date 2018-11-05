@@ -65,6 +65,27 @@ GameObject* Scene::AddGameObject()
 
 void Scene::Save(const char * filename)
 {
+	rapidjson::Document document;
+	document.SetObject();
+	FILE* fp = fopen(filename, "wb");
+	char writeBuffer[655360];
+
+	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+
+	rapidjson::Document::AllocatorType& all = document.GetAllocator();
+
+	rapidjson::Value object_node(rapidjson::kObjectType);
+
+	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+	{
+		(*it)->Save(&document,&object_node);
+	}
+
+	document.AddMember("Scene", object_node, all);
+	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+	document.Accept(writer);
+	fclose(fp);
+
 	//JSON_Value *config = json_parse_file(filename);
 	//config = json_value_init_object();
 	//JSON_Object* root_object = json_value_get_object(config);

@@ -5,6 +5,12 @@
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include <time.h>
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/document.h"
 
 class Component;
 
@@ -36,7 +42,8 @@ public:
 
 	uint UID;
 
-	void Save();
+	void Save(rapidjson::Document* d, rapidjson::Value* v);
+
 
 private:
 

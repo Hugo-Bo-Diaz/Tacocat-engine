@@ -70,10 +70,10 @@ update_status ModuleSceneController::Update(float dt)
 		App->SaveConfig("config.json");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-	{
-		App->LoadConfig("config.json");
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	//{
+	//	App->LoadConfig("config.json");
+	//}
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
 		App->importer->mesh->Import();

@@ -30,6 +30,7 @@ public:
 	void OnResize(int width, int height);
 
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
+	void Load(rapidjson::Value& v);
 
 public:
 

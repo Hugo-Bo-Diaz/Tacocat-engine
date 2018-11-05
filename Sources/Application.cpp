@@ -3,6 +3,7 @@
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/reader.h"
 #include "rapidjson/filewritestream.h"
+#include "rapidjson/filereadstream.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/document.h"
 
@@ -65,6 +66,7 @@ bool Application::Init()
 	bool ret = true;
 
 	LoadConfig("config.json");
+
 	// Call Init() in all modules
 
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
@@ -110,7 +112,9 @@ update_status Application::Update()
 	PrepareUpdate();
 	
 	if(App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		SaveConfig("lmao.json");
+		SaveConfig("config.json");
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		LoadConfig("config.json");
 
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == UPDATE_CONTINUE; it++)
 	{
@@ -167,7 +171,7 @@ void Application::SaveConfig(const char* filename)
 {
 	rapidjson::Document document;
 	document.SetObject();
-	FILE* fp = fopen("save.json", "wb");
+	FILE* fp = fopen(filename, "wb");
 	char writeBuffer[655360];
 
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
@@ -216,6 +220,35 @@ void Application::SaveConfig(const char* filename)
 
 void Application::LoadConfig(const char* filename)
 {
+
+	rapidjson::Document file;
+
+	FILE* f = fopen(filename,"rb");
+	if (f)
+	{
+		char Buffer[65536];
+		rapidjson::FileReadStream input(f, Buffer, sizeof(Buffer));
+		file.ParseStream(input);
+
+		rapidjson::Value& modules = file["App"];
+
+		rapidjson::Value& conf = modules["App"];
+
+		confg_fps = conf["FPS"].GetFloat();
+		confg_vsync = conf["vsync"].GetBool();
+
+		for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+		{
+			(*it)->Load(modules);
+		}
+
+	}
+	else
+	{
+		App->UI->console->AddLog("couldn't find the file");
+	}
+
+
 	//JSON_Value *root_value;
 	//JSON_Object *root_object;
 

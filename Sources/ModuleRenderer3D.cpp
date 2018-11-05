@@ -527,3 +527,14 @@ void ModuleRenderer3D::Save(rapidjson::Document* d, rapidjson::Value* v)
 	v->AddMember(rapidjson::GenericStringRef<char>::GenericStringRef(name.c_str()), module_obj, all);
 
 }
+
+void ModuleRenderer3D::Load(rapidjson::Value& v)
+{
+	rapidjson::Value& conf = v[name.data()];
+
+	conf_cull_face = conf["cull_face"].GetBool();
+	conf_depth_test = conf["depth_test"].GetBool();
+	conf_draw = conf["draw_mode"].GetInt();
+	conf_lighting = conf["lighting"].GetBool();
+	conf_texture = conf["texture"].GetInt();
+}
