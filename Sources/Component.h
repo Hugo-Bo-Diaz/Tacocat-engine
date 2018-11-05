@@ -26,6 +26,9 @@ public:
 	~Component() {};
 	virtual void Update(float dt) {};
 
+	virtual void Save_Component() {};
+	virtual void Load_Component() {};
+
 	GameObject* parent;
 
 };

@@ -52,7 +52,8 @@ public:
 
 	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 
-	
+	void Save_Component();
+	void Load_Component();
 
 	//float imdumb = 0;
 

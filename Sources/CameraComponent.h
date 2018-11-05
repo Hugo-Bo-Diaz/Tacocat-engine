@@ -64,7 +64,9 @@ public:
 	void Generate_frustum();
 	void Draw_frustum();
 
-	
+	void Save_Component();
+	void Load_Component();
+
 
 private:
 

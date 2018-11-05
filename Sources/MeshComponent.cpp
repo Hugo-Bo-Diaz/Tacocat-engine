@@ -238,3 +238,13 @@ bool Component_Mesh::ContainsAaBox(const AABB& refBox, const Frustum & frustum) 
 	// we must be partly in then otherwise
 	return true;
 }
+
+void Component_Mesh::Save_Component()
+{
+
+}
+
+void Component_Mesh::Load_Component()
+{
+
+}

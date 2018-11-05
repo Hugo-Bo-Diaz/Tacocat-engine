@@ -232,3 +232,34 @@ void ModuleWindow::Configuration()
 		App->renderer3D->OnResize(width, height);
 	}
 }
+
+void ModuleWindow::Save(rapidjson::Document* d, rapidjson::Value* v)
+{
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
+
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("borderless", conf_borderless, all);
+	module_obj.AddMember("full_desktop", conf_fulldesktop, all);
+	module_obj.AddMember("fullscreen", conf_fullscreen, all);
+	module_obj.AddMember("resizable", conf_resizable, all);
+
+	module_obj.AddMember("width", width, all);
+	module_obj.AddMember("height", height, all);
+	
+	v->AddMember((rapidjson::Value::StringRefType)name.data(), module_obj, all);
+}
+
+void ModuleWindow::Load(rapidjson::Value& v)
+{
+	rapidjson::Value& conf = v[name.data()];
+
+	conf_fullscreen = conf["fullscreen"].GetBool();
+	conf_fulldesktop = conf["full_desktop"].GetBool();
+	conf_borderless = conf["borderless"].GetBool();
+	conf_resizable = conf["resizable"].GetBool();
+
+	width = conf["width"].GetFloat();
+	height = conf["height"].GetFloat();
+
+}

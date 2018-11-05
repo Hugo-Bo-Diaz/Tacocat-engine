@@ -14,7 +14,7 @@ public:
 	int id = -1;
 	std::string name;
 
-	Scene();
+	Scene() {};
 	Scene(const char* _name) 
 	{ 
 		name = _name;
@@ -39,6 +39,9 @@ public:
 	std::vector<GameObject*> GameObjects;
 
 	Component_Camera* spookamera;
+
+	void Save(const char* filename);
+	void Load(const char* filename);
 
 private:
 	Spooktree* tree;

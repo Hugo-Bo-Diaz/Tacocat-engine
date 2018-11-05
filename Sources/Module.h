@@ -2,7 +2,12 @@
 
 #include "Globals.h"
 #include <string>
-#include "parson/parson.h"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/document.h"
 
 class Application;
 struct PhysBody3D;
@@ -57,4 +62,8 @@ public:
 	{}
 
 	virtual void Configuration() {};
+
+	virtual void Save(rapidjson::Document* d, rapidjson::Value* v) {};
+
+	virtual void Load(rapidjson::Value& v) {};
 };

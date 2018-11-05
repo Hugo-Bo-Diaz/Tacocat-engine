@@ -25,3 +25,13 @@ Component_Material::~Component_Material()
 	glDeleteTextures(1, &texture_buffer_id);
 
 }
+
+void Component_Material::Save_Component()
+{
+
+}
+
+void Component_Material::Load_Component()
+{
+
+}

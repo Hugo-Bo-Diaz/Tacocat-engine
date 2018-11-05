@@ -6,8 +6,6 @@
 //#include "mathgeolib/Geometry/Sphere.h"
 //#include "mathgeolib/Geometry/AABB.h"
 
-#include "parson\parson.h"
-
 //#include "mmgr\mmgr.h"
 
 ModuleSceneController::ModuleSceneController(bool start_enabled) : Module(start_enabled)
@@ -72,10 +70,10 @@ update_status ModuleSceneController::Update(float dt)
 		App->SaveConfig("config.json");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-	{
-		App->LoadConfig("config.json");
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	//{
+	//	App->LoadConfig("config.json");
+	//}
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
 		App->importer->mesh->Import();

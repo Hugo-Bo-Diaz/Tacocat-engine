@@ -24,4 +24,7 @@ public:
 
 	~Component_Material();
 
+	void Save_Component();
+	void Load_Component();
+
 };
