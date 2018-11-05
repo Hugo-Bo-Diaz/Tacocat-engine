@@ -52,8 +52,8 @@ public:
 
 	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 
-	void Save_Component();
-	void Load_Component();
+	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);
+	void Load_Component(rapidjson::Value& v);
 
 	//float imdumb = 0;
 

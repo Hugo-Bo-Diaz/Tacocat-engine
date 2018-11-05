@@ -18,8 +18,6 @@ class GameObject
 {
 public:
 
-
-
 	GameObject();
 	~GameObject();
 	GameObject* parent = nullptr;
@@ -37,6 +35,7 @@ public:
 	bool static_object = true;
 
 	AABB GetBoundingBox();
+	AABB BoundingBox;
 
 	void Hierarchy();
 

@@ -122,7 +122,19 @@ void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)
 
 	module_obj.AddMember("UID", UID, all);
 
+	rapidjson::Value components_node(rapidjson::kObjectType);
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		(*it)->Save_Component(d, &components_node);
+	}
+	module_obj.AddMember("component", components_node, all);
 
+	rapidjson::Value children_node(rapidjson::kObjectType);
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->Save(d,&children_node);
+	}
+	module_obj.AddMember("children", children_node, all);
 
 	v->AddMember("OBJECT", module_obj, all);
 	//std::string temp;

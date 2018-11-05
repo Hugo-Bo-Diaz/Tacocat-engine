@@ -239,12 +239,34 @@ bool Component_Mesh::ContainsAaBox(const AABB& refBox, const Frustum & frustum) 
 	return true;
 }
 
-void Component_Mesh::Save_Component()
+void Component_Mesh::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("material_id", material_index, all);
+
+	rapidjson::Value transform_node(rapidjson::kObjectType);
+
+	transform_node.AddMember("transform_scale_x", scaling.x, all);
+	transform_node.AddMember("transform_scale_y", scaling.y, all);
+	transform_node.AddMember("transform_scale_z", scaling.z, all);
+	
+	transform_node.AddMember("transform_rotation_x", rotation.x, all);
+	transform_node.AddMember("transform_rotation_y", rotation.y, all);
+	transform_node.AddMember("transform_rotation_z", rotation.z, all);
+	
+	transform_node.AddMember("transform_position_x", position.x, all);
+	transform_node.AddMember("transform_position_y", position.y, all);
+	transform_node.AddMember("transform_position_z", position.z, all);
+
+	module_obj.AddMember("transform", transform_node, all);
+
+	v->AddMember("MESH", module_obj, all);
 }
 
-void Component_Mesh::Load_Component()
+void Component_Mesh::Load_Component(rapidjson::Value& v)
 {
 
 }

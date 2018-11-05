@@ -214,7 +214,9 @@ void Component_Camera::Draw_frustum()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
+
 
 	glVertex3fv((GLfloat*)&vert[1]);
 	glVertex3fv((GLfloat*)&vert[5]);
@@ -282,12 +284,27 @@ void Component_Camera::Draw_frustum()
 //}
 
 
-void Component_Camera::Save_Component()
+void Component_Camera::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("angleXZ", angle_XZ, all);
+	module_obj.AddMember("angleY", angle_Y, all);
+
+	module_obj.AddMember("position_x", Position.x, all);
+	module_obj.AddMember("position_y", Position.y, all);
+	module_obj.AddMember("position_z", Position.z, all);
+
+	module_obj.AddMember("reference_x", Reference.x, all);
+	module_obj.AddMember("reference_y", Reference.y, all);
+	module_obj.AddMember("reference_z", Reference.z, all);
+
+	v->AddMember("CAMERA", module_obj, all);
 }
 
-void Component_Camera::Load_Component()
+void Component_Camera::Load_Component(rapidjson::Value& v)
 {
 
 }
