@@ -32,6 +32,8 @@ public:
 	bool conf_borderless = false;
 	bool conf_fulldesktop = false;
 
+	void Save(rapidjson::Document* d, rapidjson::Value* v);
+
 	//int width = SCREEN_WIDTH;
 	//int height = SCREEN_HEIGHT;
 

@@ -1,1 +1,24 @@
-{"lol": { "l": 0 } }
+{
+  
+  "App": {
+    "modules": 8,
+    "App": {
+      "borderless": 60.0,
+      "full_desktop": true
+    },
+    "window": {
+      "borderless": false,
+      "full_desktop": false,
+      "fullscreen": false,
+      "width": 800.0,
+      "height": 600.0
+    },
+    "renderer": {
+      "draw_mode": -1,
+      "cull_face": true,
+      "depth_test": true,
+      "lighting": true,
+      "texture": -1
+    }
+  }
+}

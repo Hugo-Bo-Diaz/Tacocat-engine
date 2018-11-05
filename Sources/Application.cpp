@@ -174,24 +174,30 @@ void Application::SaveConfig(const char* filename)
 
 	rapidjson::Document::AllocatorType& all = document.GetAllocator();
 
-	rapidjson::Value object(rapidjson::kObjectType);
-	object.AddMember("l",0,all);
-	//for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
-	//{
-	//	(*it)->Save(document, os);
-	//}
-	document.AddMember("lol", object, all);
+	rapidjson::Value modules_object(rapidjson::kObjectType);
+	modules_object.AddMember("modules",list_modules.size(),all);
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("FPS", confg_fps, all);
+	module_obj.AddMember("vsync", confg_vsync, all);
+
+	modules_object.AddMember("App", module_obj, all);
+
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+	{
+		(*it)->Save(&document, &modules_object);
+	}
+
+	document.AddMember("App", modules_object, all);
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	document.Accept(writer);
 	fclose(fp);
 	//JSON_Value *config = json_parse_file("config.json");
 	//config = json_value_init_object();
 	//JSON_Object* root_object = json_value_get_object(config);
-
 	//json_object_set_number(root_object, "fps", confg_fps);
 	//json_object_set_number(root_object, "vsync", confg_vsync);
-
 	//json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
 	//json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
 	//json_object_dotset_boolean(root_object, "Window.resizable", App->window->resizable);
@@ -199,16 +205,12 @@ void Application::SaveConfig(const char* filename)
 	//json_object_dotset_number(root_object, "Window.brightness", App->window->brightness);
 	//json_object_dotset_number(root_object, "Window.width", App->window->width);
 	//json_object_dotset_number(root_object, "Window.height", App->window->height);
-
-
 	//json_object_dotset_boolean(root_object, "Render.cull_face", App->renderer3D->conf_cull_face);
 	//json_object_dotset_boolean(root_object, "Render.depth_test", App->renderer3D->conf_depth_test);
 	//json_object_dotset_number(root_object, "Render.draw", App->renderer3D->conf_draw);
 	//json_object_dotset_boolean(root_object, "Render.lighting", App->renderer3D->conf_lighting);
 	//json_object_dotset_number(root_object, "Render.texture", App->renderer3D->conf_texture);
-
 	//json_serialize_to_file(config, "config.json");
-
 	//App->UI->console->AddLog("saved succesfully %s",filename);//CHANGE THIS FUNCTION
 }
 

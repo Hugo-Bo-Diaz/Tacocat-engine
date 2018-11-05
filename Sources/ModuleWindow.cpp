@@ -232,3 +232,19 @@ void ModuleWindow::Configuration()
 		App->renderer3D->OnResize(width, height);
 	}
 }
+
+void ModuleWindow::Save(rapidjson::Document* d, rapidjson::Value* v)
+{
+
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
+
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("borderless", conf_borderless, all);
+	module_obj.AddMember("full_desktop", conf_fulldesktop, all);
+	module_obj.AddMember("fullscreen", conf_fullscreen, all);
+	module_obj.AddMember("width", width, all);
+	module_obj.AddMember("height", height, all);
+	
+	v->AddMember(rapidjson::GenericStringRef<char>::GenericStringRef(name.c_str()), module_obj, all);
+}

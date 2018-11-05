@@ -36,7 +36,7 @@ Component_Camera::Component_Camera()
 
 void Component_Camera::Update(float dt)
 {
-	//frustum.pos = Position;
+	frustum.pos = Position;
 
 	Generate_frustum();
 
@@ -113,6 +113,8 @@ void Component_Camera::Update(float dt)
 		{
 			float DeltaX = (float)dx * Sensitivity;
 
+			RotateFrustum_XZaxis(RadToDeg(DeltaX));
+
 			X = Rotate(X, DeltaX, float3(0.0f, 1.0f, 0.0f));
 			Y = Rotate(Y, DeltaX, float3(0.0f, 1.0f, 0.0f));
 			Z = Rotate(Z, DeltaX, float3(0.0f, 1.0f, 0.0f));
@@ -121,6 +123,8 @@ void Component_Camera::Update(float dt)
 		if (dy != 0)
 		{
 			float DeltaY = (float)dy * Sensitivity;
+
+			RotateFrustum_Yaxis(RadToDeg(DeltaY));
 
 			Y = Rotate(Y, DeltaY, X);
 			Z = Rotate(Z, DeltaY, X);
