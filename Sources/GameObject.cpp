@@ -96,6 +96,9 @@ GameObject::GameObject()
 	UID += month * 1000000;
 	UID += random ;
 
+	BoundingBox.minPoint = float3(-1,-1,-1);
+	BoundingBox.maxPoint = float3(1, 1, 1);
+
 }
 
 GameObject::~GameObject()

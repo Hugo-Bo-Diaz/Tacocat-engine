@@ -67,11 +67,9 @@ public:
 	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);
 	void Load_Component(rapidjson::Value& v);
 
-
 private:
 
 	float4x4 ViewMatrix, ViewMatrixInverse;
-
 
 	~Component_Camera() {};
 

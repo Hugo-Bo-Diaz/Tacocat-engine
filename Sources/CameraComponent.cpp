@@ -35,7 +35,9 @@ Component_Camera::Component_Camera()
 }
 
 void Component_Camera::Update(float dt)
-{
+{	
+
+
 	frustum.pos = Position;
 
 	Generate_frustum();
@@ -93,6 +95,62 @@ void Component_Camera::Update(float dt)
 	Draw_frustum();//we draw it
 
 	frustum.pos = pos_now;//we move the transformed frustum to its position
+
+	//// Mouse picking
+
+	//first we need the two points of the ray, we need the position in the near and far plane of the frustum
+	//so if the mouse is in the middle it'll be halfway of the frustum plane
+
+	float mousex, mousey;
+	mousex = App->input->GetMouseX();
+	mousey = App->input->GetMouseY();
+	//
+	float percent_x = (mousex / App->window->width )*2 - 1;
+	float percent_y = (mousex / App->window->height)*2 - 1;
+
+	////here u have the two planes in float3s
+	//float3 near_down_left, near_up_left, near_down_right, near_up_right;
+	//float3 far_down_left, far_up_left, far_down_right, far_up_right;
+	//near_down_left = frustum.CornerPoint(0);
+	//near_up_left = frustum.CornerPoint(2);
+	//near_down_right = frustum.CornerPoint(4);
+	//near_up_right = frustum.CornerPoint(6);
+	//far_down_left = frustum.CornerPoint(1);
+	//far_up_left = frustum.CornerPoint(3);
+	//far_down_right = frustum.CornerPoint(5);
+	//far_up_right = frustum.CornerPoint(7);
+	//LineSegment* nearx = new LineSegment(near_down_left,near_down_right);
+	//float new_lenght = nearx->Length()* percent_x;
+	//LineSegment l;
+	//l.a = float3(0, 0, 0);
+	//l.b = float3(0, 0, 0);
+
+	LineSegment picking = frustum.UnProjectLineSegment(percent_x, percent_y);
+
+	Ray r; 
+	r.dir = picking.Dir();
+	r.pos = frustum.pos;
+	
+
+	for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
+	{
+		if(r.Intersects((*it)->BoundingBox))
+		{
+			//App->UI->console->AddLog("HA %d, (%d %d %d) (%d %d %d)", (*it)->UID, (*it)->BoundingBox.minPoint.x, (*it)->BoundingBox.minPoint.y, (*it)->BoundingBox.minPoint.z, (*it)->BoundingBox.maxPoint.x, (*it)->BoundingBox.maxPoint.y, (*it)->BoundingBox.maxPoint.z);
+		}
+		else if ((*it)->children.size() >0)
+		{
+			for (std::list<GameObject*>::iterator it_1 = (*it)->children.begin(); it_1 != (*it)->children.end(); it_1++)
+			{
+				if (r.Intersects((*it_1)->GetBoundingBox()))
+				{
+					App->UI->console->AddLog("HA %d, (%d %d %d) (%d %d %d)", (*it_1)->UID, (*it_1)->GetBoundingBox().minPoint.x, (*it_1)->GetBoundingBox().minPoint.y, (*it_1)->GetBoundingBox().minPoint.z, (*it_1)->GetBoundingBox().maxPoint.x, (*it_1)->GetBoundingBox().maxPoint.y, (*it_1)->GetBoundingBox().maxPoint.z);
+
+				}
+			}
+		}
+
+	}
 
 	//// Mouse motion ----------------
 
