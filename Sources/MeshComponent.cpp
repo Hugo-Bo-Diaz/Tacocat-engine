@@ -61,9 +61,7 @@ void Component_Mesh::draw()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
-
 
 	if (App->renderer3D->draw_checkers)
 	{	
@@ -108,44 +106,83 @@ void Component_Mesh::draw()
 
 void Component_Mesh::draw_bounding_box()
 {
+	float3 c;
+	if (parent->Iselected())
+	{
+		c = float3(0,0,0);
+	}
+	else
+	{
+		c = float3(1, 1, 1);
+	}
+
+	glDisable(GL_LIGHTING);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	glBegin(GL_LINES);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x,c.y,c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
-
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
@@ -161,6 +198,8 @@ void Component_Mesh::draw_bounding_box()
 
 
 	glEnd();
+	glEnable(GL_LIGHTING);
+
 }
 
 void Component_Mesh::Update(float dt)

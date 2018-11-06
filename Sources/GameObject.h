@@ -34,6 +34,23 @@ public:
 
 	bool static_object = true;
 
+	bool selected = false;
+	bool Iselected() 
+	{
+		if (selected)
+		{
+			return true;
+		}
+		else if (parent != nullptr && parent->Iselected())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	};
+
 	AABB GetBoundingBox();
 	AABB BoundingBox;
 

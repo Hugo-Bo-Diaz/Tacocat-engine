@@ -124,33 +124,47 @@ void Component_Camera::Update(float dt)
 	//LineSegment l;
 	//l.a = float3(0, 0, 0);
 	//l.b = float3(0, 0, 0);
-
-	LineSegment picking = frustum.UnProjectLineSegment(percent_x, percent_y);
-
-	Ray r; 
-	r.dir = picking.Dir();
-	r.pos = frustum.pos;
-	
-
-	for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		if(r.Intersects((*it)->BoundingBox))
-		{
-			//App->UI->console->AddLog("HA %d, (%d %d %d) (%d %d %d)", (*it)->UID, (*it)->BoundingBox.minPoint.x, (*it)->BoundingBox.minPoint.y, (*it)->BoundingBox.minPoint.z, (*it)->BoundingBox.maxPoint.x, (*it)->BoundingBox.maxPoint.y, (*it)->BoundingBox.maxPoint.z);
-		}
-		else if ((*it)->children.size() >0)
-		{
-			for (std::list<GameObject*>::iterator it_1 = (*it)->children.begin(); it_1 != (*it)->children.end(); it_1++)
-			{
-				if (r.Intersects((*it_1)->GetBoundingBox()))
-				{
-					App->UI->console->AddLog("HA %d, (%d %d %d) (%d %d %d)", (*it_1)->UID, (*it_1)->GetBoundingBox().minPoint.x, (*it_1)->GetBoundingBox().minPoint.y, (*it_1)->GetBoundingBox().minPoint.z, (*it_1)->GetBoundingBox().maxPoint.x, (*it_1)->GetBoundingBox().maxPoint.y, (*it_1)->GetBoundingBox().maxPoint.z);
+		LineSegment picking = frustum.UnProjectLineSegment(percent_x, percent_y);
 
-				}
+		Ray r; 
+		r.dir = picking.Dir();
+		r.pos = frustum.pos;
+	
+		std::vector<GameObject*> objects_hit;
+
+		for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
+		{
+			if(r.Intersects((*it)->GetBoundingBox()))
+			{
+				(*it)->selected = true;
+				App->UI->console->AddLog("HA %d, (%f %f %f) (%f %f %f)", (*it)->UID, (*it)->GetBoundingBox().minPoint.x, (*it)->GetBoundingBox().minPoint.y, (*it)->GetBoundingBox().minPoint.z, (*it)->GetBoundingBox().maxPoint.x, (*it)->GetBoundingBox().maxPoint.y, (*it)->GetBoundingBox().maxPoint.z);
+				objects_hit.push_back(*it);
+			}
+			else
+			{
+				(*it)->selected = false;
 			}
 		}
 
+		GameObject* object_found = nullptr;
+		bool found_something = false;
+		for (std::vector<GameObject*>::iterator it_AABB = objects_hit.begin(); it_AABB != objects_hit.end(); it_AABB++)
+		{
+			//here we should check geometry if something is hit directly then the loop will exit
+			if (found_something)
+			{
+				//tell the object it has been selected
+				break;
+			}
+		}
+		if (objects_hit.size() >0 && object_found == nullptr)
+		{
+			//App->UI->console->AddLog("this ain't it chief");
+		}
 	}
+
 
 	//// Mouse motion ----------------
 

@@ -55,6 +55,27 @@ AABB GameObject::GetBoundingBox()
 				box.maxPoint.z = ((Component_Mesh*)(*it))->bounding_box.maxPoint.z;
 		}
 	}
+	if (children.size() > 0)
+	{
+		for (std::list<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
+		{
+			AABB tmp = (*it_c)->GetBoundingBox();
+
+			if (tmp.minPoint.x < box.minPoint.x)
+				box.minPoint.x = tmp.minPoint.x;
+			if (tmp.minPoint.y < box.minPoint.y)
+				box.minPoint.y = tmp.minPoint.y;
+			if (tmp.minPoint.z < box.minPoint.z)
+				box.minPoint.z = tmp.minPoint.z;
+
+			if (tmp.maxPoint.x > box.maxPoint.x)
+				box.maxPoint.x = tmp.maxPoint.x;
+			if (tmp.maxPoint.y > box.maxPoint.y)
+				box.maxPoint.y = tmp.maxPoint.y;
+			if (tmp.maxPoint.z > box.maxPoint.z)
+				box.maxPoint.z = tmp.maxPoint.z;
+		}
+	}
 
 	return box;
 }

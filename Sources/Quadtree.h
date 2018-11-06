@@ -158,6 +158,8 @@ inline void Spooktree::Draw()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glLineWidth(2.5);
+	glDisable(GL_LIGHTING);
+
 	glColor3f(1.0, 0.0, 0.0);
 
 	glBegin(GL_LINES);
@@ -173,5 +175,10 @@ inline void Spooktree::Draw()
 	glVertex3f(maxx, 0.0, minz);
 	glVertex3f(maxx, 0.0, maxz);
 	glEnd();
+
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LIGHTING);
+
+
 }
 #endif // !QUADTREE_CLASS
