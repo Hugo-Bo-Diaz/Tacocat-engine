@@ -475,25 +475,25 @@ void ModuleRenderer3D::Configuration()
 	}
 }
 
-void ModuleRenderer3D::Properties()//imgui type function to output the meshes properties
-{
-	//vec3 pos, rot, scale;
-
-	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
-	//{
-	//	pos.Set((*it)->position.x, (*it)->position.y, (*it)->position.z);
-	//	rot.Set((*it)->rotation.x * RADTODEG, (*it)->rotation.y * RADTODEG, (*it)->rotation.z* RADTODEG);
-	//	scale.Set((*it)->scaling.x, (*it)->scaling.y, (*it)->scaling.z);
-
-	//	ImGui::Text("Name: %s", (*it)->name);
-	//	ImGui::Text("Num. vertices: %u", (*it)->num_index);
-	//	ImGui::Text("");
-	//	ImGui::InputFloat3("Pos", &pos, 2);
-	//	ImGui::InputFloat3("Rot", &rot, 2);
-	//	ImGui::InputFloat3("Scale", &scale, 2);
-	//	ImGui::Separator();
-	//}
-}
+//void ModuleRenderer3D::Properties()//imgui type function to output the meshes properties
+//{
+//	float3 pos, rot, scale;
+//	
+//	for (std::vector<*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
+//	{
+//		pos.Set((*it)->position.x, (*it)->position.y, (*it)->position.z);
+//		rot.Set((*it)->rotation.x * RADTODEG, (*it)->rotation.y * RADTODEG, (*it)->rotation.z* RADTODEG);
+//		scale.Set((*it)->scaling.x, (*it)->scaling.y, (*it)->scaling.z);
+//
+//		ImGui::Text("Name: %s", (*it)->name);
+//		ImGui::Text("Num. vertices: %u", (*it)->num_index);
+//		ImGui::Text("");
+//		ImGui::InputFloat3("Pos", &pos[0], 2);
+//		ImGui::InputFloat3("Rot", &rot[0], 2);
+//		ImGui::InputFloat3("Scale", &scale[0], 2);
+//		ImGui::Separator();
+//	}
+//}
 
 void ModuleRenderer3D::TexProperties()//same as the function above
 {

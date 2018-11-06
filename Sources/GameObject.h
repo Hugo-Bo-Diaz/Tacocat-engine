@@ -31,8 +31,12 @@ public:
 
 	void Hierarchy();
 
+	void Properties();
+
 private:
 	bool isstatic;
+
+	TransformComponent* transform;
 };
 
 #endif // !1

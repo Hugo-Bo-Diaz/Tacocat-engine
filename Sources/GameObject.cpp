@@ -4,6 +4,21 @@
 #include "MeshComponent.h"
 #include "imgui-docking/imgui.h"
 
+GameObject::GameObject()
+{
+	transform = new TransformComponent(); //All gameobjects need transform
+	AddComponent(transform);
+}
+
+GameObject::~GameObject()
+{
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		delete(*it);
+	}
+	components.clear();
+
+}
 
 void GameObject::Update(float dt)
 {
@@ -72,21 +87,6 @@ void GameObject::AddChild(GameObject * child)
 	children.push_back(child);
 
 }
-
-GameObject::GameObject()
-{
-}
-
-GameObject::~GameObject()
-{
-	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
-	{
-		delete(*it);
-	}
-	components.clear();
-
-}
-
 
 void GameObject::Hierarchy()
 {
