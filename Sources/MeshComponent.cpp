@@ -47,7 +47,7 @@ bool Component_Mesh::CheckFrustumCulling(Component_Camera * camera_to_check)
 
 void Component_Mesh::draw()
 {	
-	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()))
+	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()) && !not_working)
 	{
 
 		//if (buffer_id > 2)

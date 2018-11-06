@@ -83,7 +83,7 @@ public:
 	void DrawSceneBoundingBox();
 
 	//returns the memory index given by opengl
-	void Load(const char* filename, Scene* scene_to);
+	void Load_mesh(const char* filename, Scene* scene_to);
 
 	void FocusCamera();
 };

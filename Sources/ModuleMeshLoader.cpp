@@ -55,7 +55,7 @@ bool ModuleMeshLoader::CleanUp()
 	return true;
 }
 
-void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SCENE TO LOAD TO
+void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIEVE SCENE TO LOAD TO
 {
 	if (total_scene_bounding_box != nullptr)
 	{
@@ -91,7 +91,11 @@ void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SC
 				for (uint i = 0; i < iterator->mNumFaces; ++i)
 				{
 					if (iterator->mFaces[i].mNumIndices != 3)
-						App->UI->console->AddLog("geometry messed up");
+					{
+ 						App->UI->console->AddLog("geometry messed up");
+					m->not_working = true;
+					}
+
 					else
 						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
@@ -136,9 +140,9 @@ void ModuleMeshLoader::Load(const char* file, Scene* scene_to)//TODO, RECIEVE SC
 			m->material_index = iterator->mMaterialIndex;
 
 			m->name = iterator->mName.C_Str();
-			aiQuaterniont <float> quat;
-			scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, quat, m->position);
-			m->rotation = quat.GetEuler();
+			//aiQuaterniont <float> quat;
+			//scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, quat, m->position);
+			//m->rotation = quat.GetEuler();
 
 			glGenBuffers(1, (GLuint*) &(m->buffer_id));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
