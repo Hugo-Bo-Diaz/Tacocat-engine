@@ -35,8 +35,10 @@ Component_Camera::Component_Camera()
 }
 
 void Component_Camera::Update(float dt)
-{
-	//frustum.pos = Position;
+{	
+
+
+	frustum.pos = Position;
 
 	Generate_frustum();
 
@@ -94,6 +96,76 @@ void Component_Camera::Update(float dt)
 
 	frustum.pos = pos_now;//we move the transformed frustum to its position
 
+	//// Mouse picking
+
+	//first we need the two points of the ray, we need the position in the near and far plane of the frustum
+	//so if the mouse is in the middle it'll be halfway of the frustum plane
+
+	float mousex, mousey;
+	mousex = App->input->GetMouseX();
+	mousey = App->input->GetMouseY();
+	//
+	float percent_x = (mousex / App->window->width )*2 - 1;
+	float percent_y = (mousex / App->window->height)*2 - 1;
+
+	////here u have the two planes in float3s
+	//float3 near_down_left, near_up_left, near_down_right, near_up_right;
+	//float3 far_down_left, far_up_left, far_down_right, far_up_right;
+	//near_down_left = frustum.CornerPoint(0);
+	//near_up_left = frustum.CornerPoint(2);
+	//near_down_right = frustum.CornerPoint(4);
+	//near_up_right = frustum.CornerPoint(6);
+	//far_down_left = frustum.CornerPoint(1);
+	//far_up_left = frustum.CornerPoint(3);
+	//far_down_right = frustum.CornerPoint(5);
+	//far_up_right = frustum.CornerPoint(7);
+	//LineSegment* nearx = new LineSegment(near_down_left,near_down_right);
+	//float new_lenght = nearx->Length()* percent_x;
+	//LineSegment l;
+	//l.a = float3(0, 0, 0);
+	//l.b = float3(0, 0, 0);
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		LineSegment picking = frustum.UnProjectLineSegment(percent_x, percent_y);
+
+		Ray r; 
+		r.dir = picking.Dir();
+		r.pos = frustum.pos;
+	
+		std::vector<GameObject*> objects_hit;
+
+		for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
+		{
+			if(r.Intersects((*it)->GetBoundingBox()))
+			{
+				(*it)->selected = true;
+				App->UI->console->AddLog("HA %d, (%f %f %f) (%f %f %f)", (*it)->UID, (*it)->GetBoundingBox().minPoint.x, (*it)->GetBoundingBox().minPoint.y, (*it)->GetBoundingBox().minPoint.z, (*it)->GetBoundingBox().maxPoint.x, (*it)->GetBoundingBox().maxPoint.y, (*it)->GetBoundingBox().maxPoint.z);
+				objects_hit.push_back(*it);
+			}
+			else
+			{
+				(*it)->selected = false;
+			}
+		}
+
+		GameObject* object_found = nullptr;
+		bool found_something = false;
+		for (std::vector<GameObject*>::iterator it_AABB = objects_hit.begin(); it_AABB != objects_hit.end(); it_AABB++)
+		{
+			//here we should check geometry if something is hit directly then the loop will exit
+			if (found_something)
+			{
+				//tell the object it has been selected
+				break;
+			}
+		}
+		if (objects_hit.size() >0 && object_found == nullptr)
+		{
+			//App->UI->console->AddLog("this ain't it chief");
+		}
+	}
+
+
 	//// Mouse motion ----------------
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT || (App->input->GetKey(SDL_SCANCODE_LALT) && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT))
@@ -113,6 +185,8 @@ void Component_Camera::Update(float dt)
 		{
 			float DeltaX = (float)dx * Sensitivity;
 
+			RotateFrustum_XZaxis(RadToDeg(DeltaX));
+
 			X = Rotate(X, DeltaX, float3(0.0f, 1.0f, 0.0f));
 			Y = Rotate(Y, DeltaX, float3(0.0f, 1.0f, 0.0f));
 			Z = Rotate(Z, DeltaX, float3(0.0f, 1.0f, 0.0f));
@@ -121,6 +195,8 @@ void Component_Camera::Update(float dt)
 		if (dy != 0)
 		{
 			float DeltaY = (float)dy * Sensitivity;
+
+			RotateFrustum_Yaxis(RadToDeg(DeltaY));
 
 			Y = Rotate(Y, DeltaY, X);
 			Z = Rotate(Z, DeltaY, X);
@@ -210,7 +286,9 @@ void Component_Camera::Draw_frustum()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
+
 
 	glVertex3fv((GLfloat*)&vert[1]);
 	glVertex3fv((GLfloat*)&vert[5]);
@@ -276,3 +354,29 @@ void Component_Camera::Draw_frustum()
 //
 //	return Perspective;
 //}
+
+
+void Component_Camera::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
+{
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
+
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("angleXZ", angle_XZ, all);
+	module_obj.AddMember("angleY", angle_Y, all);
+
+	module_obj.AddMember("position_x", Position.x, all);
+	module_obj.AddMember("position_y", Position.y, all);
+	module_obj.AddMember("position_z", Position.z, all);
+
+	module_obj.AddMember("reference_x", Reference.x, all);
+	module_obj.AddMember("reference_y", Reference.y, all);
+	module_obj.AddMember("reference_z", Reference.z, all);
+
+	v->AddMember("CAMERA", module_obj, all);
+}
+
+void Component_Camera::Load_Component(rapidjson::Value& v)
+{
+
+}

@@ -1,5 +1,12 @@
 #include "Application.h"
-#include "parson/parson.h"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/document.h"
+
 
 Application::Application()
 {
@@ -59,6 +66,7 @@ bool Application::Init()
 	bool ret = true;
 
 	LoadConfig("config.json");
+
 	// Call Init() in all modules
 
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
@@ -103,6 +111,11 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 	
+	if(App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		SaveConfig("config.json");
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		LoadConfig("config.json");
+
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == UPDATE_CONTINUE; it++)
 	{
 		ret = (*it)->PreUpdate(dt);
@@ -156,60 +169,111 @@ float Application::random_between_0_1()
 
 void Application::SaveConfig(const char* filename)
 {
-	JSON_Value *config = json_parse_file("config.json");
-	config = json_value_init_object();
-	JSON_Object* root_object = json_value_get_object(config);
+	rapidjson::Document document;
+	document.SetObject();
+	FILE* fp = fopen(filename, "wb");
+	char writeBuffer[655360];
 
-	json_object_set_number(root_object, "fps", confg_fps);
-	json_object_set_number(root_object, "vsync", confg_vsync);
+	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 
-	json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
-	json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
-	json_object_dotset_boolean(root_object, "Window.resizable", App->window->resizable);
-	json_object_dotset_boolean(root_object, "Window.full_desktop", App->window->full_desktop);
-	json_object_dotset_number(root_object, "Window.brightness", App->window->brightness);
-	json_object_dotset_number(root_object, "Window.width", App->window->width);
-	json_object_dotset_number(root_object, "Window.height", App->window->height);
+	rapidjson::Document::AllocatorType& all = document.GetAllocator();
 
+	rapidjson::Value modules_object(rapidjson::kObjectType);
+	modules_object.AddMember("modules",list_modules.size(),all);
 
-	json_object_dotset_boolean(root_object, "Render.cull_face", App->renderer3D->conf_cull_face);
-	json_object_dotset_boolean(root_object, "Render.depth_test", App->renderer3D->conf_depth_test);
-	json_object_dotset_number(root_object, "Render.draw", App->renderer3D->conf_draw);
-	json_object_dotset_boolean(root_object, "Render.lighting", App->renderer3D->conf_lighting);
-	json_object_dotset_number(root_object, "Render.texture", App->renderer3D->conf_texture);
+	rapidjson::Value module_obj(rapidjson::kObjectType);
 
-	json_serialize_to_file(config, "config.json");
+	module_obj.AddMember("FPS", confg_fps, all);
+	module_obj.AddMember("vsync", confg_vsync, all);
 
-	App->UI->console->AddLog("saved succesfully %s",filename);//CHANGE THIS FUNCTION
+	modules_object.AddMember("App", module_obj, all);
+
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+	{
+		(*it)->Save(&document, &modules_object);
+	}
+
+	document.AddMember("App", modules_object, all);
+	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+	document.Accept(writer);
+	fclose(fp);
+	//JSON_Value *config = json_parse_file("config.json");
+	//config = json_value_init_object();
+	//JSON_Object* root_object = json_value_get_object(config);
+	//json_object_set_number(root_object, "fps", confg_fps);
+	//json_object_set_number(root_object, "vsync", confg_vsync);
+	//json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
+	//json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
+	//json_object_dotset_boolean(root_object, "Window.resizable", App->window->resizable);
+	//json_object_dotset_boolean(root_object, "Window.full_desktop", App->window->full_desktop);
+	//json_object_dotset_number(root_object, "Window.brightness", App->window->brightness);
+	//json_object_dotset_number(root_object, "Window.width", App->window->width);
+	//json_object_dotset_number(root_object, "Window.height", App->window->height);
+	//json_object_dotset_boolean(root_object, "Render.cull_face", App->renderer3D->conf_cull_face);
+	//json_object_dotset_boolean(root_object, "Render.depth_test", App->renderer3D->conf_depth_test);
+	//json_object_dotset_number(root_object, "Render.draw", App->renderer3D->conf_draw);
+	//json_object_dotset_boolean(root_object, "Render.lighting", App->renderer3D->conf_lighting);
+	//json_object_dotset_number(root_object, "Render.texture", App->renderer3D->conf_texture);
+	//json_serialize_to_file(config, "config.json");
+	//App->UI->console->AddLog("saved succesfully %s",filename);//CHANGE THIS FUNCTION
 }
 
 void Application::LoadConfig(const char* filename)
 {
-	JSON_Value *root_value;
-	JSON_Object *root_object;
 
-	root_value = json_parse_file(filename);
-	if (json_value_get_type(root_value) != JSONObject) {
-		App->UI->console->AddLog("couldn't find the file %d", filename);
-		return;
+	rapidjson::Document file;
+
+	FILE* f = fopen(filename,"rb");
+	if (f)
+	{
+		char Buffer[65536];
+		rapidjson::FileReadStream input(f, Buffer, sizeof(Buffer));
+		file.ParseStream(input);
+
+		rapidjson::Value& modules = file["App"];
+
+		rapidjson::Value& conf = modules["App"];
+
+		confg_fps = conf["FPS"].GetFloat();
+		confg_vsync = conf["vsync"].GetBool();
+
+		for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+		{
+			(*it)->Load(modules);
+		}
+
 	}
-	root_object = json_value_get_object(root_value);
+	else
+	{
+		App->UI->console->AddLog("couldn't find the file");
+	}
 
-	confg_fps = json_object_get_number(root_object, "fps");
-	confg_vsync = json_object_get_number(root_object, "vsync");
 
-	App->window->fullscreen = json_object_dotget_boolean(root_object, "Window.fullscreen");
-	App->window->borderless = json_object_dotget_boolean(root_object, "Window.borderless");
-	App->window->resizable = json_object_dotget_boolean(root_object, "Window.resizable");
-	App->window->full_desktop = json_object_dotget_boolean(root_object, "Window.full_desktop");
-	App->window->brightness = json_object_dotget_number(root_object, "Window.brightness");
-	App->window->width = json_object_dotget_number(root_object, "Window.width");
-	App->window->height = json_object_dotget_number(root_object, "Window.height");
+	//JSON_Value *root_value;
+	//JSON_Object *root_object;
 
-	App->renderer3D->conf_cull_face = json_object_dotget_boolean(root_object, "Render.cull_face");
-	App->renderer3D->conf_depth_test = json_object_dotget_boolean(root_object, "Render.depth_test");
-	App->renderer3D->conf_draw = json_object_dotget_number(root_object, "Render.draw");
-	App->renderer3D->conf_lighting = json_object_dotget_boolean(root_object, "Render.lighting");
-	App->renderer3D->conf_texture = json_object_dotget_number(root_object, "Render.texture");
+	//root_value = json_parse_file(filename);
+	//if (json_value_get_type(root_value) != JSONObject) {
+	//	App->UI->console->AddLog("couldn't find the file %d", filename);
+	//	return;
+	//}
+	//root_object = json_value_get_object(root_value);
+
+	//confg_fps = json_object_get_number(root_object, "fps");
+	//confg_vsync = json_object_get_number(root_object, "vsync");
+
+	//App->window->fullscreen = json_object_dotget_boolean(root_object, "Window.fullscreen");
+	//App->window->borderless = json_object_dotget_boolean(root_object, "Window.borderless");
+	//App->window->resizable = json_object_dotget_boolean(root_object, "Window.resizable");
+	//App->window->full_desktop = json_object_dotget_boolean(root_object, "Window.full_desktop");
+	//App->window->brightness = json_object_dotget_number(root_object, "Window.brightness");
+	//App->window->width = json_object_dotget_number(root_object, "Window.width");
+	//App->window->height = json_object_dotget_number(root_object, "Window.height");
+
+	//App->renderer3D->conf_cull_face = json_object_dotget_boolean(root_object, "Render.cull_face");
+	//App->renderer3D->conf_depth_test = json_object_dotget_boolean(root_object, "Render.depth_test");
+	//App->renderer3D->conf_draw = json_object_dotget_number(root_object, "Render.draw");
+	//App->renderer3D->conf_lighting = json_object_dotget_boolean(root_object, "Render.lighting");
+	//App->renderer3D->conf_texture = json_object_dotget_number(root_object, "Render.texture");
 
 }

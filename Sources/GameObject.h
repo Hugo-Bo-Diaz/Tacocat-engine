@@ -4,6 +4,13 @@
 #include <list>
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
+#include <time.h>
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/document.h"
 
 #include "TransformComponent.h"
 
@@ -27,15 +34,35 @@ public:
 
 	uint GetTexture(uint index);
 
+	bool static_object = true;
+
+	bool selected = false;
+	bool Iselected() 
+	{
+		if (selected)
+		{
+			return true;
+		}
+		else if (parent != nullptr && parent->Iselected())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	};
+
 	AABB GetBoundingBox();
+	AABB BoundingBox;
 
 	void Hierarchy();
 
-	void Properties();
+	uint UID;
+
+	void Save(rapidjson::Document* d, rapidjson::Value* v);
 
 private:
-	bool isstatic;
-
 	TransformComponent* transform;
 };
 

@@ -25,9 +25,6 @@
     <Filter Include="Sources\mathgeolib">
       <UniqueIdentifier>{24a9f7c3-32cb-4836-8de6-d967f2f5a624}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\parson">
-      <UniqueIdentifier>{d484c960-fa41-4a02-9ae1-5abfa48b8617}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Components">
       <UniqueIdentifier>{a5cc54c8-a914-430e-ac92-e336d7cb2dcc}</UniqueIdentifier>
     </Filter>
@@ -37,7 +34,7 @@
     <Filter Include="Sources\Components\Primitives">
       <UniqueIdentifier>{e77c686e-c486-4a90-b198-5ce7ca95c047}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Importer">
+    <Filter Include="Sources\Importers">
       <UniqueIdentifier>{3a1fca6b-10b8-4e71-8c41-6503d2d02e8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -86,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="UI_Configuration.h">
       <Filter>Sources\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="parson\parson.h">
-      <Filter>Sources\parson</Filter>
     </ClInclude>
     <ClInclude Include="UI_Console.h">
       <Filter>Sources\UI</Filter>
@@ -340,10 +334,10 @@
       <Filter>Sources\Components</Filter>
     </ClInclude>
     <ClInclude Include="Importer.h">
-      <Filter>Sources\Importer</Filter>
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
     <ClInclude Include="MeshImporter.h">
-      <Filter>Sources\Importer</Filter>
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
     <ClInclude Include="ModuleImporter.h">
       <Filter>Sources\Modules</Filter>
@@ -397,9 +391,6 @@
     </ClCompile>
     <ClCompile Include="UI_Configuration.cpp">
       <Filter>Sources\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="parson\parson.c">
-      <Filter>Sources\parson</Filter>
     </ClCompile>
     <ClCompile Include="UI_Console.cpp">
       <Filter>Sources\UI</Filter>
@@ -559,6 +550,12 @@
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Sources\Components</Filter>
+	</ClCompile>
+    <ClCompile Include="ModuleImporter.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshImporter.cpp">
+      <Filter>Sources\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

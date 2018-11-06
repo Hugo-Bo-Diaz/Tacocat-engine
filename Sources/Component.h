@@ -1,6 +1,9 @@
 #ifndef COMPONENT
 #define COMPONENT
 
+#include "rapidjson/document.h"
+#include "rapidjson/rapidjson.h"
+
 class GameObject;
 
 enum ComponentType
@@ -25,6 +28,9 @@ public:
 
 	~Component() {};
 	virtual void Update(float dt) {};
+
+	virtual void Save_Component(rapidjson::Document* d, rapidjson::Value* v) {};
+	virtual void Load_Component(rapidjson::Value& v) {};
 
 	GameObject* parent;
 

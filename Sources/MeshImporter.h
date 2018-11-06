@@ -1,6 +1,6 @@
 #pragma once
 #include "Importer.h"
-#include <array>
+#include <vector>
 #include "Globals.h"
 #include "Primitive.h"
 
@@ -22,6 +22,11 @@ public:
 
 	MeshImporter() {};
 
-	void CreateOwnFile(const char* path_to_file, const char* new_name);
+	void CreateOwnFile(Component_Mesh* mesh_to_save);
+	void Import();
+
+	std::vector<std::string> filenames;
+
+	void LoadCustomMeshFiles(Scene* scene_to);
 
 };

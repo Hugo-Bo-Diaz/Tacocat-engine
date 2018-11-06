@@ -3,10 +3,35 @@
 #include "MaterialComponent.h"
 #include "MeshComponent.h"
 #include "imgui-docking/imgui.h"
+#include "Application.h"
 
 GameObject::GameObject()
 {
-	transform = new TransformComponent(); //All gameobjects need transform
+	//NOTATION day-month-6 number random
+
+	//it should be unique unless there are more than 1.000.000 objects added in the scene in the span of a day
+
+	//this uid can be decoded to get when approximately was created
+
+	UID = 0;
+
+	time_t theTime = time(NULL);
+	struct tm *aTime = localtime(&theTime);
+
+	uint hours = aTime->tm_hour;//2 digits
+	uint day = aTime->tm_mday; // 2 digits
+	uint month = aTime->tm_mon + 1;//from 0-11 to 1-12  //2 digits
+
+	uint random = App->random_int(0, 999999);
+
+	UID += day * 100000000;
+	UID += month * 1000000;
+	UID += random;
+
+	BoundingBox.minPoint = float3(-1, -1, -1);
+	BoundingBox.maxPoint = float3(1, 1, 1);
+
+	transform = new TransformComponent();
 	AddComponent(transform);
 }
 
@@ -70,6 +95,27 @@ AABB GameObject::GetBoundingBox()
 				box.maxPoint.z = ((Component_Mesh*)(*it))->bounding_box.maxPoint.z;
 		}
 	}
+	if (children.size() > 0)
+	{
+		for (std::list<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
+		{
+			AABB tmp = (*it_c)->GetBoundingBox();
+
+			if (tmp.minPoint.x < box.minPoint.x)
+				box.minPoint.x = tmp.minPoint.x;
+			if (tmp.minPoint.y < box.minPoint.y)
+				box.minPoint.y = tmp.minPoint.y;
+			if (tmp.minPoint.z < box.minPoint.z)
+				box.minPoint.z = tmp.minPoint.z;
+
+			if (tmp.maxPoint.x > box.maxPoint.x)
+				box.maxPoint.x = tmp.maxPoint.x;
+			if (tmp.maxPoint.y > box.maxPoint.y)
+				box.maxPoint.y = tmp.maxPoint.y;
+			if (tmp.maxPoint.z > box.maxPoint.z)
+				box.maxPoint.z = tmp.maxPoint.z;
+		}
+	}
 
 	return box;
 }
@@ -90,5 +136,61 @@ void GameObject::AddChild(GameObject * child)
 
 void GameObject::Hierarchy()
 {
+
+}
+
+void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)
+{
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
+
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("UID", UID, all);
+
+	rapidjson::Value components_node(rapidjson::kObjectType);
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		(*it)->Save_Component(d, &components_node);
+	}
+	module_obj.AddMember("component", components_node, all);
+
+	rapidjson::Value children_node(rapidjson::kObjectType);
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->Save(d,&children_node);
+	}
+	module_obj.AddMember("children", children_node, all);
+
+	v->AddMember("OBJECT", module_obj, all);
+	//std::string temp;
+	//temp  = prev;
+	//temp += ".UID";
+	//json_object_dotset_number(root, temp.c_str(), UID);
+
+	//if (parent != nullptr)
+	//{
+	//	temp = prev;
+	//	temp += ".parent UID";
+	//	json_object_dotset_number(root, temp.c_str(),parent->UID);
+	//}
+
+
+	//std::string comp = prev;
+	//comp += ".component";
+
+	//for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	//{
+	//	(*it)->Save_Component(root,comp.c_str());
+	//}
+
+
+	//std::string child=prev;
+	//child += ".child";
+
+	//for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	//{
+	//	(*it)->Save(child.c_str(),root);
+	//}
+
 
 }

@@ -512,3 +512,29 @@ void ModuleRenderer3D::CleanPrimitives()
 	primitive_vector.clear();
 }
 
+void ModuleRenderer3D::Save(rapidjson::Document* d, rapidjson::Value* v)
+{
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
+
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("draw_mode",conf_draw, all);
+	module_obj.AddMember("cull_face", conf_cull_face, all);
+	module_obj.AddMember("depth_test", conf_depth_test, all);
+	module_obj.AddMember("lighting", conf_lighting, all);
+	module_obj.AddMember("texture", conf_texture, all);
+
+	v->AddMember(rapidjson::GenericStringRef<char>::GenericStringRef(name.c_str()), module_obj, all);
+
+}
+
+void ModuleRenderer3D::Load(rapidjson::Value& v)
+{
+	rapidjson::Value& conf = v[name.data()];
+
+	conf_cull_face = conf["cull_face"].GetBool();
+	conf_depth_test = conf["depth_test"].GetBool();
+	conf_draw = conf["draw_mode"].GetInt();
+	conf_lighting = conf["lighting"].GetBool();
+	conf_texture = conf["texture"].GetInt();
+}
