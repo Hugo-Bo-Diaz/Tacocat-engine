@@ -71,6 +71,8 @@ private:
 
 	float4x4 ViewMatrix, ViewMatrixInverse;
 
+	LineSegment ray;
+
 	~Component_Camera() {};
 
 };	

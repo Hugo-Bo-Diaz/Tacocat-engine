@@ -35,9 +35,7 @@ Component_Camera::Component_Camera()
 }
 
 void Component_Camera::Update(float dt)
-{	
-
-
+{
 	frustum.pos = Position;
 
 	Generate_frustum();
@@ -106,30 +104,24 @@ void Component_Camera::Update(float dt)
 	mousey = App->input->GetMouseY();
 	//
 	float percent_x = (mousex / App->window->width )*2 - 1;
-	float percent_y = (mousex / App->window->height)*2 - 1;
+	float percent_y = (mousey / App->window->height)*2 - 1;
 
-	////here u have the two planes in float3s
-	//float3 near_down_left, near_up_left, near_down_right, near_up_right;
-	//float3 far_down_left, far_up_left, far_down_right, far_up_right;
-	//near_down_left = frustum.CornerPoint(0);
-	//near_up_left = frustum.CornerPoint(2);
-	//near_down_right = frustum.CornerPoint(4);
-	//near_up_right = frustum.CornerPoint(6);
-	//far_down_left = frustum.CornerPoint(1);
-	//far_up_left = frustum.CornerPoint(3);
-	//far_down_right = frustum.CornerPoint(5);
-	//far_up_right = frustum.CornerPoint(7);
-	//LineSegment* nearx = new LineSegment(near_down_left,near_down_right);
-	//float new_lenght = nearx->Length()* percent_x;
-	//LineSegment l;
-	//l.a = float3(0, 0, 0);
-	//l.b = float3(0, 0, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glColor3f(0, 0, 1);
+	glBegin(GL_LINES);
+
+	glVertex3fv((GLfloat*)&ray.a[0]);
+	glVertex3fv((GLfloat*)&ray.b[0]);
+
+	glEnd();
+
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		LineSegment picking = frustum.UnProjectLineSegment(percent_x, percent_y);
-
+		ray = frustum.UnProjectLineSegment(percent_x, -percent_y);
+		App->UI->console->AddLog("ray created");
 		Ray r; 
-		r.dir = picking.Dir();
+		r.dir = ray.Dir();
 		r.pos = frustum.pos;
 	
 		std::vector<GameObject*> objects_hit;
@@ -163,6 +155,8 @@ void Component_Camera::Update(float dt)
 		{
 			//App->UI->console->AddLog("this ain't it chief");
 		}
+
+		
 	}
 
 
