@@ -1,1 +1,1 @@
-{"App":{"modules":8,"App":{"FPS":60.0,"vsync":true},"Window":{"borderless":true,"full_desktop":false,"fullscreen":false,"resizable":true,"width":1037.0,"height":724.0},"Render3D":{"draw_mode":2,"cull_face":true,"depth_test":true,"lighting":true,"texture":1}}}
+{"App":{"modules":8,"App":{"FPS":60.0,"vsync":true},"Window":{"borderless":true,"full_desktop":false,"fullscreen":false,"resizable":false,"width":1920.0,"height":1057.0},"Render3D":{"draw_mode":2,"cull_face":true,"depth_test":true,"lighting":true,"texture":1}}}

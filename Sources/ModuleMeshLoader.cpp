@@ -71,111 +71,96 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		for (int i = 0; i < scene->mNumMeshes; ++i)
-		{
-			
-			GameObject* Object = new GameObject();
-			parent->AddChild(Object);
-			Component_Mesh* m = new Component_Mesh();
-			Object->AddComponent(m);
+		Load_node(scene->mRootNode,parent,scene);
 
-			aiMesh* iterator = scene->mMeshes[i];
+		////for (int i = 0; i < root_node->mNumMeshes; ++i)
+		////{
+		////	GameObject* Object = new GameObject();
+		////	parent->AddChild(Object);
+		////	Component_Mesh* m = new Component_Mesh();
+		////	Object->AddComponent(m);
 
-			m->num_vertex = iterator->mNumVertices;
-			m->vertex = new float[m->num_vertex * 3];
-			memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
-			if (iterator->HasFaces())
-			{
-				m->num_index = iterator->mNumFaces * 3;
-				m->index = new uint[m->num_index]; // assume each face is a triangle
-				for (uint i = 0; i < iterator->mNumFaces; ++i)
-				{
-					if (iterator->mFaces[i].mNumIndices != 3)
-					{
- 						App->UI->console->AddLog("geometry messed up");
-					m->not_working = true;
-					}
+		////	aiMesh* iterator = scene->mMeshes[i];
 
-					else
-						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
-				}
-			}
-			if (iterator->HasTextureCoords(0))
-			{
-				m->tex_coords = new float[m->num_vertex * 2];
-				uint w = 0;
-				for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
-				{
-					memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
-					memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
-					++w;
-				}
-			}
+		////	m->num_vertex = iterator->mNumVertices;
+		////	m->vertex = new float[m->num_vertex * 3];
+		////	memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
+		////	if (iterator->HasFaces())
+		////	{
+		////		m->num_index = iterator->mNumFaces * 3;
+		////		m->index = new uint[m->num_index]; // assume each face is a triangle
+		////		for (uint i = 0; i < iterator->mNumFaces; ++i)
+		////		{
+		////			if (iterator->mFaces[i].mNumIndices != 3)
+		////			{
+ 	////					App->UI->console->AddLog("geometry messed up");
+		////			m->not_working = true;
+		////			}
 
-			if (iterator->HasNormals())
-			{
-				m->num_normals = iterator->mNumVertices;
-				m->normals = new float[m->num_normals * 3];
-				memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
-			}
+		////			else
+		////				memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
+		////		}
+		////	}
+		////	if (iterator->HasTextureCoords(0))
+		////	{
+		////		m->tex_coords = new float[m->num_vertex * 2];
+		////		uint w = 0;
+		////		for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
+		////		{
+		////			memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
+		////			memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
+		////			++w;
+		////		}
+		////	}
 
-			m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
+		////	if (iterator->HasNormals())
+		////	{
+		////		m->num_normals = iterator->mNumVertices;
+		////		m->normals = new float[m->num_normals * 3];
+		////		memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
+		////	}
 
-			//we want to move the model so that the center of this box is on the 0, 1/2height, 0
-			//if (scene->mNumMeshes < 2)//if i moved more than 1 the scene would not be in its place
-			//{
-			//	float to_move_x, to_move_y, to_move_z;
-
-			//	to_move_x = (m->bounding_box.maxPoint.x - m->bounding_box.minPoint.x) / 2 - m->bounding_box.maxPoint.x;//width/2 - max_x
-			//	to_move_z = (m->bounding_box.maxPoint.z - m->bounding_box.minPoint.z) / 2 - m->bounding_box.maxPoint.z;//width/2 - max_z
-
-			//	to_move_y = (m->bounding_box.maxPoint.y - m->bounding_box.minPoint.y) - m->bounding_box.maxPoint.y;
+		////	m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
 
 
-			//	m->bounding_box.minPoint += {to_move_x, to_move_y, to_move_z};
-			//	m->bounding_box.maxPoint += {to_move_x, to_move_y, to_move_z};
-			//	m->Move(to_move_x, to_move_y, to_move_z);
-			//}
+		////	m->material_index = iterator->mMaterialIndex;
 
-			m->material_index = iterator->mMaterialIndex;
+		////	m->name = iterator->mName.C_Str();
 
-			m->name = iterator->mName.C_Str();
-			//aiQuaterniont <float> quat;
-			//scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, quat, m->position);
-			//m->rotation = quat.GetEuler();
+		////	scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, m->rotation, m->position);
 
-			glGenBuffers(1, (GLuint*) &(m->buffer_id));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		}
+		////	glGenBuffers(1, (GLuint*) &(m->buffer_id));
+		////	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
+		////	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
+		////	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		////}
 
-		for (std::list<GameObject*>::iterator it = parent->children.begin(); it != parent->children.end(); it++)
-		{
-			for (std::list<Component*>::iterator it_1 = (*it)->components.begin(); it_1 != (*it)->components.end(); it_1++)
-			{
-				if ((*it_1)->type == MESH && ((Component_Mesh*)(*it_1))->material_index != -1 && ((Component_Mesh*)(*it_1))->material_index < scene->mNumMaterials && scene->HasMaterials())
-				{
-					Component_Material* mat = new Component_Material();
-					(*it)->AddComponent((Component*)mat);
-					mat->material_index = ((Component_Mesh*)(*it_1))->material_index;
+		////for (std::list<GameObject*>::iterator it = parent->children.begin(); it != parent->children.end(); it++)
+		////{
+		////	for (std::list<Component*>::iterator it_1 = (*it)->components.begin(); it_1 != (*it)->components.end(); it_1++)
+		////	{
+		////		if ((*it_1)->type == MESH && ((Component_Mesh*)(*it_1))->material_index != -1 && ((Component_Mesh*)(*it_1))->material_index < scene->mNumMaterials && scene->HasMaterials())
+		////		{
+		////			Component_Material* mat = new Component_Material();
+		////			(*it)->AddComponent((Component*)mat);
+		////			mat->material_index = ((Component_Mesh*)(*it_1))->material_index;
 
-					//now we know which texture does this mesh need and we add it to the game object as a component
-					const aiMaterial* material = scene->mMaterials[((Component_Mesh*)(*it_1))->material_index];
-					aiString texturePath;
+		////			//now we know which texture does this mesh need and we add it to the game object as a component
+		////			const aiMaterial* material = scene->mMaterials[((Component_Mesh*)(*it_1))->material_index];
+		////			aiString texturePath;
 
-					unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+		////			unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
 
-					if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-					{
-						material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-						mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(),&(mat->tex_width),&(mat->tex_height));
-					}
-				}
-			}
-		}
+		////			if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+		////			{
+		////				material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+		////				mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(),&(mat->tex_width),&(mat->tex_height));
+		////			}
+		////		}
+		////	}
+		////}
 
-		App->UI->console->AddLog("Loaded %d meshes %s", scene->mNumMeshes, file);
+		////App->UI->console->AddLog("Loaded %d meshes %s", scene->mNumMeshes, file);
 
 		//if (scene->HasMaterials())
 		//{
@@ -223,6 +208,127 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 	
 	return;
 }
+
+void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScene* scene)
+{
+	GameObject* par = new GameObject();
+	parent->AddChild(par);
+
+	for (int i = 0; i < node->mNumMeshes; ++i)
+	{
+		GameObject* Object = new GameObject();
+		par->AddChild(Object);
+		Component_Mesh* m = new Component_Mesh();
+		Object->AddComponent(m);
+
+		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
+
+		m->num_vertex = iterator->mNumVertices;
+		m->vertex = new float[m->num_vertex * 3];
+		memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
+		if (iterator->HasFaces())
+		{
+			m->num_index = iterator->mNumFaces * 3;
+			m->index = new uint[m->num_index]; // assume each face is a triangle
+			for (uint i = 0; i < iterator->mNumFaces; ++i)
+			{
+				if (iterator->mFaces[i].mNumIndices != 3)
+				{
+					App->UI->console->AddLog("geometry messed up");
+					m->not_working = true;
+				}
+
+				else
+					memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
+			}
+		}
+		if (iterator->HasTextureCoords(0))
+		{
+			m->tex_coords = new float[m->num_vertex * 2];
+			uint w = 0;
+			for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
+			{
+				memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
+				memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
+				++w;
+			}
+		}
+
+		if (iterator->HasNormals())
+		{
+			m->num_normals = iterator->mNumVertices;
+			m->normals = new float[m->num_normals * 3];
+			memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
+		}
+
+		m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
+
+
+		m->material_index = iterator->mMaterialIndex;
+
+		m->name = iterator->mName.C_Str();
+
+		//parent->AddComponent(TRANSFORM) @DANI
+		scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->scaling, m->rotation, m->position);
+
+		Component_Material* mat = new Component_Material();
+		par->AddComponent((Component*)mat);
+		mat->material_index = m->material_index;
+		m->material = mat;
+
+		const aiMaterial* material = scene->mMaterials[m->material_index];
+		aiString texturePath;
+
+		unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+
+		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+		{
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+			mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
+		}
+
+		glGenBuffers(1, (GLuint*) &(m->buffer_id));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+	
+
+	//for (std::list<GameObject*>::iterator it = parent->children.begin(); it != parent->children.end(); it++)
+	//{
+	//	for (std::list<Component*>::iterator it_1 = (*it)->components.begin(); it_1 != (*it)->components.end(); it_1++)
+	//	{
+	//		if ((*it_1)->type == MESH && ((Component_Mesh*)(*it_1))->material_index != -1 && ((Component_Mesh*)(*it_1))->material_index < scene->mNumMaterials && scene->HasMaterials())
+	//		{
+	//			Component_Material* mat = new Component_Material();
+	//			(*it)->AddComponent((Component*)mat);
+	//			mat->material_index = ((Component_Mesh*)(*it_1))->material_index;
+
+	//			//now we know which texture does this mesh need and we add it to the game object as a component
+	//			const aiMaterial* material = scene->mMaterials[((Component_Mesh*)(*it_1))->material_index];
+	//			aiString texturePath;
+
+	//			unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+
+	//			if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+	//			{
+	//				material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+	//				mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
+	//			}
+	//		}
+	//	}
+	//}
+
+	if (node->mNumChildren > 0)
+	{
+		for (int i = 0; i < node->mNumChildren; ++i)
+		{
+			Load_node(node->mChildren[i],par,scene);
+		}
+	}
+	
+}
+
 void ModuleMeshLoader::FocusCamera()
 {
 
