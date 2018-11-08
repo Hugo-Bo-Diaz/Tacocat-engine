@@ -7,7 +7,7 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
-enum sector 
+enum sector
 {
 	ROOT,
 	NW,
@@ -19,7 +19,7 @@ enum sector
 struct Spooktree
 {
 public:
-	Spooktree() 
+	Spooktree()
 	{
 		minx = 0.0f;
 		minz = 0.0f;
@@ -64,10 +64,10 @@ public:
 
 	void Divide(std::vector<GameObject*> GameObjects)
 	{
-		NWS = new Spooktree(NW, minx, minz, minx + maxx, minz + maxz);
-		NES = new Spooktree(NE, minx, minz + maxz, minx + maxz, maxz);
-		SWS = new Spooktree(SW, minx + maxx, minz, maxx, minz + maxz);
-		SES = new Spooktree(SE, minx + maxx, minz + maxz, maxx, maxz);
+		NWS = new Spooktree(NW, minx, minz, (minx + maxx) / 2, (minz + maxz) / 2);
+		NES = new Spooktree(NE, minx, (minz + maxz) / 2, (minx + maxz) / 2, maxz);
+		SWS = new Spooktree(SW, (minx + maxx) / 2, minz, maxx, (minz + maxz) / 2);
+		SES = new Spooktree(SE, (minx + maxx) / 2, (minz + maxz) / 2, maxx, maxz);
 
 		float sX, sZ, mX, mZ;
 
@@ -101,10 +101,10 @@ public:
 				assigned = true;
 			}
 
-			if (assigned)
+			/*if (assigned)
 			{
 				GameObjects.erase(GameObjects.begin() + aux);
-			}
+			}*/
 		}
 
 		sectors.push_back(NWS);
@@ -114,15 +114,18 @@ public:
 	};
 
 	//Everytime a children is added resize the containers
-	void ResizeContainers() 
+	void ResizeContainers()
 	{
 		//CalculateContainer(children);
-
-		for (std::list<Spooktree*>::iterator it = sectors.begin(); it != sectors.end(); it++)
+		if (children.size() >= max)
 		{
-			if (children.size() >= max)
+			if (sectors.empty())
 			{
-				(*it)->Divide(children);
+				Divide(children);
+			}
+
+			for (std::list<Spooktree*>::iterator it = sectors.begin(); it != sectors.end(); it++)
+			{
 				(*it)->ResizeContainers();
 			}
 		}
@@ -158,6 +161,8 @@ inline void Spooktree::Draw()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glLineWidth(2.5);
+	glDisable(GL_LIGHTING);
+
 	glColor3f(1.0, 0.0, 0.0);
 
 	glBegin(GL_LINES);
@@ -173,5 +178,13 @@ inline void Spooktree::Draw()
 	glVertex3f(maxx, 0.0, minz);
 	glVertex3f(maxx, 0.0, maxz);
 	glEnd();
+
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LIGHTING);
+
+	for (std::list<Spooktree*>::iterator it = sectors.begin(); it != sectors.end(); it++)
+	{
+		(*it)->Draw();
+	}
 }
 #endif // !QUADTREE_CLASS
