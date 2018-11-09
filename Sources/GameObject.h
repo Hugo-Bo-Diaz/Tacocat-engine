@@ -5,6 +5,9 @@
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include <time.h>
+
+#include "MeshComponent.h"
+
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/reader.h"
@@ -60,6 +63,7 @@ public:
 
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 
+	std::vector<Component_Mesh*>* GetAllMeshes(std::vector<Component_Mesh*>& ret);
 
 private:
 

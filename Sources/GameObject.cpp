@@ -161,35 +161,25 @@ void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)
 	module_obj.AddMember("children", children_node, all);
 
 	v->AddMember("OBJECT", module_obj, all);
-	//std::string temp;
-	//temp  = prev;
-	//temp += ".UID";
-	//json_object_dotset_number(root, temp.c_str(), UID);
-
-	//if (parent != nullptr)
-	//{
-	//	temp = prev;
-	//	temp += ".parent UID";
-	//	json_object_dotset_number(root, temp.c_str(),parent->UID);
-	//}
 
 
-	//std::string comp = prev;
-	//comp += ".component";
+}
 
-	//for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
-	//{
-	//	(*it)->Save_Component(root,comp.c_str());
-	//}
+std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mesh*>& ret)
+{
 
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		if ((*it)->type == MESH)
+		{
+			ret.push_back((Component_Mesh*)*it);
+		}
+	}
 
-	//std::string child=prev;
-	//child += ".child";
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->GetAllMeshes(ret);
+	}
 
-	//for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
-	//{
-	//	(*it)->Save(child.c_str(),root);
-	//}
-
-
+	return &ret;
 }

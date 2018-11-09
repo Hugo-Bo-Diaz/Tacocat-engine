@@ -142,9 +142,13 @@ void Component_Camera::Update(float dt)
 
 		GameObject* object_found = nullptr;
 		bool found_something = false;
+		std::vector<Component_Mesh*> meshesinscene;
 		for (std::vector<GameObject*>::iterator it_AABB = objects_hit.begin(); it_AABB != objects_hit.end(); it_AABB++)
 		{
 			//here we should check geometry if something is hit directly then the loop will exit
+			std::vector<Component_Mesh*> list;
+			(*it_AABB)->GetAllMeshes(list);
+
 			if (found_something)
 			{
 				//tell the object it has been selected
