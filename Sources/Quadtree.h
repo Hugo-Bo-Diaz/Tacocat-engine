@@ -25,8 +25,10 @@ public:
 		minz = 0.0f;
 		maxx = 0.0f;
 		maxz = 0.0f;
+
+		currentsub;
 	};
-	Spooktree(sector type, float minx, float minz, float maxx, float maxz) : type(type), minx(minx), minz(minz), maxx(maxx), maxz(maxz) {};
+	Spooktree(sector type, float minx, float minz, float maxx, float maxz, int currentsub) : type(type), minx(minx), minz(minz), maxx(maxx), maxz(maxz), currentsub(currentsub) {};
 	~Spooktree() {};
 
 	int max = 2;
@@ -64,10 +66,10 @@ public:
 
 	void Divide(std::vector<GameObject*> GameObjects)
 	{
-		NWS = new Spooktree(NW, minx, minz, (minx + maxx) / 2, (minz + maxz) / 2);
-		NES = new Spooktree(NE, minx, (minz + maxz) / 2, (minx + maxz) / 2, maxz);
-		SWS = new Spooktree(SW, (minx + maxx) / 2, minz, maxx, (minz + maxz) / 2);
-		SES = new Spooktree(SE, (minx + maxx) / 2, (minz + maxz) / 2, maxx, maxz);
+		NWS = new Spooktree(NW, minx, minz, (minx + maxx) / 2, (minz + maxz) / 2, currentsub + 1);
+		NES = new Spooktree(NE, minx, (minz + maxz) / 2, (minx + maxz) / 2, maxz, currentsub + 1);
+		SWS = new Spooktree(SW, (minx + maxx) / 2, minz, maxx, (minz + maxz) / 2, currentsub + 1);
+		SES = new Spooktree(SE, (minx + maxx) / 2, (minz + maxz) / 2, maxx, maxz, currentsub + 1);
 
 		float sX, sZ, mX, mZ;
 
@@ -87,17 +89,17 @@ public:
 			}
 			if ((sX >= NES->minx && mX <= NES->maxx) || (sZ >= NES->minz && mZ <= NES->maxz))
 			{
-				NWS->children.push_back(GameObjects[aux]);
+				NES->children.push_back(GameObjects[aux]);
 				assigned = true;
 			}
 			if ((sX >= SWS->minx && mX <= SWS->maxx) || (sZ >= SWS->minz && mZ <= SWS->maxz))
 			{
-				NWS->children.push_back(GameObjects[aux]);
+				SWS->children.push_back(GameObjects[aux]);
 				assigned = true;
 			}
 			if ((sX >= SES->minx && mX <= SES->maxx) || (sZ >= SES->minz && mZ <= SES->maxz))
 			{
-				NWS->children.push_back(GameObjects[aux]);
+				SES->children.push_back(GameObjects[aux]);
 				assigned = true;
 			}
 
@@ -119,7 +121,7 @@ public:
 		//CalculateContainer(children);
 		if (children.size() >= max)
 		{
-			if (sectors.empty())
+			if (sectors.empty() && currentsub < 3)
 			{
 				Divide(children);
 			}
@@ -148,6 +150,7 @@ private:
 
 	AABB container;
 	float minx, minz, maxx, maxz;
+	int currentsub;
 
 	Spooktree* NWS;
 	Spooktree* NES;

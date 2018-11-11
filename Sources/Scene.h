@@ -19,7 +19,7 @@ public:
 	{ 
 		name = _name;
 		spookamera = new Component_Camera();
-		tree = new Spooktree(ROOT, -100, -100, 100, 100);
+		tree = new Spooktree(ROOT, -100, -100, 100, 100, 0);
 	};
 
 	~Scene();
