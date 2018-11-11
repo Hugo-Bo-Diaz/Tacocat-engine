@@ -94,6 +94,76 @@ void Component_Camera::Update(float dt)
 
 	frustum.pos = pos_now;//we move the transformed frustum to its position
 
+	//// Mouse picking
+
+	//first we need the two points of the ray, we need the position in the near and far plane of the frustum
+	//so if the mouse is in the middle it'll be halfway of the frustum plane
+
+	float mousex, mousey;
+	mousex = App->input->GetMouseX();
+	mousey = App->input->GetMouseY();
+	//
+	float percent_x = (mousex / App->window->width )*2 - 1;
+	float percent_y = (mousey / App->window->height)*2 - 1;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glColor3f(0, 0, 1);
+	glBegin(GL_LINES);
+
+	glVertex3fv((GLfloat*)&ray.a[0]);
+	glVertex3fv((GLfloat*)&ray.b[0]);
+
+	glEnd();
+
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		ray = frustum.UnProjectLineSegment(percent_x, -percent_y);
+		App->UI->console->AddLog("ray created");
+		Ray r; 
+		r.dir = ray.Dir();
+		r.pos = frustum.pos;
+	
+		std::vector<GameObject*> objects_hit;
+
+		for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
+		{
+			if(r.Intersects((*it)->GetBoundingBox()))
+			{
+				(*it)->selected = true;
+				App->UI->console->AddLog("HA %d, (%f %f %f) (%f %f %f)", (*it)->UID, (*it)->GetBoundingBox().minPoint.x, (*it)->GetBoundingBox().minPoint.y, (*it)->GetBoundingBox().minPoint.z, (*it)->GetBoundingBox().maxPoint.x, (*it)->GetBoundingBox().maxPoint.y, (*it)->GetBoundingBox().maxPoint.z);
+				objects_hit.push_back(*it);
+			}
+			else
+			{
+				(*it)->selected = false;
+			}
+		}
+
+		GameObject* object_found = nullptr;
+		bool found_something = false;
+		std::vector<Component_Mesh*> meshesinscene;
+		for (std::vector<GameObject*>::iterator it_AABB = objects_hit.begin(); it_AABB != objects_hit.end(); it_AABB++)
+		{
+			//here we should check geometry if something is hit directly then the loop will exit
+			std::vector<Component_Mesh*> list;
+			(*it_AABB)->GetAllMeshes(list);
+
+			if (found_something)
+			{
+				//tell the object it has been selected
+				break;
+			}
+		}
+		if (objects_hit.size() >0 && object_found == nullptr)
+		{
+			//App->UI->console->AddLog("this ain't it chief");
+		}
+
+		
+	}
+
+
 	//// Mouse motion ----------------
 
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT || (App->input->GetKey(SDL_SCANCODE_LALT) && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT))
@@ -214,7 +284,9 @@ void Component_Camera::Draw_frustum()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
+
 
 	glVertex3fv((GLfloat*)&vert[1]);
 	glVertex3fv((GLfloat*)&vert[5]);
@@ -282,12 +354,27 @@ void Component_Camera::Draw_frustum()
 //}
 
 
-void Component_Camera::Save_Component()
+void Component_Camera::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("angleXZ", angle_XZ, all);
+	module_obj.AddMember("angleY", angle_Y, all);
+
+	module_obj.AddMember("position_x", Position.x, all);
+	module_obj.AddMember("position_y", Position.y, all);
+	module_obj.AddMember("position_z", Position.z, all);
+
+	module_obj.AddMember("reference_x", Reference.x, all);
+	module_obj.AddMember("reference_y", Reference.y, all);
+	module_obj.AddMember("reference_z", Reference.z, all);
+
+	v->AddMember("CAMERA", module_obj, all);
 }
 
-void Component_Camera::Load_Component()
+void Component_Camera::Load_Component(rapidjson::Value& v)
 {
 
 }

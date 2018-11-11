@@ -5,6 +5,9 @@
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include <time.h>
+
+#include "MeshComponent.h"
+
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/reader.h"
@@ -17,8 +20,6 @@ class Component;
 class GameObject
 {
 public:
-
-
 
 	GameObject();
 	~GameObject();
@@ -36,7 +37,25 @@ public:
 
 	bool static_object = true;
 
+	bool selected = false;
+	bool Iselected() 
+	{
+		if (selected)
+		{
+			return true;
+		}
+		else if (parent != nullptr && parent->Iselected())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	};
+
 	AABB GetBoundingBox();
+	AABB BoundingBox;
 
 	void Hierarchy();
 
@@ -44,6 +63,7 @@ public:
 
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 
+	std::vector<Component_Mesh*>* GetAllMeshes(std::vector<Component_Mesh*>& ret);
 
 private:
 

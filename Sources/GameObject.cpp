@@ -55,6 +55,27 @@ AABB GameObject::GetBoundingBox()
 				box.maxPoint.z = ((Component_Mesh*)(*it))->bounding_box.maxPoint.z;
 		}
 	}
+	if (children.size() > 0)
+	{
+		for (std::list<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
+		{
+			AABB tmp = (*it_c)->GetBoundingBox();
+
+			if (tmp.minPoint.x < box.minPoint.x)
+				box.minPoint.x = tmp.minPoint.x;
+			if (tmp.minPoint.y < box.minPoint.y)
+				box.minPoint.y = tmp.minPoint.y;
+			if (tmp.minPoint.z < box.minPoint.z)
+				box.minPoint.z = tmp.minPoint.z;
+
+			if (tmp.maxPoint.x > box.maxPoint.x)
+				box.maxPoint.x = tmp.maxPoint.x;
+			if (tmp.maxPoint.y > box.maxPoint.y)
+				box.maxPoint.y = tmp.maxPoint.y;
+			if (tmp.maxPoint.z > box.maxPoint.z)
+				box.maxPoint.z = tmp.maxPoint.z;
+		}
+	}
 
 	return box;
 }
@@ -96,6 +117,9 @@ GameObject::GameObject()
 	UID += month * 1000000;
 	UID += random ;
 
+	BoundingBox.minPoint = float3(-1,-1,-1);
+	BoundingBox.maxPoint = float3(1, 1, 1);
+
 }
 
 GameObject::~GameObject()
@@ -122,38 +146,40 @@ void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)
 
 	module_obj.AddMember("UID", UID, all);
 
+	rapidjson::Value components_node(rapidjson::kObjectType);
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		(*it)->Save_Component(d, &components_node);
+	}
+	module_obj.AddMember("component", components_node, all);
 
+	rapidjson::Value children_node(rapidjson::kObjectType);
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->Save(d,&children_node);
+	}
+	module_obj.AddMember("children", children_node, all);
 
 	v->AddMember("OBJECT", module_obj, all);
-	//std::string temp;
-	//temp  = prev;
-	//temp += ".UID";
-	//json_object_dotset_number(root, temp.c_str(), UID);
-
-	//if (parent != nullptr)
-	//{
-	//	temp = prev;
-	//	temp += ".parent UID";
-	//	json_object_dotset_number(root, temp.c_str(),parent->UID);
-	//}
 
 
-	//std::string comp = prev;
-	//comp += ".component";
+}
 
-	//for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
-	//{
-	//	(*it)->Save_Component(root,comp.c_str());
-	//}
+std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mesh*>& ret)
+{
 
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		if ((*it)->type == MESH)
+		{
+			ret.push_back((Component_Mesh*)*it);
+		}
+	}
 
-	//std::string child=prev;
-	//child += ".child";
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->GetAllMeshes(ret);
+	}
 
-	//for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
-	//{
-	//	(*it)->Save(child.c_str(),root);
-	//}
-
-
+	return &ret;
 }

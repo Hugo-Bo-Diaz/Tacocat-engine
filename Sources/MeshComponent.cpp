@@ -47,7 +47,7 @@ bool Component_Mesh::CheckFrustumCulling(Component_Camera * camera_to_check)
 
 void Component_Mesh::draw()
 {	
-	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()))
+	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()) && !not_working)
 	{
 
 		//if (buffer_id > 2)
@@ -61,9 +61,7 @@ void Component_Mesh::draw()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
-
 
 	if (App->renderer3D->draw_checkers)
 	{	
@@ -71,22 +69,20 @@ void Component_Mesh::draw()
 		glBindTexture(GL_TEXTURE_2D, App->renderer3D->texture_buffer);
 		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
-	else if (parent->GetTexture(material_index) != 0)
+	//else if (parent->GetTexture(material_index) != 0)
+	else if (material != nullptr && material->texture_buffer_id != 0)
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindTexture(GL_TEXTURE_2D, parent->GetTexture(material_index));
+		glBindTexture(GL_TEXTURE_2D, material->texture_buffer_id);
 		glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 	}
 	else
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	//glRotatef(imdumb++, 0, 1, 0);
 
 	glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 	glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
-
-	//glRotatef(-imdumb, 0, 1, 0);
 
 	if (parent->GetTexture(material_index) != 0)
 	{
@@ -108,44 +104,83 @@ void Component_Mesh::draw()
 
 void Component_Mesh::draw_bounding_box()
 {
+	float3 c;
+	if (parent->Iselected())
+	{
+		c = float3(0,0,0);
+	}
+	else
+	{
+		c = float3(1, 1, 1);
+	}
+
+	glDisable(GL_LIGHTING);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	glBegin(GL_LINES);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x,c.y,c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
-
+	glColor3f(c.x, c.y, c.z);
 
 	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
 	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
@@ -161,6 +196,8 @@ void Component_Mesh::draw_bounding_box()
 
 
 	glEnd();
+	glEnable(GL_LIGHTING);
+
 }
 
 void Component_Mesh::Update(float dt)
@@ -239,12 +276,34 @@ bool Component_Mesh::ContainsAaBox(const AABB& refBox, const Frustum & frustum) 
 	return true;
 }
 
-void Component_Mesh::Save_Component()
+void Component_Mesh::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("material_id", material_index, all);
+
+	rapidjson::Value transform_node(rapidjson::kObjectType);
+
+	transform_node.AddMember("transform_scale_x", scaling.x, all);
+	transform_node.AddMember("transform_scale_y", scaling.y, all);
+	transform_node.AddMember("transform_scale_z", scaling.z, all);
+	
+	transform_node.AddMember("transform_rotation_x", rotation.x, all);
+	transform_node.AddMember("transform_rotation_y", rotation.y, all);
+	transform_node.AddMember("transform_rotation_z", rotation.z, all);
+	
+	transform_node.AddMember("transform_position_x", position.x, all);
+	transform_node.AddMember("transform_position_y", position.y, all);
+	transform_node.AddMember("transform_position_z", position.z, all);
+
+	module_obj.AddMember("transform", transform_node, all);
+
+	v->AddMember("MESH", module_obj, all);
 }
 
-void Component_Mesh::Load_Component()
+void Component_Mesh::Load_Component(rapidjson::Value& v)
 {
 
 }

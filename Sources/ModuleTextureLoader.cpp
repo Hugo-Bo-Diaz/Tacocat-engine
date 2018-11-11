@@ -49,11 +49,25 @@ uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _he
 
 	bool textureLoaded = false;
 
+	std::string initial = file;
+
+	std::string nameoffile = "";
+	if (initial.find('\\',0) != -1)
+		nameoffile = std::strrchr(initial.c_str(), '\\');
+
+
 	//Generate and set current image ID
 	ilGenImages(1, &buffernumber);
 	ilBindImage(buffernumber);
-
-	ILboolean success = ilLoadImage(file);
+	
+	ILboolean success;
+	if (nameoffile != "")
+	{
+		std::string fin = "street" + nameoffile;//HARDCODED: NEEDS TO BE RESOURCED SYSTEM'D
+		success = ilLoadImage(fin.c_str());
+	}
+	else
+		success = ilLoadImage(file);
 
 	//Image loaded successfully
 	if (success == IL_TRUE)

@@ -39,7 +39,7 @@ void Scene::LoadToScene(const char* file)
 	if (extension == ".FBX" || extension == ".fbx")
 	{
 		App->UI->console->AddLog("model file detected, sending to mesh loader");
-		App->mesh_loader->Load(file, this); 
+		App->mesh_loader->Load_mesh(file, this); 
 	}
 	//else if (extension == ".png" || extension == ".dss")
 	//{

@@ -26,12 +26,19 @@ Component_Material::~Component_Material()
 
 }
 
-void Component_Material::Save_Component()
+void Component_Material::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	module_obj.AddMember("tex_width", tex_width, all);
+	module_obj.AddMember("tex_height", tex_height, all);
+
+	v->AddMember("MATERIAL", module_obj, all);
 }
 
-void Component_Material::Load_Component()
+void Component_Material::Load_Component(rapidjson::Value& v)
 {
 
 }

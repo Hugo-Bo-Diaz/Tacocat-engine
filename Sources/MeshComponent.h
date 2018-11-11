@@ -3,6 +3,7 @@
 #include <string>
 #include "Globals.h"
 #include "Component.h"
+#include "MaterialComponent.h"
 
 #include "Assimp\include\cimport.h"
 #include "Assimp\include\scene.h"
@@ -36,7 +37,7 @@ public:
 	Component_Mesh();
 
 	aiVector3t<float> scaling;
-	aiVector3t< float > rotation;
+	aiQuaternion rotation;
 	aiVector3t< float > position;
 	AABB bounding_box;
 	void draw();
@@ -52,9 +53,11 @@ public:
 
 	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 
-	void Save_Component();
-	void Load_Component();
+	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);
+	void Load_Component(rapidjson::Value& v);
 
-	//float imdumb = 0;
+	Component_Material* material = nullptr;
+
+	bool not_working = false;
 
 };
