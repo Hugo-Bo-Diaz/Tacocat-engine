@@ -138,13 +138,13 @@ void GameObject::Hierarchy(uint selectedID)
 	int flags = 0;
 	if (children.empty()) 
 		flags |= ImGuiTreeNodeFlags_Leaf;
-	if (selectedID == uid) 
+	if (selectedID == UID) 
 		flags |= ImGuiTreeNodeFlags_Selected;
 
-	if (ImGui::TreeNodeEx(name.c_str(), flags)) {
+	if (ImGui::TreeNodeEx("", flags)) {
 		if (ImGui::IsItemClicked()) 
-			selectedID = uid;
-		for (int aux = 0; aux < children.size(); aux++)	children[aux]->HierarchyTree(selected_obj_uid);
+			selectedID = UID;
+		//Iterator through game objects	children[aux]->HierarchyTree(selectedID);
 
 		ImGui::TreePop();
 	}

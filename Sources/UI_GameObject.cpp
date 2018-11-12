@@ -20,7 +20,7 @@ void UI_GameObject::Render()
 	{
 		for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
 		{
-			
+			//(*it)->Hierarchy()//send selected object id as reference
 		}
 	}
 	ImGui::End();
