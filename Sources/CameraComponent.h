@@ -69,6 +69,8 @@ public:
 
 private:
 
+	GameObject * selected;
+
 	float4x4 ViewMatrix, ViewMatrixInverse;
 
 	LineSegment ray;

@@ -13,8 +13,6 @@ public:
 	bool Start();
 	bool CleanUp();
 
-	void Load(const char* filename, Scene* scene_to);
-
 private:
 
 };

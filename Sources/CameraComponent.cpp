@@ -42,7 +42,9 @@ void Component_Camera::Update(float dt)
 
 	float real_speed = speed * dt;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		real_speed = speed * 2 * dt;
+		real_speed = speed * 15 * dt;
+
+	speed = 10;
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;

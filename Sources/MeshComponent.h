@@ -53,8 +53,6 @@ public:
 	void Move(float x, float y, float z);
 	void Scale(float scalex, float scaley, float scalez);
 
-	void Change_Transform(Component_Transform* to_this);
-
 	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 
 	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);

@@ -148,12 +148,16 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 		//parent->AddComponent(TRANSFORM) @DANI
 
-		Component_Transform* transform;
+		Component_Transform* transform = new Component_Transform();
 		parent->AddComponent(transform);
 
 		//scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->current_scaling, m->rotation_q, m->current_translation);
 		scene->mRootNode->mChildren[i]->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
 		//m->current_rotation = m->rotation_q.GetEuler();
+		//transform->rotation_e = transform->rotation.GetEuler();
+		transform->Calculate_Angle_Axis();
+
+		m->bounding_box.Scale(m->bounding_box.CenterPoint(),(transform->scaling.x, transform->scaling.y, transform->scaling.z));
 
 		Component_Material* mat = new Component_Material();
 		par->AddComponent((Component*)mat);

@@ -26,10 +26,11 @@ public:
 
 	aiVector3t<float> scaling;
 	aiQuaternion rotation;
+	aiVector3t<float> rotation_angle;
+	float angle;
 	aiVector3t< float > position;
 
-	float3x3 Get_Transform_Matrix();
-	void Translate_vertices(float* vertices, uint number_of_vertices);
+	void Calculate_Angle_Axis();
 
 	~Component_Transform();
 

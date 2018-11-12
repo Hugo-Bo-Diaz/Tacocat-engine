@@ -7,6 +7,17 @@
 
 void GameObject::Update(float dt)
 {
+	bool tran_exists = false;
+	Component_Transform* t = GetTransform();
+	if (t != nullptr)
+	{	
+		tran_exists = true;
+		glPushMatrix();
+		glScalef(t->scaling.x,t->scaling.y,t->scaling.z);
+		glRotatef(RadToDeg(t->angle), t->rotation_angle.x, t->rotation_angle.y, t->rotation_angle.z);
+		glTranslatef(t->position.x,t->position.y,t->position.z);
+	}
+
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		(*it)->Update(dt);
@@ -16,7 +27,8 @@ void GameObject::Update(float dt)
 	{
 		(*it)->Update(dt);
 	}
-
+	if (tran_exists)
+		glPopMatrix();
 }
 
 uint GameObject::GetTexture(uint index)
@@ -186,7 +198,12 @@ std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mes
 
 Component_Transform* GameObject::GetTransform()
 {
-
-
-
+	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	{
+		if ((*it)->type == TRANSFORM)
+		{
+			return ((Component_Transform*)*it);
+		}
+	}
+	return nullptr;
 }

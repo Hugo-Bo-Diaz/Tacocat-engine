@@ -18,8 +18,3 @@ bool ModuleFileSystem::CleanUp()
 {
 	return true;
 }
-
-void ModuleFileSystem::Load(const char * filename, Scene * scene_to)
-{
-
-}

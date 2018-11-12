@@ -312,9 +312,6 @@
     <ClInclude Include="imgui-docking\imstb_truetype.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
@@ -349,6 +346,9 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -533,9 +533,6 @@
     <ClCompile Include="imgui-docking\imgui_widgets.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
@@ -564,6 +561,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
