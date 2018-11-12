@@ -12,6 +12,7 @@
 #include "ModuleMeshLoader.h"
 #include "ModuleTextureLoader.h"
 #include "ModuleUI.h"
+#include "ModuleFileSystem.h"
 
 class Application
 {
@@ -24,6 +25,7 @@ public:
 	ModuleUI* UI;
 	ModuleMeshLoader* mesh_loader;
 	ModuleTextureLoader* tex_loader;
+	ModuleFileSystem* fsys;
 
 	std::list<Module*> list_modules;
 
