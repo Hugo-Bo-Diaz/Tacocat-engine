@@ -21,6 +21,7 @@ Application::Application()
 	UI = new ModuleUI(true);
 	tex_loader = new ModuleTextureLoader(true);
 	importer = new ModuleImporter(true);
+	fsys = new ModuleFileSystem(true);
 
 	//pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
 	//pcg32_srandom_r(&rng2, time(NULL), (intptr_t)&rng2);
@@ -35,6 +36,7 @@ Application::Application()
 	AddModule(mesh_loader);
 	AddModule(tex_loader);
 	AddModule(importer);
+	AddModule(fsys);
 
 	// Scenes
 	AddModule(scene_controller);

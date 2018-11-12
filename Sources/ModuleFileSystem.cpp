@@ -18,3 +18,11 @@ bool ModuleFileSystem::CleanUp()
 {
 	return true;
 }
+
+void ModuleFileSystem::Save(rapidjson::Document * d, rapidjson::Value * v)
+{
+}
+
+void ModuleFileSystem::Load(rapidjson::Value & v)
+{
+}
