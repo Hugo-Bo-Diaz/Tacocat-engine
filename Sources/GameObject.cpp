@@ -195,3 +195,10 @@ std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mes
 
 	return &ret;
 }
+
+Component_Transform* GameObject::GetTransform()
+{
+
+
+
+}

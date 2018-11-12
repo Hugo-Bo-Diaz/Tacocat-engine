@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "MeshComponent.h"
+#include "TransformComponent.h"
 
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/prettywriter.h"
@@ -34,6 +35,7 @@ public:
 	std::list<GameObject*> children;
 
 	uint GetTexture(uint index);
+	Component_Transform* GetTransform();
 
 	bool static_object = true;
 
