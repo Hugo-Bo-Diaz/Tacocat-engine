@@ -147,6 +147,11 @@ GameObject::~GameObject()
 
 void GameObject::Hierarchy()
 {
+	int flags = 0;
+
+	if (children.empty()) flags |= ImGuiTreeNodeFlags_Leaf;
+	if (App->scene_controller->current_scene->id == UID) flags |= ImGuiTreeNodeFlags_Selected;
+
 
 }
 

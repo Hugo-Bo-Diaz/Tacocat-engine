@@ -34,6 +34,7 @@ public:
 
 	GameObject* parent;
 
+	virtual void Properties() {}; //Elements to draw in the UI
 };
 
 #endif // !COMPONENT
