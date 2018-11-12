@@ -57,7 +57,7 @@ public:
 	AABB GetBoundingBox();
 	AABB BoundingBox;
 
-	void Hierarchy();
+	void Hierarchy(uint selectedID);
 
 	uint UID;
 

@@ -133,9 +133,21 @@ GameObject::~GameObject()
 }
 
 
-void GameObject::Hierarchy()
+void GameObject::Hierarchy(uint selectedID)
 {
+	int flags = 0;
+	if (children.empty()) 
+		flags |= ImGuiTreeNodeFlags_Leaf;
+	if (selectedID == uid) 
+		flags |= ImGuiTreeNodeFlags_Selected;
 
+	if (ImGui::TreeNodeEx(name.c_str(), flags)) {
+		if (ImGui::IsItemClicked()) 
+			selectedID = uid;
+		for (int aux = 0; aux < children.size(); aux++)	children[aux]->HierarchyTree(selected_obj_uid);
+
+		ImGui::TreePop();
+	}
 }
 
 void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)
