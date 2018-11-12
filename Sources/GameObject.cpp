@@ -152,7 +152,16 @@ void GameObject::Hierarchy()
 	if (children.empty()) flags |= ImGuiTreeNodeFlags_Leaf;
 	if (App->scene_controller->current_scene->id == UID) flags |= ImGuiTreeNodeFlags_Selected;
 
+	if (ImGui::TreeNodeEx("", flags))
+	{
+		if (ImGui::IsItemClicked())
+			App->scene_controller->current_scene->spookamera->selected = this;
 
+		for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+		{
+			(*it)->Hierarchy();
+		}
+	}
 }
 
 void GameObject::Save(rapidjson::Document* d, rapidjson::Value* v)

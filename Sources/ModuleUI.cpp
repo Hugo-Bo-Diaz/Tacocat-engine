@@ -37,12 +37,14 @@ bool ModuleUI::Init()
 	console = new UI_Console();
 	primitives = new UI_Primitives();
 	properties = new UI_Properties();
+	hierarchy = new UI_GameObject();
 
 	UI_Elements.push_back(about);
 	UI_Elements.push_back(config);
 	UI_Elements.push_back(console);
 	UI_Elements.push_back(primitives);
 	UI_Elements.push_back(properties);
+	UI_Elements.push_back(hierarchy);
 
 	return ret;
 }
@@ -131,6 +133,8 @@ update_status ModuleUI::Update(float dt)
 				config->Enable(!config->isEnabled());
 			if (ImGui::MenuItem("Console"))
 				console->Enable(!console->isEnabled());
+			if (ImGui::MenuItem("Hierarchy"))
+				hierarchy->Enable(!hierarchy->isEnabled());
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("GameObject"))
