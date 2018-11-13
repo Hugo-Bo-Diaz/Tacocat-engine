@@ -67,7 +67,7 @@ public:
 	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);
 	void Load_Component(rapidjson::Value& v);
 
-	GameObject * selected;
+	GameObject* selected = nullptr;
 
 private:
 	
