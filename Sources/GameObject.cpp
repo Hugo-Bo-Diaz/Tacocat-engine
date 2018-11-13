@@ -15,7 +15,7 @@ void GameObject::Update(float dt)
 	{	
 		glPushMatrix();
 		float4x4 globaltransformmatrix = GetTransformComponent()->transform_global;
-		float* matrixtopush = globaltransformmatrix.Transposed().ptr();
+		float* matrixtopush = (float*)globaltransformmatrix.Transposed().v;
 		glMultMatrixf(matrixtopush);
 	}
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)

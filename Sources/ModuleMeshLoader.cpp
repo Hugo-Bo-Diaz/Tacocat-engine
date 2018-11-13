@@ -151,7 +151,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		Component_Transform* transform = new Component_Transform();
 		par->AddComponent(transform);
 
-		scene->mRootNode->mChildren[i]->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
+		node->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
 		transform->rotation_angle = transform->rotation.GetEuler();
 
 		float3 p,s;
