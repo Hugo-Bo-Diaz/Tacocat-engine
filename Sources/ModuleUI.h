@@ -12,6 +12,7 @@
 #include "UI_Primitives.h"
 #include "UI_Properties.h"
 #include "UI_Gameobject.h"
+#include "UI_Time.h"
 
 class ModuleUI : public Module
 {
@@ -29,6 +30,7 @@ public:
 	UI_Primitives* primitives;
 	UI_Properties* properties;
 	UI_GameObject* hierarchy;
+	UI_Time* time;
 
 	//Send the fps data to the config window
 	void send_FPSdata(float value, float ms);

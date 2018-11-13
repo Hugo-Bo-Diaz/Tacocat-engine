@@ -178,6 +178,7 @@
     <ClInclude Include="UI_Gameobject.h" />
     <ClInclude Include="UI_Primitives.h" />
     <ClInclude Include="UI_Properties.h" />
+    <ClInclude Include="UI_Time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="UI_GameObject.cpp" />
     <ClCompile Include="UI_Primitives.cpp" />
     <ClCompile Include="UI_Properties.cpp" />
+    <ClCompile Include="UI_Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl" />

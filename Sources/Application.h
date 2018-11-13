@@ -56,6 +56,8 @@ public:
 	float confg_fps = 60.0f;
 	bool confg_vsync = true;
 
+	float	custom_dt = 1.0f;
+
 private:
 
 	void AddModule(Module* mod);

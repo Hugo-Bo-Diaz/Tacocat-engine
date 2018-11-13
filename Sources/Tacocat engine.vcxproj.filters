@@ -351,6 +351,9 @@
     <ClInclude Include="GameObject.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="UI_Time.h">
+      <Filter>Sources\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -565,6 +568,9 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Time.cpp">
+      <Filter>Sources\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

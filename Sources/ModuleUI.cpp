@@ -38,6 +38,7 @@ bool ModuleUI::Init()
 	primitives = new UI_Primitives();
 	properties = new UI_Properties();
 	hierarchy = new UI_GameObject();
+	time = new UI_Time();
 
 	UI_Elements.push_back(about);
 	UI_Elements.push_back(config);
@@ -45,6 +46,7 @@ bool ModuleUI::Init()
 	UI_Elements.push_back(primitives);
 	UI_Elements.push_back(properties);
 	UI_Elements.push_back(hierarchy);
+	UI_Elements.push_back(time);
 
 	return ret;
 }

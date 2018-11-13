@@ -93,7 +93,7 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	float frame_time = ms_timer.Read();
-	dt = frame_time / 1000.0f;
+	dt = (frame_time / 1000.0f) / custom_dt;
 	UI->send_FPSdata(1/dt, frame_time);
 	ms_timer.Start();
 }
