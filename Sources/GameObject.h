@@ -34,6 +34,8 @@ public:
 	std::list<Component*> components;
 	std::list<GameObject*> children;
 
+	std::string name;
+
 	uint GetTexture(uint index);
 	Component_Transform* GetTransform();
 

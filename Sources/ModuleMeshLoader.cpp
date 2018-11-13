@@ -144,7 +144,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 		m->material_index = iterator->mMaterialIndex;
 
-		m->name = iterator->mName.C_Str();
+		par->name = iterator->mName.C_Str();
 
 		//parent->AddComponent(TRANSFORM) @DANI
 

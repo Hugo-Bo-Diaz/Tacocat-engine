@@ -132,6 +132,9 @@ GameObject::GameObject()
 	BoundingBox.minPoint = float3(-1,-1,-1);
 	BoundingBox.maxPoint = float3(1, 1, 1);
 
+	name = std::to_string(UID);
+
+
 }
 
 GameObject::~GameObject()
