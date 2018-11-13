@@ -37,7 +37,10 @@ public:
 	std::string name;
 
 	uint GetTexture(uint index);
-	Component_Transform* GetTransform();
+
+	Component_Transform* GetTransformComponent();
+
+	void CalculateAllTransformMatrices(float4x4 previous);
 
 	bool static_object = true;
 

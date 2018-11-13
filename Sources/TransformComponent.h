@@ -27,10 +27,12 @@ public:
 	aiVector3t<float> scaling;
 	aiQuaternion rotation;
 	aiVector3t<float> rotation_angle;
-	float angle;
 	aiVector3t< float > position;
 
-	void Calculate_Angle_Axis();
+	float4x4 transform_local = float4x4::identity;//give this away to calculate other matrices
+	float4x4 transform_global = float4x4::identity;//use this for transformation in meshes
+
+	void Calculate_Global_Matrix(float4x4 globalmatrixoftheobject);
 
 	~Component_Transform();
 

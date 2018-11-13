@@ -7,28 +7,30 @@
 
 void GameObject::Update(float dt)
 {
-	bool tran_exists = false;
-	Component_Transform* t = GetTransform();
-	if (t != nullptr)
+	//glScalef(t->scaling.x,t->scaling.y,t->scaling.z);
+	//glRotatef(RadToDeg(t->angle), t->rotation_angle.x, t->rotation_angle.y, t->rotation_angle.z);
+	//glTranslatef(t->position.x,t->position.y,t->position.z);
+	//glMultMatrix(global_transform.transposed.ptr)
+	if (GetTransformComponent() !=  nullptr)
 	{	
-		tran_exists = true;
 		glPushMatrix();
-		glScalef(t->scaling.x,t->scaling.y,t->scaling.z);
-		glRotatef(RadToDeg(t->angle), t->rotation_angle.x, t->rotation_angle.y, t->rotation_angle.z);
-		glTranslatef(t->position.x,t->position.y,t->position.z);
+		float4x4 globaltransformmatrix = GetTransformComponent()->transform_global;
+		float* matrixtopush = globaltransformmatrix.Transposed().ptr();
+		glMultMatrixf(matrixtopush);
 	}
-
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		(*it)->Update(dt);
 	}
+	if (GetTransformComponent() != nullptr)
+		glPopMatrix();
 
 	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
 	{
 		(*it)->Update(dt);
-	}
-	if (tran_exists)
-		glPopMatrix();
+	}	
+
+
 }
 
 uint GameObject::GetTexture(uint index)
@@ -217,14 +219,38 @@ std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mes
 	return &ret;
 }
 
-Component_Transform* GameObject::GetTransform()
+Component_Transform * GameObject::GetTransformComponent()
 {
-	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	if (!components.empty())
 	{
-		if ((*it)->type == TRANSFORM)
+		for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 		{
-			return ((Component_Transform*)*it);
+			if ((*it)->type == TRANSFORM)
+			{
+				return ((Component_Transform*)*it);
+			}
 		}
 	}
 	return nullptr;
+}
+
+void GameObject::CalculateAllTransformMatrices(float4x4 previousmatrix)
+{
+	Component_Transform* t = GetTransformComponent();
+	float4x4 newmatrix;
+
+	if (t != nullptr)//calculate the matrix to give below
+	{
+		t->Calculate_Global_Matrix(previousmatrix);
+		newmatrix = t->transform_global;
+	}
+	else
+	{
+		newmatrix = previousmatrix;
+	}
+
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->CalculateAllTransformMatrices(newmatrix);
+	}
 }
