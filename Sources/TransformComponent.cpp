@@ -9,13 +9,10 @@ Component_Transform::Component_Transform()
 
 }
 
-void Component_Transform::Calculate_Angle_Axis()
-{
-	angle = 2 * acos(rotation.w);
-	rotation_angle.x = rotation.x / sqrt(1 - rotation.w * rotation.w);
-	rotation_angle.y = rotation.y / sqrt(1 - rotation.w * rotation.w);
-	rotation_angle.z = rotation.z / sqrt(1 - rotation.w * rotation.w);
 
+void Component_Transform::Calculate_Global_Matrix(float4x4 globalmatrixoftheobject)
+{
+	transform_global = globalmatrixoftheobject * transform_local;
 }
 
 Component_Transform::~Component_Transform()

@@ -94,10 +94,10 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 	for (int i = 0; i < node->mNumMeshes; ++i)
 	{
-		GameObject* Object = new GameObject();
-		par->AddChild(Object);
+		//GameObject* Object = new GameObject();
+		//par->AddChild(Object);
 		Component_Mesh* m = new Component_Mesh();
-		Object->AddComponent(m);
+		par->AddComponent(m);
 
 		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
 
@@ -144,18 +144,33 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 		m->material_index = iterator->mMaterialIndex;
 
-		m->name = iterator->mName.C_Str();
+		par->name = iterator->mName.C_Str();
 
 		//parent->AddComponent(TRANSFORM) @DANI
 
 		Component_Transform* transform = new Component_Transform();
 		par->AddComponent(transform);
 
-		//scene->mRootNode->mChildren[i]->mTransformation.Decompose(m->current_scaling, m->rotation_q, m->current_translation);
-		scene->mRootNode->mChildren[i]->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
-		//m->current_rotation = m->rotation_q.GetEuler();
-		//transform->rotation_e = transform->rotation.GetEuler();
-		transform->Calculate_Angle_Axis();
+		node->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
+		transform->rotation_angle = transform->rotation.GetEuler();
+
+		float3 p,s;
+		p.x = transform->position.x;
+		p.y = transform->position.y;
+		p.z = transform->position.z;
+
+		s.x = transform->scaling.x;
+		s.y = transform->scaling.y;
+		s.z = transform->scaling.z;
+
+		Quat r;
+		r.x = transform->rotation.x;
+		r.y = transform->rotation.y;
+		r.z = transform->rotation.z;
+		r.w = transform->rotation.w;
+		
+
+		transform->transform_local = float4x4::FromTRS(p,r,s);
 
 		m->bounding_box.Scale(m->bounding_box.CenterPoint(),(transform->scaling.x, transform->scaling.y, transform->scaling.z));
 

@@ -17,7 +17,9 @@ void Scene::Update(float dt)
 {
 	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
+		(*it)->CalculateAllTransformMatrices(float4x4::identity);
 		(*it)->Update(dt);
+
 	}
 	spookamera->Update(dt);
 

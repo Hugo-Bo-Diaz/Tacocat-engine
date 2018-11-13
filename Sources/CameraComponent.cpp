@@ -131,10 +131,10 @@ void Component_Camera::Update(float dt)
 		for (std::vector<GameObject*>::iterator it = App->scene_controller->current_scene->GameObjects.begin(); it != App->scene_controller->current_scene->GameObjects.end(); it++)
 		{
 			AABB newAABB = (*it)->GetBoundingBox(); 
-			if ((*it)->GetTransform() != nullptr)
-			{
-				newAABB.Translate(float3((*it)->GetTransform()->position.x, (*it)->GetTransform()->position.y, (*it)->GetTransform()->position.z));
-			}
+			//if ((*it)->GetTransform() != nullptr)
+			//{
+			//	newAABB.Translate(float3((*it)->GetTransform()->position.x, (*it)->GetTransform()->position.y, (*it)->GetTransform()->position.z));
+			//}
 
 			if(r.Intersects(newAABB))
 			{
