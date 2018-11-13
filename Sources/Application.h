@@ -27,6 +27,7 @@ public:
 	ModuleTextureLoader* tex_loader;
 	ModuleFileSystem* fsys;
 
+
 	std::list<Module*> list_modules;
 
 private:
@@ -52,6 +53,8 @@ public:
 
 	void SaveConfig(const char* filename);
 	void LoadConfig(const char* filename);
+
+	void BroadcastEvent(Event& ev);
 
 	float confg_fps = 60.0f;
 	bool confg_vsync = true;

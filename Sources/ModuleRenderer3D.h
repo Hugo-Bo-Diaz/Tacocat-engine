@@ -81,6 +81,8 @@ public:
 
 	std::vector<NOTprimitive*> primitive_vector;
 
+	void RecieveEvent(Event& ev);
+
 	GLuint texture_buffer = 0;
 	GLubyte checkImage[128][128][4];
 

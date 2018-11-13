@@ -80,6 +80,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="CubeMine.h" />
     <ClInclude Include="CylinderMine.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui-docking\imconfig.h" />

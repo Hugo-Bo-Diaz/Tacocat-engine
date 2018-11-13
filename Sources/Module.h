@@ -8,6 +8,7 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/document.h"
+#include "Event.h"
 
 class Application;
 struct PhysBody3D;
@@ -17,8 +18,10 @@ class Module
 private :
 	bool enabled;
 
+
 public:
 	//Application* App;
+	bool listentoevents=false;
 
 	std::string name;
 
@@ -66,4 +69,6 @@ public:
 	virtual void Save(rapidjson::Document* d, rapidjson::Value* v) {};
 
 	virtual void Load(rapidjson::Value& v) {};
+
+	virtual void RecieveEvent(Event& ev) {};
 };

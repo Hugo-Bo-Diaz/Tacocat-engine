@@ -7,6 +7,7 @@ ModuleWindow::ModuleWindow(bool start_enabled) : Module( start_enabled)
 {
 	window = NULL;
 	screen_surface = NULL;
+	listentoevents = true;
 
 	name = "Window";
 }
@@ -262,4 +263,20 @@ void ModuleWindow::Load(rapidjson::Value& v)
 	width = conf["width"].GetFloat();
 	height = conf["height"].GetFloat();
 
+}
+
+void ModuleWindow::RecieveEvent(Event& ev)
+{
+	if (ev.type == Event::window_resize)
+	{
+		width = ev.point2d.x;
+		height = ev.point2d.y;
+
+		//TODO MOVE THIS CODE somewhere safe
+		float aspect_ratio = width / height;
+		//hFOV = 2 * Math.atan( Math.tan( vFOV / 2 ) * aspect );
+		//we need to adjust the fovx to adjust according to this ratio
+		App->scene_controller->current_scene->spookamera->frustum.horizontalFov = 2*atan(tan(DegToRad(App->scene_controller->current_scene->spookamera->frustum.verticalFov)/2)*aspect_ratio);
+		//App->scene_controller->current_scene->spookamera->frustum.verticalFov = ;
+	}
 }

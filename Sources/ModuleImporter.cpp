@@ -4,6 +4,8 @@
 
 ModuleImporter::ModuleImporter(bool start_enabled)
 {
+	listentoevents = true;
+	name = "Importer";
 }
 
 ModuleImporter::~ModuleImporter()
@@ -28,5 +30,13 @@ void ModuleImporter::Load(const char * filename, Scene * scene_to)
 	{
 		App->mesh_loader->Load_mesh(filename,scene_to);
 	//	mesh->CreateOwnFile(filename,nullptr);
+	}
+}
+
+void ModuleImporter::RecieveEvent(Event& ev)
+{
+	if (ev.type == Event::file_dropped)
+	{
+		Load(ev.string.ptr,App->scene_controller->current_scene);
 	}
 }

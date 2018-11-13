@@ -16,6 +16,8 @@ public:
 
 	uint LoadTexture(const char* file, uint* width, uint* height);
 
+	void RecieveEvent(Event& ev);
+
 public:
 	int texture_id = 0;
 	int num_meshes = 0;

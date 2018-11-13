@@ -80,6 +80,8 @@ public:
 	
 	AABB* total_scene_bounding_box = 0;
 
+	void RecieveEvent(Event& ev);
+
 	void DrawSceneBoundingBox();
 
 	//returns the memory index given by opengl

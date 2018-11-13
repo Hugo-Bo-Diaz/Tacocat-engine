@@ -354,6 +354,9 @@
     <ClInclude Include="UI_Time.h">
       <Filter>Sources\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">

@@ -28,6 +28,7 @@ void aiLog(const char* str, char* user)
 ModuleMeshLoader::ModuleMeshLoader(bool start_enabled) : Module(start_enabled)
 {
 	name = "Mesh Loader";
+	listentoevents = true;
 }
 
 ModuleMeshLoader::~ModuleMeshLoader()
@@ -300,4 +301,10 @@ void ModuleMeshLoader::DrawSceneBoundingBox()
 
 
 	glEnd();
+}
+
+
+void ModuleMeshLoader::RecieveEvent(Event& ev)
+{
+
 }

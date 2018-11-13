@@ -36,6 +36,8 @@ public:
 
 	void Load(rapidjson::Value& v);
 
+	void RecieveEvent(Event& ev);
+
 	//int width = SCREEN_WIDTH;
 	//int height = SCREEN_HEIGHT;
 
@@ -55,6 +57,7 @@ public:
 	float height = SCREEN_HEIGHT;
 	float window_width = SCREEN_WIDTH;
 	float window_height = SCREEN_HEIGHT;
+
 };
 
 #endif // __ModuleWindow_H__

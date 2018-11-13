@@ -14,6 +14,7 @@
 ModuleTextureLoader::ModuleTextureLoader(bool start_enabled) : Module(start_enabled)
 {
 	name = "Texture Loader";
+	listentoevents = true;
 
 	ilInit();
 	iluInit();
@@ -118,4 +119,9 @@ uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _he
 	}
 
 	return buffernumber;
+}
+
+void ModuleTextureLoader::RecieveEvent(Event& ev)
+{
+
 }

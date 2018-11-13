@@ -20,6 +20,7 @@
 ModuleRenderer3D::ModuleRenderer3D( bool start_enabled) : Module(start_enabled)
 {
 	name = "Render3D";
+	listentoevents = true;
 }
 
 // Destructor
@@ -537,4 +538,12 @@ void ModuleRenderer3D::Load(rapidjson::Value& v)
 	conf_draw = conf["draw_mode"].GetInt();
 	conf_lighting = conf["lighting"].GetBool();
 	conf_texture = conf["texture"].GetInt();
+}
+
+void ModuleRenderer3D::RecieveEvent(Event& ev)
+{
+	if (ev.type == Event::window_resize)
+	{
+		OnResize(ev.point2d.x, ev.point2d.y);
+	}
 }

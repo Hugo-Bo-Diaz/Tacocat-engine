@@ -130,9 +130,14 @@ update_status ModuleInput::PreUpdate(float dt)
 			{
 				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 				{
-					App->renderer3D->OnResize(e.window.data1, e.window.data2);
-					App->window->width = e.window.data1;
-					App->window->height = e.window.data2;
+					//App->renderer3D->OnResize(e.window.data1, e.window.data2);
+					//App->window->width = e.window.data1;
+					//App->window->height = e.window.data2;
+
+					Event* ev = new Event(Event::window_resize);
+					ev->point2d.x = e.window.data1;
+					ev->point2d.y = e.window.data2;
+					App->BroadcastEvent(*ev);
 				}
 			}
 			break;
@@ -140,7 +145,10 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 				App->UI->console->AddLog("File dropped in window %s", e.drop.file);
 				
-				App->importer->Load(e.drop.file, App->scene_controller->current_scene);
+				//App->importer->Load(e.drop.file, App->scene_controller->current_scene);
+				Event* ev = new Event(Event::file_dropped);
+				ev->string.ptr = e.drop.file;
+				App->BroadcastEvent(*ev);
 
 			break;
 		}

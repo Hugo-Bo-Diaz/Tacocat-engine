@@ -199,25 +199,6 @@ void Application::SaveConfig(const char* filename)
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	document.Accept(writer);
 	fclose(fp);
-	//JSON_Value *config = json_parse_file("config.json");
-	//config = json_value_init_object();
-	//JSON_Object* root_object = json_value_get_object(config);
-	//json_object_set_number(root_object, "fps", confg_fps);
-	//json_object_set_number(root_object, "vsync", confg_vsync);
-	//json_object_dotset_boolean(root_object, "Window.fullscreen", App->window->fullscreen);
-	//json_object_dotset_boolean(root_object, "Window.borderless", App->window->borderless);
-	//json_object_dotset_boolean(root_object, "Window.resizable", App->window->resizable);
-	//json_object_dotset_boolean(root_object, "Window.full_desktop", App->window->full_desktop);
-	//json_object_dotset_number(root_object, "Window.brightness", App->window->brightness);
-	//json_object_dotset_number(root_object, "Window.width", App->window->width);
-	//json_object_dotset_number(root_object, "Window.height", App->window->height);
-	//json_object_dotset_boolean(root_object, "Render.cull_face", App->renderer3D->conf_cull_face);
-	//json_object_dotset_boolean(root_object, "Render.depth_test", App->renderer3D->conf_depth_test);
-	//json_object_dotset_number(root_object, "Render.draw", App->renderer3D->conf_draw);
-	//json_object_dotset_boolean(root_object, "Render.lighting", App->renderer3D->conf_lighting);
-	//json_object_dotset_number(root_object, "Render.texture", App->renderer3D->conf_texture);
-	//json_serialize_to_file(config, "config.json");
-	//App->UI->console->AddLog("saved succesfully %s",filename);//CHANGE THIS FUNCTION
 }
 
 void Application::LoadConfig(const char* filename)
@@ -250,32 +231,13 @@ void Application::LoadConfig(const char* filename)
 		App->UI->console->AddLog("couldn't find the file");
 	}
 
+}
 
-	//JSON_Value *root_value;
-	//JSON_Object *root_object;
-
-	//root_value = json_parse_file(filename);
-	//if (json_value_get_type(root_value) != JSONObject) {
-	//	App->UI->console->AddLog("couldn't find the file %d", filename);
-	//	return;
-	//}
-	//root_object = json_value_get_object(root_value);
-
-	//confg_fps = json_object_get_number(root_object, "fps");
-	//confg_vsync = json_object_get_number(root_object, "vsync");
-
-	//App->window->fullscreen = json_object_dotget_boolean(root_object, "Window.fullscreen");
-	//App->window->borderless = json_object_dotget_boolean(root_object, "Window.borderless");
-	//App->window->resizable = json_object_dotget_boolean(root_object, "Window.resizable");
-	//App->window->full_desktop = json_object_dotget_boolean(root_object, "Window.full_desktop");
-	//App->window->brightness = json_object_dotget_number(root_object, "Window.brightness");
-	//App->window->width = json_object_dotget_number(root_object, "Window.width");
-	//App->window->height = json_object_dotget_number(root_object, "Window.height");
-
-	//App->renderer3D->conf_cull_face = json_object_dotget_boolean(root_object, "Render.cull_face");
-	//App->renderer3D->conf_depth_test = json_object_dotget_boolean(root_object, "Render.depth_test");
-	//App->renderer3D->conf_draw = json_object_dotget_number(root_object, "Render.draw");
-	//App->renderer3D->conf_lighting = json_object_dotget_boolean(root_object, "Render.lighting");
-	//App->renderer3D->conf_texture = json_object_dotget_number(root_object, "Render.texture");
-
+void Application::BroadcastEvent(Event& ev)
+{
+	for (std::list<Module*>::iterator it_mod = list_modules.begin(); it_mod != list_modules.end(); it_mod++)
+	{
+		if ((*it_mod)->listentoevents)
+			(*it_mod)->RecieveEvent(ev);
+	}
 }

@@ -16,6 +16,8 @@ public:
 	bool Start();
 	bool CleanUp();
 
+	void RecieveEvent(Event& ev);
+
 	void Load(const char* filename, Scene* scene_to);
 
 private:
