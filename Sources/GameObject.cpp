@@ -157,7 +157,15 @@ void GameObject::Hierarchy()
 	if (children.empty()) flags |= ImGuiTreeNodeFlags_Leaf;
 	if (App->scene_controller->current_scene->spookamera->selected != nullptr)
 	{
-		if (App->scene_controller->current_scene->spookamera->selected->UID == UID) flags |= ImGuiTreeNodeFlags_Selected;
+		if (App->scene_controller->current_scene->spookamera->selected->UID == UID)
+		{
+			flags |= ImGuiTreeNodeFlags_Selected;
+			selected = true;
+		}
+		else
+		{
+			selected = false;
+		}
 	}
 
 	if (ImGui::TreeNodeEx(name.c_str(), flags))

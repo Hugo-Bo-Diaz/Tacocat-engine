@@ -24,15 +24,15 @@ void UI_Properties::Render()
 		{
 			if (App->scene_controller->current_scene->GameObjects[aux]->Iselected())
 			{
-				if (!App->scene_controller->current_scene->GameObjects[aux]->components.empty()) {
+				//if (!App->scene_controller->current_scene->GameObjects[aux]->components.empty()) {
 					for (std::list<Component*>::iterator it = App->scene_controller->current_scene->GameObjects[aux]->components.begin(); it != App->scene_controller->current_scene->GameObjects[aux]->components.end(); it++)
 					{
 						(*it)->Properties();
 					}
 					//break; //Only first selected object will be displayed
-				}
+				//}
 			}
-		};
+		}
 	}
 	if (ImGui::CollapsingHeader("Texture"))
 	{
