@@ -275,7 +275,20 @@ void Component_Camera::CalculateViewMatrix()
 
 void Component_Camera::RotateFrustum_Yaxis(float angle)
 {
+
 	angle_Y += angle;
+
+	if (angle_Y > 90)
+	{
+		angle_Y = 90;
+	}
+
+	if (angle_Y < -90)
+	{
+		angle_Y = -90;
+	}
+
+	App->UI->console->AddLog("angle %f", angle_Y);
 }
 
 void Component_Camera::RotateFrustum_XZaxis(float angle)
