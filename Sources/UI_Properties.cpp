@@ -3,7 +3,7 @@
 
 UI_Properties::UI_Properties()
 {
-	Enable(false);
+	Enable(true);
 	setPos(ImVec2(20, 20));
 }
 
@@ -19,18 +19,25 @@ void UI_Properties::Render()
 	ImGui::Begin("Properties", &enabled);
 	if (ImGui::CollapsingHeader("Model"))
 	{
+		//for (int aux = 0; aux < App->scene_controller->current_scene->GameObjects.size(); aux++)
+		//{
+		//	if (App->scene_controller->current_scene->GameObjects[aux]->Iselected())
+		//	{
+		//		if (!App->scene_controller->current_scene->GameObjects[aux]->components.empty()) {
+		//			for (std::list<Component*>::iterator it = App->scene_controller->current_scene->GameObjects[aux]->components.begin(); it != App->scene_controller->current_scene->GameObjects[aux]->components.end(); it++)
+		//			{
+		//				(*it)->Properties();
+		//			}
+		//			//break; //Only first selected object will be displayed
+		//		}
+		//	}
+		//}
 
-		for (int aux = 0; aux < App->scene_controller->current_scene->GameObjects.size(); aux++)
+		if (App->scene_controller->current_scene->spookamera->selected != nullptr) //TODO HUGO --> CHANGE SELECTED TO SCENE
 		{
-			if (App->scene_controller->current_scene->GameObjects[aux]->Iselected())
+			for (std::list<Component*>::iterator it = App->scene_controller->current_scene->spookamera->selected->components.begin(); it != App->scene_controller->current_scene->spookamera->selected->components.end(); it++)
 			{
-				//if (!App->scene_controller->current_scene->GameObjects[aux]->components.empty()) {
-					for (std::list<Component*>::iterator it = App->scene_controller->current_scene->GameObjects[aux]->components.begin(); it != App->scene_controller->current_scene->GameObjects[aux]->components.end(); it++)
-					{
-						(*it)->Properties();
-					}
-					//break; //Only first selected object will be displayed
-				//}
+				(*it)->Properties();
 			}
 		}
 	}

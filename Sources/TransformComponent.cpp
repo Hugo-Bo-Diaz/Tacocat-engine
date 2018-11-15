@@ -3,6 +3,8 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
+#include <limits>
+
 Component_Transform::Component_Transform()
 {
 	type = TRANSFORM;
@@ -35,22 +37,23 @@ void Component_Transform::Properties()
 	float3 Position, Rotation, Scale;
 
 	Position = { position[0], position[1], position[2] };
-	Rotation = { rotation.GetEuler().x, rotation.GetEuler().y , rotation.GetEuler().z };
+	Rotation = { RadToDeg(rotation.GetEuler().x), RadToDeg(rotation.GetEuler().y), RadToDeg(rotation.GetEuler().z)};
 	Scale = { scaling[0], scaling[1], scaling[2] };
 
 	if(ImGui::CollapsingHeader("Transform"))
 	{
-		ImGui::InputFloat3("Pos", &Position[0], 2);
-		ImGui::InputFloat3("Rot", &Rotation[0], 2);
-		ImGui::InputFloat3("Scale", &Scale[0], 2);
+		ImGui::DragFloat3("Pos", &Position[0], 0.2f, -100.0f, 100.0f);
+		ImGui::DragFloat3("Rot", &Rotation[0], 0.01f, -359.9f, 360.0f);
+		ImGui::DragFloat3("Scale", &Scale[0], 0.2f, -100.0f, 100.0f);
 		ImGui::Separator();
 
 		if (Position.x != position[0] || Position.y != position[1] || Position.z != position[2])
 		{
-			position.Set(position[0], position[1], position[2]);
+			position.Set(Position[0], Position[1], Position[2]);
+
 		}
 
-		if (Rotation.x != rotation.GetEuler().x || Rotation.y != rotation.GetEuler().y || Rotation.z != rotation.GetEuler().z)
+		if (Rotation.x != RadToDeg(rotation.GetEuler().x) || Rotation.y != RadToDeg(rotation.GetEuler().y) || Rotation.z != RadToDeg(rotation.GetEuler().z))
 		{
 			Quat quaternion = quaternion.FromEulerXYZ(Rotation.x, Rotation.y, Rotation.z);
 			rotation.x = quaternion.x;
@@ -61,9 +64,24 @@ void Component_Transform::Properties()
 
 		if (Scale.x != scaling[0] || Scale.y != scaling[1] || Scale.z != scaling[2])
 		{
-			scaling.Set(scaling[0], scaling[1], scaling[2]);
+			scaling.Set(Scale[0], Scale[1], Scale[2]);
 		}
-	}
 
-	ImGui::End();
+		float3 p, s;
+		p.x = position.x;
+		p.y = position.y;
+		p.z = position.z;
+
+		s.x = scaling.x;
+		s.y = scaling.y;
+		s.z = scaling.z;
+
+		Quat r;
+		r.x = rotation.x;
+		r.y = rotation.y;
+		r.z = rotation.z;
+		r.w = rotation.w;
+
+		transform_local = float4x4::FromTRS(p, r, s);
+	}
 }
