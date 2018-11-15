@@ -3,7 +3,7 @@
 
 UI_GameObject::UI_GameObject()
 {
-	Enable(false);
+	Enable(true);
 	setPos(ImVec2(20, 20));
 }
 
