@@ -9,8 +9,9 @@
 enum ResourceType
 {
 	RES_MESH,
-	RES_TEXTURE,
-	RES_AUDIO
+	RES_MATERIAL,
+	RES_AUDIO,
+	RES_INVALID
 };
 
 struct Resource
@@ -19,19 +20,44 @@ struct Resource
 	std::string path;
 	std::string path_in_library;
 
+	FILETIME last_modified;
+
 	ResourceType type;
 
 	union
 	{
 		struct
 		{
-			Mesh* ptr;
+			Mesh* ptr = nullptr;
 		} mesh;
 		struct
 		{
-			Material* ptr;
+			Material* ptr = nullptr;
 		} mat;
 	};
+
+	void Generate_in_Library()
+	{
+		if (mesh.ptr != nullptr)
+		{
+			switch ((uint)type)
+			{
+			case RES_MESH:
+				App->importer->mesh->CreateOwnFile(mesh.ptr);
+				break;
+			case RES_MATERIAL:
+				;
+				break;
+			case RES_AUDIO:
+				App->UI->console->AddLog("audio not implemented");
+				break;
+			case RES_INVALID:
+				App->UI->console->AddLog("not a valid resource type");
+			default:
+				break;
+			}
+		}
+	}
 
 	uint buffer = -1;
 
@@ -57,7 +83,9 @@ public:
 
 	//void ReplaceOnLibrary(uint UID);//if you replace a file on the assets folder this can be called so that it generates again in the Library folder
 
-	//void LoadResourcesInfo();
+	void LoadResourcesInfo();
+
+	void GenerateResourcesInfo();
 
 	//void DrawOnUI();
 

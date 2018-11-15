@@ -30,6 +30,7 @@ public:
 	bool not_working = false;
 
 	Material* material;
+
 	void SetMaterial(Material* mat) { material = mat; }
 
 	bool CheckFrustumCulling(Component_Camera * camera_to_check);
