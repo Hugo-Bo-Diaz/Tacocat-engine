@@ -38,7 +38,7 @@ void Component_Transform::Properties()
 	Rotation = { rotation.GetEuler().x, rotation.GetEuler().y , rotation.GetEuler().z };
 	Scale = { scaling[0], scaling[1], scaling[2] };
 
-	if(ImGui::CollapsingHeader("Transform"));
+	if(ImGui::CollapsingHeader("Transform"))
 	{
 		ImGui::InputFloat3("Pos", &Position[0], 2);
 		ImGui::InputFloat3("Rot", &Rotation[0], 2);

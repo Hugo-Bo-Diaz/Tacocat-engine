@@ -1,4 +1,4 @@
-﻿# Tacocat-engine
+﻿# [Tacocat-engine](https://github.com/Hugo-Bo-Diaz/Tacocat-engine)
 3D game engine for the game engines subject
 
 Made by
@@ -9,7 +9,7 @@ Made by
 
 ### Camera
 
-* Use the WASD keys to move arount
+* Use the WASD keys to move around
 * Press the right mouse button to rotate
 * Press the Left Alt key along with the left mouse button to orbit around the origin
 * Press the shift key to move faster
@@ -24,8 +24,23 @@ Made by
 
 ### UI
 
-*Thanks to ImGui we are able to give ample information on all the things happenning on the screen:
+* Thanks to ImGui we are able to give ample information on all the things happening on the screen:
   * Model data: number of vertices, number of indices, transformations, number of meshes...
   * Texture data: width, height, buffer id...
   * Application: memory usage, fps, vsync... 
   * Window: width, height...
+
+### Contribution
+
+* Hugo
+  * All resources are game objects
+  * Transformations
+  * Frustum culling
+  * Mouse picking
+  * FOV
+  * Event system
+  
+* Dani
+  * Quadtree
+  * Time management
+  
