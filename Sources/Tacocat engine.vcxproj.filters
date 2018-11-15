@@ -584,6 +584,9 @@
     <ClCompile Include="UI_Time.cpp">
       <Filter>Sources\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

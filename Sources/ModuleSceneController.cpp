@@ -76,8 +76,8 @@ update_status ModuleSceneController::Update(float dt)
 	//}
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
-		App->importer->mesh->Import();
-		App->importer->mesh->LoadCustomMeshFiles(current_scene);
+		//App->importer->mesh->Import();
+		//App->importer->mesh->LoadCustomMeshFiles(current_scene);
 	}
 
 

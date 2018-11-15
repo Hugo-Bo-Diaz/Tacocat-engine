@@ -6,10 +6,6 @@
 #include "Mesh.h"
 #include "Material.h"
 
-//struct Mesh {};
-
-//struct Texture {};
-
 enum ResourceType
 {
 	RES_MESH,
@@ -55,15 +51,15 @@ public:
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 	void Load(rapidjson::Value& v);
 
-	void LoadFile();
+	//void LoadFile();
 
-	uint ResourceFromUID(uint UID);
+	//uint ResourceFromUID(uint UID);
 
-	void ReplaceOnLibrary(uint UID);//if you replace a file on the assets folder this can be called so that it generates again in the Library folder
+	//void ReplaceOnLibrary(uint UID);//if you replace a file on the assets folder this can be called so that it generates again in the Library folder
 
-	void LoadResourcesInfo();
+	//void LoadResourcesInfo();
 
-	void DrawOnUI();
+	//void DrawOnUI();
 
 private:
 

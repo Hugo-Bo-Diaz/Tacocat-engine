@@ -97,8 +97,10 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 	{
 		//GameObject* Object = new GameObject();
 		//par->AddChild(Object);
-		Component_Mesh* m = new Component_Mesh();
-		par->AddComponent(m);
+		Component_Mesh* m_comp = new Component_Mesh();
+		Mesh* m = new Mesh();
+		m_comp->mesh = m;
+		par->AddComponent(m_comp);
 
 		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
 
@@ -143,7 +145,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
 
 
-		m->material_index = iterator->mMaterialIndex;
+		uint material_index = iterator->mMaterialIndex;
 
 		par->name = iterator->mName.C_Str();
 
@@ -179,10 +181,10 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 		Component_Material* mat = new Component_Material();
 		par->AddComponent((Component*)mat);
-		mat->material_index = m->material_index;
-		m->material = mat;
+		mat->material_index = material_index;
+		//m->material = mat;
 
-		const aiMaterial* material = scene->mMaterials[m->material_index];
+		const aiMaterial* material = scene->mMaterials[material_index];
 		aiString texturePath;
 
 		unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
