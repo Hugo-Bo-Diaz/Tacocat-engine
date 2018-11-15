@@ -3,6 +3,7 @@
 
 ModuleFileSystem::ModuleFileSystem(bool start_enabled)
 {
+	listentoevents = true;
 }
 
 ModuleFileSystem::~ModuleFileSystem()

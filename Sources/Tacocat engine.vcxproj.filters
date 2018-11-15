@@ -37,6 +37,9 @@
     <Filter Include="Sources\Importers">
       <UniqueIdentifier>{3a1fca6b-10b8-4e71-8c41-6503d2d02e8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Resources">
+      <UniqueIdentifier>{7118a3ac-9a55-4004-a99e-227aa77d550c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -356,6 +359,12 @@
     </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Sources\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

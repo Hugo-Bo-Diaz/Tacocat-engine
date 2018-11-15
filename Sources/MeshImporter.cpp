@@ -12,7 +12,7 @@
 #include <gl/GLU.h>
 
 
-void MeshImporter::CreateOwnFile(Component_Mesh* mesh)
+void MeshImporter::CreateOwnFile(Mesh* mesh)
 {
 	uint ranges[2] = { mesh->num_index , mesh->num_vertex };
 
@@ -42,7 +42,7 @@ void MeshImporter::CreateOwnFile(Component_Mesh* mesh)
 	memcpy(cursor, mesh->tex_coords, bytes);
 
 	std::string name = "Library//Meshes//";
-	name += mesh->name;
+	name += mesh->Resource_UID;
 	name += ".taco";
 
 	FILE* file = fopen(name.c_str(),"wb");
@@ -50,7 +50,7 @@ void MeshImporter::CreateOwnFile(Component_Mesh* mesh)
 	fclose(file);
 }
 
-void MeshImporter::Import()
+void MeshImporter::Import(uint mesh_resource_uid)
 {
 	std::string path = "Library//Meshes//";
 
@@ -73,13 +73,16 @@ void MeshImporter::LoadCustomMeshFiles(Scene* scene_to)
 	{
 		//each file is a separate mesh
 		GameObject* object = scene_to->AddGameObject();
-		Component_Mesh* mesh = new Component_Mesh();
-		object->AddComponent(mesh);
+		Component_Mesh* mesh_comp = new Component_Mesh();
+		Mesh* mesh = new Mesh();
+		mesh_comp->mesh = mesh;
+
+		object->AddComponent(mesh_comp);
 
 		FILE* file = fopen(it->data(),"rb");
 		if (file != NULL)
 		{
-			mesh->name = (*it);//TODO GET THE NAME FROM HERE
+			//mesh->name = (*it);//TODO GET THE NAME FROM HERE
 
 			fseek(file, 0, SEEK_END);
 			uint size = ftell(file);
@@ -119,7 +122,7 @@ void MeshImporter::LoadCustomMeshFiles(Scene* scene_to)
 
 			fclose(file);
 			
-			App->UI->console->AddLog("Loaded  %s", mesh->name.c_str());
+			//App->UI->console->AddLog("Loaded  %s", mesh->name.c_str());
 
 			mesh->bounding_box = mesh->bounding_box.MinimalEnclosingAABB((float3*)mesh->vertex, mesh->num_vertex);
 			//mesh->bounding_box.minPoint = float3(-0.5, -0.5, -0.5);

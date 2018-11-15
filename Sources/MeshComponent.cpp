@@ -15,26 +15,6 @@ Component_Mesh::Component_Mesh()
 	index = nullptr;
 }
 
-void Component_Mesh::Move(float x, float y, float z)
-{
-	for (int i = 0; i < num_vertex * 3; i += 3)
-	{
-		vertex[i] += x;
-		vertex[i + 1] += y;
-		vertex[i + 2] += z;
-	}
-}
-
-void Component_Mesh::Scale(float scalex, float scaley, float scalez)
-{
-	for (int i = 0; i < num_index; i += 3)
-	{
-		vertex[i] *= scalex;
-		vertex[i + 1] *= scaley;
-		vertex[i + 2] *= scalez;
-	}
-}
-
 bool Component_Mesh::CheckFrustumCulling(Component_Camera * camera_to_check)
 {
 	bool ret = false;
@@ -202,18 +182,17 @@ void Component_Mesh::draw_bounding_box()
 
 void Component_Mesh::Update(float dt)
 {
-	draw();
+	mesh->Draw();
 
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-	{
-		App->importer->mesh->CreateOwnFile(this);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		Move(10, 0, 10);
-		bounding_box.Translate(float3(10, 0, 10));
-		//App->importer->mesh->Import();
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	//{
+	//	App->importer->mesh->CreateOwnFile(mesh);
+	//}
+	//if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	//{
+	//	bounding_box.Translate(float3(10, 0, 10));
+	//	//App->importer->mesh->Import();
+	//}
 }
 
 //void Component_Mesh::generate_buffer()
@@ -224,22 +203,7 @@ void Component_Mesh::Update(float dt)
 
 Component_Mesh::~Component_Mesh()
 {
-	if (tex_coords != nullptr)
-	{
-		delete[] tex_coords;
-		tex_coords = nullptr;
-	}
-	if (vertex != nullptr)
-	{
-		delete[] vertex;
-		vertex = nullptr;
-	}
-	if (index != nullptr)
-	{
-		delete[] index;
-		index = nullptr;
-	}
-	glDeleteBuffers(1, &buffer_id);
+	delete mesh;
 }
 
 
@@ -282,23 +246,7 @@ void Component_Mesh::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 
 	rapidjson::Value module_obj(rapidjson::kObjectType);
 
-	module_obj.AddMember("material_id", material_index, all);
-
-	rapidjson::Value transform_node(rapidjson::kObjectType);
-
-	//transform_node.AddMember("transform_scale_x", scaling.x, all);
-	//transform_node.AddMember("transform_scale_y", scaling.y, all);
-	//transform_node.AddMember("transform_scale_z", scaling.z, all);
-	//
-	//transform_node.AddMember("transform_rotation_x", rotation.x, all);
-	//transform_node.AddMember("transform_rotation_y", rotation.y, all);
-	//transform_node.AddMember("transform_rotation_z", rotation.z, all);
-	//
-	//transform_node.AddMember("transform_position_x", position.x, all);
-	//transform_node.AddMember("transform_position_y", position.y, all);
-	//transform_node.AddMember("transform_position_z", position.z, all);
-
-	module_obj.AddMember("transform", transform_node, all);
+	module_obj.AddMember("res_uid", mesh->Resource_UID, all);
 
 	v->AddMember("MESH", module_obj, all);
 }

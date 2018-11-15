@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Component.h"
 #include "MaterialComponent.h"
+#include "Mesh.h"
 
 #include "Assimp\include\cimport.h"
 #include "Assimp\include\scene.h"
@@ -33,13 +34,17 @@ public:
 	std::string name;
 
 	uint material_index = -1;
+	
+	uint resource_id;
 
 	Component_Mesh();
 
-	aiVector3t<float> current_scaling = {1,1,1};
-	aiQuaternion rotation_q;
-	aiVector3t<float> current_rotation = {0,0,0};
-	aiVector3t< float > current_translation = {0,0,0};
+	//aiVector3t<float> current_scaling = {1,1,1};
+	//aiQuaternion rotation_q;
+	//aiVector3t<float> current_rotation = {0,0,0};
+	//aiVector3t< float > current_translation = {0,0,0};
+
+	Mesh* mesh;
 
 	AABB bounding_box;
 	void draw();
@@ -49,9 +54,6 @@ public:
 
 	~Component_Mesh();
 	bool ContainsAaBox(const AABB & refBox, const Frustum& frustum) const;
-
-	void Move(float x, float y, float z);
-	void Scale(float scalex, float scaley, float scalez);
 
 	bool CheckFrustumCulling(Component_Camera* camera_to_check);
 

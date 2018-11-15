@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#include "MeshComponent.h"
+#include "Mesh.h"
 
 #include "Assimp\include\cimport.h"
 #include "Assimp\include\scene.h"
@@ -22,8 +22,8 @@ public:
 
 	MeshImporter() {};
 
-	void CreateOwnFile(Component_Mesh* mesh_to_save);
-	void Import();
+	void CreateOwnFile(Mesh* mesh_to_save);
+	void Import(uint mesh_uid);
 
 	std::vector<std::string> filenames;
 
