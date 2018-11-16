@@ -168,6 +168,8 @@ update_status ModuleUI::Update(float dt)
 		}
 	}
 
+	App->fsys->DrawUI();
+
 	ImGui::End();
 
 	return UPDATE_CONTINUE;

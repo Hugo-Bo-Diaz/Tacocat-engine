@@ -72,7 +72,7 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		Load_node(scene->mRootNode,parent,scene);
+		Load_node(scene->mRootNode,parent,scene,file);
 
 		//now we have to get the biggest size of the model
 
@@ -88,7 +88,7 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 	return;
 }
 
-void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScene* scene)
+void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScene* scene, const char* originfile)
 {
 	GameObject* par = new GameObject();
 	parent->AddChild(par);
@@ -145,7 +145,6 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
 
 
-		uint material_index = iterator->mMaterialIndex;
 
 		par->name = iterator->mName.C_Str();
 
@@ -181,12 +180,11 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 		Component_Material* mat_comp = new Component_Material();
 		par->AddComponent((Component*)mat_comp);
-		Material* mat = new Material();
-		mat_comp->material = mat;
+		Material* mat; 
 
-		uint material_UID = App->fsys->AddResource(mat);
-		
-		mat->material_index = material_index;
+		//uint material_UID = App->fsys->AddResource(mat, originfile);
+		uint material_index = iterator->mMaterialIndex;
+
 		//m->material = mat;
 
 		const aiMaterial* material = scene->mMaterials[material_index];
@@ -197,8 +195,15 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
 		{
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-			mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
+			//mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
+			
+			Resource* r = App->fsys->LoadFile(texturePath.C_Str());
+			mat = r->mat.ptr;
+			m->materialUID = r->UID;
+			mat_comp->material = mat;
+
 		}
+		
 
 		glGenBuffers(1, (GLuint*) &(m->buffer_id));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
@@ -207,36 +212,11 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 	}
 	
 
-	//for (std::list<GameObject*>::iterator it = parent->children.begin(); it != parent->children.end(); it++)
-	//{
-	//	for (std::list<Component*>::iterator it_1 = (*it)->components.begin(); it_1 != (*it)->components.end(); it_1++)
-	//	{
-	//		if ((*it_1)->type == MESH && ((Component_Mesh*)(*it_1))->material_index != -1 && ((Component_Mesh*)(*it_1))->material_index < scene->mNumMaterials && scene->HasMaterials())
-	//		{
-	//			Component_Material* mat = new Component_Material();
-	//			(*it)->AddComponent((Component*)mat);
-	//			mat->material_index = ((Component_Mesh*)(*it_1))->material_index;
-
-	//			//now we know which texture does this mesh need and we add it to the game object as a component
-	//			const aiMaterial* material = scene->mMaterials[((Component_Mesh*)(*it_1))->material_index];
-	//			aiString texturePath;
-
-	//			unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
-
-	//			if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-	//			{
-	//				material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-	//				mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
-	//			}
-	//		}
-	//	}
-	//}
-
 	if (node->mNumChildren > 0)
 	{
 		for (int i = 0; i < node->mNumChildren; ++i)
 		{
-			Load_node(node->mChildren[i],par,scene);
+			Load_node(node->mChildren[i],par,scene,originfile);
 		}
 	}
 	

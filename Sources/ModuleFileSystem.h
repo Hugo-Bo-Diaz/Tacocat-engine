@@ -2,6 +2,8 @@
 #include "Module.h"
 #include <vector>
 #include "Globals.h"
+#include "imgui-docking/imgui.h"
+
 
 #include "Mesh.h"
 #include "Material.h"
@@ -16,14 +18,9 @@ enum ResourceType
 
 struct Resource
 {
-	Resource()
-	{
-		UID = App->random_int(0, 100000);
-	}
-	Resource(uint _UID)
-	{
-		UID = _UID;
-	}
+	Resource();
+
+	Resource(uint _UID);
 
 	uint UID;
 	std::string path;
@@ -45,28 +42,7 @@ struct Resource
 		} mat;
 	};
 
-	void Generate_in_Library()
-	{
-		if (mesh.ptr != nullptr)
-		{
-			switch ((uint)type)
-			{
-			case RES_MESH:
-				App->importer->mesh->CreateOwnFile(mesh.ptr);
-				break;
-			case RES_MATERIAL:
-				;
-				break;
-			case RES_AUDIO:
-				App->UI->console->AddLog("audio not implemented");
-				break;
-			case RES_INVALID:
-				App->UI->console->AddLog("not a valid resource type");
-			default:
-				break;
-			}
-		}
-	}
+	void Generate_in_Library();
 
 	uint buffer = -1;
 
@@ -79,7 +55,6 @@ public:
 	~ModuleFileSystem();
 
 	std::vector<Resource*> resources;
-	std::list<std::string> paths_opened;
 
 	bool Start();
 	bool CleanUp();
@@ -87,8 +62,8 @@ public:
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 	void Load(rapidjson::Value& v);
 
-	uint AddResource(Mesh* mesh);
-	uint AddResource(Material* mat);
+	uint AddResource(Mesh* mesh, const char* path);
+	uint AddResource(Material* mat, const char* path);
 
 	Resource* ResourceFromUID(uint UID);
 
@@ -100,7 +75,12 @@ public:
 
 	void GenerateResourcesInfo(rapidjson::Document * d, rapidjson::Value * v);
 
-	//void DrawOnUI();
+	void DrawUI();
+
+	void RecieveEvent(Event& ev);
+
+	bool window_active = true;
+	ImVec2 windowpos; 
 
 private:
 

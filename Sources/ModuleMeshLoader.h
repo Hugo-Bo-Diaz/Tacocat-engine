@@ -87,7 +87,7 @@ public:
 	//returns the memory index given by opengl
 	void Load_mesh(const char* filename, Scene* scene_to);
 
-	void Load_node(aiNode* node, GameObject* parent,const aiScene* scene);
+	void Load_node(aiNode* node, GameObject* parent,const aiScene* scene, const char* s);
 
 	void FocusCamera();
 };

@@ -287,8 +287,6 @@ void Component_Camera::RotateFrustum_Yaxis(float angle)
 	{
 		angle_Y = -90;
 	}
-
-	App->UI->console->AddLog("angle %f", angle_Y);
 }
 
 void Component_Camera::RotateFrustum_XZaxis(float angle)

@@ -22,7 +22,7 @@ Component_Material::Component_Material()
 Component_Material::~Component_Material()
 {
 
-	glDeleteTextures(1, &texture_buffer_id);
+	glDeleteTextures(1, &material->texture_buffer_id);
 
 }
 
@@ -32,8 +32,8 @@ void Component_Material::Save_Component(rapidjson::Document* d, rapidjson::Value
 
 	rapidjson::Value module_obj(rapidjson::kObjectType);
 
-	module_obj.AddMember("tex_width", tex_width, all);
-	module_obj.AddMember("tex_height", tex_height, all);
+	module_obj.AddMember("tex_width", resource_UID, all);
+	//module_obj.AddMember("tex_height", tex_height, all);
 
 	v->AddMember("MATERIAL", module_obj, all);
 }

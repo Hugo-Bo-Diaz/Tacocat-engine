@@ -3,6 +3,7 @@
 #include <string>
 #include "Globals.h"
 #include "Component.h"
+#include "Material.h"
 
 #include "Assimp\include\cimport.h"
 #include "Assimp\include\scene.h"
@@ -14,6 +15,7 @@ class Component_Material : public Component
 {
 public:
 
+	uint resource_UID;
 	Material* material;
 	
 	Component_Material();

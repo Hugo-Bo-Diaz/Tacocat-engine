@@ -11,8 +11,6 @@
 Component_Mesh::Component_Mesh()
 {
 	type = MESH;
-	vertex = nullptr;
-	index = nullptr;
 }
 
 bool Component_Mesh::CheckFrustumCulling(Component_Camera * camera_to_check)

@@ -37,12 +37,12 @@ void Scene::LoadToScene(const char* file)
 
 	//TODO
 	//FIRST: check the file extension
-	std::string extension = std::strrchr(file, '.');
-	if (extension == ".FBX" || extension == ".fbx")
-	{
-		App->UI->console->AddLog("model file detected, sending to mesh loader");
-		App->mesh_loader->Load_mesh(file, this); 
-	}
+	////std::string extension = std::strrchr(file, '.');
+	////if (extension == ".FBX" || extension == ".fbx")
+	////{
+	////	App->UI->console->AddLog("model file detected, sending to mesh loader");
+	////	App->mesh_loader->Load_mesh(file, this); 
+	////}
 	//else if (extension == ".png" || extension == ".dss")
 	//{
 	//	App->UI->console->AddLog("image file detected, sending to texture loader");

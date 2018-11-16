@@ -33,7 +33,7 @@ bool ModuleSceneController::Start()
 		(*it)->Init();
 	}
 
-	current_scene->LoadToScene("BakerHouse.fbx");
+	App->fsys->LoadFile("BakerHouse.fbx");
 
 	App->renderer3D->OnResize(App->window->width, App->window->height);//TODO
 
