@@ -203,7 +203,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			mat_comp->material = mat;
 
 		}
-		
+		App->fsys->AddResource(m, originfile);
 
 		glGenBuffers(1, (GLuint*) &(m->buffer_id));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
