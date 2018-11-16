@@ -37,9 +37,9 @@ uint GameObject::GetTexture(uint index)
 {
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
-		if ((*it)->type == MATERIAL && ((Component_Material*)(*it))->material_index == index)
+		if ((*it)->type == MATERIAL && ((Component_Material*)(*it))->material->material_index == index)
 		{
-			return ((Component_Material*)(*it))->texture_buffer_id;//the first texture it finds in its components is given
+			return ((Component_Material*)(*it))->material->texture_buffer_id;//the first texture it finds in its components is given
 		}
 	}
 

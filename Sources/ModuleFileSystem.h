@@ -16,6 +16,15 @@ enum ResourceType
 
 struct Resource
 {
+	Resource()
+	{
+		UID = App->random_int(0, 100000);
+	}
+	Resource(uint _UID)
+	{
+		UID = _UID;
+	}
+
 	uint UID;
 	std::string path;
 	std::string path_in_library;
@@ -70,6 +79,7 @@ public:
 	~ModuleFileSystem();
 
 	std::vector<Resource*> resources;
+	std::list<std::string> paths_opened;
 
 	bool Start();
 	bool CleanUp();
@@ -77,15 +87,18 @@ public:
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 	void Load(rapidjson::Value& v);
 
-	//void LoadFile();
+	uint AddResource(Mesh* mesh);
+	uint AddResource(Material* mat);
 
-	//uint ResourceFromUID(uint UID);
+	Resource* ResourceFromUID(uint UID);
+
+	Resource* LoadFile(const char* path); //should be called always so that way if something exists we know
 
 	//void ReplaceOnLibrary(uint UID);//if you replace a file on the assets folder this can be called so that it generates again in the Library folder
 
 	void LoadResourcesInfo();
 
-	void GenerateResourcesInfo();
+	void GenerateResourcesInfo(rapidjson::Document * d, rapidjson::Value * v);
 
 	//void DrawOnUI();
 

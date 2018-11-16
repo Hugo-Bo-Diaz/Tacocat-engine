@@ -81,6 +81,14 @@ void Scene::Save(const char * filename)
 	}
 
 	document.AddMember("Scene", object_node, all);
+
+	rapidjson::Value res_node(rapidjson::kObjectType);
+
+	App->fsys->GenerateResourcesInfo(&document, &res_node);
+
+	document.AddMember("Resources", res_node, all);
+
+	
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	document.Accept(writer);
 	fclose(fp);

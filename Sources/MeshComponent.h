@@ -17,23 +17,6 @@ class Component_Camera;
 class Component_Mesh : public Component
 {
 public:
-	uint buffer_id;
-
-	float* tex_coords = nullptr;
-
-	//uint id_index = 0; // index in VRAM
-	uint num_index = 0;
-	uint* index = nullptr;
-
-	//uint id_vertex = 0; // unique vertex in VRAM
-	uint num_vertex = 0;
-	float* vertex = nullptr;
-	uint num_normals = 0;
-	float* normals = nullptr;
-
-	std::string name;
-
-	uint material_index = -1;
 	
 	uint resource_id;
 
@@ -47,7 +30,6 @@ public:
 	Mesh* mesh;
 
 	AABB bounding_box;
-	void draw();
 	void draw_bounding_box();
 	//void generate_buffer();
 	void Update(float dt);

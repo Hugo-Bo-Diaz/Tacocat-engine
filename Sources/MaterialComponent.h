@@ -13,14 +13,15 @@
 class Component_Material : public Component
 {
 public:
-	uint texture_buffer_id;
 
-	uint tex_width;
-	uint tex_height;
-
-	uint material_index = -1;
-
+	Material* material;
+	
 	Component_Material();
+
+	Material* GetMaterial()
+	{
+		return material;
+	}
 
 	~Component_Material();
 

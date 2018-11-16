@@ -179,8 +179,13 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 		//m->bounding_box.Translate(float3( transform->position.x,transform->position.y,transform->position.z ));
 
-		Component_Material* mat = new Component_Material();
-		par->AddComponent((Component*)mat);
+		Component_Material* mat_comp = new Component_Material();
+		par->AddComponent((Component*)mat_comp);
+		Material* mat = new Material();
+		mat_comp->material = mat;
+
+		uint material_UID = App->fsys->AddResource(mat);
+		
 		mat->material_index = material_index;
 		//m->material = mat;
 

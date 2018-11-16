@@ -54,15 +54,15 @@ bool Mesh::ContainsAaBox(const AABB& refBox, const Frustum & frustum) const
 
 void Mesh::Draw()
 {
+	if (material == nullptr && materialUID != 0)
+	{
+		Resource* res = App->fsys->ResourceFromUID(materialUID);
+		if (res->type == RES_MATERIAL)
+			material = res->mat.ptr;
+	}
+
 	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()) && !not_working)
 	{
-
-		//if (buffer_id > 2)
-		//{
-		//	bounding_box.Translate(float3(0, 0.1, 0));
-		//	Move(0, 0.1, 0);
-		//}
-
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -77,10 +77,10 @@ void Mesh::Draw()
 			glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 		}
 		//else if (parent->GetTexture(material_index) != 0)
-		else if (material != nullptr && material->buffer_id != 0)
+		else if (material != nullptr && material->texture_buffer_id != 0)
 		{
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glBindTexture(GL_TEXTURE_2D, material->buffer_id);
+			glBindTexture(GL_TEXTURE_2D, material->texture_buffer_id);
 			glTexCoordPointer(2, GL_FLOAT, 0, &tex_coords[0]);
 		}
 		else
@@ -91,7 +91,7 @@ void Mesh::Draw()
 		glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
 		glDrawElements(GL_TRIANGLES, num_index, GL_UNSIGNED_INT, NULL);
 
-		if (material != nullptr && material->buffer_id != 0)
+		if (material != nullptr && material->texture_buffer_id != 0)
 		{
 			glBindTexture(GL_TEXTURE_2D, 0);
 
