@@ -142,6 +142,16 @@ public:
 
 	void Draw();
 
+	bool CheckSpooktree(GameObject* check)
+	{
+		for (int aux = 0; aux < children.size(); aux++)
+		{
+			if (check->UID == children[aux]->UID) return true;
+		}
+
+		return false;
+	}
+
 private:
 	std::list<Spooktree*> sectors; //It should have 0 or 4 sectors
 	std::vector<GameObject*> children;

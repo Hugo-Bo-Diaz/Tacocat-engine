@@ -19,7 +19,7 @@ public:
 	{ 
 		name = _name;
 		spookamera = new Component_Camera();
-		tree = new Spooktree(ROOT, -100, -100, 100, 100, 0);
+		tree = new Spooktree(ROOT, -500, -500, 500, 500, 0);
 	};
 
 	~Scene();
@@ -43,8 +43,9 @@ public:
 	void Save(const char* filename);
 	void Load(const char* filename);
 
-private:
 	Spooktree* tree;
+
+private:
 	//todo
 	//add light
 	//add camera

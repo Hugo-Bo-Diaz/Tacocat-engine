@@ -42,7 +42,7 @@ public:
 
 	void CalculateAllTransformMatrices(float4x4 previous);
 
-	bool static_object = true;
+	bool static_object = false;
 
 	bool selected = false;
 	bool Iselected() 
@@ -71,6 +71,8 @@ public:
 	void Save(rapidjson::Document* d, rapidjson::Value* v);
 
 	std::vector<Component_Mesh*>* GetAllMeshes(std::vector<Component_Mesh*>& ret);
+
+	void Properties();
 
 private:
 

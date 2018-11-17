@@ -42,6 +42,8 @@ public:
 	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);
 	void Load_Component(rapidjson::Value& v);
 
+	void Properties();
+
 	Component_Material* material = nullptr;
 
 	bool not_working = false;

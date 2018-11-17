@@ -58,7 +58,7 @@ GameObject* Scene::AddGameObject()
 {
 	GameObject* object = new GameObject();
 	GameObjects.push_back(object);
-	tree->IntoSpooktree(object);
+	//tree->IntoSpooktree(object);
 	return object;
 }
 
