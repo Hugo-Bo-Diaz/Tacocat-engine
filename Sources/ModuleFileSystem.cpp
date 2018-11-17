@@ -39,6 +39,9 @@ uint ModuleFileSystem::AddResource(Mesh * mesh, const char* path)
 	r->mesh.ptr = mesh;
 	r->type = RES_MESH;
 	r->path = path;
+
+	resources.push_back(r);
+
 	return r->UID;
 }
 
@@ -49,6 +52,9 @@ uint ModuleFileSystem::AddResource(Material * mat, const char* path)
 	r->mat.ptr = mat;
 	r->type = RES_MATERIAL;
 	r->path = path;
+
+	resources.push_back(r);
+
 	return r->UID;
 
 }
@@ -58,6 +64,17 @@ Resource * ModuleFileSystem::ResourceFromUID(uint UID)
 	for (std::vector<Resource*>::iterator it = resources.begin(); it != resources.end(); it++)
 	{
 		if ((*it)->UID == UID)
+			return (*it);
+	}
+	return nullptr;
+}
+
+Resource * ModuleFileSystem::ResourceFromPath(const char * path)
+{
+	for (std::vector<Resource*>::iterator it = resources.begin(); it != resources.end(); it++)
+	{
+		std::string temp = path;
+		if ((*it)->path == temp)
 			return (*it);
 	}
 	return nullptr;

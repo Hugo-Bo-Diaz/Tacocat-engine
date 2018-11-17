@@ -92,59 +92,86 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 {
 	GameObject* par = new GameObject();
 	parent->AddChild(par);
-
+	
 	for (int i = 0; i < node->mNumMeshes; ++i)
 	{
 		//GameObject* Object = new GameObject();
 		//par->AddChild(Object);
-		Component_Mesh* m_comp = new Component_Mesh();
-		Mesh* m = new Mesh();
-		m_comp->mesh = m;
-		par->AddComponent(m_comp);
-
 		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
 
-		m->num_vertex = iterator->mNumVertices;
-		m->vertex = new float[m->num_vertex * 3];
-		memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
-		if (iterator->HasFaces())
+		Component_Mesh* m_comp = new Component_Mesh();
+		par->AddComponent(m_comp);
+
+		Mesh* m;
+
+		std::string path = originfile;
+		path += "/";
+		//path += iterator->mName.C_Str();
+		std::string nmae = node->mName.C_Str();
+		path += nmae;
+		par->name = nmae;
+		if (App->fsys->ResourceFromPath(path.c_str()) != nullptr)
 		{
-			m->num_index = iterator->mNumFaces * 3;
-			m->index = new uint[m->num_index]; // assume each face is a triangle
-			for (uint i = 0; i < iterator->mNumFaces; ++i)
+			m = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
+			m_comp->mesh = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
+
+		}
+		else
+		{
+
+			m = new Mesh();
+			m_comp->mesh = m;
+
+
+			m->num_vertex = iterator->mNumVertices;
+			m->vertex = new float[m->num_vertex * 3];
+			memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
+			if (iterator->HasFaces())
 			{
-				if (iterator->mFaces[i].mNumIndices != 3)
+				m->num_index = iterator->mNumFaces * 3;
+				m->index = new uint[m->num_index]; // assume each face is a triangle
+				for (uint i = 0; i < iterator->mNumFaces; ++i)
 				{
-					App->UI->console->AddLog("geometry messed up");
-					m->not_working = true;
+					if (iterator->mFaces[i].mNumIndices != 3)
+					{
+						App->UI->console->AddLog("geometry messed up");
+						m->not_working = true;
+					}
+
+					else
+						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
-
-				else
-					memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 			}
-		}
-		if (iterator->HasTextureCoords(0))
-		{
-			m->tex_coords = new float[m->num_vertex * 2];
-			uint w = 0;
-			for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
+			if (iterator->HasTextureCoords(0))
 			{
-				memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
-				memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
-				++w;
+				m->tex_coords = new float[m->num_vertex * 2];
+				uint w = 0;
+				for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
+				{
+					memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
+					memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
+					++w;
+				}
 			}
+
+			if (iterator->HasNormals())
+			{
+				m->num_normals = iterator->mNumVertices;
+				m->normals = new float[m->num_normals * 3];
+				memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
+			}
+
+			m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
+
+
+			glGenBuffers(1, (GLuint*) &(m->buffer_id));
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+
+			App->fsys->AddResource(m, path.c_str());
 		}
-
-		if (iterator->HasNormals())
-		{
-			m->num_normals = iterator->mNumVertices;
-			m->normals = new float[m->num_normals * 3];
-			memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
-		}
-
-		m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
-
-
 
 		par->name = iterator->mName.C_Str();
 
@@ -173,11 +200,9 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		
 
 		transform->transform_local = float4x4::FromTRS(p,r,s);
-
-		m->bounding_box.Scale(m->bounding_box.CenterPoint(),(transform->scaling.x, transform->scaling.y, transform->scaling.z));
-
+		m->bounding_box.Scale(m->bounding_box.CenterPoint(), s);
 		//m->bounding_box.Translate(float3( transform->position.x,transform->position.y,transform->position.z ));
-
+		
 		Component_Material* mat_comp = new Component_Material();
 		par->AddComponent((Component*)mat_comp);
 		Material* mat; 
@@ -203,12 +228,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			mat_comp->material = mat;
 
 		}
-		App->fsys->AddResource(m, originfile);
 
-		glGenBuffers(1, (GLuint*) &(m->buffer_id));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	
 

@@ -67,6 +67,8 @@ public:
 
 	Resource* ResourceFromUID(uint UID);
 
+	Resource* ResourceFromPath(const char* path);
+
 	Resource* LoadFile(const char* path); //should be called always so that way if something exists we know
 
 	//void ReplaceOnLibrary(uint UID);//if you replace a file on the assets folder this can be called so that it generates again in the Library folder
@@ -80,6 +82,7 @@ public:
 	void RecieveEvent(Event& ev);
 
 	bool window_active = true;
+
 	ImVec2 windowpos; 
 
 private:
