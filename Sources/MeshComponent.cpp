@@ -198,3 +198,15 @@ void Component_Mesh::Load_Component(rapidjson::Value& v)
 {
 
 }
+
+void Component_Mesh::Properties()
+{
+	if (ImGui::CollapsingHeader("Mesh"))
+	{
+		ImGui::Text("Resource ID: %u", mesh->Resource_UID);
+		ImGui::Text("Buffer ID: %u", mesh->buffer_id);
+		ImGui::Text("");
+		ImGui::Text("Num of indices:  %u", mesh->num_index);
+		ImGui::Text("Num of vertices: %u", mesh->num_vertex);
+	}
+}

@@ -227,6 +227,17 @@ std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mes
 	return &ret;
 }
 
+void GameObject::Properties()
+{
+	ImGui::Text("%s", name);
+	if (ImGui::Button("Static"))
+	{
+		static_object = !static_object;
+		if(static_object && App->scene_controller->current_scene->tree->CheckSpooktree(this))
+			App->scene_controller->current_scene->tree->IntoSpooktree(this);
+	}
+}
+
 Component_Transform * GameObject::GetTransformComponent()
 {
 	if (!components.empty())

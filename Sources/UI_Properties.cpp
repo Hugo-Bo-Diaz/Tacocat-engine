@@ -35,6 +35,7 @@ void UI_Properties::Render()
 
 		if (App->scene_controller->current_scene->spookamera->selected != nullptr) //TODO HUGO --> CHANGE SELECTED TO SCENE
 		{
+			App->scene_controller->current_scene->spookamera->selected->Properties();
 			for (std::list<Component*>::iterator it = App->scene_controller->current_scene->spookamera->selected->components.begin(); it != App->scene_controller->current_scene->spookamera->selected->components.end(); it++)
 			{
 				(*it)->Properties();
