@@ -19,8 +19,9 @@ Made by
 * Drop the files directly to the window to load them
 * Files accepted
   * 3d models --> .fbx
-  * Textures --> .png
+  * Textures --> .png, .dds
 * With the primitives window you can display one primitive primitive at a time changing the parameters and clicking the button of the primitive you want
+* Press Left Mouse button to select game objects
 
 ### UI
 
