@@ -134,9 +134,10 @@ GameObject::GameObject()
 	BoundingBox.minPoint = float3(-1,-1,-1);
 	BoundingBox.maxPoint = float3(1, 1, 1);
 
-	int number_of_gameobjects = 0;
+
+	App->scene_controller->current_scene->number_of_gameobjects++;
 	name = "gameobject " ;
-	name += std::to_string(number_of_gameobjects);
+	name += std::to_string(App->scene_controller->current_scene->number_of_gameobjects);
 
 }
 

@@ -1,6 +1,9 @@
 #include "ModuleFileSystem.h"
 #include "Application.h"
 
+#include <filesystem>
+
+
 
 ModuleFileSystem::ModuleFileSystem(bool start_enabled)
 {
@@ -8,6 +11,11 @@ ModuleFileSystem::ModuleFileSystem(bool start_enabled)
 
 	windowpos.x = 100;
 	windowpos.y = 100;
+
+	//current_directory= SDL_GetBasePath();
+
+	GetFilesFromDirectory(current_directory.c_str());
+
 }
 
 ModuleFileSystem::~ModuleFileSystem()
@@ -147,20 +155,42 @@ void ModuleFileSystem::GenerateResourcesInfo(rapidjson::Document * d, rapidjson:
 
 void ModuleFileSystem::DrawUI()
 {
-	//ImGui::SetNextWindowPos(windowpos, ImGuiSetCond_FirstUseEver);
-	//ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiSetCond_FirstUseEver);
-	//ImGui::Begin("Properties", &window_active);
-	//if (ImGui::CollapsingHeader("Model"))
-	//{
-	//	if (App->scene_controller->current_scene->spookamera->selected != nullptr)
-	//	{
-	//		for (std::list<Component*>::iterator it = App->scene_controller->current_scene->spookamera->selected->components.begin(); it != App->scene_controller->current_scene->spookamera->selected->components.end(); it++)
-	//		{
-	//			(*it)->Properties();
-	//		}
-	//	}
-	//}
-	//ImGui::End();
+	std::string prev_currdir = current_directory;
+
+	ImGui::SetNextWindowPos(windowpos, ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiSetCond_FirstUseEver);
+	ImGui::Begin("Assets", &window_active);
+
+	if (ImGui::Button("ROOT"))
+	{
+		current_directory = default_directory;
+	}
+
+
+	for (std::vector<Display*>::iterator it = files.begin(); it != files.end();++it)
+	{
+		if ((*it)->isFolder)
+		{
+			if (ImGui::Button((*it)->path.c_str()))
+			{
+				current_directory = (*it)->path.c_str();
+			}
+		}
+		else
+		{
+			if (ImGui::Button((*it)->path.c_str()))
+			{
+				//LOAD THIS THING IF POSSIBLE
+			}
+		}
+
+	}
+	if (prev_currdir != current_directory)
+	{
+		GetFilesFromDirectory(current_directory.c_str());
+	}
+
+	ImGui::End();
 
 }
 
@@ -171,6 +201,35 @@ void ModuleFileSystem::RecieveEvent(Event& ev)
 	{
 		LoadFile(ev.string.ptr);
 	}
+}
+
+void ModuleFileSystem::GetFilesFromDirectory(const char * directory)
+{
+	//DELETE THE DIRECTORIES
+	//for (auto& p : std::experimental::filesystem::recursive_directory_iterator(directory))
+	//	if (p.status().type() == std::experimental::filesystem::file_type::directory)
+	//		r.push_back(p.path().string());
+	for (std::vector<Display*>::iterator it = files.begin(); it != files.end(); ++it)
+	{
+		delete(*it);
+	}
+	files.clear();
+
+	const std::experimental::filesystem::directory_iterator end{};
+
+	for (std::experimental::filesystem::directory_iterator iter{ directory }; iter != end; ++iter)
+	{
+		Display* d = new Display();
+		d->path = iter->path().string();
+		files.push_back(d);
+
+		if (std::experimental::filesystem::is_directory(*iter))
+		{
+			d->isFolder = true;
+		}
+
+	}	
+
 }
 
 

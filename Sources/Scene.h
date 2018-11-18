@@ -44,6 +44,7 @@ public:
 	void Load(const char* filename);
 
 	Spooktree* tree;
+	int number_of_gameobjects = 0;
 
 private:
 	//todo

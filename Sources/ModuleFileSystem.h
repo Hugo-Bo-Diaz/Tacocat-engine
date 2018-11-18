@@ -48,6 +48,12 @@ struct Resource
 
 };
 
+struct Display
+{
+	std::string path;
+	bool isFolder = false;
+};
+
 class ModuleFileSystem: public Module
 {
 public:
@@ -84,6 +90,12 @@ public:
 	bool window_active = true;
 
 	ImVec2 windowpos; 
+
+	std::string current_directory = "..//Resources"; 
+	std::string default_directory = "..//Resources";
+	std::vector<Display*> files;
+
+	void GetFilesFromDirectory(const char* directory);
 
 private:
 
