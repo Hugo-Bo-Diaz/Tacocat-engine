@@ -69,6 +69,10 @@ bool Application::Init()
 
 	LoadConfig("config.json");
 
+	Createdir("./Library");
+	Createdir("./Library/Materials");
+	Createdir("./Library/Meshes");
+
 	// Call Init() in all modules
 
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
@@ -240,4 +244,16 @@ void Application::BroadcastEvent(Event& ev)
 		if ((*it_mod)->listentoevents)
 			(*it_mod)->RecieveEvent(ev);
 	}
+}
+
+void Application::Createdir(const std::string& path)
+{
+	DWORD ftyp = GetFileAttributesA(path.c_str());
+	LPCSTR file = path.c_str();
+	if (ftyp == INVALID_FILE_ATTRIBUTES) {
+		CreateDirectory(file, NULL);//Doesn't exist
+		SetFileAttributes(file, FILE_ATTRIBUTE_HIDDEN);
+	}
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY);
+	//It exists
 }
