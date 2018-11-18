@@ -28,6 +28,6 @@ public:
 	~Component_Material();
 
 	void Save_Component(rapidjson::Document* d, rapidjson::Value* v);
-	void Load_Component(rapidjson::Value& v);
+	void Load_Component(rapidjson::Value::ConstMemberIterator v);
 
 };

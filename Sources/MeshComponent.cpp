@@ -190,7 +190,7 @@ void Component_Mesh::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 	v->AddMember("MESH", module_obj, all);
 }
 
-void Component_Mesh::Load_Component(rapidjson::Value& v)
+void Component_Mesh::Load_Component(rapidjson::Value::ConstMemberIterator)
 {
 
 }

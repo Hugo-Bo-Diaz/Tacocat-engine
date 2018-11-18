@@ -1,6 +1,13 @@
 #include "Scene.h"
 #include "Application.h"
 #include "ModuleUI.h"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/document.h"
 
 Scene::~Scene()
 {
@@ -75,19 +82,15 @@ void Scene::Save(const char * filename)
 
 	rapidjson::Value object_node(rapidjson::kObjectType);
 
+	App->fsys->GenerateResourcesInfo(&document, &object_node);
+
 	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
 		(*it)->Save(&document,&object_node);
 	}
 
+
 	document.AddMember("Scene", object_node, all);
-
-	rapidjson::Value res_node(rapidjson::kObjectType);
-
-	App->fsys->GenerateResourcesInfo(&document, &res_node);
-
-	document.AddMember("Resources", res_node, all);
-
 	
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	document.Accept(writer);
@@ -109,4 +112,61 @@ void Scene::Save(const char * filename)
 
 void Scene::Load(const char * filename)
 {
+
+	rapidjson::Document file;
+
+	FILE* f = fopen(filename, "rb");
+	if (f)
+	{
+		char Buffer[65536];
+		rapidjson::FileReadStream input(f, Buffer, sizeof(Buffer));
+		file.ParseStream(input);
+
+		const rapidjson::Value& scene = file["Scene"];
+
+		for (rapidjson::Value::ConstMemberIterator itr = scene.MemberBegin(); itr != scene.MemberEnd(); itr++)
+		{
+			if (itr->name == "OBJECT")
+			{
+				GameObject* obj = AddGameObject();
+				obj->UID = itr->value["UID"].GetInt();
+				uint parent_uid = itr->value["parentUID"].GetInt();
+
+				const rapidjson::Value& components = itr->value["Components"];
+
+				for (rapidjson::Value::ConstMemberIterator comp = components.MemberBegin(); comp != components.MemberEnd(); comp++)
+				{
+					if (comp->name == "TRANSFORM")
+					{
+						Component_Transform* t = new Component_Transform();
+						t->Load_Component(comp);
+						obj->AddComponent(t);
+					}
+					else if (comp->name == "MESH")
+					{
+						Mesh* m;
+						Component_Mesh* cm = new Component_Mesh();
+						cm->Load_Component(comp);
+						obj->AddComponent(cm);
+					}
+					else if (comp->name == "MATERIAL")
+					{
+						Material* m;
+						Component_Material* cmat = new Component_Material();
+						cmat->Load_Component(comp);
+						obj->AddComponent(cmat);
+
+
+						break;
+					}
+				}
+			}
+			if (itr->name == "Resource")
+			{
+
+			}
+		}
+
+	}
 }
+

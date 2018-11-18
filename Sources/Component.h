@@ -30,7 +30,7 @@ public:
 	virtual void Update(float dt) {};
 
 	virtual void Save_Component(rapidjson::Document* d, rapidjson::Value* v) {};
-	virtual void Load_Component(rapidjson::Value& v) {};
+	virtual void Load_Component(rapidjson::Value::ConstMemberIterator v) {};
 
 	GameObject* parent;
 

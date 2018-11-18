@@ -121,7 +121,6 @@ void Component_Camera::Update(float dt)
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		ray = frustum.UnProjectLineSegment(percent_x, -percent_y);
-		App->UI->console->AddLog("ray created");
 		Ray r; 
 		r.dir = ray.Dir();
 		r.pos = frustum.pos;
@@ -139,7 +138,7 @@ void Component_Camera::Update(float dt)
 			if(r.Intersects(newAABB))
 			{
 				(*it)->selected = true;
-				App->UI->console->AddLog("HA %d, (%f %f %f) (%f %f %f)", (*it)->UID, (*it)->GetBoundingBox().minPoint.x, (*it)->GetBoundingBox().minPoint.y, (*it)->GetBoundingBox().minPoint.z, (*it)->GetBoundingBox().maxPoint.x, (*it)->GetBoundingBox().maxPoint.y, (*it)->GetBoundingBox().maxPoint.z);
+				//App->UI->console->AddLog("HA %d, (%f %f %f) (%f %f %f)", (*it)->UID, (*it)->GetBoundingBox().minPoint.x, (*it)->GetBoundingBox().minPoint.y, (*it)->GetBoundingBox().minPoint.z, (*it)->GetBoundingBox().maxPoint.x, (*it)->GetBoundingBox().maxPoint.y, (*it)->GetBoundingBox().maxPoint.z);
 				objects_hit.push_back(*it);
 			}
 			else

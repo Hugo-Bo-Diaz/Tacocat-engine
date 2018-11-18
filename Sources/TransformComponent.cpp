@@ -24,10 +24,46 @@ Component_Transform::~Component_Transform()
 
 void Component_Transform::Save_Component(rapidjson::Document* d, rapidjson::Value* v)
 {
+	rapidjson::Document::AllocatorType& all = d->GetAllocator();
 
+	rapidjson::Value module_obj(rapidjson::kObjectType);
+
+	rapidjson::Value row1(rapidjson::kObjectType);
+
+	row1.AddMember("0", transform_local[0][0], all);
+	row1.AddMember("1", transform_local[1][0], all);
+	row1.AddMember("2", transform_local[2][0], all);
+	row1.AddMember("3", transform_local[3][0], all);
+	module_obj.AddMember("row1", row1, all);
+
+	rapidjson::Value row2(rapidjson::kObjectType);
+
+	row2.AddMember("0", transform_local[0][1], all);
+	row2.AddMember("1", transform_local[1][1], all);
+	row2.AddMember("2", transform_local[2][1], all);
+	row2.AddMember("3", transform_local[3][1], all);
+	module_obj.AddMember("row2", row2, all);
+
+	rapidjson::Value row3(rapidjson::kObjectType);
+
+	row3.AddMember("0", transform_local[0][2], all);
+	row3.AddMember("1", transform_local[1][2], all);
+	row3.AddMember("2", transform_local[2][2], all);
+	row3.AddMember("3", transform_local[3][2], all);
+	module_obj.AddMember("row3", row3, all);
+
+	rapidjson::Value row4(rapidjson::kObjectType);
+
+	row4.AddMember("0", transform_local[0][3], all);
+	row4.AddMember("1", transform_local[1][3], all);
+	row4.AddMember("2", transform_local[2][3], all);
+	row4.AddMember("3", transform_local[3][3], all);
+	module_obj.AddMember("row4", row4, all);
+
+	v->AddMember("TRANSFORM", module_obj, all);
 }
 
-void Component_Transform::Load_Component(rapidjson::Value& v)
+void Component_Transform::Load_Component(rapidjson::Value::ConstMemberIterator v)
 {
 
 }

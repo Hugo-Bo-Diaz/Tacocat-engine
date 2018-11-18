@@ -138,8 +138,8 @@ void ModuleFileSystem::GenerateResourcesInfo(rapidjson::Document * d, rapidjson:
 		rapidjson::Value res_obj(rapidjson::kObjectType);
 
 		res_obj.AddMember("UID", (*it)->UID, all);
-		//res_obj.AddMember("original path",(*it)->path,all);
-		//res_obj.AddMember("library path", (*it)->path_in_library, all);
+		res_obj.AddMember("original path", (rapidjson::Value::StringRefType)(*it)->path.c_str(),all);
+		res_obj.AddMember("library path", (rapidjson::Value::StringRefType)(*it)->path_in_library.c_str(), all);
 		res_obj.AddMember("type", (uint)(*it)->type, all);
 		//TODO GET THE FILE DATE AND OTHER INFO that should be in metadata
 

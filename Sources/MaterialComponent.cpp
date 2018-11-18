@@ -32,13 +32,13 @@ void Component_Material::Save_Component(rapidjson::Document* d, rapidjson::Value
 
 	rapidjson::Value module_obj(rapidjson::kObjectType);
 
-	module_obj.AddMember("tex_width", resource_UID, all);
+	module_obj.AddMember("res_uid", resource_UID, all);
 	//module_obj.AddMember("tex_height", tex_height, all);
 
 	v->AddMember("MATERIAL", module_obj, all);
 }
 
-void Component_Material::Load_Component(rapidjson::Value& v)
+void Component_Material::Load_Component(rapidjson::Value::ConstMemberIterator)
 {
 
 }
