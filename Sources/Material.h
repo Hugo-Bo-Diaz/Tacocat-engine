@@ -10,4 +10,5 @@ public:
 	uint tex_height;
 
 	uint material_index;
+	std::string path_in_library;
 };

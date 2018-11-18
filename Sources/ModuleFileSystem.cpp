@@ -109,10 +109,11 @@ Resource * ModuleFileSystem::LoadFile(const char * path)
 	else if (extension == ".dds" || extension == ".tga" || extension == ".png")
 	{
 		Material* m = new Material();
-		m->texture_buffer_id = App->tex_loader->LoadTexture(path, &m->tex_width, &m->tex_height);
+		m = App->tex_loader->LoadTexture(path);
 		r->type = RES_MATERIAL;
 		r->mat.ptr = m;
 		r->path = path;
+		r->path_in_library = m->path_in_library;
 		resources.push_back(r);
 	}
 
@@ -180,7 +181,7 @@ void ModuleFileSystem::DrawUI()
 		{
 			if (ImGui::Button((*it)->path.c_str()))
 			{
-				//LOAD THIS THING IF POSSIBLE
+				LoadFile((*it)->path.c_str());
 			}
 		}
 

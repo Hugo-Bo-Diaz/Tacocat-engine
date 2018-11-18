@@ -67,7 +67,15 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 	total_scene_bounding_box = new AABB({100,100,100}, {-100,-100,-100});
 
 	GameObject* parent = App->scene_controller->current_scene->AddGameObject();
-	parent->name = file;
+
+	std::string name = file;
+	std::string nameoffile = "";
+	if (name.find('\\', 0) != -1)
+		nameoffile = std::strrchr(name.c_str(), '\\');
+	else
+		nameoffile = file;
+
+	parent->name = nameoffile;
 
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
@@ -93,6 +101,8 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 {
 	GameObject* par = new GameObject();
 	parent->AddChild(par);
+
+
 	
 	for (int i = 0; i < node->mNumMeshes; ++i)
 	{
@@ -105,6 +115,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			par->name = "wtf";
 		}
 		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
+		
 
 		Component_Mesh* m_comp = new Component_Mesh();
 		par->AddComponent(m_comp);
@@ -185,7 +196,6 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		//par->name = iterator->mName.C_Str();
 
 		//parent->AddComponent(TRANSFORM) @DANI
-
 		Component_Transform* transform = new Component_Transform();
 		par->AddComponent(transform);
 
@@ -237,6 +247,34 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			mat_comp->material = mat;
 
 		}
+
+	}
+
+	if (node->mNumMeshes == 0)
+	{
+		Component_Transform* transform = new Component_Transform();
+		par->AddComponent(transform);
+
+
+		node->mTransformation.Decompose(transform->scaling, transform->rotation, transform->position);
+
+		float3 p, s;
+		p.x = transform->position.x;
+		p.y = transform->position.y;
+		p.z = transform->position.z;
+
+		s.x = transform->scaling.x;
+		s.y = transform->scaling.y;
+		s.z = transform->scaling.z;
+
+		Quat r;
+		r.x = transform->rotation.x;
+		r.y = transform->rotation.y;
+		r.z = transform->rotation.z;
+		r.w = transform->rotation.w;
+
+
+		transform->transform_local = float4x4::FromTRS(p, r, s);
 
 	}
 	

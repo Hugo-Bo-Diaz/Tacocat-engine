@@ -2,6 +2,8 @@
 #include "Module.h"
 #include <array>
 #include "Globals.h"
+#include "Material.h"
+
 
 #include "pcg32\pcg_variants.h"
 
@@ -14,7 +16,7 @@ public:
 	bool Start();
 	bool CleanUp();
 
-	uint LoadTexture(const char* file, uint* width, uint* height);
+	Material* LoadTexture(const char* file);
 
 	void RecieveEvent(Event& ev);
 

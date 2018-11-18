@@ -44,10 +44,12 @@ bool ModuleTextureLoader::CleanUp()
 }
 
 
-uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _height)
+Material* ModuleTextureLoader::LoadTexture(const char* file)
 {
-	ILuint buffernumber = 0;
+	Material* mat = new Material();
 
+	ILuint buffernumber = 0;
+	
 	bool textureLoaded = false;
 
 	std::string initial = file;
@@ -82,9 +84,9 @@ uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _he
 			iluFlipImage();
 	
 		ILuint width = ilGetInteger(IL_IMAGE_WIDTH);
-		*_width = width;
+		mat->tex_width = width;
 		ILuint height = ilGetInteger(IL_IMAGE_HEIGHT);
-		*_height = height;
+		mat->tex_height = height;
 		ILbyte* pixmap = new ILbyte[width * height * 4];
 		ilCopyPixels(0, 0, 0, width, height, 1, IL_RGBA,
 			IL_UNSIGNED_BYTE, pixmap);
@@ -99,6 +101,25 @@ uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _he
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
 			0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap);
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+		mat->texture_buffer_id = buffernumber;
+
+		std::string file_name;
+		if (nameoffile.c_str() == "")
+			file_name = nameoffile;
+		else
+			file_name = file;
+
+		size_t lastindex = file_name.find_last_of(".");
+		std::string rawname;
+		rawname= file_name.substr(0, lastindex);
+
+		mat->path_in_library = "Library/Materials/";
+		mat->path_in_library +=	rawname;
+		mat->path_in_library += ".dds";
+
+
+		ilSave(IL_DDS, mat->path_in_library.c_str());
 
 		delete[] pixmap;
 		pixmap = nullptr;
@@ -118,7 +139,7 @@ uint ModuleTextureLoader::LoadTexture(const char* file, uint* _width,  uint* _he
 
 	}
 
-	return buffernumber;
+	return mat;
 }
 
 void ModuleTextureLoader::RecieveEvent(Event& ev)
