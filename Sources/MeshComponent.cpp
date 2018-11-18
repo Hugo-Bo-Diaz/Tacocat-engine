@@ -132,6 +132,8 @@ void Component_Mesh::Update(float dt)
 		App->importer->mesh->CreateOwnFile(mesh);
 	}
 
+	if (parent->Iselected()) 
+		draw_bounding_box();
 }
 
 //void Component_Mesh::generate_buffer()
