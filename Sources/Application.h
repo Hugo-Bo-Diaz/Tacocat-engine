@@ -52,7 +52,6 @@ public:
 	float random_between_0_1();
 
 	void SaveConfig(const char* filename);
-	void Createdir(const std::string & path);
 	void LoadConfig(const char* filename);
 
 	void BroadcastEvent(Event& ev);

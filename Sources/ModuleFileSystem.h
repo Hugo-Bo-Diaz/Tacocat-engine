@@ -98,5 +98,5 @@ public:
 	void GetFilesFromDirectory(const char* directory);
 
 private:
-
+	void Createdir(const std::string & path);
 };

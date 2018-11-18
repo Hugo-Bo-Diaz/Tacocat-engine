@@ -16,6 +16,9 @@ ModuleFileSystem::ModuleFileSystem(bool start_enabled)
 
 	GetFilesFromDirectory(current_directory.c_str());
 
+	Createdir("./Library");
+	Createdir("./Library/Materials");
+	Createdir("./Library/Meshes");
 }
 
 ModuleFileSystem::~ModuleFileSystem()
@@ -264,4 +267,16 @@ void Resource::Generate_in_Library()
 			break;
 		}
 	}
+}
+
+void ModuleFileSystem::Createdir(const std::string& path)
+{
+	DWORD ftyp = GetFileAttributesA(path.c_str());
+	LPCSTR file = path.c_str();
+	if (ftyp == INVALID_FILE_ATTRIBUTES) {
+		CreateDirectory(file, NULL);//Doesn't exist
+		SetFileAttributes(file, FILE_ATTRIBUTE_HIDDEN);
+	}
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY);
+	//It exists
 }
