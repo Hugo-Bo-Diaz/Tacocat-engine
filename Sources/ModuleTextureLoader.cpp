@@ -64,13 +64,18 @@ Material* ModuleTextureLoader::LoadTexture(const char* file)
 	ilBindImage(buffernumber);
 	
 	ILboolean success;
-	if (nameoffile != "")
+	if (nameoffile != "" && initial.find("Library",0) == std::string::npos)
 	{
 		std::string fin = "street" + nameoffile;//HARDCODED: NEEDS TO BE RESOURCED SYSTEM'D
 		success = ilLoadImage(fin.c_str());
 	}
+
 	else
 		success = ilLoadImage(file);
+	if (file == "Library/Materials\\building_016_c.dds")
+	{
+		App->UI->console->AddLog("lol");
+	}
 
 	//Image loaded successfully
 	if (success == IL_TRUE)
@@ -81,7 +86,9 @@ Material* ModuleTextureLoader::LoadTexture(const char* file)
 		ILinfo ImageInfo;
 		iluGetImageInfo(&ImageInfo);
 		if (ImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
-			iluFlipImage();
+		{
+				iluFlipImage();
+		}
 	
 		ILuint width = ilGetInteger(IL_IMAGE_WIDTH);
 		mat->tex_width = width;
@@ -105,21 +112,24 @@ Material* ModuleTextureLoader::LoadTexture(const char* file)
 		mat->texture_buffer_id = buffernumber;
 
 		std::string file_name;
-		if (nameoffile.c_str() == "")
+		if (nameoffile.c_str() != ""&& initial.find("Library", 0) == std::string::npos)
 			file_name = nameoffile;
 		else
 			file_name = file;
-
+		
+		if (initial.find("Library", 0) == std::string::npos)
+		{
 		size_t lastindex = file_name.find_last_of(".");
 		std::string rawname;
 		rawname= file_name.substr(0, lastindex);
 
-		mat->path_in_library = "Library/Materials/";
+		mat->path_in_library = "Library/Materials";
 		mat->path_in_library +=	rawname;
 		mat->path_in_library += ".dds";
 
-
 		ilSave(IL_DDS, mat->path_in_library.c_str());
+		}
+
 
 		delete[] pixmap;
 		pixmap = nullptr;

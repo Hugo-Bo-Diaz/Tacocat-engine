@@ -29,7 +29,7 @@ public:
 
 	bool not_working = false;
 
-	Material* material;
+	Material* material =nullptr;
 	uint materialUID = 0;
 
 	void SetMaterial(Material* mat) { material = mat; }

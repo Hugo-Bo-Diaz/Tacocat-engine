@@ -50,6 +50,7 @@ uint ModuleFileSystem::AddResource(Mesh * mesh, const char* path)
 	r->mesh.ptr = mesh;
 	r->type = RES_MESH;
 	r->path = path;
+	mesh->Resource_UID = r->UID;
 
 	resources.push_back(r);
 

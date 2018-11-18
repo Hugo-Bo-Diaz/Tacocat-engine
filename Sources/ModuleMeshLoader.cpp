@@ -134,6 +134,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		{
 			m = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
 			m_comp->mesh = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
+			m_comp->resource_id = m->Resource_UID;
 
 		}
 		else
@@ -141,7 +142,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 			m = new Mesh();
 			m_comp->mesh = m;
-
+			m_comp->resource_id = m->Resource_UID;
 
 			m->num_vertex = iterator->mNumVertices;
 			m->vertex = new float[m->num_vertex * 3];

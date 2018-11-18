@@ -127,15 +127,11 @@ void Component_Mesh::Update(float dt)
 {
 	mesh->Draw();
 
-	//if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-	//{
-	//	App->importer->mesh->CreateOwnFile(mesh);
-	//}
-	//if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	//{
-	//	bounding_box.Translate(float3(10, 0, 10));
-	//	//App->importer->mesh->Import();
-	//}
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		App->importer->mesh->CreateOwnFile(mesh);
+	}
+
 }
 
 //void Component_Mesh::generate_buffer()
