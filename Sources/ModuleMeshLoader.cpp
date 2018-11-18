@@ -67,6 +67,7 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 	total_scene_bounding_box = new AABB({100,100,100}, {-100,-100,-100});
 
 	GameObject* parent = App->scene_controller->current_scene->AddGameObject();
+	parent->name = file;
 
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
@@ -97,12 +98,20 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 	{
 		//GameObject* Object = new GameObject();
 		//par->AddChild(Object);
+		std::string lol = node->mName.C_Str();	
+		if (lol== "City_building_010" || lol == "City_building_016"|| lol == "City_building_017")
+		{
+
+			par->name = "wtf";
+		}
 		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
 
 		Component_Mesh* m_comp = new Component_Mesh();
 		par->AddComponent(m_comp);
 
-		Mesh* m;
+		Mesh* m; 
+
+
 
 		std::string path = originfile;
 		path += "/";
@@ -173,7 +182,7 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			App->fsys->AddResource(m, path.c_str());
 		}
 
-		par->name = iterator->mName.C_Str();
+		//par->name = iterator->mName.C_Str();
 
 		//parent->AddComponent(TRANSFORM) @DANI
 
