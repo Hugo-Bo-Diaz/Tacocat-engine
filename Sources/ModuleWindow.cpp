@@ -231,6 +231,11 @@ void ModuleWindow::Configuration()
 	{
 		SDL_SetWindowSize(window, width, height);
 		App->renderer3D->OnResize(width, height);
+
+		Event* ev = new Event(Event::window_resize);
+		ev->point2d.x = width;
+		ev->point2d.y = height;
+		App->BroadcastEvent(*ev);
 	}
 }
 
