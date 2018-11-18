@@ -232,7 +232,14 @@ std::vector<Component_Mesh*>* GameObject::GetAllMeshes(std::vector<Component_Mes
 void GameObject::Properties()
 {
 	//ImGui::Text("%s", name);
-	if(ImGui::Checkbox("Static", &static_object))
+	ImGui::Checkbox("Static", &static_object);
+
+	if (!children.empty()) {
+		for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+		{
+			(*it)->static_object = static_object;
+		}
+	}
 	
 	if(static_object && !App->scene_controller->current_scene->tree->CheckSpooktree(this))
 		App->scene_controller->current_scene->tree->IntoSpooktree(this);
