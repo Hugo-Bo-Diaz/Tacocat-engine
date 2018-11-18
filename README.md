@@ -23,6 +23,7 @@ Made by
 * With the primitives window you can display one primitive primitive at a time changing the parameters and clicking the button of the primitive you want
 * Press Left Mouse button to select game objects
 * Press V to serialize the scene
+* To load without transformations press L and then K
 
 ### UI
 
