@@ -40,6 +40,9 @@
     <Filter Include="Sources\Resources">
       <UniqueIdentifier>{7118a3ac-9a55-4004-a99e-227aa77d550c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Helpers\WWise">
+      <UniqueIdentifier>{7509048e-1609-4c06-96c7-508732fce443}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -366,6 +369,87 @@
     <ClInclude Include="Material.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\AkPlatforms.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\IBytes.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkBytesMem.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkCallback.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkCommonDefs.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkDynamicDialogue.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkDynamicSequence.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkFPUtilities.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkMemoryMgr.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkMidiTypes.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkModule.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkQueryParameters.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkSimd.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkSoundEngine.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkSoundEngineExport.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkSpeakerConfig.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkSpeakerVolumes.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkStreamMgrModule.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkTypes.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\AkVirtualAcoustics.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\IAkMixerPlugin.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\IAkPlugin.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\IAkPluginMemAlloc.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\IAkProcessorFeatures.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\IAkRTPCSubscriber.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
+    <ClInclude Include="AK\SoundEngine\Common\IAkStreamMgr.h">
+      <Filter>Sources\Helpers\WWise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -586,6 +670,9 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
