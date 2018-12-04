@@ -52,6 +52,11 @@ bool Mesh::ContainsAaBox(const AABB& refBox, const Frustum & frustum) const
 	return true;
 }
 
+void Mesh::Recalculate_bounding_box()
+{
+
+}
+
 void Mesh::Draw()
 {
 	if (material == nullptr && materialUID != 0)
@@ -61,7 +66,7 @@ void Mesh::Draw()
 			material = res->mat.ptr;
 	}
 
-	if (CheckFrustumCulling(App->scene_controller->GetMainCamera()) && !not_working)
+	if (/*CheckFrustumCulling(App->scene_controller->GetMainCamera()) && */!not_working)
 	{
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -106,6 +111,11 @@ void Mesh::Draw()
 
 	}
 }
+void Mesh::DrawBoundingBox()
+{
+
+}
+
 Mesh::~Mesh()
 {
 	if (tex_coords != nullptr)

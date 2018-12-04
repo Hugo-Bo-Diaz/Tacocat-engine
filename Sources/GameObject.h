@@ -62,7 +62,8 @@ public:
 	};
 
 	AABB GetBoundingBox();
-	AABB BoundingBox;
+	void DrawBoundingBox();
+	AABB bounding_box;
 
 	void Hierarchy();
 

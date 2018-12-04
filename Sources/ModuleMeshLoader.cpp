@@ -220,7 +220,8 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 		
 
 		transform->transform_local = float4x4::FromTRS(p,r,s);
-		m->bounding_box.Scale(m->bounding_box.CenterPoint(), s);
+		//m->bounding_box.Scale(m->bounding_box.CenterPoint(), s);
+
 		//m->bounding_box.Translate(float3( transform->position.x,transform->position.y,transform->position.z ));
 		
 		Component_Material* mat_comp = new Component_Material();
