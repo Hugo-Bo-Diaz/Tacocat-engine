@@ -99,196 +99,226 @@ void ModuleMeshLoader::Load_mesh(const char* file, Scene* scene_to)//TODO, RECIE
 
 void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScene* scene, const char* originfile)
 {
-	GameObject* par = new GameObject();
-	parent->AddChild(par);
 
-
-	
-	for (int i = 0; i < node->mNumMeshes; ++i)
+	if (GetTotalMeshesInNode(node) && node->mTransformation.IsIdentity())
 	{
-		//GameObject* Object = new GameObject();
-		//par->AddChild(Object);
-		std::string lol = node->mName.C_Str();	
-		if (lol== "City_building_010" || lol == "City_building_016"|| lol == "City_building_017")
+		if (node->mNumChildren > 0)
 		{
-
-			par->name = "wtf";
+			for (int i = 0; i < node->mNumChildren; ++i)
+			{
+				if (GetTotalMeshesInNode(node->mChildren[i]))
+					Load_node(node->mChildren[i], parent, scene, originfile);
+			}
 		}
-		aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
+	}
+	else
+	{
+		GameObject* par = new GameObject();
+		parent->AddChild(par);
+		for (int i = 0; i < node->mNumMeshes; ++i)
+		{
+			//GameObject* Object = new GameObject();
+			//par->AddChild(Object);
+			//std::string lol = node->mName.C_Str();	
+			//if (lol== "City_building_010" || lol == "City_building_016"|| lol == "City_building_017")
+			//{
+
+			//	par->name = "wtf";
+			//}
+			aiMesh* iterator = scene->mMeshes[node->mMeshes[i]];
 		
 
-		Component_Mesh* m_comp = new Component_Mesh();
-		par->AddComponent(m_comp);
+			Component_Mesh* m_comp = new Component_Mesh();
+			par->AddComponent(m_comp);
 
-		Mesh* m; 
+			Mesh* m; 
 
 
 
-		std::string path = originfile;
-		path += "/";
-		//path += iterator->mName.C_Str();
-		std::string nmae = node->mName.C_Str();
-		path += nmae;
-		par->name = nmae;
-		if (App->fsys->ResourceFromPath(path.c_str()) != nullptr)
-		{
-			m = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
-			m_comp->mesh = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
-			m_comp->resource_id = m->Resource_UID;
-
-		}
-		else
-		{
-
-			m = new Mesh();
-			m_comp->mesh = m;
-			m_comp->resource_id = m->Resource_UID;
-
-			m->num_vertex = iterator->mNumVertices;
-			m->vertex = new float[m->num_vertex * 3];
-			memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
-			if (iterator->HasFaces())
+			std::string path = originfile;
+			path += "/";
+			//path += iterator->mName.C_Str();
+			std::string nmae = node->mName.C_Str();
+			path += nmae;
+			par->name = nmae;
+			if (App->fsys->ResourceFromPath(path.c_str()) != nullptr)
 			{
-				m->num_index = iterator->mNumFaces * 3;
-				m->index = new uint[m->num_index]; // assume each face is a triangle
-				for (uint i = 0; i < iterator->mNumFaces; ++i)
+				m = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
+				m_comp->mesh = App->fsys->ResourceFromPath(path.c_str())->mesh.ptr;
+				m_comp->resource_id = m->Resource_UID;
+
+			}
+			else
+			{
+
+				m = new Mesh();
+				m_comp->mesh = m;
+				m_comp->resource_id = m->Resource_UID;
+
+				m->num_vertex = iterator->mNumVertices;
+				m->vertex = new float[m->num_vertex * 3];
+				memcpy(m->vertex, iterator->mVertices, sizeof(float) * m->num_vertex * 3);
+				if (iterator->HasFaces())
 				{
-					if (iterator->mFaces[i].mNumIndices != 3)
+					m->num_index = iterator->mNumFaces * 3;
+					m->index = new uint[m->num_index]; // assume each face is a triangle
+					for (uint i = 0; i < iterator->mNumFaces; ++i)
 					{
-						App->UI->console->AddLog("geometry messed up");
-						m->not_working = true;
+						if (iterator->mFaces[i].mNumIndices != 3)
+						{
+							App->UI->console->AddLog("geometry messed up");
+							m->not_working = true;
+						}
+
+						else
+							memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 					}
-
-					else
-						memcpy(&m->index[i * 3], iterator->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
-			}
-			if (iterator->HasTextureCoords(0))
-			{
-				m->tex_coords = new float[m->num_vertex * 2];
-				uint w = 0;
-				for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
+				if (iterator->HasTextureCoords(0))
 				{
-					memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
-					memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
-					++w;
+					m->tex_coords = new float[m->num_vertex * 2];
+					uint w = 0;
+					for (uint i = 0; i < iterator->mNumVertices * 2; i += 2)
+					{
+						memcpy(&m->tex_coords[i], &iterator->mTextureCoords[0][w].x, sizeof(float));
+						memcpy(&m->tex_coords[i + 1], &iterator->mTextureCoords[0][w].y, sizeof(float));
+						++w;
+					}
 				}
+
+				if (iterator->HasNormals())
+				{
+					m->num_normals = iterator->mNumVertices;
+					m->normals = new float[m->num_normals * 3];
+					memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
+				}
+
+				m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
+
+
+				glGenBuffers(1, (GLuint*) &(m->buffer_id));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+
+				App->fsys->AddResource(m, path.c_str());
 			}
 
-			if (iterator->HasNormals())
+			//par->name = iterator->mName.C_Str();
+
+			//parent->AddComponent(TRANSFORM) @DANI
+			Component_Transform* transform = new Component_Transform();
+			par->AddComponent(transform);
+
+			node->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
+			transform->rotation_angle = transform->rotation.GetEuler();
+
+			float3 p,s;
+			p.x = transform->position.x;
+			p.y = transform->position.y;
+			p.z = transform->position.z;
+
+			s.x = transform->scaling.x;
+			s.y = transform->scaling.y;
+			s.z = transform->scaling.z;
+
+			Quat r;
+			r.x = transform->rotation.x;
+			r.y = transform->rotation.y;
+			r.z = transform->rotation.z;
+			r.w = transform->rotation.w;
+		
+
+			transform->transform_local = float4x4::FromTRS(p,r,s);
+			//m->bounding_box.Scale(m->bounding_box.CenterPoint(), s);
+
+			//m->bounding_box.Translate(float3( transform->position.x,transform->position.y,transform->position.z ));
+		
+			Component_Material* mat_comp = new Component_Material();
+			par->AddComponent((Component*)mat_comp);
+			Material* mat; 
+
+			//uint material_UID = App->fsys->AddResource(mat, originfile);
+			uint material_index = iterator->mMaterialIndex;
+
+			//m->material = mat;
+
+			const aiMaterial* material = scene->mMaterials[material_index];
+			aiString texturePath;
+
+			unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
+
+			if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
 			{
-				m->num_normals = iterator->mNumVertices;
-				m->normals = new float[m->num_normals * 3];
-				memcpy(m->normals, iterator->mNormals, sizeof(float)*m->num_normals * 3);
+				material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+				//mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
+			
+				Resource* r = App->fsys->LoadFile(texturePath.C_Str());
+				mat = r->mat.ptr;
+				m->materialUID = r->UID;
+				mat_comp->material = mat;
+
 			}
 
-			m->bounding_box = m->bounding_box.MinimalEnclosingAABB((float3*)m->vertex, m->num_vertex);
-
-
-			glGenBuffers(1, (GLuint*) &(m->buffer_id));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffer_id);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*m->num_index, &m->index[0], GL_STATIC_DRAW);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-			App->fsys->AddResource(m, path.c_str());
 		}
 
-		//par->name = iterator->mName.C_Str();
-
-		//parent->AddComponent(TRANSFORM) @DANI
-		Component_Transform* transform = new Component_Transform();
-		par->AddComponent(transform);
-
-		node->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
-		transform->rotation_angle = transform->rotation.GetEuler();
-
-		float3 p,s;
-		p.x = transform->position.x;
-		p.y = transform->position.y;
-		p.z = transform->position.z;
-
-		s.x = transform->scaling.x;
-		s.y = transform->scaling.y;
-		s.z = transform->scaling.z;
-
-		Quat r;
-		r.x = transform->rotation.x;
-		r.y = transform->rotation.y;
-		r.z = transform->rotation.z;
-		r.w = transform->rotation.w;
-		
-
-		transform->transform_local = float4x4::FromTRS(p,r,s);
-		//m->bounding_box.Scale(m->bounding_box.CenterPoint(), s);
-
-		//m->bounding_box.Translate(float3( transform->position.x,transform->position.y,transform->position.z ));
-		
-		Component_Material* mat_comp = new Component_Material();
-		par->AddComponent((Component*)mat_comp);
-		Material* mat; 
-
-		//uint material_UID = App->fsys->AddResource(mat, originfile);
-		uint material_index = iterator->mMaterialIndex;
-
-		//m->material = mat;
-
-		const aiMaterial* material = scene->mMaterials[material_index];
-		aiString texturePath;
-
-		unsigned int numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);   // always 0
-
-		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+		if (node->mNumMeshes == 0)
 		{
-			material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-			//mat->texture_buffer_id = App->tex_loader->LoadTexture(texturePath.C_Str(), &(mat->tex_width), &(mat->tex_height));
-			
-			Resource* r = App->fsys->LoadFile(texturePath.C_Str());
-			mat = r->mat.ptr;
-			m->materialUID = r->UID;
-			mat_comp->material = mat;
+			Component_Transform* transform = new Component_Transform();
+			par->AddComponent(transform);
+
+
+			node->mTransformation.Decompose(transform->scaling, transform->rotation, transform->position);
+
+			float3 p, s;
+			p.x = transform->position.x;
+			p.y = transform->position.y;
+			p.z = transform->position.z;
+
+			s.x = transform->scaling.x;
+			s.y = transform->scaling.y;
+			s.z = transform->scaling.z;
+
+			Quat r;
+			r.x = transform->rotation.x;
+			r.y = transform->rotation.y;
+			r.z = transform->rotation.z;
+			r.w = transform->rotation.w;
+
+
+			transform->transform_local = float4x4::FromTRS(p, r, s);
 
 		}
-
+		if (node->mNumChildren > 0)
+		{
+			for (int i = 0; i < node->mNumChildren; ++i)
+			{
+				Load_node(node->mChildren[i], par, scene, originfile);
+			}
+		}
 	}
 
-	if (node->mNumMeshes == 0)
-	{
-		Component_Transform* transform = new Component_Transform();
-		par->AddComponent(transform);
-
-
-		node->mTransformation.Decompose(transform->scaling, transform->rotation, transform->position);
-
-		float3 p, s;
-		p.x = transform->position.x;
-		p.y = transform->position.y;
-		p.z = transform->position.z;
-
-		s.x = transform->scaling.x;
-		s.y = transform->scaling.y;
-		s.z = transform->scaling.z;
-
-		Quat r;
-		r.x = transform->rotation.x;
-		r.y = transform->rotation.y;
-		r.z = transform->rotation.z;
-		r.w = transform->rotation.w;
-
-
-		transform->transform_local = float4x4::FromTRS(p, r, s);
-
-	}
 	
 
+
+	
+}
+
+int ModuleMeshLoader::GetTotalMeshesInNode(aiNode * node)
+{
+	int ret = 0;
+	ret += node->mNumMeshes;
 	if (node->mNumChildren > 0)
 	{
 		for (int i = 0; i < node->mNumChildren; ++i)
 		{
-			Load_node(node->mChildren[i],par,scene,originfile);
+			ret += GetTotalMeshesInNode(node->mChildren[i]);
 		}
 	}
-	
+
+
+	return ret;
 }
 
 void ModuleMeshLoader::FocusCamera()
