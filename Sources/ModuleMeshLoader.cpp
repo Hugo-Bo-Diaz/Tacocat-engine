@@ -133,8 +133,6 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 
 			Mesh* m; 
 
-
-
 			std::string path = originfile;
 			path += "/";
 			//path += iterator->mName.C_Str();
@@ -211,8 +209,10 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			Component_Transform* transform = new Component_Transform();
 			par->AddComponent(transform);
 
-			node->mTransformation.Decompose(transform->scaling,transform->rotation, transform->position);
-			transform->rotation_angle = transform->rotation.GetEuler();
+			Quat r;
+			aiQuaternion rot;
+
+			node->mTransformation.Decompose(transform->scaling, rot, transform->position);
 
 			float3 p,s;
 			p.x = transform->position.x;
@@ -223,12 +223,12 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			s.y = transform->scaling.y;
 			s.z = transform->scaling.z;
 
-			Quat r;
-			r.x = transform->rotation.x;
-			r.y = transform->rotation.y;
-			r.z = transform->rotation.z;
-			r.w = transform->rotation.w;
-		
+			r.x = rot.x;
+			r.y = rot.y;
+			r.z = rot.z;
+			r.w = rot.w;
+			transform->rotation = r;
+
 
 			transform->transform_local = float4x4::FromTRS(p,r,s);
 			//m->bounding_box.Scale(m->bounding_box.CenterPoint(), s);
@@ -269,7 +269,10 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			par->AddComponent(transform);
 
 
-			node->mTransformation.Decompose(transform->scaling, transform->rotation, transform->position);
+			Quat r;
+			aiQuaternion rot;
+
+			node->mTransformation.Decompose(transform->scaling, rot, transform->position);
 
 			float3 p, s;
 			p.x = transform->position.x;
@@ -280,11 +283,11 @@ void ModuleMeshLoader::Load_node(aiNode * node, GameObject * parent,const aiScen
 			s.y = transform->scaling.y;
 			s.z = transform->scaling.z;
 
-			Quat r;
-			r.x = transform->rotation.x;
-			r.y = transform->rotation.y;
-			r.z = transform->rotation.z;
-			r.w = transform->rotation.w;
+			r.x = rot.x;
+			r.y = rot.y;
+			r.z = rot.z;
+			r.w = rot.w;
+			transform->rotation = r;
 
 
 			transform->transform_local = float4x4::FromTRS(p, r, s);

@@ -17,6 +17,8 @@ void Component_Transform::Calculate_Global_Matrix(float4x4 globalmatrixoftheobje
 	transform_global = globalmatrixoftheobject * transform_local;
 }
 
+
+
 Component_Transform::~Component_Transform()
 {
 
@@ -73,13 +75,16 @@ void Component_Transform::Properties()
 	float3 Position, Rotation, Scale;
 
 	Position = { position[0], position[1], position[2] };
-	Rotation = { RadToDeg(rotation.GetEuler().x), RadToDeg(rotation.GetEuler().y), RadToDeg(rotation.GetEuler().z)};
+	//Rotation = { RadToDeg(rotation.GetEuler().x), RadToDeg(rotation.GetEuler().y), RadToDeg(rotation.GetEuler().z)};
+	Rotation = rotation.ToEulerXYZ();
 	Scale = { scaling[0], scaling[1], scaling[2] };
 
 	if(ImGui::CollapsingHeader("Transform"))
 	{
 		ImGui::DragFloat3("Pos", &Position[0], 0.2f, -100.0f, 100.0f);
-		ImGui::DragFloat3("Rot", &Rotation[0], 0.01f, -359.9f, 360.0f);
+		ImGui::DragFloat3("Rot", &Rotation[0], 0.01f);
+		//ImGui::InputFloat3("Rot",&Rotation[0]);
+		//Rotation.x += 0.1;
 		ImGui::DragFloat3("Scale", &Scale[0], 0.2f, -100.0f, 100.0f);
 		ImGui::Separator();
 
@@ -89,13 +94,37 @@ void Component_Transform::Properties()
 
 		}
 
-		if (Rotation.x != RadToDeg(rotation.GetEuler().x) || Rotation.y != RadToDeg(rotation.GetEuler().y) || Rotation.z != RadToDeg(rotation.GetEuler().z))
+		//if (Rotation.x != rotation.GetEuler().x || Rotation.y != rotation.GetEuler().y || Rotation.z != rotation.GetEuler().z)
+		if (Rotation.x != rotation.ToEulerXYZ().x || Rotation.y != rotation.ToEulerXYZ().y || Rotation.z != rotation.ToEulerXYZ().z)
 		{
-			Quat quaternion = quaternion.FromEulerXYZ(Rotation.x, Rotation.y, Rotation.z);
-			rotation.x = quaternion.x;
-			rotation.y = quaternion.y;
-			rotation.z = quaternion.z;
-			rotation.w = quaternion.w;
+			//aiVector3D v;
+			//v.x = Rotation.x;
+			//v.y = Rotation.y;
+			//v.z = Rotation.z;
+
+			//rotation.Rotate(v);
+
+			//Quat quaternion;
+
+			//quaternion.x = rotation.x;
+			//quaternion.y = rotation.y;
+			//quaternion.z = rotation.z;
+			//quaternion.w = rotation.w;
+			rotation = rotation.FromEulerXYZ(Rotation.x, Rotation.y, Rotation.z);
+			//rotation = rotation.RotateX(Rotation.x- rotation.ToEulerXYZ().x);
+			//rotation = rotation.RotateY(Rotation.y- rotation.ToEulerXYZ().y);
+			//rotation = rotation.RotateZ(Rotation.z- rotation.ToEulerXYZ().z);
+
+			//quaternion.RotateX(pi);
+			//quaternion.RotateY(Rotation.y);
+			//quaternion.RotateZ(Rotation.z);
+
+			////Quat quaternion = quaternion.FromEulerXYZ(Rotation.x, Rotation.y, Rotation.z);
+
+			//rotation.x = quaternion.x;
+			//rotation.y = quaternion.y;
+			//rotation.z = quaternion.z;
+			//rotation.w = quaternion.w;
 		}
 
 		if (Scale.x != scaling[0] || Scale.y != scaling[1] || Scale.z != scaling[2])
@@ -112,12 +141,12 @@ void Component_Transform::Properties()
 		s.y = scaling.y;
 		s.z = scaling.z;
 
-		Quat r;
-		r.x = rotation.x;
-		r.y = rotation.y;
-		r.z = rotation.z;
-		r.w = rotation.w;
 
-		transform_local = float4x4::FromTRS(p, r, s);
+		transform_local = float4x4::FromTRS(p, rotation, s);
 	}
+}
+
+void Component_Transform::Rotate(float angle_x, float angle_y, float angle_z)
+{
+	//rotation.Rotate
 }

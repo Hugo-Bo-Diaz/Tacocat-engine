@@ -25,7 +25,7 @@ public:
 	Component_Transform();
 
 	aiVector3t<float> scaling;
-	aiQuaternion rotation;
+	Quat rotation;
 	aiVector3t<float> rotation_angle;
 	aiVector3t< float > position;
 
@@ -33,6 +33,8 @@ public:
 	float4x4 transform_global = float4x4::identity;//use this for transformation in meshes
 
 	void Calculate_Global_Matrix(float4x4 globalmatrixoftheobject);
+
+	void Rotate(float angle_x, float angle_y, float angle_z);
 
 	~Component_Transform();
 
