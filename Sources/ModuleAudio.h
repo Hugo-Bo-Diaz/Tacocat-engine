@@ -2,8 +2,10 @@
 #define AUDIO_CLASS
 
 #include "Module.h"
-#include "AK/SoundEngine/Common/AkMemoryMgr.h"                  // Memory Manager
-#include "AK/SoundEngine/Common/AkModule.h"                     // Default memory and stream managers
+#include "Application.h"
+
+#include <AK/SoundEngine/Common/AkSoundEngine.h>
+#include <AK/IBytes.h>
 
 /////////////////////////////////////////////////////////////////////////////////
 // Custom alloc/free functions. These are declared as "extern" in AkMemoryMgr.h
