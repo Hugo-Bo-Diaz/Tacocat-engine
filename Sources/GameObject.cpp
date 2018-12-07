@@ -30,6 +30,7 @@ void GameObject::Update(float dt)
 		(*it)->Update(dt);
 	}	
 
+	bounding_box = GetBoundingBox();
 
 }
 
@@ -48,50 +49,159 @@ uint GameObject::GetTexture(uint index)
 
 AABB GameObject::GetBoundingBox()
 {
-	AABB box = {float3(100,100,100),float3(-100-100-100)};
-
+	AABB box;
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		if ((*it)->type == MESH)
 		{
-			if (((Component_Mesh*)(*it))->bounding_box.minPoint.x < box.minPoint.x)
-				box.minPoint.x = ((Component_Mesh*)(*it))->bounding_box.minPoint.x;
-			if (((Component_Mesh*)(*it))->bounding_box.minPoint.y < box.minPoint.y)
-				box.minPoint.y = ((Component_Mesh*)(*it))->bounding_box.minPoint.y;
-			if (((Component_Mesh*)(*it))->bounding_box.minPoint.z < box.minPoint.z)
-				box.minPoint.z = ((Component_Mesh*)(*it))->bounding_box.minPoint.z;
-
-			if (((Component_Mesh*)(*it))->bounding_box.maxPoint.x > box.maxPoint.x)
-				box.maxPoint.x = ((Component_Mesh*)(*it))->bounding_box.maxPoint.x;
-			if (((Component_Mesh*)(*it))->bounding_box.maxPoint.y > box.maxPoint.y)
-				box.maxPoint.y = ((Component_Mesh*)(*it))->bounding_box.maxPoint.y;
-			if (((Component_Mesh*)(*it))->bounding_box.maxPoint.z > box.maxPoint.z)
-				box.maxPoint.z = ((Component_Mesh*)(*it))->bounding_box.maxPoint.z;
+			box = ((Component_Mesh*)(*it))->bounding_box;
 		}
 	}
-	if (children.size() > 0)
-	{
-		for (std::list<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
-		{
-			AABB tmp = (*it_c)->GetBoundingBox();
 
-			if (tmp.minPoint.x < box.minPoint.x)
-				box.minPoint.x = tmp.minPoint.x;
-			if (tmp.minPoint.y < box.minPoint.y)
-				box.minPoint.y = tmp.minPoint.y;
-			if (tmp.minPoint.z < box.minPoint.z)
-				box.minPoint.z = tmp.minPoint.z;
+	//for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+	//{
+	//	if ((*it)->type == MESH)
+	//	{
+	//		if (((Component_Mesh*)(*it))->bounding_box.minPoint.x < box.minPoint.x)
+	//			box.minPoint.x = ((Component_Mesh*)(*it))->bounding_box.minPoint.x;
+	//		if (((Component_Mesh*)(*it))->bounding_box.minPoint.y < box.minPoint.y)
+	//			box.minPoint.y = ((Component_Mesh*)(*it))->bounding_box.minPoint.y;
+	//		if (((Component_Mesh*)(*it))->bounding_box.minPoint.z < box.minPoint.z)
+	//			box.minPoint.z = ((Component_Mesh*)(*it))->bounding_box.minPoint.z;
 
-			if (tmp.maxPoint.x > box.maxPoint.x)
-				box.maxPoint.x = tmp.maxPoint.x;
-			if (tmp.maxPoint.y > box.maxPoint.y)
-				box.maxPoint.y = tmp.maxPoint.y;
-			if (tmp.maxPoint.z > box.maxPoint.z)
-				box.maxPoint.z = tmp.maxPoint.z;
-		}
-	}
+	//		if (((Component_Mesh*)(*it))->bounding_box.maxPoint.x > box.maxPoint.x)
+	//			box.maxPoint.x = ((Component_Mesh*)(*it))->bounding_box.maxPoint.x;
+	//		if (((Component_Mesh*)(*it))->bounding_box.maxPoint.y > box.maxPoint.y)
+	//			box.maxPoint.y = ((Component_Mesh*)(*it))->bounding_box.maxPoint.y;
+	//		if (((Component_Mesh*)(*it))->bounding_box.maxPoint.z > box.maxPoint.z)
+	//			box.maxPoint.z = ((Component_Mesh*)(*it))->bounding_box.maxPoint.z;
+	//	}
+	//}
+	//if (children.size() > 0)
+	//{
+	//	for (std::list<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
+	//	{
+	//		AABB tmp = (*it_c)->GetBoundingBox();
+
+	//		if (tmp.minPoint.x < box.minPoint.x)
+	//			box.minPoint.x = tmp.minPoint.x;
+	//		if (tmp.minPoint.y < box.minPoint.y)
+	//			box.minPoint.y = tmp.minPoint.y;
+	//		if (tmp.minPoint.z < box.minPoint.z)
+	//			box.minPoint.z = tmp.minPoint.z;
+
+	//		if (tmp.maxPoint.x > box.maxPoint.x)
+	//			box.maxPoint.x = tmp.maxPoint.x;
+	//		if (tmp.maxPoint.y > box.maxPoint.y)
+	//			box.maxPoint.y = tmp.maxPoint.y;
+	//		if (tmp.maxPoint.z > box.maxPoint.z)
+	//			box.maxPoint.z = tmp.maxPoint.z;
+	//	}
+	//}
 
 	return box;
+}
+
+void GameObject::DrawBoundingBox()
+{
+	float3 c;
+	if (Iselected())
+	{
+		c = float3(0, 0, 0);
+	}
+	else
+	{
+		c = float3(1, 1, 1);
+	}
+
+	glDisable(GL_LIGHTING);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glBegin(GL_LINES);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.minPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.minPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glColor3f(c.x, c.y, c.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.minPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.minPoint.z);
+	glVertex3f(bounding_box.maxPoint.x, bounding_box.maxPoint.y, bounding_box.maxPoint.z);
+
+
+	glEnd();
+	glEnable(GL_LIGHTING);
+
+	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->DrawBoundingBox();
+	}
 }
 
 void GameObject::AddComponent(Component* comp)
@@ -131,8 +241,8 @@ GameObject::GameObject()
 	UID += month * 1000000;
 	UID += random ;
 
-	BoundingBox.minPoint = float3(-1,-1,-1);
-	BoundingBox.maxPoint = float3(1, 1, 1);
+	bounding_box.minPoint = float3(-1,-1,-1);
+	bounding_box.maxPoint = float3(1, 1, 1);
 
 
 	App->scene_controller->current_scene->number_of_gameobjects++;

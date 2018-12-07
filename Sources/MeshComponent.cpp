@@ -125,15 +125,21 @@ void Component_Mesh::draw_bounding_box()
 
 void Component_Mesh::Update(float dt)
 {
-	mesh->Draw();
+	if (App->renderer3D->conf_draw != 1 && CheckFrustumCulling(App->scene_controller->current_scene->spookamera))
+		mesh->Draw();
+
+	bounding_box = mesh->bounding_box; 
+	bounding_box.TransformAsAABB(parent->GetTransformComponent()->transform_global);
+
+	//if (App->renderer3D->conf_draw==2 || App->renderer3D->conf_draw == 1)
+	//	draw_bounding_box();
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
 		App->importer->mesh->CreateOwnFile(mesh);
 	}
 
-	if (parent->Iselected()) 
-		draw_bounding_box();
+
 }
 
 //void Component_Mesh::generate_buffer()

@@ -89,6 +89,8 @@ public:
 
 	void Load_node(aiNode* node, GameObject* parent,const aiScene* scene, const char* s);
 
+	int GetTotalMeshesInNode(aiNode* node);
+
 	//void Load_mesh_node(aiMesh* iterator_node, )
 
 	void FocusCamera();

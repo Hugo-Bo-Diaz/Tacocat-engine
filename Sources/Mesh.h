@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MESH_H
+#define MESH_H
 #include "Globals.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include "CameraComponent.h"
@@ -26,6 +27,7 @@ public:
 	float* normals = nullptr;
 
 	AABB bounding_box;
+	AABB base_bounding_box;
 
 	bool not_working = false;
 
@@ -36,10 +38,13 @@ public:
 
 	bool CheckFrustumCulling(Component_Camera * camera_to_check);
 	bool ContainsAaBox(const AABB & refBox, const Frustum& frustum) const;
+	void Recalculate_bounding_box();
 
 	void Draw();
+	void DrawBoundingBox();
 
 	~Mesh();
 
 };
 
+#endif

@@ -26,8 +26,17 @@ void Scene::Update(float dt)
 	{
 		(*it)->CalculateAllTransformMatrices(float4x4::identity);
 		(*it)->Update(dt);
-
 	}
+
+	if (App->renderer3D->conf_draw == 1 || App->renderer3D->conf_draw == 2)
+	{
+		for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+		{
+			(*it)->DrawBoundingBox();
+		}
+	}
+
+
 	spookamera->Update(dt);
 
 	tree->Draw();
