@@ -3,8 +3,9 @@
 #include <AK/SoundEngine/Common/AkMemoryMgr.h>                  // Memory Manager
 #include <AK/SoundEngine/Common/AkModule.h>                     // Default memory and stream managers
 
-ModuleAudio::ModuleAudio(bool start_enabled = true)
+ModuleAudio::ModuleAudio(bool start_enabled)
 {
+	Init();
 }
 
 
