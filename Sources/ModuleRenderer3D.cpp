@@ -382,10 +382,7 @@ void ModuleRenderer3D::BoundingBoxDraw()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINES);
 	glColor3f(0.0f, 0.75f, 0.0f);
 	glLineWidth(2.0f);
-	//for (std::vector<NOTmesh*>::iterator it = mesh_vector.begin(); it != mesh_vector.end(); it++)
-	//{
-	//	(*it)->draw_bounding_box();
-	//}
+
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 }

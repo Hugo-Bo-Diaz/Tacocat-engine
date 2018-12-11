@@ -139,7 +139,7 @@ void Scene::Load(const char * filename)
 			{
 				GameObject* obj = AddGameObject();
 				obj->UID = itr->value["UID"].GetInt();
-				uint parent_uid = itr->value["parentUID"].GetInt();
+				obj->parent_uid = itr->value["parentUID"].GetInt();
 
 				const rapidjson::Value& components = itr->value["Components"];
 
@@ -174,6 +174,22 @@ void Scene::Load(const char * filename)
 			{
 
 			}
+		}
+
+		std::vector<GameObject*> indexestoeliminate;
+		for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+		{
+			if ((*it)->parent_uid != 0)
+			{
+				GetObjectFromUID((*it)->parent_uid)->AddChild(*it);
+				indexestoeliminate.push_back(*it);
+			}
+		}
+		
+		for (std::vector<GameObject*>::iterator it_1 = indexestoeliminate.begin(); it_1 != indexestoeliminate.end(); ++it_1)
+		{
+			std::vector<GameObject*>::iterator u = std::find(GameObjects.begin(),GameObjects.end(),*it_1);
+			GameObjects.erase(u);
 		}
 
 	}

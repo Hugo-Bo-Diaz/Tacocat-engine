@@ -25,6 +25,7 @@ public:
 	GameObject();
 	~GameObject();
 	GameObject* parent = nullptr;
+	uint parent_uid = 0;
 
 	void AddComponent(Component* comp);
 	void AddChild(GameObject* child);

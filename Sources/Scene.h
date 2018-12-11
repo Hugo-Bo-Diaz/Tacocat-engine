@@ -35,6 +35,7 @@ public:
 	void Disable() { enabled = false; };
 
 	GameObject* AddGameObject();
+	GameObject* GetObjectFromUID(uint UID);
 
 	std::vector<GameObject*> GameObjects;
 

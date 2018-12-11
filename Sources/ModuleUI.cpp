@@ -1,6 +1,8 @@
 #include "ModuleUI.h"
 #include "Application.h"
 
+#include "TransformComponent.h"
+
 #include "imgui-docking/imgui.h"
 #include "imgui-docking/imgui_impl_sdl.h"
 #include "imgui-docking/imgui_impl_opengl2.h"
@@ -170,6 +172,8 @@ update_status ModuleUI::Update(float dt)
 
 	App->fsys->DrawUI();
 
+	DrawGuizmo();
+
 	ImGui::End();
 
 	return UPDATE_CONTINUE;
@@ -182,6 +186,81 @@ bool ModuleUI::CleanUp()
 	ImGui::DestroyContext();
 
 	return true;
+}
+
+void ModuleUI::DrawGuizmo()
+{
+
+	if (draw_guizmo)
+	{
+		ImGuizmo::BeginFrame();
+		float4x4 projection4x4;
+		float4x4 view4x4;
+
+		glGetFloatv(GL_MODELVIEW_MATRIX, (float*)view4x4.v);
+		glGetFloatv(GL_PROJECTION_MATRIX, (float*)projection4x4.v);
+
+		ImGuiIO& io = ImGui::GetIO();
+		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+
+		Component_Transform* transform = (Component_Transform*)App->scene_controller->GetMainCamera()->selected->GetTransformComponent();
+		Component_Transform* original;
+		Component_Transform aux;
+
+		switch (gizmo_operation)
+		{
+		case ImGuizmo::OPERATION::TRANSLATE:
+			aux.rotation = transform->rotation;
+			aux.position = transform->position;
+			break;
+		case ImGuizmo::OPERATION::ROTATE:
+			aux.position = transform->position;
+			aux.rotation = transform->rotation;
+			break;
+		case ImGuizmo::OPERATION::SCALE:
+			aux.position = transform->position;
+			aux.rotation = transform->rotation;
+			aux.scaling = transform->scaling;
+			break;
+		default:
+			break;
+		}
+
+		aux.Caluculate_Local_Matrix();
+		float4x4 mat = aux.transform_local;
+		mat.Transpose();
+		ImGuizmo::Manipulate((float*)view4x4.v, (float*)projection4x4.v, gizmo_operation, gizmo_mode, (float*)mat.v);
+		if (ImGuizmo::IsUsing())
+		{
+			float3 new_pos = float3::zero;
+			float3 new_rot = float3::zero;
+			float3 new_scale = float3::zero;
+			mat.Transpose();
+			switch (gizmo_operation)
+			{
+			case ImGuizmo::OPERATION::TRANSLATE:
+				transform->position.x = mat.TranslatePart().x;
+				transform->position.y = mat.TranslatePart().y;
+				transform->position.z = mat.TranslatePart().z;
+				break;
+			case ImGuizmo::OPERATION::ROTATE:
+				new_rot.x = mat.RotatePart().ToEulerXYZ().x;
+				new_rot.y = mat.RotatePart().ToEulerXYZ().y;
+				new_rot.z = mat.RotatePart().ToEulerXYZ().z;
+				transform->rotation = (Quat::FromEulerXYZ(new_rot.x, new_rot.y, new_rot.z));
+				break;
+			case ImGuizmo::OPERATION::SCALE:
+				transform->scaling.x = mat.GetScale().x;
+				transform->scaling.y = mat.GetScale().y;
+				transform->scaling.z = mat.GetScale().z;
+				break;
+			default:
+				break;
+			}
+			transform->Caluculate_Local_Matrix();
+			//transform->GlobalToLocal();
+		}
+	}
 }
 
 void ModuleUI::Draw()

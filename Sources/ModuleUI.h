@@ -13,6 +13,7 @@
 #include "UI_Properties.h"
 #include "UI_Gameobject.h"
 #include "UI_Time.h"
+#include "imgui-docking/ImGuizmo.h"
 
 class ModuleUI : public Module
 {
@@ -35,6 +36,13 @@ public:
 	//Send the fps data to the config window
 	void send_FPSdata(float value, float ms);
 
+	ImGuiIO* io;
+	ImGuizmo::OPERATION gizmo_operation = ImGuizmo::TRANSLATE;
+	ImGuizmo::MODE gizmo_mode = ImGuizmo::WORLD;
+
+	void DrawGuizmo();
+	bool draw_guizmo = true;
+
 	void Draw();
 
 private:
@@ -44,6 +52,7 @@ private:
 	//UI Components
 	bool draw_menu = true;
 	bool draw_demo = true;
+
 
 
 

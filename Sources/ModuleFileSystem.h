@@ -7,7 +7,7 @@
 
 #include "Mesh.h"
 #include "Material.h"
-
+#include "Audio.h"
 enum ResourceType
 {
 	RES_MESH,
@@ -40,6 +40,10 @@ struct Resource
 		{
 			Material* ptr = nullptr;
 		} mat;
+		struct
+		{
+			Audio* ptr = nullptr;
+		} aud;
 	};
 
 	void Generate_in_Library();

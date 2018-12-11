@@ -214,6 +214,7 @@ void GameObject::AddComponent(Component* comp)
 void GameObject::AddChild(GameObject * child)
 {
 	child->parent = this;
+	child->parent_uid = UID;
 	children.push_back(child);
 
 }

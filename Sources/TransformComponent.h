@@ -33,6 +33,7 @@ public:
 	float4x4 transform_global = float4x4::identity;//use this for transformation in meshes
 
 	void Calculate_Global_Matrix(float4x4 globalmatrixoftheobject);
+	void Caluculate_Local_Matrix();
 
 	void Rotate(float angle_x, float angle_y, float angle_z);
 

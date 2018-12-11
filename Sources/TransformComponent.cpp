@@ -17,6 +17,22 @@ void Component_Transform::Calculate_Global_Matrix(float4x4 globalmatrixoftheobje
 	transform_global = globalmatrixoftheobject * transform_local;
 }
 
+void Component_Transform::Caluculate_Local_Matrix()
+{
+
+	float3 p, s;
+	p.x = position.x;
+	p.y = position.y;
+	p.z = position.z;
+
+	s.x = scaling.x;
+	s.y = scaling.y;
+	s.z = scaling.z;
+
+
+	transform_local = float4x4::FromTRS(p, rotation, s);
+}
+
 
 
 Component_Transform::~Component_Transform()
