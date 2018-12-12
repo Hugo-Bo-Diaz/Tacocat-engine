@@ -13,6 +13,12 @@
 #include "UI_Properties.h"
 #include "UI_Gameobject.h"
 #include "UI_Time.h"
+
+
+#include "imgui-docking/imgui.h"
+#include "imgui-docking/imgui_impl_sdl.h"
+#include "imgui-docking/imgui_impl_opengl2.h"
+
 #include "imgui-docking/ImGuizmo.h"
 
 class ModuleUI : public Module
@@ -40,7 +46,7 @@ public:
 	ImGuizmo::OPERATION gizmo_operation = ImGuizmo::TRANSLATE;
 	ImGuizmo::MODE gizmo_mode = ImGuizmo::WORLD;
 
-	void DrawGuizmo();
+	void DrawGuizmoUI();
 	bool draw_guizmo = true;
 
 	void Draw();

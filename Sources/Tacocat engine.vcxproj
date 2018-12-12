@@ -14,7 +14,7 @@
     <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
     <ProjectName>Tacocat engine</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -92,6 +92,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="imgui-docking\imconfig.h" />
     <ClInclude Include="imgui-docking\imgui.h" />
+    <ClInclude Include="imgui-docking\ImGuizmo.h" />
     <ClInclude Include="imgui-docking\imgui_impl_opengl2.h" />
     <ClInclude Include="imgui-docking\imgui_impl_sdl.h" />
     <ClInclude Include="imgui-docking\imgui_internal.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="CylinderMine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="imgui-docking\imgui.cpp" />
+    <ClCompile Include="imgui-docking\ImGuizmo.cpp" />
     <ClCompile Include="imgui-docking\imgui_demo.cpp" />
     <ClCompile Include="imgui-docking\imgui_draw.cpp" />
     <ClCompile Include="imgui-docking\imgui_impl_opengl2.cpp" />

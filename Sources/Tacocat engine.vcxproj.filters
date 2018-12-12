@@ -375,6 +375,9 @@
     <ClInclude Include="Audio.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="imgui-docking\ImGuizmo.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -604,6 +607,9 @@
     </ClCompile>
     <ClCompile Include="Audio.cpp">
       <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\ImGuizmo.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

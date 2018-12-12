@@ -3,9 +3,6 @@
 
 #include "TransformComponent.h"
 
-#include "imgui-docking/imgui.h"
-#include "imgui-docking/imgui_impl_sdl.h"
-#include "imgui-docking/imgui_impl_opengl2.h"
 
 ModuleUI::ModuleUI(bool start_enabled) : Module( start_enabled)
 {
@@ -172,7 +169,7 @@ update_status ModuleUI::Update(float dt)
 
 	App->fsys->DrawUI();
 
-	DrawGuizmo();
+	DrawGuizmoUI();
 
 	ImGui::End();
 
@@ -188,7 +185,7 @@ bool ModuleUI::CleanUp()
 	return true;
 }
 
-void ModuleUI::DrawGuizmo()
+void ModuleUI::DrawGuizmoUI()
 {
 
 	if (draw_guizmo)
@@ -203,62 +200,65 @@ void ModuleUI::DrawGuizmo()
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
 
-		Component_Transform* transform = (Component_Transform*)App->scene_controller->GetMainCamera()->selected->GetTransformComponent();
-		Component_Transform* original;
-		Component_Transform aux;
-
-		switch (gizmo_operation)
+		if ((Component_Transform*)App->scene_controller->GetMainCamera()->selected != nullptr)
 		{
-		case ImGuizmo::OPERATION::TRANSLATE:
-			aux.rotation = transform->rotation;
-			aux.position = transform->position;
-			break;
-		case ImGuizmo::OPERATION::ROTATE:
-			aux.position = transform->position;
-			aux.rotation = transform->rotation;
-			break;
-		case ImGuizmo::OPERATION::SCALE:
-			aux.position = transform->position;
-			aux.rotation = transform->rotation;
-			aux.scaling = transform->scaling;
-			break;
-		default:
-			break;
-		}
+			Component_Transform* transform = (Component_Transform*)App->scene_controller->GetMainCamera()->selected->GetTransformComponent();
+			Component_Transform* original;
+			Component_Transform aux;
 
-		aux.Caluculate_Local_Matrix();
-		float4x4 mat = aux.transform_local;
-		mat.Transpose();
-		ImGuizmo::Manipulate((float*)view4x4.v, (float*)projection4x4.v, gizmo_operation, gizmo_mode, (float*)mat.v);
-		if (ImGuizmo::IsUsing())
-		{
-			float3 new_pos = float3::zero;
-			float3 new_rot = float3::zero;
-			float3 new_scale = float3::zero;
-			mat.Transpose();
 			switch (gizmo_operation)
 			{
 			case ImGuizmo::OPERATION::TRANSLATE:
-				transform->position.x = mat.TranslatePart().x;
-				transform->position.y = mat.TranslatePart().y;
-				transform->position.z = mat.TranslatePart().z;
+				aux.rotation = transform->rotation;
+				aux.position = transform->position;
 				break;
 			case ImGuizmo::OPERATION::ROTATE:
-				new_rot.x = mat.RotatePart().ToEulerXYZ().x;
-				new_rot.y = mat.RotatePart().ToEulerXYZ().y;
-				new_rot.z = mat.RotatePart().ToEulerXYZ().z;
-				transform->rotation = (Quat::FromEulerXYZ(new_rot.x, new_rot.y, new_rot.z));
+				aux.position = transform->position;
+				aux.rotation = transform->rotation;
 				break;
 			case ImGuizmo::OPERATION::SCALE:
-				transform->scaling.x = mat.GetScale().x;
-				transform->scaling.y = mat.GetScale().y;
-				transform->scaling.z = mat.GetScale().z;
+				aux.position = transform->position;
+				aux.rotation = transform->rotation;
+				aux.scaling = transform->scaling;
 				break;
 			default:
 				break;
 			}
-			transform->Caluculate_Local_Matrix();
-			//transform->GlobalToLocal();
+
+			aux.Caluculate_Local_Matrix();
+			float4x4 mat = aux.transform_local;
+			mat.Transpose();
+			ImGuizmo::Manipulate((float*)view4x4.v, (float*)projection4x4.v, gizmo_operation, gizmo_mode, (float*)mat.v);
+			if (ImGuizmo::IsUsing())
+			{
+				float3 new_pos = float3::zero;
+				float3 new_rot = float3::zero;
+				float3 new_scale = float3::zero;
+				mat.Transpose();
+				switch (gizmo_operation)
+				{
+				case ImGuizmo::OPERATION::TRANSLATE:
+					transform->position.x = mat.TranslatePart().x;
+					transform->position.y = mat.TranslatePart().y;
+					transform->position.z = mat.TranslatePart().z;
+					break;
+				case ImGuizmo::OPERATION::ROTATE:
+					new_rot.x = mat.RotatePart().ToEulerXYZ().x;
+					new_rot.y = mat.RotatePart().ToEulerXYZ().y;
+					new_rot.z = mat.RotatePart().ToEulerXYZ().z;
+					transform->rotation = (Quat::FromEulerXYZ(new_rot.x, new_rot.y, new_rot.z));
+					break;
+				case ImGuizmo::OPERATION::SCALE:
+					transform->scaling.x = mat.GetScale().x;
+					transform->scaling.y = mat.GetScale().y;
+					transform->scaling.z = mat.GetScale().z;
+					break;
+				default:
+					break;
+				}
+				transform->Caluculate_Local_Matrix();
+				//transform->GlobalToLocal();
+			}
 		}
 	}
 }

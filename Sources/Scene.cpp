@@ -78,6 +78,11 @@ GameObject* Scene::AddGameObject()
 	return object;
 }
 
+GameObject * Scene::GetObjectFromUID(uint UID)
+{
+	return nullptr;
+}
+
 void Scene::Save(const char * filename)
 {
 	rapidjson::Document document;

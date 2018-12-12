@@ -4,8 +4,10 @@
 #include "Module.h"
 #include "Application.h"
 
-#include <AK/SoundEngine/Common/AkSoundEngine.h>
-#include <AK/IBytes.h>
+//#include "WWISESDK/AK/SoundEngine/Common/AkSoundEngine.h"
+//#include "WWISESDK/AK/IBytes.h"
+//#include <AK/SoundEngine/Common/AkSoundEngine.h>
+//#include <AK/IBytes.h>
 
 /////////////////////////////////////////////////////////////////////////////////
 // Custom alloc/free functions. These are declared as "extern" in AkMemoryMgr.h
