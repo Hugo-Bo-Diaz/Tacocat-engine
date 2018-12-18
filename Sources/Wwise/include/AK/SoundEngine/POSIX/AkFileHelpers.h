@@ -24,14 +24,20 @@ written agreement between you and Audiokinetic Inc.
 #define _AK_FILE_HELPERS_H_
 
 #include <AK/Tools/Common/AkAssert.h>
-#include <windows.h>
 #include <AK/SoundEngine/Common/AkStreamMgrModule.h>
+#include <sys/stat.h>
+
+#ifdef AK_EMSCRIPTEN
+	#include <errno.h>
+#else
+	#include <sys/errno.h>
+#endif
 
 class CAkFileHelpers
 {
 public:
 
-	// Wrapper for Win32 CreateFile().
+	// Wrapper for OS X CreateFile().
 	static AKRESULT OpenFile( 
         const AkOSChar* in_pszFilename,     // File name.
         AkOpenMode      in_eOpenMode,       // Open mode.
@@ -46,32 +52,21 @@ public:
 			AKASSERT( !"NULL file name" );
 			return AK_InvalidParameter;
 		}
-
-		// Open mode
-		DWORD dwShareMode;
-		DWORD dwAccessMode;
-		DWORD dwCreationDisposition;
+		
+		char* mode;
 		switch ( in_eOpenMode )
 		{
 			case AK_OpenModeRead:
-					dwShareMode = FILE_SHARE_READ | FILE_SHARE_WRITE;
-					dwAccessMode = GENERIC_READ;
-					dwCreationDisposition = OPEN_EXISTING;
+				mode = (char*)"r"; 
 				break;
 			case AK_OpenModeWrite:
-					dwShareMode = FILE_SHARE_READ;
-					dwAccessMode = GENERIC_WRITE;
-					dwCreationDisposition = OPEN_ALWAYS;
+				mode = (char*)"w";
 				break;
 			case AK_OpenModeWriteOvrwr:
-					dwShareMode = FILE_SHARE_READ;
-					dwAccessMode = GENERIC_WRITE;
-					dwCreationDisposition = CREATE_ALWAYS;
+				mode = (char*)"w+";
 				break;
 			case AK_OpenModeReadWrite:
-					dwShareMode = FILE_SHARE_READ;
-					dwAccessMode = GENERIC_READ | GENERIC_WRITE;
-					dwCreationDisposition = OPEN_ALWAYS;
+				mode = (char*)"a";
 				break;
 			default:
 					AKASSERT( !"Invalid open mode" );
@@ -79,45 +74,17 @@ public:
 					return AK_InvalidParameter;
 				break;
 		}
+		
+		out_hFile =	fopen( in_pszFilename , mode );
 
-		// Flags
-		DWORD dwFlags = FILE_FLAG_SEQUENTIAL_SCAN;
-		if ( in_bUnbufferedIO && in_eOpenMode == AK_OpenModeRead )
-			dwFlags |= FILE_FLAG_NO_BUFFERING;
-		if ( in_bOverlappedIO )
-			dwFlags |= FILE_FLAG_OVERLAPPED;
-
-		// Create the file handle.
-#if defined(AK_USE_UWP_API) && !defined(AK_XBOXONE) // Xbox One can use "normal" IO
-		out_hFile = ::CreateFile2( 
-			in_pszFilename,
-			dwAccessMode,
-			dwShareMode, 
-			dwCreationDisposition,
-			NULL );
-#else
-		out_hFile = ::CreateFileW( 
-			in_pszFilename,
-			dwAccessMode,
-			dwShareMode, 
-			NULL,
-			dwCreationDisposition,
-			dwFlags,
-			NULL );
-#endif
-		if( out_hFile == INVALID_HANDLE_VALUE )
+		if( !out_hFile )
 		{
-			DWORD dwAllocError = ::GetLastError();
-			if ( ERROR_FILE_NOT_FOUND == dwAllocError ||
-				 ERROR_PATH_NOT_FOUND == dwAllocError )
-				return AK_FileNotFound;
-
-			return AK_Fail;
+			return AK_FileNotFound;
 		}
 
 		return AK_Success;
 	}
-
+	
 	//Open file and fill AkFileDesc
 	static AKRESULT Open(
 		const AkOSChar* in_pszFileName,     // File name.
@@ -133,18 +100,15 @@ public:
 			in_bOverlapped,
 			in_bOverlapped, //No buffering flag goes in pair with overlapped flag for now.  Block size must be set accordingly
 			out_fileDesc.hFile );
-
-		if (eResult == AK_Success)
+		if ( eResult == AK_Success )
 		{
-#ifdef AK_USE_UWP_API
-			FILE_STANDARD_INFO info;
-			::GetFileInformationByHandleEx(out_fileDesc.hFile, FileStandardInfo, &info, sizeof(info));
-			out_fileDesc.iFileSize = info.EndOfFile.QuadPart;
-#else
-			ULARGE_INTEGER Temp;
-			Temp.LowPart = ::GetFileSize(out_fileDesc.hFile, (LPDWORD)&Temp.HighPart);
-			out_fileDesc.iFileSize = Temp.QuadPart;
-#endif
+			struct stat buf;
+			// Get Info about the file size
+			if( stat(in_pszFileName, &buf) != 0)
+			{
+				return AK_Fail;
+			}
+			out_fileDesc.iFileSize = buf.st_size;
 		}
 		return eResult;
 	}
@@ -152,8 +116,7 @@ public:
 	// Wrapper for system file handle closing.
 	static AKRESULT CloseFile( AkFileHandle in_hFile )
 	{
-		::FlushFileBuffers(in_hFile);
-		if ( ::CloseHandle( in_hFile ) )
+		if ( !fclose( in_hFile ) )
 			return AK_Success;
 		
 		AKASSERT( !"Failed to close file handle" );
@@ -194,17 +157,18 @@ public:
 		AKASSERT( in_uSizeToRead % s_uRequiredBlockSize == 0 
 			&& in_uPosition % s_uRequiredBlockSize == 0 );
 
-#ifdef AK_USE_UWP_API
-		LARGE_INTEGER uPosition;
-		uPosition.QuadPart = in_uPosition;
-		if ( SetFilePointerEx( in_hFile, uPosition, NULL, FILE_BEGIN ) == FALSE )
+		if( fseek(in_hFile, in_uPosition, SEEK_SET ) )
+		{
 			return AK_Fail;
-#else
-		if ( SetFilePointer( in_hFile, in_uPosition, NULL, FILE_BEGIN ) != in_uPosition )
-			return AK_Fail;
-#endif
-		if ( ::ReadFile( in_hFile, in_pBuffer, in_uSizeToRead, &out_uSizeRead, NULL ) )
+		}
+
+		out_uSizeRead = (AkUInt32) fread( in_pBuffer, 1, in_uSizeToRead , in_hFile );
+		
+		if( out_uSizeRead == in_uSizeToRead )
+		{
 			return AK_Success;
+		}
+		
 		return AK_Fail;		
 	}
 
@@ -213,24 +177,12 @@ public:
 	/// Some platforms may return AK_NotImplemented, in this case you cannot rely on it.
 	static AKRESULT CheckDirectoryExists( const AkOSChar* in_pszBasePath )
 	{
-		DWORD fileAttributes = INVALID_FILE_ATTRIBUTES;
-#ifdef AK_USE_UWP_API
-		WIN32_FILE_ATTRIBUTE_DATA    fileInfo;
-		if( GetFileAttributesEx(in_pszBasePath, GetFileExInfoStandard, &fileInfo ) )
-		{
-			fileAttributes = fileInfo.dwFileAttributes;
-		}
-#else
-		fileAttributes = GetFileAttributes( in_pszBasePath );
-#endif
-		if (fileAttributes == INVALID_FILE_ATTRIBUTES)
-			return AK_Fail;  //something is wrong with your path!
+		struct stat status;
+		stat( in_pszBasePath, &status );
+		if( status.st_mode & S_IFDIR )
+			return AK_Success;
 
-		if (fileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			return AK_Success;   // this is a directory!
-
-
-		return AK_Fail;    // this is not a directory!
+		return AK_Fail;
 	}
 
 	static AKRESULT WriteBlocking(
@@ -239,26 +191,26 @@ public:
 		AkUInt64		in_uPosition,		// Position from which to start writing.
 		AkUInt32		in_uSizeToWrite)
 	{
-		AKASSERT( in_pData && in_hFile != INVALID_HANDLE_VALUE );
-
-		OVERLAPPED overlapped;
-		overlapped.Offset = (DWORD)( in_uPosition & 0xFFFFFFFF );
-		overlapped.OffsetHigh = (DWORD)( ( in_uPosition >> 32 ) & 0xFFFFFFFF );
-		overlapped.hEvent = NULL;
-
-		AkUInt32 uSizeTransferred;
-
-		if ( ::WriteFile( 
-			in_hFile,
-			in_pData,
-			in_uSizeToWrite,
-			&uSizeTransferred,
-			&overlapped ) )
+		
+#if defined( AK_QNX ) || defined (AK_EMSCRIPTEN)
+		if( !fseeko( in_hFile, in_uPosition, SEEK_SET ) )
+#else
+#ifdef AK_LINUX
+		fpos_t pos;
+		pos.__pos = in_uPosition;
+#else
+		fpos_t pos = in_uPosition;
+#endif
+		if( !fsetpos( in_hFile, &pos ) )
+#endif
 		{
-			AKASSERT( uSizeTransferred == in_uSizeToWrite );
-			return AK_Success;
+			size_t itemsWritten = fwrite( in_pData, 1, in_uSizeToWrite, in_hFile );
+			if( itemsWritten > 0 )
+			{
+				fflush( in_hFile );
+				return AK_Success;
+			}
 		}
-
 		return AK_Fail;
 	}
 };

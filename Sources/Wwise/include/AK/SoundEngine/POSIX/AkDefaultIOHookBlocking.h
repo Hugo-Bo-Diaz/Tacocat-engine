@@ -30,8 +30,7 @@ written agreement between you and Audiokinetic Inc.
 // at class CAkDefaultLowLevelIODispatcher).
 //
 // AK::StreamMgr::IAkIOHookBlocking: 
-// Uses platform API for I/O. Calls to ::ReadFile() and ::WriteFile() 
-// block because files are opened without the FILE_FLAG_OVERLAPPED flag. 
+// Uses the C Standard Input and Output Library.
 // The AK::StreamMgr::IAkIOHookBlocking interface is meant to be used with
 // AK_SCHEDULER_BLOCKING streaming devices. 
 //
@@ -176,7 +175,7 @@ public:
     virtual void GetDeviceDesc(
         AkDeviceDesc &  		out_deviceDesc      // Device description.
         );
-
+		
 	// Returns custom profiling data: 1 if file opens are asynchronous, 0 otherwise.
 	virtual AkUInt32 GetDeviceData();
 

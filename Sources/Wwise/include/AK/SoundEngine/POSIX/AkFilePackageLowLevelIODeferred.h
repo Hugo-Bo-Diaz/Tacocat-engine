@@ -41,7 +41,7 @@ public:
 
 	// Override Cancel: The Windows platform SDK only permits cancellations of all transfers 
 	// for a given file handle. Since the packaged files share the same handle, we cannot do this.
-	virtual void Cancel(
+	void Cancel(
 		AkFileDesc &			in_fileDesc,		// File descriptor.
 		AkAsyncIOTransferInfo & io_transferInfo,	// Transfer info to cancel.
 		bool & io_bCancelAllTransfersForThisFile	// Flag indicating whether all transfers should be cancelled for this file (see notes in function description).

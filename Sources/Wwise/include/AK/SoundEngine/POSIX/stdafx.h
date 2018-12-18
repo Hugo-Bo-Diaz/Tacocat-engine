@@ -13,7 +13,7 @@ written agreement between you and Audiokinetic Inc.
   Copyright (c) 2006-2018 Audiokinetic Inc.
 *******************************************************************************/
 
-#include "stdafx.h"
+#pragma once
 
-// TODO: reference any additional headers you need in STDAFX.H
-// and not in this file
+
+// TODO: reference additional headers your program requires here
