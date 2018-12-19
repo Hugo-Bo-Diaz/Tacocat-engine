@@ -83,6 +83,10 @@ public:
 	~ModuleAudio();
 
 	bool Init();
+
+	void ProcessingAudio(); //Recurring calls to perform audio processing
+
+	void TermSoundEngine(); //Terminate sound engine
 };
 
 #endif // !AUDIO_CLASS

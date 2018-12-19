@@ -20,6 +20,7 @@ ModuleAudio::ModuleAudio(bool start_enabled)
 
 ModuleAudio::~ModuleAudio()
 {
+	TermSoundEngine();
 }
 
 bool ModuleAudio::Init()
@@ -123,4 +124,45 @@ bool ModuleAudio::Init()
 
 
 	return true;
+}
+
+void ModuleAudio::ProcessingAudio()
+{
+	// Process bank requests, events, positions, RTPC, etc.
+	AK::SoundEngine::RenderAudio();
+}
+
+void ModuleAudio::TermSoundEngine()
+{
+#ifndef AK_OPTIMIZED
+	//
+	// Terminate Communication Services
+	//
+	AK::Comm::Term();
+#endif // AK_OPTIMIZED
+
+	//
+	// Terminate the music engine
+	//
+
+	AK::MusicEngine::Term();
+
+	//
+	// Terminate the sound engine
+	//
+
+	AK::SoundEngine::Term();
+
+	// Terminate the streaming device and streaming manager
+
+	// CAkFilePackageLowLevelIOBlocking::Term() destroys its associated streaming device 
+	// that lives in the Stream Manager, and unregisters itself as the File Location Resolver.
+	g_lowLevelIO.Term();
+
+	if (AK::IAkStreamMgr::Get())
+		AK::IAkStreamMgr::Get()->Destroy();
+
+	// Terminate the Memory Manager
+	AK::MemoryMgr::Term();
+
 }
