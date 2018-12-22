@@ -14,7 +14,7 @@
     <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
     <ProjectName>Tacocat engine</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -82,8 +82,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Audio.h" />
-    <ClInclude Include="AudioEmitterComponent.h" />
-    <ClInclude Include="AudioListenerComponent.h" />
+    <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -197,8 +196,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Audio.cpp" />
-    <ClCompile Include="AudioEmitterComponent.cpp" />
-    <ClCompile Include="AudioListenerComponent.cpp" />
+    <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
