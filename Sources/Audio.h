@@ -4,7 +4,7 @@ class Audio
 {
 public:
 
-	Audio();
+	Audio() {};
 
 	void Play();
 
