@@ -29,6 +29,8 @@ public:
 	aiVector3t<float> rotation_angle;
 	aiVector3t< float > position;
 
+	float3 GetGlobalPosition();
+
 	float4x4 transform_local = float4x4::identity;//give this away to calculate other matrices
 	float4x4 transform_global = float4x4::identity;//use this for transformation in meshes
 

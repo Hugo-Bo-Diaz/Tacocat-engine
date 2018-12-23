@@ -12,6 +12,16 @@ Component_Transform::Component_Transform()
 }
 
 
+float3 Component_Transform::GetGlobalPosition()
+{
+	float3 pos;
+	float3 not;
+	float3x4 needed;
+
+	transform_global.Decompose(pos,needed,not);
+	return pos;
+}
+
 void Component_Transform::Calculate_Global_Matrix(float4x4 globalmatrixoftheobject)
 {
 	transform_global = globalmatrixoftheobject * transform_local;

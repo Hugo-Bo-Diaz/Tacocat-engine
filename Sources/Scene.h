@@ -3,23 +3,32 @@
 
 #include "GameObject.h"
 #include "CameraComponent.h"
+#include "AudioEmitterComponent.h"
 #include <string>
 #include <vector>
 #include "Quadtree.h"
+
+#include "Wwise_include.h"
 
 class Scene
 {
 public:
 
+	bool first_update = true;
+
 	int id = -1;
 	std::string name;
 
-	Scene() {};
+	AkGameObjectID listener = 10000;
+
+	Scene() {
+	};
 	Scene(const char* _name) 
 	{ 
 		name = _name;
 		spookamera = new Component_Camera();
 		tree = new Spooktree(ROOT, -500, -500, 500, 500, 0);
+
 	};
 
 	~Scene();

@@ -1,4 +1,5 @@
 #include "ModuleAudio.h"
+#include "Application.h"
 
 #include <AK/SoundEngine/Common/AkMemoryMgr.h>                  // Memory Manager
 #include <AK/SoundEngine/Common/AkModule.h>                     // Default memory and stream managers
@@ -14,7 +15,6 @@ CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 
 ModuleAudio::ModuleAudio(bool start_enabled)
 {
-	Init();
 }
 
 
@@ -41,29 +41,19 @@ bool ModuleAudio::Init()
 		return false;
 	}
 
+	// Initializing the Streaming Manager
 	AkStreamMgrSettings stmSettings;
 	AK::StreamMgr::GetDefaultSettings(stmSettings);
 
-	// Customize the Stream Manager settings here.
-
+	// Customize the Stream Manager settings here
 	if (!AK::StreamMgr::Create(stmSettings))
 	{
 		assert(!"Could not create the Streaming Manager");
 		return false;
 	}
-
-	//
-	// Create a streaming device with blocking low-level I/O handshaking.
-	// Note that you can override the default low-level I/O module with your own. Refer
-	// to the SDK documentation for more information.      
-	//
+	// -------------------
 	AkDeviceSettings deviceSettings;
 	AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);
-
-	// Customize the streaming device settings here.
-
-	// CAkFilePackageLowLevelIOBlocking::Init() creates a streaming device
-	// in the Stream Manager, and registers itself as the File Location Resolver.
 	if (g_lowLevelIO.Init(deviceSettings) != AK_Success)
 	{
 		assert(!"Could not create the streaming device and Low-Level I/O system");
@@ -121,9 +111,33 @@ bool ModuleAudio::Init()
 
 	// -----------------------------------------------------------------------------------------------------------
 	
-
+	LoadBank("Sound/Init.bnk");
+	LoadBank("Sound/death_banck.bnk");
 
 	return true;
+}
+
+AkBankID ModuleAudio::LoadBank(const char * name)
+{
+	AkBankID bankID;
+	AKRESULT eResult = AK::SoundEngine::LoadBank(name, AK_DEFAULT_POOL_ID, bankID);
+	if (eResult == AK_WrongBankVersion)
+	{
+		assert(!"WrongBankVersion!");
+		return false;
+	}
+	else if (eResult != AK_Success)
+	{
+		assert(!"Could not load soundbank!");
+		return false;
+	}
+	return bankID;
+}
+
+update_status ModuleAudio::Update(float dt)
+{
+	AK::SoundEngine::RenderAudio();
+	return UPDATE_CONTINUE;
 }
 
 void ModuleAudio::ProcessingAudio()

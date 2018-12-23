@@ -22,6 +22,24 @@ Scene::~Scene()
 
 void Scene::Update(float dt)
 {
+	if (first_update)
+	{
+		GameObject* f = AddGameObject();
+		Component_Transform* t = new Component_Transform();
+		t->rotation.Set(0, 0, 0, 0);
+		t->position.Set(0, 0, 0);
+		t->scaling.Set(0, 0, 0);
+		f->AddComponent(t);
+		Component_Audio_Emitter* p = new Component_Audio_Emitter();
+		f->AddComponent(p);
+		p->SetWwiseObject();
+
+		AK::SoundEngine::RegisterGameObj(listener);
+		AK::SoundEngine::SetDefaultListeners(&listener, 1);
+
+		first_update = false;
+	}
+
 	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
 		(*it)->CalculateAllTransformMatrices(float4x4::identity);

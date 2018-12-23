@@ -13,6 +13,7 @@ Application::Application()
 
 	window = new ModuleWindow(true);
 	input = new ModuleInput(true);
+	audio = new ModuleAudio(true);
 	scene_controller = new ModuleSceneController(true);
 	mesh_loader = new ModuleMeshLoader(true);
 	renderer3D = new ModuleRenderer3D(true);
@@ -22,6 +23,7 @@ Application::Application()
 	tex_loader = new ModuleTextureLoader(true);
 	importer = new ModuleImporter(true);
 	fsys = new ModuleFileSystem(true);
+	
 
 	//pcg32_srandom_r(&rng1, time(NULL), (intptr_t)&rng1);
 	//pcg32_srandom_r(&rng2, time(NULL), (intptr_t)&rng2);
@@ -39,6 +41,7 @@ Application::Application()
 	AddModule(fsys);
 
 	// Scenes
+	AddModule(audio);
 	AddModule(scene_controller);
 
 		// UI

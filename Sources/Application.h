@@ -13,7 +13,7 @@
 #include "ModuleTextureLoader.h"
 #include "ModuleUI.h"
 #include "ModuleFileSystem.h"
-
+#include "ModuleAudio.h"
 class Application
 {
 public:
@@ -26,7 +26,7 @@ public:
 	ModuleMeshLoader* mesh_loader;
 	ModuleTextureLoader* tex_loader;
 	ModuleFileSystem* fsys;
-
+	ModuleAudio* audio;
 
 	std::list<Module*> list_modules;
 

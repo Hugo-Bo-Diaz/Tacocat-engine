@@ -2,7 +2,7 @@
 #define AUDIO_CLASS
 
 #include "Module.h"
-#include "Application.h"
+#include <list>
 
 #include "Wwise_include.h"
 
@@ -13,6 +13,12 @@ public:
 	~ModuleAudio();
 
 	bool Init();
+
+	AkBankID LoadBank(const char* name);
+
+	update_status Update(float dt);
+
+	std::list<AkBankID> banks;
 
 	void ProcessingAudio(); //Recurring calls to perform audio processing
 
