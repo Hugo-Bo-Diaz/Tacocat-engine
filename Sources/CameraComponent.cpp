@@ -100,9 +100,9 @@ void Component_Camera::Update(float dt)
 	App->scene_controller->current_scene->Camera->GetTransformComponent()->position.x = Position.x;
 	App->scene_controller->current_scene->Camera->GetTransformComponent()->position.y = Position.y;
 	App->scene_controller->current_scene->Camera->GetTransformComponent()->position.z = Position.z;
-	App->scene_controller->current_scene->Camera->GetTransformComponent()->rotation = Quat::FromEulerXYZ(angle_Y,angle_XZ,0);
+	App->scene_controller->current_scene->Camera->GetTransformComponent()->rotation = Quat::FromEulerXYZ(frustum.front.x,frustum.front.y,frustum.front.z);
 	App->scene_controller->current_scene->Camera->GetTransformComponent()->Caluculate_Local_Matrix();
-	App->UI->console->AddLog("%f, %f, %f", Position.x, Position.y, Position.z);
+	//App->UI->console->AddLog("%f, %f, %f", Position.x, Position.y, Position.z);
 
 
 	//// Mouse picking

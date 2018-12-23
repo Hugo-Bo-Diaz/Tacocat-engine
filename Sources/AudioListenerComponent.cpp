@@ -15,21 +15,27 @@ void Component_Audio_Listener::CalculatePositionWithObjectTransform()
 	p.SetPosition(-pos.x, pos.y, -pos.z);
 	App->UI->console->AddLog("%f, %f, %f", pos.x, pos.y, pos.z);
 
-	//front.X = x_front;
-	//front.Y = y_front;
-	//front.Z = z_front;
-	//top.X = x_top;
-	//top.Y = y_top;
-	//top.Z = z_top;
-	//float length_front = sqrt(pow(front.X, 2) + pow(front.Y, 2) + pow(front.Z, 2));
-	//float length_top = sqrt(pow(top.X, 2) + pow(top.Y, 2) + pow(top.Z, 2));
-	////Normalize vectors
-	//front.X = front.X / length_front;
-	//front.Y = front.Y / length_front;
-	//front.Z = front.Z / length_front;
-	//top.X = top.X / length_top;
-	//top.Y = top.Y / length_top;
-	//top.Z = top.Z / length_top;
+	AkVector front, top;
+
+	front.X = parent->GetTransformComponent()->rotation.ToEulerXYZ().x;
+	front.Y = parent->GetTransformComponent()->rotation.ToEulerXYZ().y;
+	front.Z = parent->GetTransformComponent()->rotation.ToEulerXYZ().z;
+
+	top.X = 0;
+	top.Y = 1;
+	top.Z = 0;
+	float length_front = sqrt(pow(front.X, 2) + pow(front.Y, 2) + pow(front.Z, 2));
+	float length_top = sqrt(pow(top.X, 2) + pow(top.Y, 2) + pow(top.Z, 2));
+
+	front.X = front.X / length_front;
+	front.Y = front.Y / length_front;
+	front.Z = front.Z / length_front;
+	top.X = top.X / length_top;
+	top.Y = top.Y / length_top;
+	top.Z = top.Z / length_top;
+
+	p.SetOrientation(front,top);
+
 	////Check if the are orthogonals
 	//float dot_prod = top.X*front.X + top.Y*front.Y + top.Z*front.Z;
 	//if (dot_prod >= 0.0001)
@@ -70,7 +76,6 @@ void Component_Audio_Listener::Update(float dt)
 	//reverb.listenerID = Wwise_obj;
 	//reverb.auxBusID = AK::SoundEngine::GetIDFromString("tunnel");
 	//reverb.fControlValue = 20;
-
 	//AKRESULT res = AK::SoundEngine::SetGameObjectAuxSendValues(Wwise_obj, &reverb, 1);
 }
 
