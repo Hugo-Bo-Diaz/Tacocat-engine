@@ -71,7 +71,7 @@ void Scene::Init()
 	Demo_not_static->name = "Demo_moving";
 	Component_Transform* b_not_static = new Component_Transform();
 	b_not_static->rotation.Set(0, 0, 0, 0);
-	b_not_static->position.Set(0, 0, 0);
+	b_not_static->position.Set(0, 0, -70);
 	b_not_static->scaling.Set(0, 0, 0);
 	Demo_not_static->AddComponent(b_not_static);
 
@@ -86,18 +86,33 @@ void Scene::Init()
 void Scene::Update(float dt)
 {
 	//DEMO THINGS
-	if (Demo_not_static->GetTransformComponent()->position.x < 100)
-	{
+
 		Demo_static->bounding_box.minPoint = float3(Demo_static->GetTransformComponent()->position.x - 1, Demo_static->GetTransformComponent()->position.y - 1, Demo_static->GetTransformComponent()->position.z - 1);
 		Demo_static->bounding_box.maxPoint = float3(Demo_static->GetTransformComponent()->position.x + 1, Demo_static->GetTransformComponent()->position.y + 1, Demo_static->GetTransformComponent()->position.z + 1);
 		Demo_not_static->bounding_box.minPoint = float3(Demo_not_static->GetTransformComponent()->position.x - 1, Demo_not_static->GetTransformComponent()->position.y - 1, Demo_not_static->GetTransformComponent()->position.z - 1);
 		Demo_not_static->bounding_box.maxPoint = float3(Demo_not_static->GetTransformComponent()->position.x + 1, Demo_not_static->GetTransformComponent()->position.y + 1, Demo_not_static->GetTransformComponent()->position.z + 1);
-	}
-
-	if (Demo_not_static->GetTransformComponent()->position.x > -100)
+		
+	if (Demo_not_static->GetTransformComponent()->position.x < 100 && going_positive)
 	{
-
+		Demo_not_static->GetTransformComponent()->position.x += 10*dt;
+		Demo_not_static->GetTransformComponent()->Caluculate_Local_Matrix();
+		if (Demo_not_static->GetTransformComponent()->position.x >= 100)
+		{
+			going_positive = false;
+		}
 	}
+
+	if (Demo_not_static->GetTransformComponent()->position.x > -100 && !going_positive)
+	{
+		Demo_not_static->GetTransformComponent()->position.x -= 10 * dt;
+		Demo_not_static->GetTransformComponent()->Caluculate_Local_Matrix();
+		if (Demo_not_static->GetTransformComponent()->position.x <= -100)
+		{
+			going_positive = true;
+		}
+	}
+
+
 
 	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
