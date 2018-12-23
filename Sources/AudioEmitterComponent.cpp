@@ -70,9 +70,6 @@ void Component_Audio_Emitter::Properties()
 {
 	if (ImGui::CollapsingHeader("Sound Emitter"))
 	{
-		if (ImGui::Button("Play"))
-		{
-
-		}
+		ImGui::Text("This object is capable of emitting sounds");
 	}
 }
