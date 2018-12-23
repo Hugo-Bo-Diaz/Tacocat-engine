@@ -24,18 +24,8 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	GameObject* f = AddGameObject();
-	Component_Transform* t = new Component_Transform();
-	t->rotation.Set(0, 0, 0, 0);
-	t->position.Set(0, 0, 0);
-	t->scaling.Set(0, 0, 0);
-	f->AddComponent(t);
-	Component_Audio_Emitter* p = new Component_Audio_Emitter();
-	f->AddComponent(p);
-	p->SetWwiseObject();
-
-
 	Camera = AddGameObject();
+	Camera->name = "Camera";
 	Component_Transform* s = new Component_Transform();
 	s->rotation.Set(0, 0, 0, 0);
 	s->position.Set(0, 0, 0);

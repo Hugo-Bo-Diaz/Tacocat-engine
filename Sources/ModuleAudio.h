@@ -23,6 +23,9 @@ public:
 	void ProcessingAudio(); //Recurring calls to perform audio processing
 
 	void TermSoundEngine(); //Terminate sound engine
+
+	bool CleanUp();
+
 };
 
 #endif // !AUDIO_CLASS

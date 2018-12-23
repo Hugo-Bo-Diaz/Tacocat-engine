@@ -165,7 +165,10 @@ void ModuleAudio::TermSoundEngine()
 	// Terminate the sound engine
 	//
 
+	//AK::SoundEngine::UnregisterAllGameObj();
+	AK::SoundEngine::ClearBanks();
 	AK::SoundEngine::Term();
+
 
 	// Terminate the streaming device and streaming manager
 
@@ -179,4 +182,11 @@ void ModuleAudio::TermSoundEngine()
 	// Terminate the Memory Manager
 	AK::MemoryMgr::Term();
 
+}
+
+bool ModuleAudio::CleanUp()
+{
+	TermSoundEngine();
+
+	return true;
 }
