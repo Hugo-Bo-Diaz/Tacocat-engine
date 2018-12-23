@@ -102,169 +102,122 @@
   <!-- Header End -->
   <!-- Content -->
   <div id="content">
-    <div class="container">
-       <div class="f-center">
+      <div class="container">
+          <div class="f-center">
               <h2>What is TacocaT engine?</h2>
               <div class="head-info">
                   Tacocat engine is a 3D engine made for the subject of 3D engines of the polytechnic university of catalonia imparted by <a href="https://es.linkedin.com/in/ricardpillosu" title="Wonderful teacher" style="color:blue">Ricard Pillosu</a>
-              </div>  
-       </div>
-       <div class="f-hr"></div>
-      <div class="row space40"></div>
-      <div class="row">
-        <div class="span12">
-          <!-- Our Team -->      
-          <h3>Our Team</h3>
-                
-          <div  class="slider2 team flexslider">
-            <ul class="slides">
-              <li>
-                <div class="row">
-                                  
-                  <a href="https://github.com/Hugo-Bo-Diaz">
-                    <div class="span3 square-1">
-                      <div class="img-container">
-                        <img src="img/our-team/1.jpg" alt="">
-                        <div class="img-bg-icon"></div>
-                      </div>
-                      <h4>Hugo Bo</h4>
-                        Lead programmer <br/>
-                        Done the most of the code
-                    </div>
-                  </a>
-                  
-                  <a href="https://www.artstation.com/daraenor">
-                    <div class="span3 square-1">
-                      <div class="img-container">
-                        <img src="img/our-team/dani.png" alt="">
-                        <div class="img-bg-icon"></div>
-                      </div>
-                      <h4>Daniel Garcia</h4>
-                        Lead artist <br />
-                        More or less mascot of the team
-                    </div>
-                  </a>
-                </div> 
-              </li>
-            </ul>
+              </div>
           </div>
-          <!-- Our Team End -->   
-       </div>
-        <div class="span8">        
-          <img src="img/gallery/engine.png" alt="">
-        </div>
-        <div class="span4">
-          <div class="ic-1"></div>
-          <div class="title-1"><h4>Main subsystems:</h4></div>
-          <!-- List -->
-          <div class="text-1"> 
-              <ul class="list-b">
-                  <!-- List Items -->
-                  <li><i class="icon-ok"></i> Drag and drop of files</li>
-                  <li><i class="icon-ok"></i> Camera</li>
-                  <li><i class="icon-ok"></i> Hierarchy</li>
-                  <li><i class="icon-ok"></i> Transform</li>
-                  <li><i class="icon-ok"></i> Mouse pick</li>
-                  <li><i class="icon-ok"></i> Quadtree</li>
-                  <li><i class="icon-ok"></i> Camera FOV</li>
-                  <li><i class="icon-ok"></i> Window resize</li>
-                  <li><i class="icon-ok"></i> Bounding boxes</li>
-                  <li><i class="icon-ok"></i> Scene serialization</li>
-                  <li><i class="icon-ok"></i> Own fileformat</li>
-                  <li><i class="icon-ok"></i> Time management</li>
-              </ul>     
+          <div class="f-hr"></div>
+          <div class="row space40"></div>
+          <div class="row">
+              <div class="span12">
+                  <!-- Our Team -->
+                  <h3>Our Team</h3>
+
+                  <div class="slider2 team flexslider">
+                      <ul class="slides">
+                          <li>
+                              <div class="row">
+
+                                  <a href="https://github.com/Hugo-Bo-Diaz">
+                                      <div class="span3 square-1">
+                                          <div class="img-container">
+                                              <img src="img/our-team/1.jpg" alt="">
+                                              <div class="img-bg-icon"></div>
+                                          </div>
+                                          <h4>Hugo Bo</h4>
+                                          Lead programmer <br />
+                                          Done the most of the code
+                                      </div>
+                                  </a>
+
+                                  <a href="https://www.artstation.com/daraenor">
+                                      <div class="span3 square-1">
+                                          <div class="img-container">
+                                              <img src="img/our-team/dani.png" alt="">
+                                              <div class="img-bg-icon"></div>
+                                          </div>
+                                          <h4>Daniel Garcia</h4>
+                                          Lead artist <br />
+                                          More or less mascot of the team
+                                      </div>
+                                  </a>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+                  <!-- Our Team End -->
+              </div>
+              <div class="span8">
+                  <img src="img/gallery/engine.png" alt="">
+              </div>
+              <div class="span4">
+                  <div class="ic-1"></div>
+                  <div class="title-1"><h4>Main subsystems:</h4></div>
+                  <!-- List -->
+                  <div class="text-1">
+                      <dl class="list-b">
+                          <!-- List Items -->
+                          <dt><i class="icon-ok"></i> Drag and drop of files</dt>
+                          <dd>Can drag and drop multiple file formats into the engine in order to load them</dd>
+                          <dt><i class="icon-ok"></i> Camera</dt>
+                          <dd>Camera movement using WASD keys and right mouse or Alt + left mouse to orbit camera</dd>
+                          <dt><i class="icon-ok"></i> Hierarchy</dt>
+                          <dd>Display all loaded objects in scene with a hierarchy</dd>
+                          <dt><i class="icon-ok"></i> Transform</dt>
+                          <dd>Can modify position rotation and scale of gameobjects</dd>
+                          <dt><i class="icon-ok"></i> Mouse pick</dt>
+                          <dd>Can select gameobjects using mouse picks</dd>
+                          <dt><i class="icon-ok"></i> Quadtree</dt>
+                          <dd>Static gameobjects are selected more quickly using a quadtree</dd>
+                          <dt><i class="icon-ok"></i> Camera FOV</dt>
+                          <dd>Gameobjects outside the field of view are not loaded</dd>
+                          <dt><i class="icon-ok"></i> Window resize</dt>
+                          <dd>Resize window using borders</dd>
+                          <dt><i class="icon-ok"></i> Bounding boxes</dt>
+                          <dd>All objects are surrounded by bounding boxes in order to ease selection and visualization</dd>
+                          <dt><i class="icon-ok"></i> Scene serialization</dt>
+                          <dd>Save scene to be able to load it later</dd>
+                          <dt><i class="icon-ok"></i> Own fileformat</dt>
+                          <dd>All assets used are converted into our own fileformat to speed up the loading process</dd>
+                          <dt><i class="icon-ok"></i> Time management</dt>
+                          <dd>Can play pause stop scene in order to make adjustments</dd>
+                      </dl>
+                  </div>
+                  <!-- List End -->
+              </div>
+
           </div>
-          <!-- List End -->
-        </div>
-               
+
+          <div class="space40"></div>
+
+          <div class="row t-row">
+              <!-- Line -->
+              <div class="span12"><hr></div>
+              <div class="span9">
+                  <h2>Download TacocaT engine</h2>
+              </div>
+              <div class="span3">
+                  <!-- Button -->
+                  <div class="btn btn-blue f-right">
+                      <!-- Title -->
+                      <a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine"><h3><i class="icon-signin hidden-tablet"></i> Repository</h3></a>
+                  </div>
+                  <div class="btn btn-blue f-right">
+                      <!-- Title -->
+                      <a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine/releases"><h3><i class="icon-signin hidden-tablet"></i> &nbsp;Download</h3></a>
+                  </div>
+              </div>
+              <div class="space30 visible-phone"></div>
+              <!-- Line -->
+              <div class="span12"><hr></div>
+          </div>
+
+          <div class="space50"></div>
+
       </div>
-      
-      <div class="space40"></div>  
-              
-      <!-- Our Clients -->
-      <div class="row">
-        <div class="span12">
-          <h3>Our Clients</h3>
-        </div>
-      </div> 
-    
-      <div id="our-clients" class="slider2 flexslider">
-        <ul class="slides">
-          <li>
-            <div class="row">
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/1.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/2.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/3.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/4.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/5.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/6.png" alt="">
-                </a>
-              </div>
-            </div>  
-          </li>
-          <li>
-            <div class="row">
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/4.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/3.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/1.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/2.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/5.png" alt="">
-                </a>
-              </div>
-              <div class="span2">
-                <a href="#" rel="external">
-                    <img src="img/our-clients/6.png" alt="">
-                </a>
-              </div>
-            </div>  
-          </li>
-        </ul>
-      </div> 
-      <!-- Our Clients End -->
-      
-      <div class="space50"></div> 
-       
-    </div>
   </div>
   <!-- Content End -->
   
@@ -297,32 +250,20 @@
         </div>
         <div class="span3 offset3">
           <h3>Address</h3>
-          81 Sunnyvale Street<br>
-          Los Angeles, CA 90185<br>
-          United States<br>
+          33 Igualtat Street<br>
+          Terrassa, 08222<br>
+          Spain<br>
           <br>
-          <i class="icon-phone"></i>+01 880 555 999<br>
-          <i class="icon-envelope"></i><a href="mailto:support@example.com">support@example.com</a><br>
-          <i class="icon-home"></i><a href="#">www.example.com</a>
-          
-          <div class="row space40"></div>  
+          <i class="icon-envelope"></i><a href="mailto:hugobodiaz@gmail.com">hugobodiaz@gmail.com</a><br>
+          <i class="icon-home"></i><a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine">Tacocat repo</a>
 
-          <a href="#" class="social-network sn2 behance"></a>
-          <a href="#" class="social-network sn2 facebook"></a>
-          <a href="#" class="social-network sn2 pinterest"></a>
-          <a href="#" class="social-network sn2 flickr"></a>
-          <a href="#" class="social-network sn2 dribbble"></a>
-          <a href="#" class="social-network sn2 lastfm"></a>
-          <a href="#" class="social-network sn2 forrst"></a>
-          <a href="#" class="social-network sn2 xing"></a>      
-        </div>
       </div>
       
       <div class="row space50"></div>
       <div class="row">
         <div class="span6">
           <div class="logo-footer">
-            Design by <a href="https://www.freshdesignweb.com">freshDesignweb</a>
+            Design by <a href="https://www.freshdesignweb.com">freshDesignweb</a> modified by Daniel Garcia
           </div>                       
         </div>
         <div class="span6 right">
