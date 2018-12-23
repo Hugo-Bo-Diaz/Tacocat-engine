@@ -40,6 +40,9 @@
     <Filter Include="Sources\Resources">
       <UniqueIdentifier>{7118a3ac-9a55-4004-a99e-227aa77d550c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Wwise">
+      <UniqueIdentifier>{71027288-a0c4-40ed-a5d0-14a09c4cd576}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="AudioEmitterComponent.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Wwise_include.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleInput.cpp">
@@ -616,6 +622,30 @@
     </ClCompile>
     <ClCompile Include="AudioEmitterComponent.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Common\AkFilePackage.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Common\AkFilePackageLUT.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Common\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Common\AkFileLocationBase.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Win32\AkDefaultIOHookDeferred.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Win32\stdafx.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise\IO\Win32\AkDefaultIOHookBlocking.cpp">
+      <Filter>Sources\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="Wwise_include.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

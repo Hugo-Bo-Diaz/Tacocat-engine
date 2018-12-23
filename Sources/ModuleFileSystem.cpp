@@ -260,9 +260,6 @@ void Resource::Generate_in_Library()
 		case RES_MATERIAL:
 			;
 			break;
-		case RES_AUDIO:
-			App->UI->console->AddLog("audio not implemented");
-			break;
 		case RES_INVALID:
 			App->UI->console->AddLog("not a valid resource type");
 		default:

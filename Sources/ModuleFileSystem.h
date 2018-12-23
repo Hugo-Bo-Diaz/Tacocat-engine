@@ -7,12 +7,11 @@
 
 #include "Mesh.h"
 #include "Material.h"
-#include "Audio.h"
+
 enum ResourceType
 {
 	RES_MESH,
 	RES_MATERIAL,
-	RES_AUDIO,
 	RES_INVALID
 };
 
@@ -40,10 +39,6 @@ struct Resource
 		{
 			Material* ptr = nullptr;
 		} mat;
-		struct
-		{
-			Audio* ptr = nullptr;
-		} aud;
 	};
 
 	void Generate_in_Library();
