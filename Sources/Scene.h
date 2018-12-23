@@ -15,6 +15,8 @@ class Scene
 {
 public:
 
+	AkGameObjectID music_player = 100;
+
 	int id = -1;
 	std::string name;
 
@@ -48,6 +50,10 @@ public:
 	GameObject* Camera;
 	Component_Audio_Listener* listener;
 	Component_Camera* spookamera;
+
+	GameObject* Demo_static;
+	GameObject* Demo_not_static;
+	bool going_positive = true;
 
 	void Save(const char* filename);
 	void Load(const char* filename);

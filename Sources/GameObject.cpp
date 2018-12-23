@@ -28,9 +28,18 @@ void GameObject::Update(float dt)
 	for (std::list<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
 	{
 		(*it)->Update(dt);
-	}	
+	}
+	float3 one = GetBoundingBox().minPoint;
+	float3 two = GetBoundingBox().maxPoint;
+	float3 three = float3(-50, -50, -50);
+	float3 four = float3(50, 50, 50);
 
-	bounding_box = GetBoundingBox();
+	if(one.x != three.x && one.y != three.y &&one.z != three.z && 
+		two.x != four.x && two.y != four.y && two.z != four.z)
+	{
+		bounding_box = GetBoundingBox();
+	}
+
 
 }
 
@@ -50,6 +59,8 @@ uint GameObject::GetTexture(uint index)
 AABB GameObject::GetBoundingBox()
 {
 	AABB box;
+	box.minPoint = float3(-50,-50,-50);
+	box.maxPoint = float3(50, 50, 50);
 	for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
 		if ((*it)->type == MESH)
@@ -98,7 +109,6 @@ AABB GameObject::GetBoundingBox()
 	//			box.maxPoint.z = tmp.maxPoint.z;
 	//	}
 	//}
-
 	return box;
 }
 
