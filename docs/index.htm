@@ -43,243 +43,301 @@
 
 </head>       
 <body>
-  <!-- Header -->
-  <header id="header">
-    <div class="container">
-      <div class="row t-container">
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="row t-container">
 
-        <!-- Logo -->
-        <div class="span3">
-          <div class="logo">
-            <a href="index.htm"><img src="img/logo-header.png" alt=""></a>
-          </div>            
-        </div>
-        <!-- 
-        <div class="span9">
-          <div class="row space60"></div>
-             <nav id="nav" role="navigation">
-               	<a href="#nav" title="Show navigation">Show navigation</a>
-	            <a href="#" title="Hide navigation">Hide navigation</a>
-	            <ul class="clearfix">
-	           	<li class="active"><a href="index.htm" title="">Home</a></li>
-                <li><a href="about-us.htm" title="">About Us</a></li>                
-                <li><a href="gallery.htm" title="">Gallery</a></li>
-                <li><a href="services.htm" title="">Services</a></li>
-                <li><a href="components.htm" title=""><span>Features</span></a>
-  			      <ul>
-                      <li><a href="components.htm" title="">Components</a></li>
-                      <li><a href="blog.htm" title="">Blog</a></li>
-                      <li><a href="blog-detail.htm" title="">Blog Detail</a></li>
-                      <li><a href="contact.htm" title="">Contact</a></li>
-  		         </ul>    
-               </li>
-	           </ul>
-          </nav>
-         </div>
-        -->
-      </div> 
-       <div class="row space40"></div>
-        <!-- Slider for now not needed
-          <div class="slider1 flexslider">
-            <ul class="slides">
-              <li>
-    	    	    <img src="img/slider/1.jpg" alt="">
-    	    		</li>
-    	    		<li>
-    	    	    <img src="img/slider/2.jpg" alt="">
-    	    		</li>
-    	    		<li>
-    	    	    <img src="img/slider/3.jpg" alt="">
-    	    		</li>
-                    <li>
-    	    	    <img src="img/slider/4.jpg" alt="">
-    	    		</li>
-            </ul>
-          </div>  
-        -->
-  </div> 
-</header>
-  <!-- Header End -->
-  <!-- Content -->
-  <div id="content">
-      <div class="container">
-          <div class="f-center">
-              <h2>What is TacocaT engine?</h2>
-              <div class="head-info">
-                  Tacocat engine is a 3D engine made for the subject of 3D engines of the polytechnic university of catalonia imparted by <a href="https://es.linkedin.com/in/ricardpillosu" title="Wonderful teacher" style="color:blue">Ricard Pillosu</a>
-              </div>
-          </div>
-          <div class="f-hr"></div>
-          <div class="row space40"></div>
-          <div class="row">
-              <div class="span12">
-                  <!-- Our Team -->
-                  <h3>Our Team</h3>
-
-                  <div class="slider2 team flexslider">
-                      <ul class="slides">
-                          <li>
-                              <div class="row">
-
-                                  <a href="https://github.com/Hugo-Bo-Diaz">
-                                      <div class="span3 square-1">
-                                          <div class="img-container">
-                                              <img src="img/our-team/1.jpg" alt="">
-                                              <div class="img-bg-icon"></div>
-                                          </div>
-                                          <h4>Hugo Bo</h4>
-                                          Lead programmer <br />
-                                          Done the most of the code
-                                      </div>
-                                  </a>
-
-                                  <a href="https://www.artstation.com/daraenor">
-                                      <div class="span3 square-1">
-                                          <div class="img-container">
-                                              <img src="img/our-team/dani.png" alt="">
-                                              <div class="img-bg-icon"></div>
-                                          </div>
-                                          <h4>Daniel Garcia</h4>
-                                          Lead artist <br />
-                                          More or less mascot of the team
-                                      </div>
-                                  </a>
-                              </div>
-                          </li>
-                      </ul>
-                  </div>
-                  <!-- Our Team End -->
-              </div>
-              <div class="span8">
-                  <img src="img/gallery/engine.png" alt="">
-              </div>
-              <div class="span4">
-                  <div class="ic-1"></div>
-                  <div class="title-1"><h4>Main subsystems:</h4></div>
-                  <!-- List -->
-                  <div class="text-1">
-                      <dl class="list-b">
-                          <!-- List Items -->
-                          <dt><i class="icon-ok"></i> Drag and drop of files</dt>
-                          <dd>Can drag and drop multiple file formats into the engine in order to load them</dd>
-                          <dt><i class="icon-ok"></i> Camera</dt>
-                          <dd>Camera movement using WASD keys and right mouse or Alt + left mouse to orbit camera</dd>
-                          <dt><i class="icon-ok"></i> Hierarchy</dt>
-                          <dd>Display all loaded objects in scene with a hierarchy</dd>
-                          <dt><i class="icon-ok"></i> Transform</dt>
-                          <dd>Can modify position rotation and scale of gameobjects</dd>
-                          <dt><i class="icon-ok"></i> Mouse pick</dt>
-                          <dd>Can select gameobjects using mouse picks</dd>
-                          <dt><i class="icon-ok"></i> Quadtree</dt>
-                          <dd>Static gameobjects are selected more quickly using a quadtree</dd>
-                          <dt><i class="icon-ok"></i> Camera FOV</dt>
-                          <dd>Gameobjects outside the field of view are not loaded</dd>
-                          <dt><i class="icon-ok"></i> Window resize</dt>
-                          <dd>Resize window using borders</dd>
-                          <dt><i class="icon-ok"></i> Bounding boxes</dt>
-                          <dd>All objects are surrounded by bounding boxes in order to ease selection and visualization</dd>
-                          <dt><i class="icon-ok"></i> Scene serialization</dt>
-                          <dd>Save scene to be able to load it later</dd>
-                          <dt><i class="icon-ok"></i> Own fileformat</dt>
-                          <dd>All assets used are converted into our own fileformat to speed up the loading process</dd>
-                          <dt><i class="icon-ok"></i> Time management</dt>
-                          <dd>Can play pause stop scene in order to make adjustments</dd>
-                      </dl>
-                  </div>
-                  <!-- List End -->
-              </div>
-
-          </div>
-
-          <div class="space40"></div>
-
-          <div class="row t-row">
-              <!-- Line -->
-              <div class="span12"><hr></div>
-              <div class="span9">
-                  <h2>Download TacocaT engine</h2>
-              </div>
-              <div class="span3">
-                  <!-- Button -->
-                  <div class="btn btn-blue f-right">
-                      <!-- Title -->
-                      <a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine"><h3><i class="icon-signin hidden-tablet"></i> Repository</h3></a>
-                  </div>
-                  <div class="btn btn-blue f-right">
-                      <!-- Title -->
-                      <a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine/releases"><h3><i class="icon-signin hidden-tablet"></i> &nbsp;Download</h3></a>
-                  </div>
-              </div>
-              <div class="space30 visible-phone"></div>
-              <!-- Line -->
-              <div class="span12"><hr></div>
-          </div>
-
-          <div class="space50"></div>
-
-      </div>
-  </div>
-  <!-- Content End -->
-  
-  <!-- Footer -->
-  <footer id="footer">
-    <div class="container">
-      <div class="row">
-        <div class="span5">
-        <h3>Contact Form</h3>
-        <div>         
-          <form class="form-main" name="ajax-form" id="ajax-form" action="#" method="post">
-            <div id="ajaxsuccess">E-mail was successfully sent.</div> 
-            <div class="error" id="err-name">Please enter name</div>
-            <input name="name" id="name" type="text" value="Name" onfocus="if(this.value == 'Name') this.value='';" onblur="if(this.value == '') this.value='Name';">
-            
-            <div class="error" id="err-email">Please enter e-mail</div>
-		        <div class="error" id="err-emailvld">E-mail is not a valid format</div>
-            <input  name="email" id="email" type="text" value="E-mail" onfocus="if(this.value == 'E-mail') this.value='';" onblur="if(this.value == '') this.value='E-mail';">
-
-            <div class="error" id="err-message">Please enter message</div>
-            <textarea  name="message" id="message" onfocus="if(this.value == 'Message') this.value='';" onblur="if(this.value == '') this.value='Message';">Message</textarea><br>
-            <div>
-            	<div class="error" id="err-form">There was a problem validating the form please check!</div>
-            	<div class="error" id="err-timedout">The connection to the server timed out!</div>
-            	<div class="error" id="err-state"></div>
+                <!-- Logo -->
+                <div class="span3">
+                    <!--<div class="logo">
+                        <a href="index.htm"><img src="img/logo-header.png" alt=""></a>
+                    </div>-->
+                </div>
+                <!--
+                <div class="span9">
+                  <div class="row space60"></div>
+                     <nav id="nav" role="navigation">
+                        <a href="#nav" title="Show navigation">Show navigation</a>
+                        <a href="#" title="Hide navigation">Hide navigation</a>
+                        <ul class="clearfix">
+                        <li class="active"><a href="index.htm" title="">Home</a></li>
+                        <li><a href="about-us.htm" title="">About Us</a></li>
+                        <li><a href="gallery.htm" title="">Gallery</a></li>
+                        <li><a href="services.htm" title="">Services</a></li>
+                        <li><a href="components.htm" title=""><span>Features</span></a>
+                          <ul>
+                              <li><a href="components.htm" title="">Components</a></li>
+                              <li><a href="blog.htm" title="">Blog</a></li>
+                              <li><a href="blog-detail.htm" title="">Blog Detail</a></li>
+                              <li><a href="contact.htm" title="">Contact</a></li>
+                         </ul>
+                       </li>
+                       </ul>
+                  </nav>
+                 </div>
+                -->
             </div>
-            <button id="send" class="btn f-right">Send Message <i class="icon-ok"></i></button>
-          </form>
+            <div class="row space40"></div>
+            <!-- Slider for now not needed
+              <div class="slider1 flexslider">
+                <ul class="slides">
+                  <li>
+                        <img src="img/slider/1.jpg" alt="">
+                        </li>
+                        <li>
+                        <img src="img/slider/2.jpg" alt="">
+                        </li>
+                        <li>
+                        <img src="img/slider/3.jpg" alt="">
+                        </li>
+                        <li>
+                        <img src="img/slider/4.jpg" alt="">
+                        </li>
+                </ul>
+              </div>
+            -->
         </div>
-        </div>
-        <div class="span3 offset3">
-          <h3>Address</h3>
-          33 Igualtat Street<br>
-          Terrassa, 08222<br>
-          Spain<br>
-          <br>
-          <i class="icon-envelope"></i><a href="mailto:hugobodiaz@gmail.com">hugobodiaz@gmail.com</a><br>
-          <i class="icon-home"></i><a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine">Tacocat repo</a>
+    </header>
+    <!-- Header End -->
+    <!-- Content -->
+    <div id="content">
+        <div class="container">
+            <div class="f-center">
+                <h2>What is TacocaT engine?</h2>
+                <div class="head-info">
+                    Tacocat engine is a 3D engine made for the subject of 3D engines of the polytechnic university of catalonia imparted by <a href="https://es.linkedin.com/in/ricardpillosu" title="Wonderful teacher" style="color:blue">Ricard Pillosu</a>
+                </div>
+            </div>
+            <div class="f-hr"></div>
+            <div class="row space40"></div>
+            <div class="row">
+                <div class="span12">
+                    <!-- Our Team -->
+                    <h3>Our Team</h3>
 
-      </div>
-      
-      <div class="row space50"></div>
-      <div class="row">
-        <div class="span6">
-          <div class="logo-footer">
-            Design by <a href="https://www.freshdesignweb.com">freshDesignweb</a> modified by Daniel Garcia
-          </div>                       
+                    <div class="slider2 team flexslider">
+                        <ul class="slides">
+                            <li>
+                                <div class="row">
+
+                                    <a href="https://github.com/Hugo-Bo-Diaz">
+                                        <div class="span3 square-1">
+                                            <div class="img-container">
+                                                <img src="img/our-team/hugo.png" alt="">
+                                                <div class="img-bg-icon"></div>
+                                            </div>
+                                            <h4>Hugo Bo</h4>
+                                            Lead programmer <br />
+                                            Has done most of thw workload, as he has focused on the core parts of the engine
+                                        </div>
+                                    </a>
+
+                                    <a href="https://www.artstation.com/daraenor">
+                                        <div class="span3 square-1">
+                                            <div class="img-container">
+                                                <img src="img/our-team/dani.png" alt="">
+                                                <div class="img-bg-icon"></div>
+                                            </div>
+                                            <h4>Daniel Garcia</h4>
+                                            Lead artist <br />
+                                            Has done quadtree, hierarchy, UI in engine, website
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Our Team End -->
+                </div>
+                <div class="span8">
+                    <img src="img/gallery/engine.png" alt="">
+                </div>
+                <div class="span4">
+                    <div class="ic-1"></div>
+                    <div class="title-1"><h4>Main subsystems:</h4></div>
+                    <!-- List -->
+                    <div class="text-1">
+                        <dl class="list-b">
+                            <!-- List Items -->
+                            <dt><i class="icon-ok"></i> Importer</dt>
+                            <dd>Can drag and drop multiple file formats into the engine in order to load them</dd>
+                            <dt><i class="icon-ok"></i> Camera</dt>
+                            <dd>Camera movement using WASD keys and right mouse or Alt + left mouse to orbit camera</dd>
+                            <dt><i class="icon-ok"></i> Meshes and textures</dt>
+                            <dd>Can load and display 3d objects and textures</dd>
+                            <dt><i class="icon-ok"></i> Hierarchy</dt>
+                            <dd>Display all loaded objects in scene with a hierarchy</dd>
+                            <dt><i class="icon-ok"></i> Transform</dt>
+                            <dd>Can modify position rotation and scale of gameobjects</dd>
+                            <dt><i class="icon-ok"></i> Mouse pick</dt>
+                            <dd>Can select gameobjects using mouse picks</dd>
+                            <dt><i class="icon-ok"></i> Quadtree</dt>
+                            <dd>Static gameobjects are selected more quickly using a quadtree</dd>
+                            <dt><i class="icon-ok"></i> Camera FOV</dt>
+                            <dd>Gameobjects outside the field of view are not loaded</dd>
+                            <dt><i class="icon-ok"></i> Window resize</dt>
+                            <dd>Resize window using borders</dd>
+                            <dt><i class="icon-ok"></i> Bounding boxes</dt>
+                            <dd>All objects are surrounded by bounding boxes in order to ease selection and visualization</dd>
+                            <dt><i class="icon-ok"></i> Scene serialization</dt>
+                            <dd>Save scene to be able to load it later</dd>
+                            <dt><i class="icon-ok"></i> Own fileformat</dt>
+                            <dd>All assets used are converted into our own fileformat to speed up the loading process</dd>
+                            <dt><i class="icon-ok"></i> Time management</dt>
+                            <dd>Can play pause stop scene in order to make adjustments</dd>
+                        </dl>
+                    </div>
+                    <!-- List End -->
+                </div>
+
+            </div>
+
+            <div class="space40"></div>
+
+            <div class="span12">
+                <!-- Our Team -->
+                <h3>Wwise</h3>
+
+                <div class="slider2 team flexslider">
+                    <ul class="slides">
+                        <li>
+                            <div class="row">
+                                    <div class="span3 square-1">
+                                        <div class="img-container">
+                                            <img src="img/gallery/Playaudio.gif" alt="">
+                                            <div class="img-bg-icon"></div>
+                                        </div>
+                                        <h4>Play audio</h4>
+                                    </div>
+
+                                    <div class="span3 square-1">
+                                        <div class="img-container">
+                                            <img src="img/gallery/listener.png" alt="">
+                                            <div class="img-bg-icon"></div>
+                                        </div>
+                                        <h4>Set up listeners</h4>
+                                    </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Our Team End -->
+            </div>
+
+        <div class="row t-row">
+            VIDEO HERE
         </div>
-        <div class="span6 right">
-          &copy; 2020. All rights reserved.
+
+        <div class="row t-row">
+            <!-- Line -->
+            <div class="span12"><hr></div>
+            <div class="span9">
+                <h4>Download TacocaT engine</h4>
+            </div>
+            <div class="span3">
+                <!-- Button -->
+                <div class="btn btn-blue f-right">
+                    <!-- Title -->
+                    <a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine"><h3><i class="icon-signin hidden-tablet"></i> Repository</h3></a>
+                </div>
+                <div class="btn btn-blue f-right">
+                    <!-- Title -->
+                    <a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine/releases"><h3><i class="icon-signin hidden-tablet"></i> &nbsp;Download</h3></a>
+                </div>
+            </div>
+            <div class="space30 visible-phone"></div>
+            <!-- Line -->
+            <div class="span12"><hr></div>
         </div>
-      </div>
+
+        <div class="row t-row">
+            <div class="span9">
+                <h3>MIT License</h3>
+
+                <h6>Copyright (c) 2018 Hugo-Bo-Diaz</h6>
+
+                Permission is hereby granted, free of charge, to any person obtaining a copy
+                of this software and associated documentation files (the "Software"), to deal
+                in the Software without restriction, including without limitation the rights
+                to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                copies of the Software, and to permit persons to whom the Software is
+                furnished to do so, subject to the following conditions: <br /><br />
+
+                The above copyright notice and this permission notice shall be included in all
+                copies or substantial portions of the Software. <br /><br />
+
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                SOFTWARE.<br /><br />
+            </div>
+        </div>
 
     </div>
-  </footer>
-  <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="span5">
+                    <h3>Contact Form</h3>
+                    <div>
+                        <form class="form-main" name="ajax-form" id="ajax-form" action="#" method="post">
+                            <div id="ajaxsuccess">E-mail was successfully sent.</div>
+                            <div class="error" id="err-name">Please enter name</div>
+                            <input name="name" id="name" type="text" value="Name" onfocus="if(this.value == 'Name') this.value='';" onblur="if(this.value == '') this.value='Name';">
 
-  <!-- JavaScripts -->
-  <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script> 
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>  
-  <script type="text/javascript" src="js/functions.js"></script>
-  <script type="text/javascript" defer src="js/jquery.flexslider.js"></script>
+                            <div class="error" id="err-email">Please enter e-mail</div>
+                            <div class="error" id="err-emailvld">E-mail is not a valid format</div>
+                            <input name="email" id="email" type="text" value="E-mail" onfocus="if(this.value == 'E-mail') this.value='';" onblur="if(this.value == '') this.value='E-mail';">
+
+                            <div class="error" id="err-message">Please enter message</div>
+                            <textarea name="message" id="message" onfocus="if(this.value == 'Message') this.value='';" onblur="if(this.value == '') this.value='Message';">Message</textarea><br>
+                            <div>
+                                <div class="error" id="err-form">There was a problem validating the form please check!</div>
+                                <div class="error" id="err-timedout">The connection to the server timed out!</div>
+                                <div class="error" id="err-state"></div>
+                            </div>
+                            <button id="send" class="btn f-right">Send Message <i class="icon-ok"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="span3 offset3">
+                    <h3>Address</h3>
+                    33 Igualtat Street<br>
+                    Terrassa, 08222<br>
+                    Spain<br>
+                    <br>
+                    <i class="icon-envelope"></i><a href="mailto:hugobodiaz@gmail.com">hugobodiaz@gmail.com</a><br>
+                    <i class="icon-home"></i><a href="https://github.com/Hugo-Bo-Diaz/Tacocat-engine">Tacocat repo</a>
+
+                </div>
+
+                <div class="row space50"></div>
+                <div class="row">
+                    <div class="span6">
+                        <div class="logo-footer">
+                            Design by <a href="https://www.freshdesignweb.com">freshDesignweb</a> modified by Daniel Garcia
+                        </div>
+                    </div>
+                    <div class="span6 right">
+                        &copy; 2020. All rights reserved.
+                    </div>
+                </div>
+
+            </div>
+    </footer>
+    <!-- Footer End -->
+    <!-- JavaScripts -->
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" defer src="js/jquery.flexslider.js"></script>
 
 </body>
 </html>
