@@ -1,0 +1,11 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1147267972	loop_static			\Default Work Unit\loop_static	
+	2142030052	loop_moving			\Default Work Unit\loop_moving	
+	3991942870	music			\Default Work Unit\music	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	22133257	School_Bell_Sound_Effect_-_Copyright_Free_Sound_Effects-X15iMnSHtj4	C:\Users\hugob\Documents\WwiseProjects\engines audio demo\.cache\Windows\SFX\School_Bell_Sound_Effect_-_Copyright_Free_Sound_Effects-X15iMnSHtj4_606D195B.wem		\Actor-Mixer Hierarchy\Default Work Unit\loop_static\School_Bell_Sound_Effect_-_Copyright_Free_Sound_Effects-X15iMnSHtj4		367484
+	48256458	Asketa_Natan_Chaim_-_Alone_feat__Kyle_Reynolds_NCS_Release-q-ooKjw43w8	C:\Users\hugob\Documents\WwiseProjects\engines audio demo\.cache\Windows\SFX\Asketa_Natan_Chaim_-_Alone_feat._Kyle_Reynolds_NCS_Release-q-ooKjw43w8_4DBC4663.wem		\Actor-Mixer Hierarchy\Default Work Unit\music_loop\Asketa_Natan_Chaim_-_Alone_feat__Kyle_Reynolds_NCS_Release-q-ooKjw43w8		5323052
+	355465193	Jim_Yosef_Valentina_Franco_-_Chasing_Dreams_NCS_Release-WkWY9ctNr0I	C:\Users\hugob\Documents\WwiseProjects\engines audio demo\.cache\Windows\SFX\Jim_Yosef_Valentina_Franco_-_Chasing_Dreams_NCS_Release-WkWY9ctNr0I_85BBF78C.wem		\Actor-Mixer Hierarchy\Default Work Unit\music_loop\Jim_Yosef_Valentina_Franco_-_Chasing_Dreams_NCS_Release-WkWY9ctNr0I		5117200
+	1063508851	Car_Engine_Sound_Effect-bvTaUSDHn3I	C:\Users\hugob\Documents\WwiseProjects\engines audio demo\.cache\Windows\SFX\Car_Engine_Sound_Effect-bvTaUSDHn3I_01E47EE6.wem		\Actor-Mixer Hierarchy\Default Work Unit\loop_moving\Car_Engine_Sound_Effect-bvTaUSDHn3I		874996
+

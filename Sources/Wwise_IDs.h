@@ -13,7 +13,8 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID DEATH = 779278001U;
+        static const AkUniqueID LOOP_MOVING = 2142030052U;
+        static const AkUniqueID LOOP_STATIC = 1147267972U;
         static const AkUniqueID MUSIC = 3991942870U;
     } // namespace EVENTS
 
@@ -34,7 +35,7 @@ namespace AK
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
-        static const AkUniqueID DEATH_BANCK = 1934763593U;
+        static const AkUniqueID AUDIO_DEMO = 1275834961U;
     } // namespace BANKS
 
     namespace BUSSES

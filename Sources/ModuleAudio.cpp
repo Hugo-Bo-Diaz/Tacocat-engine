@@ -112,7 +112,7 @@ bool ModuleAudio::Init()
 	// -----------------------------------------------------------------------------------------------------------
 	
 	LoadBank("Sound/Init.bnk");
-	LoadBank("Sound/death_banck.bnk");
+	LoadBank("Sound/audio_demo.bnk");
 
 	return true;
 }

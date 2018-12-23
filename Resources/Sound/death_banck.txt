@@ -1,9 +1,0 @@
-Event	ID	Name			Wwise Object Path	Notes
-	779278001	death			\Default Work Unit\death	
-	3991942870	music			\Default Work Unit\music	
-
-In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	27105033	Monkey Island 1 - The Secret of Monkey Island	C:\Users\hugob\Documents\WwiseProjects\oof\.cache\Windows\SFX\Monkey Island 1 - The Secret of Monkey Island_8EFB4B1B.wem		\Actor-Mixer Hierarchy\Default Work Unit\music_loop\res\Monkey Island 1 - The Secret of Monkey Island		5299068
-	497657482	ChillingMusic	C:\Users\hugob\Documents\WwiseProjects\oof\.cache\Windows\SFX\ChillingMusic_98EBCE5E.wem		\Actor-Mixer Hierarchy\Default Work Unit\music_loop\res\ChillingMusic		4834936
-	796949091	player_death	C:\Users\hugob\Documents\WwiseProjects\oof\.cache\Windows\SFX\player_death_1C9C67B2.wem		\Actor-Mixer Hierarchy\Default Work Unit\player_death		90212
-

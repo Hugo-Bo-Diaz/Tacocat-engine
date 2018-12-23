@@ -47,25 +47,24 @@ void Scene::Init()
 	l->SetWwiseObject();
 
 	AK::SoundEngine::RegisterGameObj(music_player,"player");
-	//AK::SoundEngine::PostEvent(AK::EVENTS::MUSIC, music_player);
+	AK::SoundEngine::PostEvent(AK::EVENTS::MUSIC, music_player);
 
 	//DEMO OBJECTS
 	Demo_static = AddGameObject();
 	Demo_static->name = "Demo_static";
 	Component_Transform* b_static = new Component_Transform();
 	b_static->rotation.Set(0, 0, 0, 0);
-	b_static->position.Set(0, 0, 0);
+	b_static->position.Set(0, 0, -50);
 	b_static->scaling.Set(0, 0, 0);
 	Demo_static->AddComponent(b_static);
 
 	Component_Audio_Emitter* x_static = new Component_Audio_Emitter();
 	Demo_static->AddComponent(x_static);
 	x_static->SetWwiseObject();
+	x_static->PlayEvent(AK::EVENTS::LOOP_STATIC);
 
 	Demo_static->bounding_box.minPoint = float3(-1,-1,-1);
 	Demo_static->bounding_box.maxPoint = float3(1, 1, 1);
-
-
 
 	Demo_not_static = AddGameObject();
 	Demo_not_static->name = "Demo_moving";
@@ -78,6 +77,7 @@ void Scene::Init()
 	Component_Audio_Emitter* x_not_static = new Component_Audio_Emitter();
 	Demo_not_static->AddComponent(x_not_static);
 	x_not_static->SetWwiseObject();
+	x_not_static->PlayEvent(AK::EVENTS::LOOP_MOVING);
 
 	Demo_not_static->bounding_box.minPoint = float3(-1, -1, -1);
 	Demo_not_static->bounding_box.maxPoint = float3(1, 1, 1);
@@ -92,21 +92,21 @@ void Scene::Update(float dt)
 		Demo_not_static->bounding_box.minPoint = float3(Demo_not_static->GetTransformComponent()->position.x - 1, Demo_not_static->GetTransformComponent()->position.y - 1, Demo_not_static->GetTransformComponent()->position.z - 1);
 		Demo_not_static->bounding_box.maxPoint = float3(Demo_not_static->GetTransformComponent()->position.x + 1, Demo_not_static->GetTransformComponent()->position.y + 1, Demo_not_static->GetTransformComponent()->position.z + 1);
 		
-	if (Demo_not_static->GetTransformComponent()->position.x < 100 && going_positive)
+	if (Demo_not_static->GetTransformComponent()->position.x < 50 && going_positive)
 	{
 		Demo_not_static->GetTransformComponent()->position.x += 10*dt;
 		Demo_not_static->GetTransformComponent()->Caluculate_Local_Matrix();
-		if (Demo_not_static->GetTransformComponent()->position.x >= 100)
+		if (Demo_not_static->GetTransformComponent()->position.x >= 50)
 		{
 			going_positive = false;
 		}
 	}
 
-	if (Demo_not_static->GetTransformComponent()->position.x > -100 && !going_positive)
+	if (Demo_not_static->GetTransformComponent()->position.x > -50 && !going_positive)
 	{
 		Demo_not_static->GetTransformComponent()->position.x -= 10 * dt;
 		Demo_not_static->GetTransformComponent()->Caluculate_Local_Matrix();
-		if (Demo_not_static->GetTransformComponent()->position.x <= -100)
+		if (Demo_not_static->GetTransformComponent()->position.x <= -50)
 		{
 			going_positive = true;
 		}

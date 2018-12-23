@@ -205,6 +205,8 @@ void ModuleUI::DrawGuizmoUI()
 			Component_Transform* transform = (Component_Transform*)App->scene_controller->GetMainCamera()->selected->GetTransformComponent();
 			Component_Transform* original;
 			Component_Transform aux;
+			if (transform == nullptr)
+				return;
 
 			switch (gizmo_operation)
 			{

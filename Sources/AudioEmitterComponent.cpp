@@ -72,7 +72,7 @@ void Component_Audio_Emitter::Properties()
 	{
 		if (ImGui::Button("Play"))
 		{
-			PlayEvent(AK::EVENTS::DEATH);
+
 		}
 	}
 }
