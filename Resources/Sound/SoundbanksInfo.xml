@@ -22,8 +22,17 @@
 			<Path>death_banck.bnk</Path>
 			<IncludedEvents>
 				<Event Id="779278001" Name="death" ObjectPath="\Events\Default Work Unit\death"/>
+				<Event Id="3991942870" Name="music" ObjectPath="\Events\Default Work Unit\music"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
+				<File Id="27105033" Language="SFX">
+					<ShortName>Monkey Island 1 - The Secret of Monkey Island.wav</ShortName>
+					<Path>SFX\Monkey Island 1 - The Secret of Monkey Island_8EFB4B1B.wem</Path>
+				</File>
+				<File Id="497657482" Language="SFX">
+					<ShortName>ChillingMusic.wav</ShortName>
+					<Path>SFX\ChillingMusic_98EBCE5E.wem</Path>
+				</File>
 				<File Id="796949091" Language="SFX">
 					<ShortName>player_death.wav</ShortName>
 					<Path>SFX\player_death_1C9C67B2.wem</Path>

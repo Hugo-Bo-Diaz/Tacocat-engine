@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
-
+#include "Wwise_IDs.h"
 
 Component_Audio_Emitter::Component_Audio_Emitter()
 {
@@ -34,8 +34,6 @@ void Component_Audio_Emitter::CalculatePositionWithObjectTransform()
 
 	AkSoundPosition p;
 	p.SetPosition(-pos.x,pos.y,-pos.z);
-	App->UI->console->AddLog("%f, %f, %f",pos.x, pos.y, pos.z);
-
 	//front.X = x_front;
 	//front.Y = y_front;
 	//front.Z = z_front;
@@ -74,7 +72,7 @@ void Component_Audio_Emitter::Properties()
 	{
 		if (ImGui::Button("Play"))
 		{
-			PlayEvent(779278001U);
+			PlayEvent(AK::EVENTS::DEATH);
 		}
 	}
 }

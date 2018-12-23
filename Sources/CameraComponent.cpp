@@ -42,9 +42,9 @@ void Component_Camera::Update(float dt)
 
 	float real_speed = speed * dt;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		real_speed = speed * 15 * dt;
+		real_speed = speed * 3 * dt;
 
-	speed = 10;
+	speed = 3;
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
@@ -95,6 +95,15 @@ void Component_Camera::Update(float dt)
 	Draw_frustum();//we draw it
 
 	frustum.pos = pos_now;//we move the transformed frustum to its position
+
+
+	App->scene_controller->current_scene->Camera->GetTransformComponent()->position.x = Position.x;
+	App->scene_controller->current_scene->Camera->GetTransformComponent()->position.y = Position.y;
+	App->scene_controller->current_scene->Camera->GetTransformComponent()->position.z = Position.z;
+	App->scene_controller->current_scene->Camera->GetTransformComponent()->rotation = Quat::FromEulerXYZ(angle_Y,angle_XZ,0);
+	App->scene_controller->current_scene->Camera->GetTransformComponent()->Caluculate_Local_Matrix();
+	App->UI->console->AddLog("%f, %f, %f", Position.x, Position.y, Position.z);
+
 
 	//// Mouse picking
 
@@ -214,6 +223,7 @@ void Component_Camera::Update(float dt)
 		}
 		Position = Reference + Z * Position.Length();
 	}
+
 
 	CalculateViewMatrix();
 }

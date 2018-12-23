@@ -63,9 +63,15 @@ void Component_Audio_Listener::Update(float dt)
 {
 	if (attached)
 	{
-
 		CalculatePositionWithObjectTransform();
 	}
+
+	//AkAuxSendValue reverb;
+	//reverb.listenerID = Wwise_obj;
+	//reverb.auxBusID = AK::SoundEngine::GetIDFromString("tunnel");
+	//reverb.fControlValue = 20;
+
+	//AKRESULT res = AK::SoundEngine::SetGameObjectAuxSendValues(Wwise_obj, &reverb, 1);
 }
 
 void Component_Audio_Listener::Properties()

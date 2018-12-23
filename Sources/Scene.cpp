@@ -9,6 +9,8 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/document.h"
 
+#include "Wwise_IDs.h"
+
 Scene::~Scene()
 {
 
@@ -34,20 +36,68 @@ void Scene::Init()
 
 
 	Camera = AddGameObject();
-	Component_Audio_Listener* l = new Component_Audio_Listener();
-	Camera->AddComponent(l);
-	l->SetWwiseObject();
 	Component_Transform* s = new Component_Transform();
 	s->rotation.Set(0, 0, 0, 0);
 	s->position.Set(0, 0, 0);
 	s->scaling.Set(0, 0, 0);
 	Camera->AddComponent(s);
 	Camera->AddComponent(spookamera);
+	Component_Audio_Listener* l = new Component_Audio_Listener();
+	Camera->AddComponent(l);
+	l->SetWwiseObject();
 
+	AK::SoundEngine::RegisterGameObj(music_player,"player");
+	//AK::SoundEngine::PostEvent(AK::EVENTS::MUSIC, music_player);
+
+	//DEMO OBJECTS
+	Demo_static = AddGameObject();
+	Demo_static->name = "Demo_static";
+	Component_Transform* b_static = new Component_Transform();
+	b_static->rotation.Set(0, 0, 0, 0);
+	b_static->position.Set(0, 0, 0);
+	b_static->scaling.Set(0, 0, 0);
+	Demo_static->AddComponent(b_static);
+
+	Component_Audio_Emitter* x_static = new Component_Audio_Emitter();
+	Demo_static->AddComponent(x_static);
+	x_static->SetWwiseObject();
+
+	Demo_static->bounding_box.minPoint = float3(-1,-1,-1);
+	Demo_static->bounding_box.maxPoint = float3(1, 1, 1);
+
+
+
+	Demo_not_static = AddGameObject();
+	Demo_not_static->name = "Demo_moving";
+	Component_Transform* b_not_static = new Component_Transform();
+	b_not_static->rotation.Set(0, 0, 0, 0);
+	b_not_static->position.Set(0, 0, 0);
+	b_not_static->scaling.Set(0, 0, 0);
+	Demo_not_static->AddComponent(b_not_static);
+
+	Component_Audio_Emitter* x_not_static = new Component_Audio_Emitter();
+	Demo_not_static->AddComponent(x_not_static);
+	x_not_static->SetWwiseObject();
+
+	Demo_not_static->bounding_box.minPoint = float3(-1, -1, -1);
+	Demo_not_static->bounding_box.maxPoint = float3(1, 1, 1);
 }
 
 void Scene::Update(float dt)
 {
+	//DEMO THINGS
+	if (Demo_not_static->GetTransformComponent()->position.x < 100)
+	{
+		Demo_static->bounding_box.minPoint = float3(Demo_static->GetTransformComponent()->position.x - 1, Demo_static->GetTransformComponent()->position.y - 1, Demo_static->GetTransformComponent()->position.z - 1);
+		Demo_static->bounding_box.maxPoint = float3(Demo_static->GetTransformComponent()->position.x + 1, Demo_static->GetTransformComponent()->position.y + 1, Demo_static->GetTransformComponent()->position.z + 1);
+		Demo_not_static->bounding_box.minPoint = float3(Demo_not_static->GetTransformComponent()->position.x - 1, Demo_not_static->GetTransformComponent()->position.y - 1, Demo_not_static->GetTransformComponent()->position.z - 1);
+		Demo_not_static->bounding_box.maxPoint = float3(Demo_not_static->GetTransformComponent()->position.x + 1, Demo_not_static->GetTransformComponent()->position.y + 1, Demo_not_static->GetTransformComponent()->position.z + 1);
+	}
+
+	if (Demo_not_static->GetTransformComponent()->position.x > -100)
+	{
+
+	}
 
 	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
@@ -62,6 +112,7 @@ void Scene::Update(float dt)
 			(*it)->DrawBoundingBox();
 		}
 	}
+
 
 
 	//spookamera->Update(dt);
