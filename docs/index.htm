@@ -167,9 +167,9 @@
                             <dt><i class="icon-ok"></i> Meshes and textures</dt>
                             <dd>Can load and display 3d objects and textures</dd>
                             <dt><i class="icon-ok"></i> Hierarchy</dt>
-                            <dd>Display all loaded objects in scene with a hierarchy</dd>
+                            <dd>Display all loaded objects in scene with a hierarchy, can also select withing hierarchy</dd>
                             <dt><i class="icon-ok"></i> Transform</dt>
-                            <dd>Can modify position rotation and scale of gameobjects</dd>
+                            <dd>Can modify position rotation and scale of gameobjects, also available with a gizmo</dd>
                             <dt><i class="icon-ok"></i> Mouse pick</dt>
                             <dd>Can select gameobjects using mouse picks</dd>
                             <dt><i class="icon-ok"></i> Quadtree</dt>
@@ -185,7 +185,9 @@
                             <dt><i class="icon-ok"></i> Own fileformat</dt>
                             <dd>All assets used are converted into our own fileformat to speed up the loading process</dd>
                             <dt><i class="icon-ok"></i> Time management</dt>
-                            <dd>Can play pause stop scene in order to make adjustments</dd>
+                            <dd>Can play pause stop scene in order to make adjustments, press play to save settings and stop to reload everything</dd>
+                            <dt><i class="icon-ok"></i> Resource management</dt>
+                            <dd>If you load the same object twice the memory doesn't increase</dd>
                         </dl>
                     </div>
                     <!-- List End -->
@@ -200,6 +202,8 @@
                 <h3>Wwise</h3>
 
                 <p>For the 3rd delivery we had to implement <a href="https://www.audiokinetic.com/products/wwise/" style="color:blue">Wwise</a>, a middleware that eases the process of integrating audio into a 3d engine</p>
+
+                <p>We used the version 2017.1.3.6377 of Wwise for our implementation, using other versions to import soundbanks may cause problems when loading soundbanks.</p>
 
                 <div class="slider2 team flexslider">
                     <ul class="slides">
