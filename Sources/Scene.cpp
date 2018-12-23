@@ -20,37 +20,34 @@ Scene::~Scene()
 
 }
 
+void Scene::Init()
+{
+	GameObject* f = AddGameObject();
+	Component_Transform* t = new Component_Transform();
+	t->rotation.Set(0, 0, 0, 0);
+	t->position.Set(0, 0, 0);
+	t->scaling.Set(0, 0, 0);
+	f->AddComponent(t);
+	Component_Audio_Emitter* p = new Component_Audio_Emitter();
+	f->AddComponent(p);
+	p->SetWwiseObject();
+
+
+	Camera = AddGameObject();
+	Component_Audio_Listener* l = new Component_Audio_Listener();
+	Camera->AddComponent(l);
+	l->SetWwiseObject();
+	Component_Transform* s = new Component_Transform();
+	s->rotation.Set(0, 0, 0, 0);
+	s->position.Set(0, 0, 0);
+	s->scaling.Set(0, 0, 0);
+	Camera->AddComponent(s);
+	Camera->AddComponent(spookamera);
+
+}
+
 void Scene::Update(float dt)
 {
-	if (first_update)
-	{
-		GameObject* f = AddGameObject();
-		Component_Transform* t = new Component_Transform();
-		t->rotation.Set(0, 0, 0, 0);
-		t->position.Set(0, 0, 0);
-		t->scaling.Set(0, 0, 0);
-		f->AddComponent(t);
-		Component_Audio_Emitter* p = new Component_Audio_Emitter();
-		f->AddComponent(p);
-		p->SetWwiseObject();
-
-		AK::SoundEngine::RegisterGameObj(listener,"listener");
-		AK::SoundEngine::SetDefaultListeners(&listener, 1);
-
-		AkSoundPosition position;
-		AkVector k, v;
-		k.X = 1;		
-		k.Z = 1;
-		k.Y = 1;
-		v.X = 1;
-		v.Y = 1;
-		v.Z = 1;
-		position.SetOrientation(k,v);
-		position.SetPosition(0, 0, 0);
-		AKRESULT res = AK::SoundEngine::SetPosition(listener, position);
-
-		first_update = false;
-	}
 
 	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
 	{
@@ -67,7 +64,7 @@ void Scene::Update(float dt)
 	}
 
 
-	spookamera->Update(dt);
+	//spookamera->Update(dt);
 
 	tree->Draw();
 
@@ -108,8 +105,15 @@ GameObject* Scene::AddGameObject()
 	return object;
 }
 
-GameObject * Scene::GetObjectFromUID(uint UID)
+GameObject* Scene::GetObjectFromUID(uint UID)
 {
+	for (std::vector<GameObject*>::iterator it = GameObjects.begin(); it != GameObjects.end(); it++)
+	{
+		if ((*it)->UID == UID)
+		{
+			return *it;
+		}
+	}
 	return nullptr;
 }
 

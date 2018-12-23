@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "CameraComponent.h"
 #include "AudioEmitterComponent.h"
+#include "AudioListenerComponent.h"
 #include <string>
 #include <vector>
 #include "Quadtree.h"
@@ -14,12 +15,8 @@ class Scene
 {
 public:
 
-	bool first_update = true;
-
 	int id = -1;
 	std::string name;
-
-	AkGameObjectID listener = 10000;
 
 	Scene() {
 	};
@@ -33,7 +30,7 @@ public:
 
 	~Scene();
 
-	virtual void Init() {};
+	void Init();
 	void Update(float dt);
 
 	virtual void CleanUp() {};
@@ -48,6 +45,8 @@ public:
 
 	std::vector<GameObject*> GameObjects;
 
+	GameObject* Camera;
+	Component_Audio_Listener* listener;
 	Component_Camera* spookamera;
 
 	void Save(const char* filename);

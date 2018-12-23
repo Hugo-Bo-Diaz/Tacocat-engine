@@ -23,7 +23,6 @@ void Component_Audio_Emitter::Update(float dt)
 {
 	if (attached)
 	{
-		x += 1;
 
 		CalculatePositionWithObjectTransform();
 	}
