@@ -34,8 +34,20 @@ void Scene::Update(float dt)
 		f->AddComponent(p);
 		p->SetWwiseObject();
 
-		AK::SoundEngine::RegisterGameObj(listener);
+		AK::SoundEngine::RegisterGameObj(listener,"listener");
 		AK::SoundEngine::SetDefaultListeners(&listener, 1);
+
+		AkSoundPosition position;
+		AkVector k, v;
+		k.X = 1;		
+		k.Z = 1;
+		k.Y = 1;
+		v.X = 1;
+		v.Y = 1;
+		v.Z = 1;
+		position.SetOrientation(k,v);
+		position.SetPosition(0, 0, 0);
+		AKRESULT res = AK::SoundEngine::SetPosition(listener, position);
 
 		first_update = false;
 	}

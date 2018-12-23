@@ -23,7 +23,9 @@ void Component_Audio_Emitter::Update(float dt)
 {
 	if (attached)
 	{
+		x += 1;
 
+		CalculatePositionWithObjectTransform();
 	}
 }
 void Component_Audio_Emitter::CalculatePositionWithObjectTransform()
@@ -33,6 +35,7 @@ void Component_Audio_Emitter::CalculatePositionWithObjectTransform()
 
 	AkSoundPosition p;
 	p.SetPosition(-pos.x,pos.y,-pos.z);
+	App->UI->console->AddLog("%f, %f, %f",pos.x, pos.y, pos.z);
 
 	//front.X = x_front;
 	//front.Y = y_front;
@@ -54,7 +57,7 @@ void Component_Audio_Emitter::CalculatePositionWithObjectTransform()
 	//if (dot_prod >= 0.0001)
 	//	LOG("Vectors are not orthogonal!");
 
-	AKRESULT res = AK::SoundEngine::SetPosition((AkGameObjectID)Wwise_obj, position);
+	AKRESULT res = AK::SoundEngine::SetPosition(Wwise_obj, p);
 }
 
 void Component_Audio_Emitter::PlayEvent(unsigned long int _event)

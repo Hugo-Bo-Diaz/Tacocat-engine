@@ -22,7 +22,7 @@ public:
 	void PlayEvent(unsigned long int event);
 
 	void Properties();
-
+	int x = 0;
 	void SetWwiseObject();//parent needed for this to work
 
 	void Update(float dt);
